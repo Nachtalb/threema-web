@@ -1,7 +1,8 @@
 <!-- Non status messages -->
 <article ng-if="ctrl.isContactMessage"
          class="message"
-         ng-class="{'message-in': !ctrl.message.isOutbox, 'message-out': ctrl.message.isOutbox}">
+         ng-class="{'message-in': !ctrl.message.isOutbox, 'message-out': ctrl.message.isOutbox}"
+         eee-message-contextmenu>
 
     <eee-avatar
             class="message-avatar"

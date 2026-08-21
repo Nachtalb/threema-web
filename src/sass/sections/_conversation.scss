@@ -201,17 +201,24 @@
         display: flex;
         flex-direction: row;
         align-items: flex-start;
+        position: relative;
 
+        // The menu is opened by right clicking the message, so its button is
+        // never shown. The menu still has to stay in the layout for
+        // angular-material to position and open it, and it is moved to the
+        // pointer before opening.
         md-menu {
-            &:not(.md-open) {
-                position: relative;
-                visibility: hidden;
-            }
-        }
+            position: absolute;
+            top: 0;
+            left: 0;
 
-        &:hover {
-            md-menu {
-                visibility: visible;
+            .md-icon-button {
+                visibility: hidden;
+                pointer-events: none;
+                margin: 0;
+                width: 0;
+                height: 0;
+                padding: 0;
             }
         }
 
