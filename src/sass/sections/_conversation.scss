@@ -263,15 +263,17 @@
             width: $bubble-triangle-size;
             height: $bubble-triangle-size;
 
+            // Below the bubble (z-index 2) so it reads as part of it rather
+            // than a shape drawn on top.
             &::after {
                 @include message-bubble-triangle;
-                z-index: 3;
+                z-index: 1;
             }
 
             &::before {
                 @include message-bubble-triangle;
                 @include message-bubble-shadow;
-                z-index: 1;
+                z-index: 0;
             }
         }
 
