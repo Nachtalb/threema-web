@@ -93,6 +93,14 @@ class BackgroundSettings {
     public setBlur(blur: boolean): void {
         this.settingsService.storeUntrustedKeyValuePair('backgroundBlur', blur ? 'true' : 'false');
 
+        // Swap to the variant matching the new setting. The blurred default
+        // uses a smaller, more heavily compressed image.
+        const image = document.getElementById('background-image') as HTMLImageElement | null;
+        if (image !== null && image.src !== '') {
+            const base = image.src.replace(/\.sharp\.avif$/, '.avif');
+            image.src = blur ? base : base.replace(/\.avif$/, '.sharp.avif');
+        }
+
         // Emit change
         this.settingsService.backgroundBlurChange.post(blur);
     }
