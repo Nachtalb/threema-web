@@ -7,7 +7,20 @@ $float-gap: 1rem;
 $float-radius: 1rem;
 $float-shadow: 0 2px 8px rgba(0, 0, 0, .18);
 $list-width: 24rem;
+$detail-width: 24rem;
 $chat-max-width: 60rem;
+
+@keyframes detail-slide-in {
+    from {
+        margin-left: -$float-gap;
+        width: 0;
+    }
+
+    to {
+        margin-left: 0;
+        width: $detail-width;
+    }
+}
 
 .user-interface {
     &-minimal {
@@ -81,8 +94,72 @@ $chat-max-width: 60rem;
             }
         }
 
-        #conversation {
+        // Chat and profile sidebar sit side by side
+        #conversation-wrapper {
+            display: flex;
+            flex-direction: row;
             gap: $float-gap;
+            height: 100%;
+            min-width: 0;
+        }
+
+        #conversation-detail {
+            flex: 0 0 auto;
+            margin-top: $float-gap;
+            border-radius: $float-radius;
+            box-shadow: $float-shadow;
+            width: $detail-width;
+            background-color: $light-background-color;
+            overflow-x: hidden;
+            overflow-y: auto;
+            // Animating the sidebar's own width makes the chat slide across
+            // with it, rather than jumping when the flex layout changes.
+            transition: width .25s ease-out, margin-left .25s ease-out;
+
+            // Collapsed until a profile is open. The width change coincides
+            // with the template being inserted, so the panel animates itself
+            // in rather than transitioning between the two states.
+            &:empty {
+                margin-left: -$float-gap;
+                box-shadow: none;
+                width: 0;
+            }
+
+            &:not(:empty) {
+                animation: detail-slide-in .25s ease-out;
+            }
+
+            // Overlay the scrollbar so it does not steal width from the
+            // content, which would push it off centre.
+            scrollbar-width: none;
+
+            &::-webkit-scrollbar {
+                border: 0;
+                background-color: transparent;
+                width: 6px;
+            }
+
+            &::-webkit-scrollbar-thumb {
+                border-radius: 3px;
+                background-color: transparent;
+                transition: background-color .25s ease-out;
+            }
+
+            &:hover {
+                &::-webkit-scrollbar-thumb {
+                    background-color: rgba(0, 0, 0, .3);
+                }
+            }
+
+            .detail-header {
+                border-radius: $float-radius $float-radius 0 0;
+            }
+        }
+
+        #conversation {
+            flex: 1 1 auto;
+            gap: $float-gap;
+            min-width: 0;
             background-image: none;
 
             // Header and compose area float; the messages between them scroll
@@ -134,6 +211,19 @@ $chat-max-width: 60rem;
                         background-color: rgba(0, 0, 0, .3);
                     }
                 }
+            }
+
+            // Keep the scroll-to-bottom button with the chat column rather
+            // than the full width of the conversation area.
+            #scrolljump {
+                align-self: center;
+                right: 0;
+                margin: 0 auto;
+                box-sizing: border-box;
+                padding-right: 1rem;
+                width: 100%;
+                max-width: $chat-max-width;
+                text-align: right;
             }
 
             #conversation-footer {

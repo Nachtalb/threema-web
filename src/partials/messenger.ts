@@ -967,7 +967,7 @@ class ConversationController {
     }
 
     public showReceiver(ev): void {
-        this.$state.go('messenger.home.detail', this.receiver);
+        this.$state.go('messenger.home.conversation.detail', this.receiver);
     }
 
     public hasMoreMessages(): boolean {
@@ -1463,6 +1463,7 @@ class MessengerController {
             onConversationRemoved(receiver: threema.Receiver) {
                 switch ($state.current.name) {
                     case 'messenger.home.conversation':
+                    case 'messenger.home.conversation.detail':
                     case 'messenger.home.detail':
                     case 'messenger.home.edit':
                         if ($state.params !== undefined
@@ -1922,8 +1923,18 @@ angular.module('3ema.messenger', ['ngMaterial'])
             params: {initParams: null},
         })
 
+        // Nested below the conversation so it opens as a sidebar next to the
+        // chat rather than replacing it.
+        .state('messenger.home.conversation.detail', {
+            url: '/detail',
+            templateUrl: 'partials/messenger.receiver.html',
+            controller: 'ReceiverDetailController',
+            controllerAs: 'ctrl',
+        })
+
+        // Own profile, which has no conversation to sit next to
         .state('messenger.home.detail', {
-            url: '/conversation/{type}/{id}/detail',
+            url: '/receiver/{type}/{id}/detail',
             templateUrl: 'partials/messenger.receiver.html',
             controller: 'ReceiverDetailController',
             controllerAs: 'ctrl',

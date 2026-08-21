@@ -1,3 +1,4 @@
+<div id="conversation-wrapper">
 <div id="conversation" class="drag-container">
     <drag-file
             ng-if="!ctrl.locked && !ctrl.receiver.isBlocked"
@@ -129,4 +130,8 @@
             </compose-area>
         </div>
     </div>
+</div>
+
+<!-- Receiver detail: messenger.receiver.html -->
+<aside id="conversation-detail" ui-view></aside>
 </div>
