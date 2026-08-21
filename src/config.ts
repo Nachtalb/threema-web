@@ -27,7 +27,8 @@ export default {
     // shown to the user if reconnecting fails.
     PREV_PROTOCOL_LAST_VERSION: '1.8.2',
 
-    // Store session password in-memory (if an appropriate API is available).
-    // Auto-generate a session password if none was entered.
-    IN_MEMORY_SESSION_PASSWORD: false,
+    // Store session password for the lifetime of the app, so a reload does not
+    // require re-entering it. Auto-generate a session password if none was
+    // entered.
+    IN_MEMORY_SESSION_PASSWORD: true,
 } as threema.Config;

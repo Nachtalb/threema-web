@@ -354,10 +354,11 @@ class WelcomeController {
         this.stateService.reset('new');
         this.log.info('Initialize session by unlocking trusted key...');
 
-        // If a session password is stored, re-use it
+        // If a session password is stored, re-use it and reconnect right away
         const sessionPassword = this.inMemorySessionPassword;
         if (sessionPassword !== undefined) {
             this.password = sessionPassword;
+            this.unlockConfirm();
         }
     }
 

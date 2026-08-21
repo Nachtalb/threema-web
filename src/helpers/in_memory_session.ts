@@ -27,46 +27,58 @@ declare global {
     }
 }
 
+/**
+ * Stores the session password for the lifetime of the app.
+ *
+ * The desktop app provides the AppDataStore API. In a browser, sessionStorage
+ * is used instead: it survives a reload but is cleared when the tab is closed.
+ */
 export class InMemorySession {
     private static SESSION_PASSWORD_STORAGE_KEY = 'inMemorySessionPassword';
 
-    /**
-     * Return true if the AppDataStore API is available.
-     */
     public storeAvailable(): boolean {
-        return hasValue(window.AppDataStore);
+        return hasValue(window.AppDataStore) || this.sessionStorageAvailable();
     }
 
     /**
-     * Return the in-memory session password.
-     *
-     * If the AppDataStore API is not available, return undefined.
+     * sessionStorage may be unavailable if the user blocked storage access,
+     * in which case accessing the property throws.
      */
+    private sessionStorageAvailable(): boolean {
+        try {
+            return hasValue(window.sessionStorage);
+        } catch (error) {
+            return false;
+        }
+    }
+
     public getPassword(): string | undefined {
-        if (!this.storeAvailable()) {
+        if (hasValue(window.AppDataStore)) {
+            const sessionPassword = window.AppDataStore.getValue(InMemorySession.SESSION_PASSWORD_STORAGE_KEY);
+            return typeof sessionPassword === 'string' ? sessionPassword : undefined;
+        }
+        if (!this.sessionStorageAvailable()) {
             return undefined;
         }
-        const sessionPassword = window.AppDataStore.getValue(InMemorySession.SESSION_PASSWORD_STORAGE_KEY);
-        return typeof sessionPassword === 'string' ? sessionPassword : undefined;
+        const stored = window.sessionStorage.getItem(InMemorySession.SESSION_PASSWORD_STORAGE_KEY);
+        return stored === null ? undefined : stored;
     }
 
-    /**
-     * Set the in-memory session password.
-     *
-     * If the AppDataStore API is not available, do nothing.
-     */
     public setPassword(password: string) {
-        if (!this.storeAvailable()) {
+        if (hasValue(window.AppDataStore)) {
+            window.AppDataStore.setValue(InMemorySession.SESSION_PASSWORD_STORAGE_KEY, password);
             return;
         }
-        window.AppDataStore.setValue(InMemorySession.SESSION_PASSWORD_STORAGE_KEY, password);
+        if (!this.sessionStorageAvailable()) {
+            return;
+        }
+        if (password === undefined) {
+            window.sessionStorage.removeItem(InMemorySession.SESSION_PASSWORD_STORAGE_KEY);
+        } else {
+            window.sessionStorage.setItem(InMemorySession.SESSION_PASSWORD_STORAGE_KEY, password);
+        }
     }
 
-    /**
-     * Clear the in-memory session password.
-     *
-     * If the AppDataStore API is not available, do nothing.
-     */
     public clearPassword() {
         this.setPassword(undefined);
     }
