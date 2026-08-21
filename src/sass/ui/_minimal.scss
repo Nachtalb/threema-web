@@ -22,6 +22,18 @@ $chat-max-width: 60rem;
     }
 }
 
+@keyframes detail-slide-out {
+    from {
+        margin-left: 0;
+        width: $detail-width;
+    }
+
+    to {
+        margin-left: -$float-gap;
+        width: 0;
+    }
+}
+
 .user-interface {
     &-minimal {
         &.messenger {
@@ -104,49 +116,55 @@ $chat-max-width: 60rem;
         }
 
         #conversation-detail {
+            display: flex;
             flex: 0 0 auto;
             margin-top: $float-gap;
-            border-radius: $float-radius;
-            box-shadow: $float-shadow;
-            width: $detail-width;
-            background-color: $light-background-color;
-            overflow-x: hidden;
-            overflow-y: auto;
-            // Animating the sidebar's own width makes the chat slide across
-            // with it, rather than jumping when the flex layout changes.
-            transition: width .25s ease-out, margin-left .25s ease-out;
+            background-color: transparent;
+            overflow: hidden;
 
-            // Collapsed until a profile is open. The width change coincides
-            // with the template being inserted, so the panel animates itself
-            // in rather than transitioning between the two states.
+            // No panel, no gap to leave behind
             &:empty {
                 margin-left: -$float-gap;
-                box-shadow: none;
-                width: 0;
             }
 
-            &:not(:empty) {
-                animation: detail-slide-in .25s ease-out;
-            }
+            // ng-if creates and destroys this element, which is what lets
+            // ngAnimate run an animation on the way out as well as in.
+            .detail-panel {
+                display: block;
+                border-radius: $float-radius;
+                box-shadow: $float-shadow;
+                box-sizing: border-box;
+                width: $detail-width;
+                height: 100%;
+                background-color: $light-background-color;
+                overflow-x: hidden;
+                overflow-y: auto;
 
-            // Overlay the scrollbar so it does not steal width from the
-            // content, which would push it off centre.
-            scrollbar-width: none;
+                &.ng-enter {
+                    animation: detail-slide-in .25s ease-out;
+                }
 
-            &::-webkit-scrollbar {
-                border: 0;
-                background-color: transparent;
-                width: 6px;
-            }
+                &.ng-leave {
+                    animation: detail-slide-out .25s ease-in;
+                }
 
-            &::-webkit-scrollbar-thumb {
-                border-radius: 3px;
-                background-color: transparent;
-                transition: background-color .25s ease-out;
-            }
+                // Overlay the scrollbar so it does not steal width from the
+                // content, which would push it off centre.
+                scrollbar-width: none;
 
-            &:hover {
+                &::-webkit-scrollbar {
+                    border: 0;
+                    background-color: transparent;
+                    width: 6px;
+                }
+
                 &::-webkit-scrollbar-thumb {
+                    border-radius: 3px;
+                    background-color: transparent;
+                    transition: background-color .25s ease-out;
+                }
+
+                &:hover::-webkit-scrollbar-thumb {
                     background-color: rgba(0, 0, 0, .3);
                 }
             }

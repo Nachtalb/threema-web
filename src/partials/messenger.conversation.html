@@ -133,5 +133,7 @@
 </div>
 
 <!-- Receiver detail: messenger.receiver.html -->
-<aside id="conversation-detail" ui-view></aside>
+<div id="conversation-detail">
+    <aside class="detail-panel" ui-view ng-if="ctrl.isDetailOpen()"></aside>
+</div>
 </div>

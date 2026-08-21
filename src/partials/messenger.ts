@@ -970,6 +970,13 @@ class ConversationController {
         this.$state.go('messenger.home.conversation.detail', this.receiver);
     }
 
+    /**
+     * Return whether the receiver detail sidebar is open.
+     */
+    public isDetailOpen(): boolean {
+        return this.$state.current.name === 'messenger.home.conversation.detail';
+    }
+
     public hasMoreMessages(): boolean {
         return this.hasMore;
     }
