@@ -315,12 +315,36 @@
                 margin-left: 8px;
             }
 
+            // The media speaks for itself; the avatar already identifies the
+            // sender.
             .message-name {
-                margin-top: 8px;
+                display: none;
             }
 
             .message-info {
                 margin-bottom: 8px;
+            }
+
+            // Without a caption there is no bar to sit in, so the timestamp
+            // is laid over the media instead.
+            &:not(:has(.message-text)) {
+                position: relative;
+
+                .message-info {
+                    position: absolute;
+                    right: 8px;
+                    bottom: 6px;
+                    margin: 0;
+                    border-radius: 8px;
+                    background-color: rgba(0, 0, 0, .45);
+                    padding: 2px 8px;
+                    color: #ffffff;
+
+                    .message-date,
+                    .message-state i {
+                        color: #ffffff;
+                    }
+                }
             }
 
             .message-media {
