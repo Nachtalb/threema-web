@@ -177,11 +177,10 @@ $chat-max-width: 60rem;
                 width: 100%;
                 max-width: $chat-max-width;
 
-                // Overlay scrollbar: no track, and the thumb only fades in
-                // while the pointer is over the messages.
-                scrollbar-width: thin;
-                scrollbar-color: transparent transparent;
-                transition: scrollbar-color .25s ease-out;
+                // Overlay scrollbar: no reserved gutter, so messages line up
+                // with the header and compose area, and the thumb only fades
+                // in while the pointer is over the messages.
+                scrollbar-width: none;
 
                 &::-webkit-scrollbar {
                     border: 0;
@@ -195,12 +194,8 @@ $chat-max-width: 60rem;
                     transition: background-color .25s ease-out;
                 }
 
-                &:hover {
-                    scrollbar-color: rgba(0, 0, 0, .3) transparent;
-
-                    &::-webkit-scrollbar-thumb {
-                        background-color: rgba(0, 0, 0, .3);
-                    }
+                &:hover::-webkit-scrollbar-thumb {
+                    background-color: rgba(0, 0, 0, .3);
                 }
             }
 

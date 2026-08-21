@@ -49,10 +49,16 @@
         @include scrollbar;
         flex-grow: 1;
         overflow-y: scroll;
-        // A selected message scales up slightly; leave room for it rather than
-        // clipping it against the edge.
+        // A selected message lifts slightly; the padding keeps that from being
+        // clipped, and the list pulls back out so messages still line up with
+        // the header and compose area.
         overflow-x: hidden;
         padding: 0 10px;
+
+        .chat {
+            margin-right: -10px;
+            margin-left: -10px;
+        }
     }
 
     #conversation-quote {
