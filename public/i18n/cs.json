@@ -77,15 +77,11 @@
         "USE_ARCHIVE_VERSION": "Případně se můžete vrátit na <a href=\"{archiveUrl}\">předchozí verzi</a> Threema Web.",
         "TROUBLESHOOTING": "Řešení potíží",
         "REPORT_FAQ": "Nejdříve si prosím <a target=\"_blank\" href=\"https://threema.ch/faq\">přečtěte nejčastější dotazy a odpovědi – FAQs</a>, kde najdete obecné dotazy a popis, jak vyřešit většinu problémů.",
-        "REPORT_LOG": "Pokud nemůžete najít odpověď na svůj dotaz, nebo problém přetrvává, můžete týmu podpory Threema odeslat protokol chyb.",
-        "REPORT_VIA_THREEMA_UNAVAILABLE": "Odeslání protokolu přes aplikaci Threema je momentálně nedostupné, protože není funkční připojení k vašemu mobilnímu zařízení. Nejdříve se připojte k vašemu mobilnímu zařízení.",
-        "REPORT_VIA_CLIPBOARD": "Případně můžete zkopírovat protokol do schránky a <a target=\"_blank\" href=\"https://threema.ch/support\">nahlásit jej týmu podpory Threema prostřednictvím webového formuláře</a>.",
+        "REPORT_LOG": "If you can't find an answer to your question or the problem persists, you can copy the log and open an issue on GitHub.",
+        "REPORT_VIA_CLIPBOARD": "Please include the log in the issue so the problem can be reproduced.",
         "REMOVE_SENSITIVE_DATA": "Odstranit citlivá data (kontakty, obsah zpráv, …)",
-        "DESCRIBE_PROBLEM": "Zde prosím popište problém.",
         "COPY_LOG_CLIPBOARD": "Zkopírovat protokol do schránky",
-        "REPORT_VIA_THREEMA": "Odeslat protokol podpoře",
-        "REPORT_VIA_THREEMA_FAILED": "Při odesílání protokolu na podporu došlo k chybě.",
-        "REPORT_VIA_THREEMA_SUCCESS": "Protokol byl odeslán podpoře.",
+        "REPORT_VIA_GITHUB": "Open an issue on GitHub",
         "PLEASE_OPEN_AND_UNLOCK": "<strong>Odemkněte</strong> prosím vaše zařízení a <strong>otevřete</strong> aplikaci Threema, abyste zůstali připojeni k desktopové aplikaci / webovému klientu. <a target=\"_blank\" rel=\"noopener noreferrer\" href=\"{faqUrl}\">Zjistěte více…</a>"
     },
     "common": {

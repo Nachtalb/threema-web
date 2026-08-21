@@ -71,15 +71,11 @@
         "USE_ARCHIVE_VERSION": "또는 Threema Web의 <a href=\"{archiveUrl}\">이전 버전</a>으로 다시 전환할 수 있습니다.",
         "TROUBLESHOOTING": "문제 해결",
         "REPORT_FAQ": "일반적인 질문과 문제를 해결하려면 먼저 <a target=\"_blank\" href=\"https://threema.ch/faq\">FAQ를 확인하십시오</a>.",
-        "REPORT_LOG": "질문에 대한 답을 찾을 수 없거나 문제가 지속되면 Threema 지원팀에 로그 리포트를 보낼 수 있다.",
-        "REPORT_VIA_THREEMA_UNAVAILABLE": "모바일 기기에 연결되어 있지 않기 때문에 Threema를 통한 로그 보고는 현재 사용할 수 없습니다. 먼저 모바일 기기에 연결하십시오.",
-        "REPORT_VIA_CLIPBOARD": "또는 로그를 클립보드에 복사하여 <a target=\"_blank\" href=\"https://threema.ch/support\">웹 양식을 통해 Threema 지원 팀에 보고하십시오</a>.",
+        "REPORT_LOG": "If you can't find an answer to your question or the problem persists, you can copy the log and open an issue on GitHub.",
+        "REPORT_VIA_CLIPBOARD": "Please include the log in the issue so the problem can be reproduced.",
         "REMOVE_SENSITIVE_DATA": "중요한 데이터(연락처, 메시지 내용 등) 제거",
-        "DESCRIBE_PROBLEM": "여기에 문제를 설명하십시오.",
         "COPY_LOG_CLIPBOARD": "클립보드에 로그 복사",
-        "REPORT_VIA_THREEMA": "지원부에 로그 전송하기",
-        "REPORT_VIA_THREEMA_FAILED": "지원부에 로그 보고를 전송하지 못했습니다.",
-        "REPORT_VIA_THREEMA_SUCCESS": "로그 보고가 지원부로 전송되었습니다."
+        "REPORT_VIA_GITHUB": "Open an issue on GitHub"
     },
     "common": {
         "YES": "네",

@@ -71,15 +71,11 @@
         "USE_ARCHIVE_VERSION": "Като алтернатива можете да се върнете към <a href=\"{archiveUrl}\">предишната версия</a> на Threema Web.",
         "TROUBLESHOOTING": "Отстраняване на неизправности",
         "REPORT_FAQ": "Моля, първо <a target=\"_blank\" href=\"https://threema.ch/faq\">разгледайте нашите често задавани въпроси</a> за общи въпроси и за разрешаване на често срещани проблеми.",
-        "REPORT_LOG": "Ако не можете да намерите отговор на въпроса си или проблемът продължава, можете да изпратите отчет на екипа за поддръжка на Threema.",
-        "REPORT_VIA_THREEMA_UNAVAILABLE": "Понастоящем отчитането на регистрационния файл чрез Threema не е налице, тъй като няма връзка с вашето мобилно устройство. Първо се свържете с мобилното си устройство.",
-        "REPORT_VIA_CLIPBOARD": "Като алтернатива можете да копирате регистрационния файл в клипборда и да го <a target=\"_blank\" href=\"https://threema.ch/support\">докладвате на екипа за поддръжка на Threema чрез уеб формуляра</a>.",
+        "REPORT_LOG": "If you can't find an answer to your question or the problem persists, you can copy the log and open an issue on GitHub.",
+        "REPORT_VIA_CLIPBOARD": "Please include the log in the issue so the problem can be reproduced.",
         "REMOVE_SENSITIVE_DATA": "Премахване на чувствителни данни (контакти, съдържание на съобщението и т.н.)",
-        "DESCRIBE_PROBLEM": "Моля, опишете проблема тук.",
         "COPY_LOG_CLIPBOARD": "Копирайте регистрационния файл в клипборда",
-        "REPORT_VIA_THREEMA": "Изпратете регистрационния файл на поддръжката",
-        "REPORT_VIA_THREEMA_FAILED": "Изпращането на регистрационния файл на поддръжката не бе успешно",
-        "REPORT_VIA_THREEMA_SUCCESS": "Регистрационният файл е изпратен на поддръжката."
+        "REPORT_VIA_GITHUB": "Open an issue on GitHub"
     },
     "common": {
         "YES": "Да",

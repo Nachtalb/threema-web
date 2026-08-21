@@ -114,6 +114,7 @@
         <footer ng-controller="FooterController as ctrl">
             <ul translate-cloak>
                 <li><a ng-click="ctrl.showVersionInfo()" ng-keypress="ctrl.showVersionInfo($event)" tabindex="0">Version [[VERSION]]</a></li>
+                <li><a ng-href="{{ ctrl.config.GIT_REPO }}" target="_blank" rel="noopener noreferrer" tabindex="0">GitHub</a></li>
                 <li><a ng-click="ctrl.showTroubleshooting()" ng-keypress="ctrl.showTroubleshooting($event)" translate>troubleshooting.TROUBLESHOOTING</a></li>
             </ul>
         </footer>

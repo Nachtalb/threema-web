@@ -77,15 +77,11 @@
         "USE_ARCHIVE_VERSION": "或者您可以使用 Threema 網頁版 <a href=\"{archiveUrl}\">之前的版本</a>。",
         "TROUBLESHOOTING": "疑難排解",
         "REPORT_FAQ": "請先檢視我們的<a target=\"_blank\" href=\"https://threema.ch/faq\">常見問題集</a>，了解一般問題和解決常見問題。",
-        "REPORT_LOG": "如果您無法找到問題的答案或問題仍然存在，您可以向 Threema 支援團隊傳送日誌報告。",
-        "REPORT_VIA_THREEMA_UNAVAILABLE": "由於您沒有與您的行動裝置連結，因此目前無法透過 Threema 傳送報告日誌。請首先連結至您的行動裝置。",
-        "REPORT_VIA_CLIPBOARD": "您也可以將日誌複製至剪貼板，並<a target=\"_blank\" href=\"https://threema.ch/support\">透過網頁表單將報告傳送至 Threema 支援團隊</a>。",
+        "REPORT_LOG": "If you can't find an answer to your question or the problem persists, you can copy the log and open an issue on GitHub.",
+        "REPORT_VIA_CLIPBOARD": "Please include the log in the issue so the problem can be reproduced.",
         "REMOVE_SENSITIVE_DATA": "移除敏感資料（如聯絡人，訊息內容等）",
-        "DESCRIBE_PROBLEM": "請在此描述問題",
         "COPY_LOG_CLIPBOARD": "將日誌複製至剪貼板",
-        "REPORT_VIA_THREEMA": "將日誌傳送至支援團隊",
-        "REPORT_VIA_THREEMA_FAILED": "日誌報告傳送失敗",
-        "REPORT_VIA_THREEMA_SUCCESS": "日誌報告已傳送至支援團隊",
+        "REPORT_VIA_GITHUB": "Open an issue on GitHub",
         "PLEASE_OPEN_AND_UNLOCK": "請<strong>解鎖</strong>您的 iOS 裝置，並<strong>開啟</strong> Threema 應用程式以保持與桌面應用程式 / 網頁版的連線。<a target=\"_blank\" rel=\"noopener noreferrer\" href=\"{faqUrl}\">了解更多</a>…"
     },
     "common": {

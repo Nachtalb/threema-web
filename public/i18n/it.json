@@ -77,15 +77,11 @@
         "USE_ARCHIVE_VERSION": "In alternativa puoi tornare alla <a href=\"{archiveUrl}\">versione precedente</a> di Threema Web.",
         "TROUBLESHOOTING": "Risoluzione dei problemi",
         "REPORT_FAQ": "Per favore <a target=\"_blank\" href=\"https://threema.ch/faq\">consulta prima le nostre FAQ</a> per domande generali e per risolvere problemi comuni.",
-        "REPORT_LOG": "Se non riesci a trovare una risposta alla tua domanda o il problema persiste, puoi inviare un log report al team di supporto di Threema.",
-        "REPORT_VIA_THREEMA_UNAVAILABLE": "La segnalazione dei log tramite Threema non è attualmente disponibile poiché non è presente alcuna connessione al tuo dispositivo mobile. Connettiti prima al tuo dispositivo mobile.",
-        "REPORT_VIA_CLIPBOARD": "In alternativa, puoi copiare i log negli appunti e <a target=\"_blank\" href=\"https://threema.ch/support\">segnalarlo al team di supporto di Threema tramite il modulo web.</a>",
+        "REPORT_LOG": "If you can't find an answer to your question or the problem persists, you can copy the log and open an issue on GitHub.",
+        "REPORT_VIA_CLIPBOARD": "Please include the log in the issue so the problem can be reproduced.",
         "REMOVE_SENSITIVE_DATA": "Rimuovi dati sensibili (contatti, contenuti dei messaggi, etc.)",
-        "DESCRIBE_PROBLEM": "Per favore descrivi il problema qui.",
         "COPY_LOG_CLIPBOARD": "Copia i log negli appunti",
-        "REPORT_VIA_THREEMA": "Inviare il log al supporto",
-        "REPORT_VIA_THREEMA_FAILED": "L'invio del rapporto di registro al supporto non è riuscito.",
-        "REPORT_VIA_THREEMA_SUCCESS": "A log report has been sent to support.",
+        "REPORT_VIA_GITHUB": "Open an issue on GitHub",
         "PLEASE_OPEN_AND_UNLOCK": "Please <strong>unlock</strong> your iOS device, and <strong>open</strong> the Threema app to stay connected to the desktop app / the web client. <a target=\"_blank\" rel=\"noopener noreferrer\" href=\"{faqUrl}\">Learn more…</a>"
     },
     "common": {

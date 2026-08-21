@@ -22,17 +22,17 @@
                 <p translate>about.OPEN_SOURCE</p>
                 <p>
                     <span translate>about.SOURCE_CODE</span>
-                    <a href="https://github.com/threema-ch/threema-web"
-                       target="_blank" rel="noopener noreferrer">https://github.com/threema-ch/threema-web</a>.
+                    <a ng-href="{{ ctrl.config.GIT_REPO }}"
+                       target="_blank" rel="noopener noreferrer">{{ ctrl.config.GIT_REPO }}</a>.
                 </p>
 
                 <h2 translate>about.CHANGELOG</h2>
-                <p translate translate-values="{ url: 'https://github.com/threema-ch/threema-web/blob/{{ ctrl.config.GIT_BRANCH }}/CHANGELOG.md' }">about.CHANGELOG_TEXT</p>
+                <p translate translate-values="{ url: '{{ ctrl.config.GIT_REPO }}/blob/{{ ctrl.config.GIT_BRANCH }}/CHANGELOG.md' }">about.CHANGELOG_TEXT</p>
 
                 <h2 translate>about.LICENSES</h2>
                 <ul>
                     <li translate>about.EMOJI_ART</li>
-                    <li translate translate-values="{ url: 'https://github.com/threema-ch/threema-web/blob/{{ ctrl.config.GIT_BRANCH }}/LICENSE-3RD-PARTY.txt' }">about.LICENSE_TEXT</li>
+                    <li translate translate-values="{ url: '{{ ctrl.config.GIT_REPO }}/blob/{{ ctrl.config.GIT_BRANCH }}/LICENSE-3RD-PARTY.txt' }">about.LICENSE_TEXT</li>
                     <li translate>about.NOTIFICATION_SOUNDS</li>
                     <li>
                         The font software Lab Grotesque is the property of Letters from Sweden and

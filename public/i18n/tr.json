@@ -77,15 +77,11 @@
         "USE_ARCHIVE_VERSION": "Alternatif olarak, Threema Web'in <a href=\"{archiveUrl}\">eski</a> bir sürümüne geri dönebilirsiniz.",
         "TROUBLESHOOTING": "Sorun giderme",
         "REPORT_FAQ": "Genel sorular ve genel sorunları çözmek için lütfen <a target=\"_blank\" href=\"https://threema.ch/faq\">SSS bölümümüzü  kontrol edin.</a>",
-        "REPORT_LOG": "Sorunuza cevap bulamazsanız veya sorun devam ederse, Threema destek ekibine günlük raporu gönderebilirsiniz.",
-        "REPORT_VIA_THREEMA_UNAVAILABLE": "Günlük Threema aracılığıyla şu anda bildirilemiyor çünkü mobil cihazınızla bağlantı yok. Önce mobil cihazınızı internete bağlayın.",
-        "REPORT_VIA_CLIPBOARD": "Alternatif olarak, günlüğü panoya kopyalayabilir ve web formu aracılığıyla <a target=\"_blank\" href=\"https://threema.ch/support\">Threema destek ekibi</a>ne bildirebilirsiniz.",
+        "REPORT_LOG": "If you can't find an answer to your question or the problem persists, you can copy the log and open an issue on GitHub.",
+        "REPORT_VIA_CLIPBOARD": "Please include the log in the issue so the problem can be reproduced.",
         "REMOVE_SENSITIVE_DATA": "Hassas verileri kaldırın (kişiler, mesaj içerikleri vb.)",
-        "DESCRIBE_PROBLEM": "Lütfen problemi burada tanımlayın.",
         "COPY_LOG_CLIPBOARD": "Günlüğü panoya kopyala",
-        "REPORT_VIA_THREEMA": "Günlüğü destek ekibine gönder",
-        "REPORT_VIA_THREEMA_FAILED": "Destek ekibine günlük raporunu gönderme başarısız oldu.",
-        "REPORT_VIA_THREEMA_SUCCESS": "Destek ekibine günlük raporu gönderildi.",
+        "REPORT_VIA_GITHUB": "Open an issue on GitHub",
         "PLEASE_OPEN_AND_UNLOCK": "Lütfen iOS cihazınızın <strong>kilidini açın</strong> ve masaüstü uygulamasına / web istemcisine bağlı kalmak için Threema uygulamasını <strong>açın</strong>. <a target=\"_blank\" rel=\"noopener noreferrer\" href=\"{faqUrl}\">Daha fazla bilgi edinin…</a>"
     },
     "common": {

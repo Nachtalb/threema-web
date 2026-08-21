@@ -68,15 +68,11 @@
         "USE_ARCHIVE_VERSION": "Máskülönben meg tudod változtatni a Threema Webet  az<a href=\"{archiveUrl}\">előző verzióra</a>.",
         "TROUBLESHOOTING": "Hibaelhárítás",
         "REPORT_FAQ": "Please <a target=\"_blank\" href=\"https://threema.ch/faq\">check out our FAQs</a> first for general questions and to resolve common problems.",
-        "REPORT_LOG": "Ha nem találod a választ a kérdéseidre vagy a probléma még mindig fennáll, elküldheted a naplófájlt a Threema csapatának.",
-        "REPORT_VIA_THREEMA_UNAVAILABLE": "Reporting the log via Threema is currently unavailable since there is no connection to your mobile device. Connect to your mobile device first.",
-        "REPORT_VIA_CLIPBOARD": "Alternatively, you may copy the log into the clipboard and <a target=\"_blank\" href=\"https://threema.ch/support\">report it to the Threema support team via the web form</a>.",
+        "REPORT_LOG": "If you can't find an answer to your question or the problem persists, you can copy the log and open an issue on GitHub.",
+        "REPORT_VIA_CLIPBOARD": "Please include the log in the issue so the problem can be reproduced.",
         "REMOVE_SENSITIVE_DATA": "Kényes adatok eltávolítása (kapcsolatos, üzenetek, stb.)",
-        "DESCRIBE_PROBLEM": "Írd körül a problémát itt:",
         "COPY_LOG_CLIPBOARD": "Hibaüzenet másolása vágólapra",
-        "REPORT_VIA_THREEMA": "Hibaüzenet küldéne a *SUPPORT részére",
-        "REPORT_VIA_THREEMA_FAILED": "Naplófájl küldése a *SUPPORT részére sikertelen.",
-        "REPORT_VIA_THREEMA_SUCCESS": "A hibaüzenetet elküldtük a *SUPPORT részére."
+        "REPORT_VIA_GITHUB": "Open an issue on GitHub"
     },
     "common": {
         "YES": "Igen",

@@ -3,11 +3,25 @@
 This changelog lists the most important changes for each released version. For
 the full log, please refer to the git commit history.
 
-> :warning: **Note:** Threema Web is in maintenance mode while we are working on a new
-> solution that should resolve some of the long-standing issues we were having
-> with Threema Web. We will still do regular maintenance and fix critical bugs,
-> but for now there will be no major new features or non-critical bugfixes.
-> See https://github.com/threema-ch/threema-web/pull/996 for more details.
+> :information_source: **Note:** This is a fork of
+> [threema-ch/threema-web](https://github.com/threema-ch/threema-web), which is
+> in maintenance mode upstream. Changes made in this fork are listed under
+> "Unreleased" below.
+
+
+### Unreleased
+
+Changes:
+
+* [feature] Keep the session password across reloads in the browser
+* [feature] Add a random set of background images, with a setting to disable the blur
+* [change] Move the overflow menu entries into the settings dialog
+* [change] Default to the minimal user interface
+* [change] Use toggles for the settings entries
+* [change] Remove the desktop app banner and trim the welcome screen
+* [change] Link to this fork's repository and issue tracker
+* [change] Use Bun instead of npm
+* [fix] Handle wire message acknowledgements sent as a response
 
 
 ### [v2.6.5][v2.6.5] (2026-07-03)

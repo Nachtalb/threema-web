@@ -17,7 +17,7 @@
 
 import {Logger} from 'ts-log';
 
-import {arrayToBuffer, copyShallow, hasFeature, sleep} from '../helpers';
+import {copyShallow} from '../helpers';
 import * as clipboard from '../helpers/clipboard';
 
 import {BrowserService} from '../services/browser';
@@ -32,7 +32,6 @@ export class TroubleshootingController extends DialogController {
         'CONFIG', 'LogService', 'BrowserService', 'ThemeService', 'WebClientService',
     ];
 
-    private readonly $scope: ng.IScope;
     private readonly $mdToast: ng.material.IToastService;
     private readonly $translate: ng.translate.ITranslateService;
     private readonly config: threema.Config;
@@ -41,9 +40,6 @@ export class TroubleshootingController extends DialogController {
     private readonly webClientService: WebClientService;
     private readonly log: Logger;
     public sanitize: boolean = true;
-    public isSending: boolean = false;
-    public sendingFailed: boolean = false;
-    public description: string = '';
 
     constructor(
         $scope: ng.IScope,
@@ -57,7 +53,6 @@ export class TroubleshootingController extends DialogController {
         webClientService: WebClientService,
     ) {
         super($scope, $mdDialog, themeService);
-        this.$scope = $scope;
         this.$mdToast = $mdToast;
         this.$translate = $translate;
         this.config = config;
@@ -76,90 +71,10 @@ export class TroubleshootingController extends DialogController {
     }
 
     /**
-     * Return whether the log is ready to be sent.
-     *
-     * This requires...
-     *
-     * - the web client to be connected (or able to reconnect on its own),
-     * - a description of the problem to be populated, and
-     * - sending to be not in progress already.
+     * Return the URL for opening a new issue on GitHub.
      */
-    public get canSend(): boolean {
-        return this.isConnected && this.description.length > 0 && !this.isSending;
-    }
-
-    /**
-     * Send the log to *SUPPORT.
-     */
-    public async send(): Promise<void> {
-        this.isSending = true;
-        this.sendingFailed = false;
-
-        // Get the log
-        const log = new TextEncoder().encode(this.getLog(this.sanitize));
-
-        // Error handler
-        const fail = () => {
-            this.$scope.$apply(() => {
-                this.isSending = false;
-                this.sendingFailed = true;
-
-                // Show toast
-                this.$mdToast.show(this.$mdToast.simple()
-                    .textContent(this.$translate.instant('troubleshooting.REPORT_VIA_THREEMA_FAILED'))
-                    .position('bottom center'));
-            });
-        };
-
-        // Add contact *SUPPORT (if needed)
-        const support: threema.BaseReceiver = {
-            id: '*SUPPORT',
-            type: 'contact',
-        };
-        if (!this.webClientService.contacts.has(support.id)) {
-            try {
-                await this.webClientService.addContact(support.id);
-            } catch (error) {
-                this.log.error('Unable to add contact *SUPPORT:', error);
-                return fail();
-            }
-        }
-
-        // Workaround for iOS which does not fetch the feature mask immediately
-        // TODO: Remove once IOS-809 has been resolved
-        for (let i = 0; i < 50; ++i) {
-            const contact = this.webClientService.contacts.get(support.id);
-            if (hasFeature(contact, threema.ContactReceiverFeature.FILE, this.log)) {
-                break;
-            }
-            await sleep(100);
-        }
-
-        // Send as file to *SUPPORT
-        const browser = this.browserService.getBrowser();
-        const message: threema.FileMessageData = {
-            name: `webclient-${this.config.VERSION}-${browser.description('-')}.log`,
-            fileType: 'text/plain',
-            size: log.byteLength,
-            data: arrayToBuffer(log),
-            caption: this.description,
-            sendAsFile: true,
-        };
-        try {
-            await this.webClientService.sendMessage(support, 'file', message, { waitUntilAcknowledged: true });
-        } catch (error) {
-            this.log.error('Unable to send log report to *SUPPORT:', error);
-            return fail();
-        }
-
-        // Done
-        this.isSending = false;
-        this.$mdToast.show(this.$mdToast.simple()
-            .textContent(this.$translate.instant('troubleshooting.REPORT_VIA_THREEMA_SUCCESS'))
-            .position('bottom center'));
-
-        // Hide dialog
-        this.hide();
+    public get issueUrl(): string {
+        return `${this.config.GIT_REPO}/issues/new`;
     }
 
     /**

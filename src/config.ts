@@ -14,7 +14,8 @@ export default {
     SELF_HOSTED: false,
 
     // General
-    GIT_BRANCH: 'master',
+    GIT_REPO: 'https://github.com/Nachtalb/threema-web',
+    GIT_BRANCH: 'hate-driven-development',
 
     // When the Threema Web protocol version changes, this can be set to the
     // last version of Threema Web that supported the previous protocol

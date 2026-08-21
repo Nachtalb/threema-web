@@ -71,15 +71,11 @@
         "USE_ARCHIVE_VERSION": "Vous pouvez aussi revenir à l’<a href=\"{archiveUrl}\">ancienne version</a>de Threema Web.",
         "TROUBLESHOOTING": "Résolution des problèmes",
         "REPORT_FAQ": "Veuillez d’abord <a target=\"_blank\" href=\"https://threema.ch/faq\">consulter nos FAQ</a> pour les questions d’ordre général et pour résoudre les problèmes communs.",
-        "REPORT_LOG": "Si vous ne trouvez aucune réponse à votre question ou si le problème persiste, vous pouvez envoyer un fichier journal à l’équipe de support Threema.",
-        "REPORT_VIA_THREEMA_UNAVAILABLE": "L’envoi d’un fichier journal via Threema est indisponible pour le moment, car il n’y a aucune connexion avec votre appareil mobile. Veuillez connecter votre appareil mobile d’abord.",
-        "REPORT_VIA_CLIPBOARD": "Vous pouvez également copier le journal dans le presse-papier et <a target=\"_blank\" href=\"https://threema.ch/support\">le rapporter au support Threema via le formulaire web</a>.",
+        "REPORT_LOG": "If you can't find an answer to your question or the problem persists, you can copy the log and open an issue on GitHub.",
+        "REPORT_VIA_CLIPBOARD": "Please include the log in the issue so the problem can be reproduced.",
         "REMOVE_SENSITIVE_DATA": "Supprimer les données sensibles (contacts, contenu des messages, etc.)",
-        "DESCRIBE_PROBLEM": "Veuillez décrire le problème ici.",
         "COPY_LOG_CLIPBOARD": "Copier le journal dans le presse-papier",
-        "REPORT_VIA_THREEMA": "Envoyer le journal au support",
-        "REPORT_VIA_THREEMA_FAILED": "Échec de l’envoi du journal au support.",
-        "REPORT_VIA_THREEMA_SUCCESS": "Un fichier journal a été envoyé au support."
+        "REPORT_VIA_GITHUB": "Open an issue on GitHub"
     },
     "common": {
         "YES": "Oui",

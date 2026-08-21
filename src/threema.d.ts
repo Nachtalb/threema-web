@@ -684,6 +684,7 @@ declare namespace threema {
 
         // General
         SELF_HOSTED: boolean;
+        GIT_REPO: string;
         PREV_PROTOCOL_LAST_VERSION: string | null;
         GIT_BRANCH: string;
 

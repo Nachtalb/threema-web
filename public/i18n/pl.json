@@ -77,15 +77,11 @@
         "USE_ARCHIVE_VERSION": "Alternatywnie, możesz powrócić do <a href=\"{archiveUrl}\">poprzedniej wersji</a> Threema Web.",
         "TROUBLESHOOTING": "Rozwiązywanie problemów",
         "REPORT_FAQ": "Sprawdź <a target=\"_blank\" href=\"https://threema.ch/faq\">najczęściej zadawane pytania</a> aby rozwiązać popularne problemy.",
-        "REPORT_LOG": "Jeżeli nie możesz znaleźć odpowiedzi na twoje pytanie lub błąd wciąż występuje, możesz wysłać zgłoszenie do zespołu wsparcia Threema.",
-        "REPORT_VIA_THREEMA_UNAVAILABLE": "Zgłoszenie logu poprzez Threema jest obecnie niedostępne, ponieważ nie ma połączenia z twoim urządzeniem mobilnym. Połącz najpierw swoje urządzenie mobilne.",
-        "REPORT_VIA_CLIPBOARD": "Alternatywnie, możesz skopiować log do schowka i <a target=\"_blank\" href=\"https://threema.ch/support\">zgłosić go do zespołu wsparcia Threema poprzez formularz kontaktowy</a>.",
+        "REPORT_LOG": "If you can't find an answer to your question or the problem persists, you can copy the log and open an issue on GitHub.",
+        "REPORT_VIA_CLIPBOARD": "Please include the log in the issue so the problem can be reproduced.",
         "REMOVE_SENSITIVE_DATA": "Usuń dane wrażliwe (kontakty, zawartość wiadomości, itp.)",
-        "DESCRIBE_PROBLEM": "Opisz błąd tutaj.",
         "COPY_LOG_CLIPBOARD": "Skopiuj log do schowka",
-        "REPORT_VIA_THREEMA": "Wyślij log do *SUPPORT",
-        "REPORT_VIA_THREEMA_FAILED": "Wysyłanie raportu do *SUPPORT nieudane.",
-        "REPORT_VIA_THREEMA_SUCCESS": "Raport został wysłany do *SUPPORT.",
+        "REPORT_VIA_GITHUB": "Open an issue on GitHub",
         "PLEASE_OPEN_AND_UNLOCK": "<strong>Odblokuj</strong> twoje urządzenie iOS i <strong>otwórz</strong> aplikację Threema aby utrzymać połączenie do aplikacji pulpitu / klienta przeglądarkowego. <a target=\"_blank\" rel=\"noopener noreferrer\" href=\"{faqUrl}\">Dowiedz się więcej...</a>"
     },
     "common": {

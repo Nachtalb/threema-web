@@ -77,15 +77,11 @@
         "USE_ARCHIVE_VERSION": "または、<a href=\"{archiveUrl}\">古いバージョン</a>の Threema Web に戻すこともできます。",
         "TROUBLESHOOTING": "トラブルシューティング",
         "REPORT_FAQ": "一般的な質問やよくある問題を解決するために、まずは <a target=\"_blank\" href=\"https://threema.ch/faq\">FAQ</a> をご確認ください。",
-        "REPORT_LOG": "それでも問題が解決しない場合は、Threema サポートチームにログレポートを送信することができます。",
-        "REPORT_VIA_THREEMA_UNAVAILABLE": "現在、モバイル端末に接続されていないため、Threema 経由でのログの報告が行えません。まずはモバイル端末に接続してください。",
-        "REPORT_VIA_CLIPBOARD": "または、ログをクリップボードにコピーして、<a target=\"_blank\" href=\"https://threema.ch/support\">ウェブフォームから Threema サポートチームに報告する</a>こともできます。",
+        "REPORT_LOG": "If you can't find an answer to your question or the problem persists, you can copy the log and open an issue on GitHub.",
+        "REPORT_VIA_CLIPBOARD": "Please include the log in the issue so the problem can be reproduced.",
         "REMOVE_SENSITIVE_DATA": "センシティブなデータを削除 (連絡先、メッセージの内容など)",
-        "DESCRIBE_PROBLEM": "ここに問題の内容を記述してください。",
         "COPY_LOG_CLIPBOARD": "ログをクリップボードにコピー",
-        "REPORT_VIA_THREEMA": "サポートにログを送信",
-        "REPORT_VIA_THREEMA_FAILED": "サポートへのログレポートの送信に失敗しました。",
-        "REPORT_VIA_THREEMA_SUCCESS": "ログレポートがサポートに送信されました。",
+        "REPORT_VIA_GITHUB": "Open an issue on GitHub",
         "PLEASE_OPEN_AND_UNLOCK": "お願い<strong>ロックを解除してください。</strong>お使いのiOS端末のロックを解除してください。<strong>開く</strong>デスクトップアプリ/ウェブクライアントとの接続を維持するには、Threemaアプリを開く必要があります。<a target=\"_blank\" rel=\"noopener noreferrer\" href=\"{faqUrl}\">さらに詳しく..."
     },
     "common": {

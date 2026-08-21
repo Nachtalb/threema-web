@@ -77,15 +77,11 @@
         "USE_ARCHIVE_VERSION": "Ви також можете повернутися до <a href=\"{archiveUrl}\"> попередньої версії</a> Threema Web.",
         "TROUBLESHOOTING": "Усунення несправностей",
         "REPORT_FAQ": "Спершу <a target=\"_blank\" href=\"https://threema.ch/faq\">ознайомтеся з розділом \"Запитання й відповіді\"</a>, в якому наведені відповіді на загальні запитання й способи вирішення поширених проблем.",
-        "REPORT_LOG": "Якщо вам не вдається знайти відповідь на своє запитання або проблема виникає знову, ви можете надіслати звіт журналу помилок команді підтримки Threema.",
-        "REPORT_VIA_THREEMA_UNAVAILABLE": "Щоб надіслати журнал помилок через Threema, спершу підключіться до свого мобільного пристрою.",
-        "REPORT_VIA_CLIPBOARD": "Ви також можете скопіювати журнал помилок до буфера обміну й <a target=\"_blank\" href=\"https://threema.ch/support\">надіслати його службі підтримки Threema через онлайн-форму</a>.",
+        "REPORT_LOG": "If you can't find an answer to your question or the problem persists, you can copy the log and open an issue on GitHub.",
+        "REPORT_VIA_CLIPBOARD": "Please include the log in the issue so the problem can be reproduced.",
         "REMOVE_SENSITIVE_DATA": "Вилучити конфіденційні дані (контакти, вміст повідомлень тощо)",
-        "DESCRIBE_PROBLEM": "Опишіть несправність.",
         "COPY_LOG_CLIPBOARD": "Скопіювати журнал помилок",
-        "REPORT_VIA_THREEMA": "Надіслати журнал помилок",
-        "REPORT_VIA_THREEMA_FAILED": "Не вдалося надіслати журнал помилок службі підтримки.",
-        "REPORT_VIA_THREEMA_SUCCESS": "Журнал помилок надіслано службі підтримки.",
+        "REPORT_VIA_GITHUB": "Open an issue on GitHub",
         "PLEASE_OPEN_AND_UNLOCK": "<strong>Розблокуйте</strong> пристрій iOS і <strong>відкрийте</strong> додаток Threema, щоб зберігати з'єднання з веб-клієнтом або додатком для ПК. <a target=\"_blank\" rel=\"noopener noreferrer\" href=\"{faqUrl}\">Докладніше…</a>"
     },
     "common": {

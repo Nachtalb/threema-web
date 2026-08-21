@@ -77,15 +77,11 @@
         "USE_ARCHIVE_VERSION": "Prípadne môžete prejsť na <a href=\"{archiveUrl}\">predchádzajúcu verziu</a> Threema Web.",
         "TROUBLESHOOTING": "Riešenie problémov",
         "REPORT_FAQ": "Najprv si prečítajte <a target=\"_blank\" href=\"https://threema.ch/faq\">FAQ</a> na riešenie bežných problémov.",
-        "REPORT_LOG": "Ak nemôžete nájsť odpoveď na svoju otázku alebo problém pretrváva, môžete tímu podpory Threema poslať log záznam.",
-        "REPORT_VIA_THREEMA_UNAVAILABLE": "Posielanie log záznamu prostredníctvom aplikácie Threema je momentálne nedostupné, pretože nie ste pripojený k mobilnému zariadeniu. Najskôr sa pripojte k mobilnému zariadeniu.",
-        "REPORT_VIA_CLIPBOARD": "Prípadne môžete skopírovať log záznam do schránky a nahlásiť ho tímu podpory Threema prostredníctvom <a target=\"_blank\" href=\"https://threema.ch/support\">webového formulára</a>. ",
+        "REPORT_LOG": "If you can't find an answer to your question or the problem persists, you can copy the log and open an issue on GitHub.",
+        "REPORT_VIA_CLIPBOARD": "Please include the log in the issue so the problem can be reproduced.",
         "REMOVE_SENSITIVE_DATA": "Odstrániť citlivé údaje (kontakty, obsahy správ, atď.)",
-        "DESCRIBE_PROBLEM": "Prosím tu popíšte Váš problém.",
         "COPY_LOG_CLIPBOARD": "Skopírovať log záznam do schránky",
-        "REPORT_VIA_THREEMA": "Odoslať log záznam pre *SUPPORT",
-        "REPORT_VIA_THREEMA_FAILED": "Odoslanie log záznamu pre *SUPPORT zlyhalo.",
-        "REPORT_VIA_THREEMA_SUCCESS": "Log záznam bol odoslaný pre *SUPPORT.",
+        "REPORT_VIA_GITHUB": "Open an issue on GitHub",
         "PLEASE_OPEN_AND_UNLOCK": "Prosím <strong>odblokujte</strong> Vaše iOS zariadenie a <strong>otvorte</strong> aplikáciu Threema pre udržanie spojenia s desktop aplikáciou / web klientom. <a target=\"_blank\" rel=\"noopener noreferrer\" href=\"{faqUrl}\">Dozvedieť sa viac...</a>"
     },
     "common": {

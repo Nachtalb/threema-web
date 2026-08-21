@@ -71,15 +71,11 @@
         "USE_ARCHIVE_VERSION": "Ca o alternativa puteti trece la <a href=\"{archiveUrl}\"> versiunea anterioare </a> a Threema Web.",
         "TROUBLESHOOTING": "Depanare",
         "REPORT_FAQ": "Va rugam <a target=\"_blank\" href=\"https://threema.ch/faq\"> verificati intai FAQs </a> pentru intrebari generale si rezolvarea problemelor comune. ",
-        "REPORT_LOG": "Daca nu puteti gasi un raspuns la intrebarea dumneavoastra si problema persista, puteti trimite un raport cu logul catre echipa de support Threema.",
-        "REPORT_VIA_THREEMA_UNAVAILABLE": "Raportarea evenimentelor prin Threema este momentan indisponibila, deoarece nu exista conexiune pe dispozitivul dumneavoastra mobil. Conectati-va la dispozitivul mobil.",
-        "REPORT_VIA_CLIPBOARD": "Ca o alternativa, puteti copia log-ul in clipboard si <a target=\"_blank\" href=\"https://threema.ch/support\"> sa il raportati echipei de suport Threema prin formularul web </a>",
+        "REPORT_LOG": "If you can't find an answer to your question or the problem persists, you can copy the log and open an issue on GitHub.",
+        "REPORT_VIA_CLIPBOARD": "Please include the log in the issue so the problem can be reproduced.",
         "REMOVE_SENSITIVE_DATA": "Eliminati date sensibile (contacte, continut mesaje, etc.)",
-        "DESCRIBE_PROBLEM": "Va rugam descrieti problema aici.",
         "COPY_LOG_CLIPBOARD": "Copiati in clipboard",
-        "REPORT_VIA_THREEMA": "Trimite log-ul catre suport",
-        "REPORT_VIA_THREEMA_FAILED": "Trimiterea log-ului catre suport a esuat.",
-        "REPORT_VIA_THREEMA_SUCCESS": "Un raport continand log-ul a fost trimis catre suport."
+        "REPORT_VIA_GITHUB": "Open an issue on GitHub"
     },
     "common": {
         "YES": "Da",

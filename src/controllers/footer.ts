@@ -87,6 +87,6 @@ export class FooterController {
      * Return the changelog URL.
      */
     public get changelogUrl(): string {
-        return 'https://github.com/threema-ch/threema-web/blob/' + this.config.GIT_BRANCH + '/CHANGELOG.md';
+        return `${this.config.GIT_REPO}/blob/${this.config.GIT_BRANCH}/CHANGELOG.md`;
     }
 }

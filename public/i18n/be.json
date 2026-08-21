@@ -77,15 +77,11 @@
         "USE_ARCHIVE_VERSION": "У якасці альтэрнатывы вы можаце вярнуцца да <a href=\"{archiveUrl}\">папярэдняй версіі</a> Threema Web.",
         "TROUBLESHOOTING": "Выпраўленне непаладак",
         "REPORT_FAQ": "Калі ласка, <a target=\"_blank\" href=\"https://threema.ch/faq\">азнаёмцеся з пытаннямі якія часта задаюць</a>і для агульных пытанняў і рашэнні агульных праблем.",
-        "REPORT_LOG": "Калі вы не знайшлі адказ на сваё пытанне ці праблема захоўваецца, вы можаце адправіць журнал у службу падтрымкі Threema.",
-        "REPORT_VIA_THREEMA_UNAVAILABLE": "Перадача журнала праз Threema зараз недаступная, паколькі няма злучэння з вашай мабільнай прыладай. Спачатку падключыцеся да мабільнай прылады.",
-        "REPORT_VIA_CLIPBOARD": "Акрамя таго, вы можаце скапіраваць журнал у буфер абмену і <a target=\"_blank\" href=\"https://threema.ch/support\">паведаміць пра гэта ў службу падтрымкі Threema праз вэб-форму</a>.",
+        "REPORT_LOG": "If you can't find an answer to your question or the problem persists, you can copy the log and open an issue on GitHub.",
+        "REPORT_VIA_CLIPBOARD": "Please include the log in the issue so the problem can be reproduced.",
         "REMOVE_SENSITIVE_DATA": "Выдаліць канфідэнцыяльныя даныя (кантакты, змесціва паведамленняў і г. д.)",
-        "DESCRIBE_PROBLEM": "Калі ласка, апішыце праблему тут.",
         "COPY_LOG_CLIPBOARD": "Скапіраваць журнал у буфер абмену",
-        "REPORT_VIA_THREEMA": "Адправіць журнал у службу падтрымкі",
-        "REPORT_VIA_THREEMA_FAILED": "Не ўдалося адправіць журнал у службу падтрымкі.",
-        "REPORT_VIA_THREEMA_SUCCESS": "Журнал быў адпраўлены ў службу падтрымкі.",
+        "REPORT_VIA_GITHUB": "Open an issue on GitHub",
         "PLEASE_OPEN_AND_UNLOCK": "<strong>Разблакіруйце</strong> вашу прыладу iOS, затым <strong>адкрыйце</strong> праграму Threema, каб заставацца падлучаным да праграмы для Пк / вэб-кліенту. <a target=\"_blank\" rel=\"noopener noreferrer\" href=\"{faqUrl}\">Даведацца больш…</a>"
     },
     "common": {

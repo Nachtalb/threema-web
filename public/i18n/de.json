@@ -77,15 +77,11 @@
         "USE_ARCHIVE_VERSION": "Alternativ können Sie zu der <a href=\"{archiveUrl}\">vorherigen Version</a> von Threema Web wechseln.",
         "TROUBLESHOOTING": "Fehlerbehebung",
         "REPORT_FAQ": "Bitte lesen Sie zuerst unsere <a target=\"_blank\" href=\"https://threema.ch/faq\">FAQs</a> für allgemeine Fragen und zur Lösung häufiger Probleme.",
-        "REPORT_LOG": "Wenn Sie keine Antwort auf ihre Frage finden, oder das Problem weiterhin besteht, können Sie ein Protokoll an das Threema Support-Team senden.",
-        "REPORT_VIA_THREEMA_UNAVAILABLE": "Das Senden des Protokolls über Threema ist derzeit nicht möglich, da keine Verbindung zu Ihrem Mobilgerät besteht. Verbinden Sie sich zuerst mit Ihrem Mobilgerät.",
-        "REPORT_VIA_CLIPBOARD": "Alternativ können Sie das Protokoll in die Zwischenablage kopieren und über das <a target=\"_blank\" href=\"https://threema.ch/support\">Webformular an das Threema-Support-Team senden</a>.",
+        "REPORT_LOG": "If you can't find an answer to your question or the problem persists, you can copy the log and open an issue on GitHub.",
+        "REPORT_VIA_CLIPBOARD": "Please include the log in the issue so the problem can be reproduced.",
         "REMOVE_SENSITIVE_DATA": "Sensible Daten entfernen (Kontakte, Nachrichten-Inhalte, etc.)",
-        "DESCRIBE_PROBLEM": "Bitte beschreiben Sie hier das Problem.",
         "COPY_LOG_CLIPBOARD": "Protokoll in die Zwischenablage kopieren",
-        "REPORT_VIA_THREEMA": "Protokoll an Support senden",
-        "REPORT_VIA_THREEMA_FAILED": "Das Senden des Protokolls an den Support ist fehlgeschlagen.",
-        "REPORT_VIA_THREEMA_SUCCESS": "Das Protokoll wurde an den Support gesendet.",
+        "REPORT_VIA_GITHUB": "Open an issue on GitHub",
         "PLEASE_OPEN_AND_UNLOCK": "Bitte <strong>entsperren</strong> Sie Ihr iOS-Gerät und <strong>öffnen</strong> Sie die Threema-App, um mit der Desktop-App bzw. dem Web-Client verbunden zu bleiben. <a target=\"_blank\" rel=\"noopener noreferrer\" href=\"{faqUrl}\">Mehr erfahren…</a>"
     },
     "common": {

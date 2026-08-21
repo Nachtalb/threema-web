@@ -77,15 +77,11 @@
         "USE_ARCHIVE_VERSION": "Como alternativa, puedes volver a la <a href=\"{archiveUrl}\">versión anterior</a> de Threema Web.",
         "TROUBLESHOOTING": "Solución de problemas",
         "REPORT_FAQ": "Por favor <a target=\"_blank\" href=\"https://threema.ch/faq\">verifica nuestros FAQs</a> primero para preguntas generales y para solucionar problemas comunes.",
-        "REPORT_LOG": "Si no puedes encontrar una repuesta a tu pregunta o el problema persiste, puedes enviar un informe de registro al equipo de apoyo de Threema.",
-        "REPORT_VIA_THREEMA_UNAVAILABLE": "Informar el registro a través de Threema no está disponible actualmente ya que no hay conexión a su dispositivo móvil. Conéctese primero a su dispositivo móvil.",
-        "REPORT_VIA_CLIPBOARD": "Alternativamente, puedes copiar el registro al portapapeles y <a target=\"_blank\" href=\"https://threema.ch/support\">informar al equipo de apoyo de Threema vía el formulario web</a>.",
+        "REPORT_LOG": "If you can't find an answer to your question or the problem persists, you can copy the log and open an issue on GitHub.",
+        "REPORT_VIA_CLIPBOARD": "Please include the log in the issue so the problem can be reproduced.",
         "REMOVE_SENSITIVE_DATA": "Eliminar datos confidenciales (contactos, contenido de mensajes, etc.)",
-        "DESCRIBE_PROBLEM": "Por favor describe el problema aquí.",
         "COPY_LOG_CLIPBOARD": "Copiar registro al portapapeles",
-        "REPORT_VIA_THREEMA": "Envía registro a soporte",
-        "REPORT_VIA_THREEMA_FAILED": "Envío del informe de registro a soporte falló.",
-        "REPORT_VIA_THREEMA_SUCCESS": "Un informe de registro ha sido enviado a soporte."
+        "REPORT_VIA_GITHUB": "Open an issue on GitHub"
     },
     "common": {
         "YES": "Sí",

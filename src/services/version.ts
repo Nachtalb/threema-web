@@ -123,9 +123,7 @@ export class VersionService {
             // Don't show again if dialog is already showing.
             return;
         }
-        const changelogUrl = 'https://github.com/threema-ch/threema-web/blob/'
-                + this.config.GIT_BRANCH
-                + '/CHANGELOG.md';
+        const changelogUrl = `${this.config.GIT_REPO}/blob/${this.config.GIT_BRANCH}/CHANGELOG.md`;
         const changelogLink = '<a href="' + changelogUrl + '" target="_blank" rel="noopener noreferrer">Changelog</a>';
         const confirm = this.$mdDialog.alert()
             .title(this.$translate.instant('version.NEW_VERSION'))

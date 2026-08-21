@@ -77,15 +77,11 @@
         "USE_ARCHIVE_VERSION": "Vaihtoehtoisesti voit vaihtaa takaisin <a href=\"{archiveUrl}\">edelliseen versioon</a> Threema Webistä",
         "TROUBLESHOOTING": "Vianmääritys",
         "REPORT_FAQ": "Tarkista ensin<a target=\"_blank\" href=\"https://threema.ch/faq\">Usein kysytyt kysymykset</a> yleisille kysymyksille ja yleisimpien ongelmien ratkomiseen.",
-        "REPORT_LOG": "Mikäli et löydä vastausta kysymykseesi tai ongelma jatkuu, voit lähettä lokiraportin Threeman tukitiimille.",
-        "REPORT_VIA_THREEMA_UNAVAILABLE": "Lokiraportin lähettäminen Threemalle ei ole tällä hetkellä mahdollista, koska et ole yhdistettynä mobiililaitteeseesi. Yhdistä mobiililaitteeseesi ensin.",
-        "REPORT_VIA_CLIPBOARD": "Vaihtoehtoisesti voit kopioida lokiraportin leikepöydälle ja <a target=\"_blank\" href=\"https://threema.ch/support\">raportoida sen Threeman tukitiimille verkkolomakkeella</a>.",
+        "REPORT_LOG": "If you can't find an answer to your question or the problem persists, you can copy the log and open an issue on GitHub.",
+        "REPORT_VIA_CLIPBOARD": "Please include the log in the issue so the problem can be reproduced.",
         "REMOVE_SENSITIVE_DATA": "Poista arkaluonteiset tiedot (yhteystiedot, viestien sisältö ym.)",
-        "DESCRIBE_PROBLEM": "Kuvaile ongelma tähän.",
         "COPY_LOG_CLIPBOARD": "Kopioi lokitiedosto leikepöydälle",
-        "REPORT_VIA_THREEMA": "Lähetä lokiraportti tukeen.",
-        "REPORT_VIA_THREEMA_FAILED": "Lokiraportin lähettäminen epäonnistui.",
-        "REPORT_VIA_THREEMA_SUCCESS": "Lokiraportti on lähetetty tukeen.",
+        "REPORT_VIA_GITHUB": "Open an issue on GitHub",
         "PLEASE_OPEN_AND_UNLOCK": "Ole hyvä ja <strong>avaa lukitus</strong> iOS-laitteellasi ja <strong>avaa</strong> Threema-sovellus pysyäksesi yhdistettynä Threeman työpöytä- tai web-versioon. <a target=\"_blank\" rel=\"noopener noreferrer\" href=\"{faqUrl}\">Lue lisää…</a>"
     },
     "common": {
