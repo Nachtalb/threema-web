@@ -7,6 +7,39 @@ is the backend, reached over SaltyRTC. There is no server-side account.
 
 TypeScript + AngularJS 1 + angular-material, bundled by webpack.
 
+## Layout
+
+```
+src/
+  app.ts              module wiring; registers everything with angular
+  bootstrap.ts        entry point; dynamic import('./app') then angular.bootstrap
+  config.ts           build-time config (VERSION, GIT_REPO, feature flags)
+  userconfig.js       runtime config (SaltyRTC hosts, ICE servers, log levels)
+  threema.d.ts        global `threema` namespace: interfaces, enums, Config
+  services/           singletons: webclient, settings, notification, keystore, ...
+  controllers/        dialog controllers (theme, footer, troubleshooting)
+  partials/           screen templates + their controllers (welcome, messenger)
+  directives/         components with their own template
+  controller_model/   edit/create models for contacts, groups, distribution lists
+  helpers/            pure functions; helpers.ts is the grab bag
+  sass/               app.scss imports base/ layout/ components/ sections/ ui/
+public/               served as-is; copied wholesale into the release
+  i18n/               23 translation catalogs
+  img/backgrounds/    bgN.avif + bgN.sharp.avif
+  js/                 plain scripts loaded outside the bundle
+docs/                 self_hosting.md, docker.md, qr_code.md, zindex.md
+dist/                 packaging scripts; build output lands in dist/generated
+tests/                unit tests + Selenium UI tests
+troubleshoot/         standalone log viewer, separate from the app
+```
+
+`src/services/webclient.ts` is the protocol implementation and by far the
+largest file — message dispatch, wire message futures, connection lifecycle.
+
+Screens live in `partials/` as an `.html` + `.ts` pair, where the `.ts` holds
+several controllers for that screen. `messenger.ts` holds the navigation,
+conversation and settings controllers.
+
 ## Commands
 
 Bun, not npm. `bunx`, not `npx`.

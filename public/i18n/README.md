@@ -1,3 +1,2 @@
-Note: Translations are done through Transifex.
-See `TRANSLATING.md` in the root of the repository
-for more information.
+Note: Upstream translations are done through Transifex. This fork edits these
+catalogs directly; new keys fall back to English until translated.
