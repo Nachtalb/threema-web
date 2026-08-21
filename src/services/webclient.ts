@@ -2904,7 +2904,11 @@ export class WebClientService {
         future.resolve(blobInfo);
     }
 
-    private _receiveUpdateConfirm(message: threema.WireMessage): void {
+    /**
+     * Handle a bare wire message acknowledgement. Sent by the app both as an
+     * update and as a response.
+     */
+    private _receiveConfirm(message: threema.WireMessage): void {
         this.arpLog.debug('Received wire message acknowledgement');
         const future = this.popWireMessageFuture(message);
         if (!message.ack.success) {
@@ -3861,6 +3865,9 @@ export class WebClientService {
 
     private _receiveResponse(type: string, message: threema.WireMessage): void {
         switch (type) {
+            case WebClientService.SUB_TYPE_CONFIRM:
+                this._receiveConfirm(message);
+                break;
             case WebClientService.SUB_TYPE_CONFIRM_ACTION:
                 this._receiveResponseConfirmAction(message);
                 break;
@@ -3900,7 +3907,7 @@ export class WebClientService {
     private _receiveUpdate(type: string, message: threema.WireMessage): void {
         switch (type) {
             case WebClientService.SUB_TYPE_CONFIRM:
-                this._receiveUpdateConfirm(message);
+                this._receiveConfirm(message);
                 break;
             case WebClientService.SUB_TYPE_RECEIVER:
                 this._receiveUpdateReceiver(message);
