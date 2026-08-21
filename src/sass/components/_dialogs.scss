@@ -43,6 +43,23 @@ md-dialog {
     .status {
         padding-left: 16px;
     }
+
+    // Action entries at the bottom of the settings dialog. Clickable
+    // md-list-items are rendered as md-buttons, which centre their content by
+    // default. angular-material also sets `md-icon { margin-left: auto }`,
+    // which pushes the icon and its label to the right edge.
+    .settings-actions {
+        md-list-item .md-button,
+        md-list-item .md-list-item-inner {
+            justify-content: flex-start;
+            text-align: left;
+        }
+
+        md-list-item md-icon {
+            margin-left: 0;
+            margin-right: 16px;
+        }
+    }
 }
 
 md-dialog.send-file-dialog {

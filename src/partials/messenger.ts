@@ -241,6 +241,7 @@ class SettingsController extends DialogController {
     public $window: ng.IWindowService;
     public settingsService: SettingsService;
     private notificationService: NotificationService;
+    private navigation: NavigationController;
 
     private desktopNotifications: boolean;
     private notificationApiAvailable: boolean;
@@ -249,9 +250,10 @@ class SettingsController extends DialogController {
     private notificationSound: boolean;
     private submitKey: string;
     private userInterface: string;
+    private minimalUserInterface: boolean;
 
     public static $inject = [
-        '$scope', '$mdDialog', '$window', 'SettingsService', 'ThemeService', 'NotificationService',
+        '$scope', '$mdDialog', '$window', 'SettingsService', 'ThemeService', 'NotificationService', 'navigation',
     ];
     constructor(
         $scope: ng.IScope,
@@ -260,11 +262,13 @@ class SettingsController extends DialogController {
         settingsService: SettingsService,
         themeService: ThemeService,
         notificationService: NotificationService,
+        navigation: NavigationController,
     ) {
         super($scope, $mdDialog, themeService);
         this.$window = $window;
         this.settingsService = settingsService;
         this.notificationService = notificationService;
+        this.navigation = navigation;
         this.desktopNotifications = notificationService.getWantsNotifications();
         this.notificationApiAvailable = notificationService.isNotificationApiAvailable();
         this.notificationPermission = notificationService.getNotificationPermission();
@@ -272,6 +276,7 @@ class SettingsController extends DialogController {
         this.notificationSound = notificationService.getWantsSound();
         this.submitKey = settingsService.composeArea.getSubmitKey().toString();
         this.userInterface = settingsService.userInterface.getUserInterface().toString();
+        this.minimalUserInterface = navigation.minimalUserInterface;
     }
 
     public setWantsNotifications(desktopNotifications: boolean) {
@@ -292,6 +297,40 @@ class SettingsController extends DialogController {
 
     public setUserInterface(userInterface: threema.UserInterface) {
         this.settingsService.userInterface.setUserInterface(userInterface);
+    }
+
+    public isPersistent(): boolean {
+        return this.navigation.isPersistent();
+    }
+
+    /**
+     * Close the settings dialog, then run the navigation action. Only a single
+     * md-dialog can be open at a time, so the settings dialog must be closed
+     * before the follow-up dialog is shown.
+     */
+    private closeThen(action: (ev: Event) => void, ev: Event): void {
+        this.cancel();
+        action.call(this.navigation, ev);
+    }
+
+    public troubleshooting(ev: Event): void {
+        this.closeThen(this.navigation.troubleshooting, ev);
+    }
+
+    public about(ev: Event): void {
+        this.closeThen(this.navigation.about, ev);
+    }
+
+    public version(ev: Event): void {
+        this.closeThen(this.navigation.version, ev);
+    }
+
+    public closeSession(ev: Event): void {
+        this.closeThen(this.navigation.closeSession, ev);
+    }
+
+    public deleteSession(ev: Event): void {
+        this.closeThen(this.navigation.deleteSession, ev);
     }
 }
 
@@ -1220,6 +1259,7 @@ class NavigationController {
             targetEvent: ev,
             clickOutsideToClose: true,
             fullscreen: true,
+            locals: {navigation: this},
         });
     }
 
