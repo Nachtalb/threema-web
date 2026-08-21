@@ -4,3 +4,9 @@ input[type=button]:focus-visible,
     outline: 2px dotted $focus-outline-color;
     outline-offset: 4px;
 }
+
+// angular-material focuses menu items on hover, which would show the focus
+// outline for a plain mouse hover.
+md-menu-item .md-button:focus-visible {
+    outline: none;
+}

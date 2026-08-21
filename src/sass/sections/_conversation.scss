@@ -48,8 +48,11 @@
     #conversation-chat {
         @include scrollbar;
         flex-grow: 1;
-        overflow: auto;
         overflow-y: scroll;
+        // A selected message scales up slightly; leave room for it rather than
+        // clipping it against the edge.
+        overflow-x: hidden;
+        padding: 0 10px;
     }
 
     #conversation-quote {
@@ -219,6 +222,25 @@
                 width: 0;
                 height: 0;
                 padding: 0;
+            }
+        }
+
+        // Lift the message the menu belongs to, so it is clear which one the
+        // actions apply to. The offset is fixed rather than a scale factor,
+        // which would grow long messages far more than short ones.
+        .message-body,
+        .bubble-triangle {
+            transition: transform .15s ease-out;
+        }
+
+        &.message-selected {
+            .message-body,
+            .bubble-triangle {
+                transform: translateY(-2px);
+            }
+
+            .message-body {
+                box-shadow: 0 4px 10px rgba(0, 0, 0, .25);
             }
         }
 

@@ -18,31 +18,80 @@
 /**
  * Open the message menu on right click instead of showing a button for it.
  *
- * The menu is an md-menu rendered inside the message. It is positioned
- * relative to its (hidden) trigger, so the trigger is moved to the pointer
- * before the menu is opened.
+ * angular-material positions the menu relative to its trigger, so the (hidden)
+ * trigger is moved to the pointer first. The message is marked as selected for
+ * as long as the menu is open.
  */
 export default [
-    function() {
+    '$rootScope', '$mdMenu',
+    function($rootScope: ng.IRootScopeService, $mdMenu: any) {
         return {
             restrict: 'A',
             link(scope, element: ng.IAugmentedJQuery) {
-                element[0].addEventListener('contextmenu', (event: MouseEvent) => {
-                    const menu = element[0].querySelector('.message-menu md-menu') as HTMLElement | null;
+                const message = element[0];
+
+                const open = (event: MouseEvent) => {
+                    const menu = message.querySelector('.message-menu md-menu') as HTMLElement | null;
                     const trigger = menu === null
                         ? null
                         : menu.querySelector('button') as HTMLElement | null;
                     if (trigger === null) {
                         // No menu for this message, keep the browser's own
-                        return;
+                        return false;
                     }
-                    event.preventDefault();
 
-                    const rect = element[0].getBoundingClientRect();
+                    // The menu opens from the trigger's own box, so place that
+                    // box exactly under the pointer.
+                    const rect = message.getBoundingClientRect();
                     menu.style.left = `${event.clientX - rect.left}px`;
                     menu.style.top = `${event.clientY - rect.top}px`;
 
+                    // Only ever one message is selected at a time
+                    document.querySelectorAll('.message-selected')
+                        .forEach((el) => el.classList.remove('message-selected'));
+                    message.classList.add('message-selected');
                     trigger.click();
+                    return true;
+                };
+
+                message.addEventListener('contextmenu', (event: MouseEvent) => {
+                    if (open(event)) {
+                        event.preventDefault();
+                    }
+                });
+
+                // While a menu is open its backdrop swallows the event, so the
+                // click never reaches the message underneath. Close the open
+                // menu and open this one instead of falling back to the
+                // browser's own menu.
+                const onBackdropContextmenu = (event: MouseEvent) => {
+                    const backdrop = document.querySelector('.md-menu-backdrop, md-backdrop');
+                    if (backdrop === null || event.target !== backdrop) {
+                        return;
+                    }
+                    const under = document
+                        .elementsFromPoint(event.clientX, event.clientY)
+                        .find((el) => el.classList.contains('message'));
+                    if (under !== message) {
+                        return;
+                    }
+                    event.preventDefault();
+                    event.stopPropagation();
+                    // Close the open menu properly, then open this one once it
+                    // has torn down.
+                    $mdMenu.hide(null, {closeAll: true});
+                    setTimeout(() => scope.$apply(() => open(event)), 0);
+                };
+                document.addEventListener('contextmenu', onBackdropContextmenu, true);
+
+                // md-menu closes by removing its container from the body, so
+                // watch for that rather than listening on the trigger.
+                const deregister = $rootScope.$on(
+                    '$mdMenuClose', () => message.classList.remove('message-selected'));
+
+                scope.$on('$destroy', () => {
+                    document.removeEventListener('contextmenu', onBackdropContextmenu, true);
+                    deregister();
                 });
             },
         };
