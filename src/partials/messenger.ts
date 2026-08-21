@@ -250,6 +250,7 @@ class SettingsController extends DialogController {
     private notificationSound: boolean;
     private submitWithCtrlEnter: boolean;
     private minimalUserInterface: boolean;
+    private backgroundBlur: boolean;
 
     public static $inject = [
         '$scope', '$mdDialog', '$window', 'SettingsService', 'ThemeService', 'NotificationService', 'navigation',
@@ -277,6 +278,7 @@ class SettingsController extends DialogController {
             settingsService.composeArea.getSubmitKey() === threema.ComposeAreaSubmitKey.CtrlEnter;
         this.minimalUserInterface =
             settingsService.userInterface.getUserInterface() === threema.UserInterface.Minimal;
+        this.backgroundBlur = settingsService.background.getBlur();
     }
 
     public setWantsNotifications(desktopNotifications: boolean) {
@@ -301,6 +303,10 @@ class SettingsController extends DialogController {
         this.settingsService.userInterface.setUserInterface(minimal
             ? threema.UserInterface.Minimal
             : threema.UserInterface.Default);
+    }
+
+    public setBackgroundBlur(blur: boolean) {
+        this.settingsService.background.setBlur(blur);
     }
 
     public isPersistent(): boolean {

@@ -34,6 +34,9 @@ export class ThemeController {
     // User interface class
     public userInterfaceClass: string;
 
+    // Background class
+    public backgroundClass: string;
+
     public static $inject = ['$scope', 'LogService', 'ThemeService', 'SettingsService'];
     constructor($scope, logService: LogService, themeService: ThemeService, settingsService: SettingsService) {
         // Logging
@@ -57,6 +60,18 @@ export class ThemeController {
             this.log.debug(`Updating user interface class: ${this.userInterfaceClass} -> ${newUserInterfaceClass}`);
             $scope.$apply(() => this.userInterfaceClass = newUserInterfaceClass);
         })
+
+        // Set background class
+        this.backgroundClass = ThemeController.getBackgroundClass(settingsService.background.getBlur());
+
+        // Listen to background blur changes
+        settingsService.backgroundBlurChange.attach((blur: boolean) => {
+            $scope.$apply(() => this.backgroundClass = ThemeController.getBackgroundClass(blur));
+        })
+    }
+
+    private static getBackgroundClass(blur: boolean): string {
+        return blur ? '' : 'background-sharp';
     }
 
     private static getUserInterfaceClass(userInterface: threema.UserInterface): string {

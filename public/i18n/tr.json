@@ -325,7 +325,8 @@
         },
         "ui": {
             "UI": "Kullanıcı arayüzü",
-            "MINIMAL_LAYOUT": "Use minimal layout"
+            "MINIMAL_LAYOUT": "Use minimal layout",
+            "BACKGROUND_BLUR": "Blur the background image"
         }
     },
     "deviceUnreachable": {

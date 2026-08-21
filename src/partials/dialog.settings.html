@@ -80,6 +80,14 @@
                                 <span translate>settings.ui.MINIMAL_LAYOUT</span>
                             </md-switch>
                         </md-list-item>
+                        <md-list-item>
+                            <md-switch
+                                    ng-model="ctrl.backgroundBlur"
+                                    ng-change="ctrl.setBackgroundBlur(ctrl.backgroundBlur)"
+                                    aria-label="Blur the background image">
+                                <span translate>settings.ui.BACKGROUND_BLUR</span>
+                            </md-switch>
+                        </md-list-item>
                     </md-list>
                 </section>
                 <section class="settings-actions">

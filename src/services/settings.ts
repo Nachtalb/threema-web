@@ -79,6 +79,25 @@ class UserInterfaceSettings {
     }
 }
 
+class BackgroundSettings {
+    private readonly settingsService: SettingsService;
+
+    constructor(settingsService: SettingsService) {
+        this.settingsService = settingsService;
+    }
+
+    public getBlur(): boolean {
+        return this.settingsService.retrieveUntrustedKeyValuePair('backgroundBlur', false) !== 'false';
+    }
+
+    public setBlur(blur: boolean): void {
+        this.settingsService.storeUntrustedKeyValuePair('backgroundBlur', blur ? 'true' : 'false');
+
+        // Emit change
+        this.settingsService.backgroundBlurChange.post(blur);
+    }
+}
+
 /**
  * The settings service can update variables for settings and persist them to
  * LocalStorage.
@@ -88,11 +107,13 @@ export class SettingsService {
     private static STORAGE_KEY_PREFIX = 'settings-';
     public readonly composeArea: ComposeAreaSettings;
     public readonly userInterface: UserInterfaceSettings;
+    public readonly background: BackgroundSettings;
     private readonly log: Logger;
     private storage: Storage;
 
     // Events
     public userInterfaceChange = new AsyncEvent<threema.UserInterface>();
+    public backgroundBlurChange = new AsyncEvent<boolean>();
 
     public static $inject = ['$window', 'LogService'];
     constructor($window: ng.IWindowService, logService: LogService) {
@@ -100,6 +121,7 @@ export class SettingsService {
         this.storage = $window.localStorage;
         this.composeArea = new ComposeAreaSettings(this);
         this.userInterface = new UserInterfaceSettings(this);
+        this.background = new BackgroundSettings(this);
     }
 
     /**
