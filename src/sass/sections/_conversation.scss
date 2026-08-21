@@ -303,6 +303,43 @@
             }
         }
 
+        // Media fills the bubble edge to edge. Everything else keeps the
+        // padding, so a caption still lines up with a text message.
+        &.image-message-body,
+        &.video-message-body {
+            padding: 0;
+            overflow: hidden;
+
+            > *:not(.message-media) {
+                margin-right: 8px;
+                margin-left: 8px;
+            }
+
+            .message-name {
+                margin-top: 8px;
+            }
+
+            .message-info {
+                margin-bottom: 8px;
+            }
+
+            .message-media {
+                display: block;
+
+                .thumbnail,
+                .preview-image,
+                .animgif img {
+                    display: block;
+                    width: 100%;
+                }
+            }
+
+            // Sized by the media, so the caption wraps to that width rather
+            // than stretching the bubble.
+            width: min-content;
+            min-width: 0;
+        }
+
         .message-name {
             margin-bottom: 8px;
             font-size: .9em;
