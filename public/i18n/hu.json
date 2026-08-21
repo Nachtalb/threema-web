@@ -37,14 +37,11 @@
         "MANUAL_START_STEP1": "Nyisd meg a Threema alkalmazást és koppints a \"Threema Web\" opcióra a baloldali menüben",
         "MANUAL_START_STEP2": "Koppints arra a munkafolyamatra, amely ehhez a böngészőhöz tartozik",
         "MANUAL_START_STEP3": "Válaszd a \"Munkafolyamat kezdése\" opciót az indításhoz.",
-        "MORE_ABOUT_WEB": "About",
         "LOCAL_STORAGE_MISSING_DETAILS": "Access to LocalStorage not possible. This can occur if your browser is configured to reject cookies, or if you installed a browser add-on that blocks access to LocalStorage. Please allow local storage in your browser settings or disable any add-ons you might have installed.",
         "LOCAL_STORAGE_EXCEPTION_DETAILS": "Kritikus hiba lépett fel LocalStorage elérése közben: {errorMsg}. <br>Próbáld meg újraindítani a böngésződ.",
         "ALREADY_CONNECTED": "Már csatlakoztatva",
         "ALREADY_CONNECTED_DETAILS": "Már csatlakoztál a Threema Webhez egy másik lapfülön vagy ablakban.",
-        "VERSION": "Verzió",
-        "BACKGROUND_IMAGE": "Háttérkép",
-        "HELP_TRANSLATE": "Help Translate"
+        "VERSION": "Verzió"
     },
     "connecting": {
         "CONNECTION_PROBLEMS": "Csatlakozási problémák",

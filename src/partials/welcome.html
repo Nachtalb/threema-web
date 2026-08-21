@@ -1,24 +1,4 @@
 <div id="welcome">
-    <div ng-if="!ctrl.showLoadingIndicator" class="desktop-beta-banner">
-        <div class="prose">
-            <p translate>
-                welcome.DESKTOP_BETA_HINT_INTRO_TEXT1
-            </p>
-            <p translate>
-                welcome.DESKTOP_BETA_HINT_INTRO_TEXT2
-            </p>
-        </div>
-
-        <a class="button" ng-href="https://threema.com/switch-to-desktop" target="_blank">
-            <span class="badge" translate>common.BETA</span>
-            <div class="content">
-                <img class="app-icon" src="img/app-icon-generic.svg">
-                <span class="label" translate>welcome.DESKTOP_BETA_HINT</span>
-            </div>
-            <md-icon class="icon" class="material-icons md-24">arrow_forward</md-icon>
-        </a>
-    </div>
-
     <div class="welcome">
         <div ng-if="(ctrl.state === 'connecting' || ctrl.state === 'waiting') && ctrl.mode === 'scan'" class="scan">
             <div class="ios-only-warning" ng-if="ctrl.browser.safari">

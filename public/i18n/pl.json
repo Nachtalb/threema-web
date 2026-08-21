@@ -5,9 +5,6 @@
     "welcome": {
         "ABORT": "Anuluj",
         "CONTINUE_ANYWAY": "Kontynuuj mimo to",
-        "DESKTOP_BETA_HINT": "Korzystaj z nowej aplikacji desktop teraz",
-        "DESKTOP_BETA_HINT_INTRO_TEXT1": "Czy korzystasz już z nowej aplikacji Threema desktop?",
-        "DESKTOP_BETA_HINT_INTRO_TEXT2": "Pobierz aplikację teraz.",
         "PLEASE_SCAN": "Zeskanuj kod QR twoją aplikacją Threema",
         "PLEASE_SCAN_INSTRUCTIONS": "Android: Menu > Desktop/Web | iOS: Ustawienia > Desktop/Web",
         "PLEASE_UNLOCK": "Sesja zamknięta",
@@ -46,14 +43,11 @@
         "MANUAL_START_STEP1": "Otwórz aplikację Threema, dotknij przycisku menu w prawym górnym rogu i wybierz \"Desktop/Web\"",
         "MANUAL_START_STEP2": "Kliknij na sesji powiązanej z tą przeglądarką",
         "MANUAL_START_STEP3": "Wybierz \"Rozpocznij sesję\" aby rozpocząć sesję",
-        "MORE_ABOUT_WEB": "O aplikacji",
         "LOCAL_STORAGE_MISSING_DETAILS": "Dostęp do LocalStorage niemożliwy. Może to wystąpić jeśli twoja przeglądarka ma skonfigurowane blokowanie ciasteczek lub jeśli zainstalowałeś rozszerzenie do przeglądarki, które blokuje dostęp do LocalStorage. Zezwól na dostęp do LocalStorage w ustawieniach przeglądarki lub zablokuj któreś z zainstalowanych rozszerzeń.",
         "LOCAL_STORAGE_EXCEPTION_DETAILS": "Błąd krytyczny przy dostępie do LocalStorage: {errorMsg}.<br>Spróbuj zrestartować przeglądarkę.",
         "ALREADY_CONNECTED": "Już połączono",
         "ALREADY_CONNECTED_DETAILS": "Już połączono z Threema Web w innej zakładce lub oknie!",
-        "VERSION": "Wersja",
-        "BACKGROUND_IMAGE": "Obraz w tle",
-        "HELP_TRANSLATE": "Pomóż tłumaczyć"
+        "VERSION": "Wersja"
     },
     "connecting": {
         "CONNECTION_PROBLEMS": "Problemy z połączeniem",
@@ -114,8 +108,7 @@
         "SAVE": "Zapisz",
         "DONE": "Ukończono",
         "MODIFY": "Modyfikuj",
-        "NOTE": "Wskazówka:",
-        "BETA": "Beta"
+        "NOTE": "Wskazówka:"
     },
     "messenger": {
         "VERSION": "Wersja",

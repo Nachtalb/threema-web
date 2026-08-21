@@ -5,9 +5,6 @@
     "welcome": {
         "ABORT": "Abbrechen",
         "CONTINUE_ANYWAY": "Trotzdem fortfahren",
-        "DESKTOP_BETA_HINT": "Nutzen Sie die neue Desktop-App",
-        "DESKTOP_BETA_HINT_INTRO_TEXT1": "Nutzen Sie bereits die neue Threema Desktop-App?",
-        "DESKTOP_BETA_HINT_INTRO_TEXT2": "Laden Sie die App gleich herunter.",
         "PLEASE_SCAN": "Scannen Sie den QR-Code mit Ihrer Threema-App",
         "PLEASE_SCAN_INSTRUCTIONS": "Android: Menu > Desktop/Web | iOS: Einstellungen > Desktop/Web",
         "PLEASE_UNLOCK": "Sitzung geschlossen",
@@ -46,14 +43,11 @@
         "MANUAL_START_STEP1": "Öffnen Sie die Threema-App, tippen Sie auf den Menu-Button oben rechts und wählen Sie «Desktop/Web»",
         "MANUAL_START_STEP2": "Tippen Sie auf die Sitzung, die Sie wiederherstellen möchten",
         "MANUAL_START_STEP3": "Wählen Sie «Sitzung starten», um die Sitzung zu starten",
-        "MORE_ABOUT_WEB": "Weitere Infos",
         "LOCAL_STORAGE_MISSING_DETAILS": "Zugriff auf LocalStorage ist nicht möglich. Dieses Problem kann auftreten, wenn in Ihrem Browser Cookies blockiert werden, oder wenn ein Browser-Add-On installiert ist, welches den Zugriff auf LocalStorage blockiert. Bitte erlauben Sie die Nutzung von LocalStorage in Ihrem Browser oder deaktivieren Sie die installierten Browser-Add-Ons.",
         "LOCAL_STORAGE_EXCEPTION_DETAILS": "Kritischer Fehler beim Zugriff auf LocalStorage: {errorMsg}.<br>Bitte starten Sie Ihren Browser neu.",
         "ALREADY_CONNECTED": "Bereits verbunden",
         "ALREADY_CONNECTED_DETAILS": "Sie sind bereits in einem anderen Tab oder Fenster mit Threema Web verbunden!",
-        "VERSION": "Version",
-        "BACKGROUND_IMAGE": "Hintergrundbild",
-        "HELP_TRANSLATE": "Übersetzen"
+        "VERSION": "Version"
     },
     "connecting": {
         "CONNECTION_PROBLEMS": "Verbindungsprobleme",
@@ -114,8 +108,7 @@
         "SAVE": "Speichern",
         "DONE": "Fertig",
         "MODIFY": "Ändern",
-        "NOTE": "Hinweis:",
-        "BETA": "Beta"
+        "NOTE": "Hinweis:"
     },
     "messenger": {
         "VERSION": "Version",

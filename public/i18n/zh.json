@@ -5,9 +5,6 @@
     "welcome": {
         "ABORT": "中止",
         "CONTINUE_ANYWAY": "仍然继续",
-        "DESKTOP_BETA_HINT": "立即使用新的桌面版应用程序",
-        "DESKTOP_BETA_HINT_INTRO_TEXT1": "您是否已经使用新的 Threema 桌面应用程序？",
-        "DESKTOP_BETA_HINT_INTRO_TEXT2": "立即下载应用程序。",
         "PLEASE_SCAN": "使用 Threema 客户端扫描二维码",
         "PLEASE_SCAN_INSTRUCTIONS": "Android: 菜单 > Desktop/Web | iOS: 设置 > Desktop/Web",
         "PLEASE_UNLOCK": "会话已关闭",
@@ -46,14 +43,11 @@
         "MANUAL_START_STEP1": "请打开 Threema 应用程序，点击右上角的菜单按钮并选择“Desktop/Web”",
         "MANUAL_START_STEP2": "点击与此浏览器关联的连接会话",
         "MANUAL_START_STEP3": "选择 “开始会话” 来启动会话",
-        "MORE_ABOUT_WEB": "关于",
         "LOCAL_STORAGE_MISSING_DETAILS": "无法使用本地存储。如果您的浏览器设置了禁用 cookie，或者安装了阻止访问 LocalStorage 的浏览器插件，则可能出现这种情况。请在浏览器设置中允许访问 LocalStorage，或禁用可能影响读写 LocalStorage 的相关插件。",
         "LOCAL_STORAGE_EXCEPTION_DETAILS": "访问 LocalStorage 时出现严重错误：{errorMsg} .<br>请尝试重新启动浏览器。",
         "ALREADY_CONNECTED": "已经连接成功",
         "ALREADY_CONNECTED_DETAILS": "您已经在其他网页选项卡或者其他窗口里连接了 Threema 网页版。",
-        "VERSION": "版本",
-        "BACKGROUND_IMAGE": "背景图片",
-        "HELP_TRANSLATE": "帮助我们翻译"
+        "VERSION": "版本"
     },
     "connecting": {
         "CONNECTION_PROBLEMS": "连接问题",
@@ -114,8 +108,7 @@
         "SAVE": "保存",
         "DONE": "完成",
         "MODIFY": "编辑",
-        "NOTE": "注意：",
-        "BETA": "测试版"
+        "NOTE": "注意："
     },
     "messenger": {
         "VERSION": "版本",

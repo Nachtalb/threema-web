@@ -5,9 +5,6 @@
     "welcome": {
         "ABORT": "中止",
         "CONTINUE_ANYWAY": "仍然繼續",
-        "DESKTOP_BETA_HINT": "立即使用新的桌面版應用程式",
-        "DESKTOP_BETA_HINT_INTRO_TEXT1": "您是否已經使用新的 Threema 桌面應用程式？",
-        "DESKTOP_BETA_HINT_INTRO_TEXT2": "立即下載應用程式。",
         "PLEASE_SCAN": "使用 Threema 手機應用程式掃描QR碼",
         "PLEASE_SCAN_INSTRUCTIONS": "Android: 選單 > Desktop/Web | iOS: 設定 > Desktop/Web",
         "PLEASE_UNLOCK": "工作階段已關閉",
@@ -46,14 +43,11 @@
         "MANUAL_START_STEP1": "請開啟 Threema 手機應用程式，按一下右上角的選單按鈕並選擇「Desktop/Web」",
         "MANUAL_START_STEP2": "點擊與此瀏覽器相關的工作階段",
         "MANUAL_START_STEP3": "選擇「開始工作階段」以開啟工作階段",
-        "MORE_ABOUT_WEB": "關於",
         "LOCAL_STORAGE_MISSING_DETAILS": "無法取用本地儲存。如果您的瀏覽器設定了停用 Cookie，或者安裝了阻止取用 LocalStorage 的瀏覽器外掛程式，則可能出現這種情況。請在瀏覽器設定中允許取用 LocalStorage，或停用可能影響讀寫 LocalStorage 的相關外掛程式。",
         "LOCAL_STORAGE_EXCEPTION_DETAILS": "取用 LocalStorage 時出現嚴重錯誤：{errorMsg}。<br>請嘗試重新啟動瀏覽器。",
         "ALREADY_CONNECTED": "已經連線成功",
         "ALREADY_CONNECTED_DETAILS": "您已經在其他分頁或其他視窗中開啟了 Threema 網頁版。",
-        "VERSION": "版本",
-        "BACKGROUND_IMAGE": "背景圖片",
-        "HELP_TRANSLATE": "協助我們翻譯"
+        "VERSION": "版本"
     },
     "connecting": {
         "CONNECTION_PROBLEMS": "連線問題",
@@ -114,8 +108,7 @@
         "SAVE": "儲存",
         "DONE": "完成",
         "MODIFY": "編輯",
-        "NOTE": "注意：",
-        "BETA": "測試版"
+        "NOTE": "注意："
     },
     "messenger": {
         "VERSION": "版本",

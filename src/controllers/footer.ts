@@ -25,7 +25,6 @@ import {TroubleshootingController} from './troubleshooting';
  */
 export class VersionDialogController extends DialogController {
     public readonly version: string;
-    public readonly fullVersion: string;
 
     public readonly config: threema.Config;
 
@@ -38,7 +37,6 @@ export class VersionDialogController extends DialogController {
     ) {
         super($scope, $mdDialog, themeService);
         this.version = config.VERSION;
-        this.fullVersion = `${config.VERSION} ${config.VERSION_MOUNTAIN}`;
         this.config = config;
     }
 }

@@ -5,9 +5,6 @@
     "welcome": {
         "ABORT": "Прервать",
         "CONTINUE_ANYWAY": "Продолжить",
-        "DESKTOP_BETA_HINT": "Используйте новое приложение для ПК прямо сейчас",
-        "DESKTOP_BETA_HINT_INTRO_TEXT1": "Вы уже пользуетесь новым приложением Threema для ПК?",
-        "DESKTOP_BETA_HINT_INTRO_TEXT2": "Скачайте приложение прямо сейчас.",
         "PLEASE_SCAN": "Отсканируйте QR-код с помощью приложения Threema",
         "PLEASE_SCAN_INSTRUCTIONS": "Android: Меню > Desktop/Web | iOS: Настройки > Desktop/Web",
         "PLEASE_UNLOCK": "Сеанс закрыт",
@@ -46,14 +43,11 @@
         "MANUAL_START_STEP1": "Откройте приложение Threema, нажмите на кнопку меню в правом верхнем углу и выберите \"Desktop/Web\".",
         "MANUAL_START_STEP2": "Нажмите на сеанс, связанный с этим браузером",
         "MANUAL_START_STEP3": "Выберите \"Начать сеанс\", чтобы начать",
-        "MORE_ABOUT_WEB": "О Threema",
         "LOCAL_STORAGE_MISSING_DETAILS": "Доступ к LocalStorage невозможен. Это может произойти, если ваш браузер настроен на отклонение файлов cookie или если вы установили расширение браузера, которое блокирует доступ к LocalStorage. Разрешите доступ к локальному хранилищу в настройках браузера или отключите все расширения, которые вы могли установить.",
         "LOCAL_STORAGE_EXCEPTION_DETAILS": "Критическая ошибка при доступе к локальному хранилищу: {errorMsg}. Попробуйте перезапустить браузер.",
         "ALREADY_CONNECTED": "Уже соединено",
         "ALREADY_CONNECTED_DETAILS": "Вы уже соединены с Threema Web в другой вкладке или окне!",
-        "VERSION": "Версия",
-        "BACKGROUND_IMAGE": "Фоновое изображение",
-        "HELP_TRANSLATE": "Помощь в переводе"
+        "VERSION": "Версия"
     },
     "connecting": {
         "CONNECTION_PROBLEMS": "Проблемы с соединением",
@@ -114,8 +108,7 @@
         "SAVE": "Сохранить",
         "DONE": "Выполнено",
         "MODIFY": "Изменить",
-        "NOTE": "Замечания:",
-        "BETA": "Бета"
+        "NOTE": "Замечания:"
     },
     "messenger": {
         "VERSION": "Версия",

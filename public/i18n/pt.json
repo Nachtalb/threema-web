@@ -34,14 +34,11 @@
         "MANUAL_START_STEP1": "Abra o aplicativo Threema e toque em \"Threema Web\" na gaveta de navegação esquerda",
         "MANUAL_START_STEP2": "Escolha a sessão associada a este navegador",
         "MANUAL_START_STEP3": "Escolha \"iniciar sessão\" para iniciar a sessão",
-        "MORE_ABOUT_WEB": "Acerca de",
         "LOCAL_STORAGE_MISSING_DETAILS": "Access to LocalStorage not possible. This can occur if your browser is configured to reject cookies, or if you installed a browser add-on that blocks access to LocalStorage. Please allow local storage in your browser settings or disable any add-ons you might have installed.",
         "LOCAL_STORAGE_EXCEPTION_DETAILS": "Erro crítico ao acessar o LocalStorage: {errorMsg}.<br>Tente reiniciar seu navegador.",
         "ALREADY_CONNECTED": "Já se encontra ligado/a",
         "ALREADY_CONNECTED_DETAILS": "Você já está conectado ao Threema Web numa outra aba ou janela!",
-        "VERSION": "Versão",
-        "BACKGROUND_IMAGE": "Imagem de fundo",
-        "HELP_TRANSLATE": "Ajude a traduzir"
+        "VERSION": "Versão"
     },
     "connecting": {
         "CONNECTION_PROBLEMS": "Problemas de ligação",

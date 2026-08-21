@@ -40,14 +40,11 @@
         "MANUAL_START_STEP1": "Deschide aplicatia Threem si alege \"Threema Web\" din meniul de navigare din stanga",
         "MANUAL_START_STEP2": "Atingeti sesiunea asociata acestui browser",
         "MANUAL_START_STEP3": "Selecteaza \"Porneste sesiunea\" pentru a porni sesiunea",
-        "MORE_ABOUT_WEB": "Despre",
         "LOCAL_STORAGE_MISSING_DETAILS": "Accesul la mediul de stocare local nu este posibil. Acest lucru se poate datora daca browserul dumneavoastra nu permite cookies, sau aveti un add-on instalat in browser ce blocheaza accesul. Va rugam permiteti accesul la dispozitivul de stocare local in setarile browserului sau dezactivati orice addon instalat.",
         "LOCAL_STORAGE_EXCEPTION_DETAILS": "Eroare critica la accesarea mediului local de stocare: {errorMsg}. <br> Incercati o repornire a browserului.",
         "ALREADY_CONNECTED": "Deja conectat",
         "ALREADY_CONNECTED_DETAILS": "Sunteti deja conectat la Threema Web in alt tab sau fereastra!",
-        "VERSION": "Versiune",
-        "BACKGROUND_IMAGE": "Imagine de fundal",
-        "HELP_TRANSLATE": "Ajuta la traducere"
+        "VERSION": "Versiune"
     },
     "connecting": {
         "CONNECTION_PROBLEMS": "Probleme de conectare",

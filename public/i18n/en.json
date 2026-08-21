@@ -5,9 +5,6 @@
     "welcome": {
         "ABORT": "Abort",
         "CONTINUE_ANYWAY": "Continue anyway",
-        "DESKTOP_BETA_HINT": "Use the new desktop app now",
-        "DESKTOP_BETA_HINT_INTRO_TEXT1": "Do you already use the new Threema desktop app?",
-        "DESKTOP_BETA_HINT_INTRO_TEXT2": "Download the app now.",
         "PLEASE_SCAN": "Scan this QR code with your Threema app",
         "PLEASE_SCAN_INSTRUCTIONS": "Android: Menu > Desktop/Web | iOS: Settings > Desktop/Web",
         "PLEASE_UNLOCK": "Session closed",
@@ -46,14 +43,11 @@
         "MANUAL_START_STEP1": "Open the Threema app, tap on the menu button in the top right and choose “Desktop/Web”",
         "MANUAL_START_STEP2": "Tap on the session related to this browser",
         "MANUAL_START_STEP3": "Select “Start session” to start the session",
-        "MORE_ABOUT_WEB": "About",
         "LOCAL_STORAGE_MISSING_DETAILS": "Access to LocalStorage not possible. This can occur if your browser is configured to reject cookies, or if you installed a browser add-on that blocks access to LocalStorage. Please allow local storage in your browser settings or disable any add-ons you might have installed.",
         "LOCAL_STORAGE_EXCEPTION_DETAILS": "Critical error when accessing LocalStorage: {errorMsg}.<br>Try restarting your browser.",
         "ALREADY_CONNECTED": "Already connected",
         "ALREADY_CONNECTED_DETAILS": "You are already connected to Threema Web in another tab or window!",
-        "VERSION": "Version",
-        "BACKGROUND_IMAGE": "Background Image",
-        "HELP_TRANSLATE": "Help Translate"
+        "VERSION": "Version"
     },
     "connecting": {
         "CONNECTION_PROBLEMS": "Connection problems",
@@ -114,8 +108,7 @@
         "SAVE": "Save",
         "DONE": "Done",
         "MODIFY": "Modify",
-        "NOTE": "Note:",
-        "BETA": "Beta"
+        "NOTE": "Note:"
     },
     "messenger": {
         "VERSION": "Version",

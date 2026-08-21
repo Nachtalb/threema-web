@@ -5,9 +5,6 @@
     "welcome": {
         "ABORT": "Threema Webについて",
         "CONTINUE_ANYWAY": "とにかく続ける",
-        "DESKTOP_BETA_HINT": "Use the new desktop app now",
-        "DESKTOP_BETA_HINT_INTRO_TEXT1": "Do you already use the new Threema desktop app?",
-        "DESKTOP_BETA_HINT_INTRO_TEXT2": "Download the app now.",
         "PLEASE_SCAN": "この QR コードを Threema アプリでスキャンしてください",
         "PLEASE_SCAN_INSTRUCTIONS": "Android: メニュー > Desktop/Web ｜ iOS: 設定 > Desktop/Web",
         "PLEASE_UNLOCK": "セッションが終了しました",
@@ -46,14 +43,11 @@
         "MANUAL_START_STEP1": "Threemaアプリを開き、右上のメニューボタンをタップし、\"Desktop/Web \"を選択します。",
         "MANUAL_START_STEP2": "このブラウザに関連するセッションをタップする",
         "MANUAL_START_STEP3": "「セッションの開始」を選択して、セッションを開始する",
-        "MORE_ABOUT_WEB": "アプリについて",
         "LOCAL_STORAGE_MISSING_DETAILS": "ローカルストレージへのアクセスができません。この現象は、クッキーを拒否するようにブラウザが設定されている場合や、ローカルストレージへのアクセスをブロックするようなブラウザのアドオンをインストールしている場合に発生します。お手数ですが、ブラウザの設定でローカルストレージを許可するか、インストールされているアドオンを無効にしてください。",
         "LOCAL_STORAGE_EXCEPTION_DETAILS": "LocalStorageへのアクセス時に重大なエラーが発生しました: {errorMsg}。<br>ブラウザを再起動してみてください。",
         "ALREADY_CONNECTED": "既に接続されています",
         "ALREADY_CONNECTED_DETAILS": "あなたはすでに別のタブまたはウィンドウでThreema Webに接続しています！",
-        "VERSION": "バージョン",
-        "BACKGROUND_IMAGE": "背景画像",
-        "HELP_TRANSLATE": "翻訳を手伝う"
+        "VERSION": "バージョン"
     },
     "connecting": {
         "CONNECTION_PROBLEMS": "接続の問題",
@@ -114,8 +108,7 @@
         "SAVE": "保存",
         "DONE": "完了",
         "MODIFY": "修正",
-        "NOTE": "注意:",
-        "BETA": "Beta"
+        "NOTE": "注意:"
     },
     "messenger": {
         "VERSION": "バージョン",

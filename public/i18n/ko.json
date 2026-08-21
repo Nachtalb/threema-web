@@ -40,14 +40,11 @@
         "MANUAL_START_STEP1": "Threema 앱을 열고 왼쪽 상단 메뉴의 \"Threema Web\"을 누르십시오.",
         "MANUAL_START_STEP2": "이 브라우저와 관련된 세션을 클릭하세요",
         "MANUAL_START_STEP3": "세션을 시작하려면 \"세션 시작\"을 선택하십시오.",
-        "MORE_ABOUT_WEB": "관련 정보",
         "LOCAL_STORAGE_MISSING_DETAILS": "LocalStorage에 액세스할 수 없습니다. 이 문제는 브라우저가 쿠키를 거부하도록 구성되어 있거나 LocalStorage에 대한 액세스를 차단하는 브라우저 추가 기능을 설치한 경우 발생할 수 있습니다. 브라우저 설정에서 로컬 스토리지를 허용하거나 설치한 추가 기능을 사용하지 않도록 설정하십시오.",
         "LOCAL_STORAGE_EXCEPTION_DETAILS": "로컬스토리지에 액세스하는 동안 심각한 오류 발생: {errorMsg}. <br>브라우저를 다시 시작해 보십시오.",
         "ALREADY_CONNECTED": "이미 연결되어 있음",
         "ALREADY_CONNECTED_DETAILS": "다른 탭이나 창에서 이미 Threema Web에 연결되어 있음!",
-        "VERSION": "버전",
-        "BACKGROUND_IMAGE": "배경 이미지",
-        "HELP_TRANSLATE": "번역 돕기"
+        "VERSION": "버전"
     },
     "connecting": {
         "CONNECTION_PROBLEMS": "연결 문제",

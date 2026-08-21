@@ -684,11 +684,6 @@ declare namespace threema {
 
         // General
         SELF_HOSTED: boolean;
-        VERSION_MOUNTAIN: string;
-        VERSION_MOUNTAIN_URL: string;
-        VERSION_MOUNTAIN_IMAGE_URL: string;
-        VERSION_MOUNTAIN_IMAGE_COPYRIGHT: string;
-        VERSION_MOUNTAIN_HEIGHT: number;
         PREV_PROTOCOL_LAST_VERSION: string | null;
         GIT_BRANCH: string;
 

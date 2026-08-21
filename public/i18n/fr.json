@@ -40,14 +40,11 @@
         "MANUAL_START_TEXT2": "Vous pouvez utiliser Threema Desktop/Web sans les services push, mais vous devez démarrer la session manuellement :",
         "MANUAL_START_STEP2": "Cliquer sur la session provenant de votre navigateur.",
         "MANUAL_START_STEP3": "Sélectionnez « Démarrer la session » pour démarrer la session.",
-        "MORE_ABOUT_WEB": "À propos",
         "LOCAL_STORAGE_MISSING_DETAILS": "L’accès au stockage local est impossible. Ceci peut arriver si votre navigateur est configuré pour refuser les cookies, ou si vous avez installé une extension du navigateur bloquant l’accès au stockage local. Veuillez autoriser l’accès au stockage local dans les paramètres de votre navigateur ou désactiver les extensions que vous auriez installées.",
         "LOCAL_STORAGE_EXCEPTION_DETAILS": "Erreur fatale lors de l’accès au stockage local : {errorMsg}.<br>Essayez de redémarrer votre navigateur.",
         "ALREADY_CONNECTED": "Déjà connecté",
         "ALREADY_CONNECTED_DETAILS": "Vous êtes déjà connecté à Threema Web dans un autre onglet ou une autre fenêtre !",
-        "VERSION": "Version",
-        "BACKGROUND_IMAGE": "Papier peint",
-        "HELP_TRANSLATE": "Aidez à traduire"
+        "VERSION": "Version"
     },
     "connecting": {
         "CONNECTION_PROBLEMS": "Problèmes de connexion",

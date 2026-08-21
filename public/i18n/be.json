@@ -5,9 +5,6 @@
     "welcome": {
         "ABORT": "Скасаваць",
         "CONTINUE_ANYWAY": "Усё роўна працягнуць",
-        "DESKTOP_BETA_HINT": "Скарыстайцеся новай настольнай праграмай",
-        "DESKTOP_BETA_HINT_INTRO_TEXT1": "Вы ўжо карыстаецеся новай настольнай праграмай Threema?",
-        "DESKTOP_BETA_HINT_INTRO_TEXT2": "Спампуйце праграму зараз.",
         "PLEASE_SCAN": "Праскануй гэты QR-код з дапамогай сваёй праграмы Threema",
         "PLEASE_SCAN_INSTRUCTIONS": "Android: Меню > Desktop/Web | iOS: Налады > Desktop/Web",
         "PLEASE_UNLOCK": "Сеанс скончаны",
@@ -46,14 +43,11 @@
         "MANUAL_START_STEP1": "Адкрыйце праграму Threema, націсніце на кнопку меню ў правым верхнім куце і абярыце \"Desktop/Web\"",
         "MANUAL_START_STEP2": "Націсніце на сеанс, звязаны з гэтым браўзерам.",
         "MANUAL_START_STEP3": "Абярыце \"Пачаць сеанс\", каб пачаць сеанс",
-        "MORE_ABOUT_WEB": "Пра праграму",
         "LOCAL_STORAGE_MISSING_DETAILS": "Доступ да LocalStorage немагчымы. Гэта можа адбыцца, калі ваш браўзер наладжаны на адхіленне файлаў cookie ці калі вы ўсталявалі дадатак да браўзера, якое блакіруе доступ да LocalStorage. Калі ласка, дазвольце лакальнае сховішча ў наладах вашага браўзера або адключыце ўсталяваныя дадаткі.",
         "LOCAL_STORAGE_EXCEPTION_DETAILS": "Крытычная памылка пры звароце да LocalStorage: {errorMsg}.<br> Паспрабуйце перазапусціць браўзер.",
         "ALREADY_CONNECTED": "Вы ўжо падлучаныя",
         "ALREADY_CONNECTED_DETAILS": "Вы ўжо падлучаныя да Threema Web у іншай укладцы ці акне!",
-        "VERSION": "Версія",
-        "BACKGROUND_IMAGE": "Фонавы відарыс",
-        "HELP_TRANSLATE": "Дапамагчы з перакладам"
+        "VERSION": "Версія"
     },
     "connecting": {
         "CONNECTION_PROBLEMS": "Праблемы з сувяззю",
@@ -114,8 +108,7 @@
         "SAVE": "Захаваць",
         "DONE": "Гатова",
         "MODIFY": "Змяніць",
-        "NOTE": "Заўвага:",
-        "BETA": "Бэта-версія"
+        "NOTE": "Заўвага:"
     },
     "messenger": {
         "VERSION": "Версія",

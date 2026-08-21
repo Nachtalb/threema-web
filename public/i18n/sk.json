@@ -43,14 +43,11 @@
         "MANUAL_START_STEP1": "Otvorte aplikáciu Threema, ťuknite na tlačidlo menu v pravom hornom rohu a zvoľte \"Desktop/Web\"",
         "MANUAL_START_STEP2": "Kliknite na reláciu súvisiacu s týmto prehliadačom",
         "MANUAL_START_STEP3": "Zvoľte \"Začať reláciu\" pre začatie relácie",
-        "MORE_ABOUT_WEB": "O aplikácii",
         "LOCAL_STORAGE_MISSING_DETAILS": "Prístup k miestnemu úložisku nie je možný. K tomu môže prísť, pokiaľ je Váš prehliadač nakonfigurovaný k odmietaniu súborov Cookie alebo pokiaľ ste nainštalovali doplnok prehliadača, ktorý blokuje prístup k miestnemu úložisku. Povoľte miestne úložisko v nastaveniach prehliadača alebo dočasne deaktivujte všetky doplnky, ktoré ste nainštalovali.",
         "LOCAL_STORAGE_EXCEPTION_DETAILS": "Kritická chyba pri prístupe k miestnemu úložisku: {errorMsg}.<br>Skúste reštartovať prehliadač.",
         "ALREADY_CONNECTED": "Už pripojené",
         "ALREADY_CONNECTED_DETAILS": "Už ste pripojený k Threema Web v inej karte alebo okne prehliadača!",
-        "VERSION": "Verzia",
-        "BACKGROUND_IMAGE": "Obrázok pozadia",
-        "HELP_TRANSLATE": "Pomoc s prekladom"
+        "VERSION": "Verzia"
     },
     "connecting": {
         "CONNECTION_PROBLEMS": "Problém s pripojením",

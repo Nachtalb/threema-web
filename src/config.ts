@@ -14,11 +14,6 @@ export default {
     SELF_HOSTED: false,
 
     // General
-    VERSION_MOUNTAIN: 'Lütispitz',
-    VERSION_MOUNTAIN_URL: 'https://de.wikipedia.org/wiki/L%C3%BCtispitz',
-    VERSION_MOUNTAIN_IMAGE_URL: 'img/bg.original.jpg',
-    VERSION_MOUNTAIN_IMAGE_COPYRIGHT: 'CC BY-SA 3.0 dbrgn',
-    VERSION_MOUNTAIN_HEIGHT: 1987,
     GIT_BRANCH: 'master',
 
     // When the Threema Web protocol version changes, this can be set to the

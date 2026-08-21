@@ -5,9 +5,6 @@
     "welcome": {
         "ABORT": "Přerušit",
         "CONTINUE_ANYWAY": "Přesto pokračovat",
-        "DESKTOP_BETA_HINT": "Použijte novou desktopovou aplikaci nyní",
-        "DESKTOP_BETA_HINT_INTRO_TEXT1": "Již používáte novou desktopovou aplikaci Threema?",
-        "DESKTOP_BETA_HINT_INTRO_TEXT2": "Stáhněte si aplikaci nyní.",
         "PLEASE_SCAN": "Naskenujte tento QR kód pomocí aplikace Threema ve vašem zařízení",
         "PLEASE_SCAN_INSTRUCTIONS": "Android: Menu > Desktop/Web | iOS: Nastavení > Desktop/Web",
         "PLEASE_UNLOCK": "Relace ukončena",
@@ -46,14 +43,11 @@
         "MANUAL_START_STEP1": "Otevřete aplikaci Threema, klepněte na tlačítko menu v pravém horním rohu a zvolte „Desktop/Web“",
         "MANUAL_START_STEP2": "Klepněte na relaci související s tímto prohlížečem",
         "MANUAL_START_STEP3": "Vyberte „Zahájit relaci“ pro zahájení relace",
-        "MORE_ABOUT_WEB": "O aplikaci",
         "LOCAL_STORAGE_MISSING_DETAILS": "Přístup k místnímu úložišti není možný. K tomu může dojít, pokud je váš prohlížeč nakonfigurován k odmítnutí souborů Cookie nebo pokud jste nainstalovali doplněk prohlížeče, který blokuje přístup k místnímu úložišti. Povolte místní úložiště v nastavení prohlížeče nebo dočasně deaktivujte všechny doplňky, které jste nainstalovali.",
         "LOCAL_STORAGE_EXCEPTION_DETAILS": "Během přístupu k místnímu úložišti nastala kritická chyba: {errorMsg}.<br>Zkuste restartovat prohlížeč.",
         "ALREADY_CONNECTED": "Již je spojeno",
         "ALREADY_CONNECTED_DETAILS": "Již jste připojeni k Threema Web v jiném panelu nebo okně prohlížeče!",
-        "VERSION": "Verze",
-        "BACKGROUND_IMAGE": "Obrázek pozadí",
-        "HELP_TRANSLATE": "Pomoc s překladem"
+        "VERSION": "Verze"
     },
     "connecting": {
         "CONNECTION_PROBLEMS": "Chyba spojení",
@@ -114,8 +108,7 @@
         "SAVE": "Uložit",
         "DONE": "Hotovo",
         "MODIFY": "Upravit",
-        "NOTE": "Poznámka:",
-        "BETA": "Beta"
+        "NOTE": "Poznámka:"
     },
     "messenger": {
         "VERSION": "Verze",

@@ -43,14 +43,11 @@
         "MANUAL_START_STEP1": "Threema uygulamasını açın, sağ üstteki menü düğmesine dokunun ve “Masaüstü/Web”i seçin",
         "MANUAL_START_STEP2": "Bu tarayıcıyla ilgili oturuma dokunun",
         "MANUAL_START_STEP3": "Oturumu başlatmak için \"Oturumu başlat\"ı seçin",
-        "MORE_ABOUT_WEB": "Hakkında",
         "LOCAL_STORAGE_MISSING_DETAILS": "Yerel depolamaya erişmek mümkün değil. Tarayıcınız çerezleri reddetmek için ayarlandı ya da yerel depolamaya erişimi engelleyen bir tarayıcı eklentisi yüklediyseniz bu durum oluşabilir.",
         "LOCAL_STORAGE_EXCEPTION_DETAILS": "Yerel depolamaya erişirken kritik hata: {errorMsg}.<br>Tarayıcınızı yeniden başlatmayı deneyin.",
         "ALREADY_CONNECTED": "Zaten bağlı",
         "ALREADY_CONNECTED_DETAILS": "Zaten Threema Web'e başka bir sekmede veya pencerede bağlısınız!",
-        "VERSION": "Versiyon",
-        "BACKGROUND_IMAGE": "Arka plan resmi",
-        "HELP_TRANSLATE": "Çeviriye yardımcı olun"
+        "VERSION": "Versiyon"
     },
     "connecting": {
         "CONNECTION_PROBLEMS": "Bağlantı problemi",

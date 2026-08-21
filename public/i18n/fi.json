@@ -5,9 +5,6 @@
     "welcome": {
         "ABORT": "Keskeytä",
         "CONTINUE_ANYWAY": "Jatka silti",
-        "DESKTOP_BETA_HINT": "Käytä uutta työpöytäsovellusta nyt",
-        "DESKTOP_BETA_HINT_INTRO_TEXT1": "Käytätkö jo uutta Threema-työpöytäsovellusta?",
-        "DESKTOP_BETA_HINT_INTRO_TEXT2": "Lataa sovellus nyt.",
         "PLEASE_SCAN": "Skannaa QR-koodi Threema-sovelluksella",
         "PLEASE_SCAN_INSTRUCTIONS": "Android: Valikko > Työpöytä/Web | iOS: Asetukset > Työpöytä/Web",
         "PLEASE_UNLOCK": "Istunto suljettu",
@@ -46,14 +43,11 @@
         "MANUAL_START_STEP1": "Avaa Threema-sovellus, näpäytä valikkopainiketta oikeasta yläkulmasta ja valitse \"Työpöytä/Web\"",
         "MANUAL_START_STEP2": "Valitse tähän selaimeen liittyvä istunto",
         "MANUAL_START_STEP3": "Valitse \"Aloita istunto\" aloittaaksesi istunnon",
-        "MORE_ABOUT_WEB": "Tietoa meistä",
         "LOCAL_STORAGE_MISSING_DETAILS": "Pääsy LocalStorageen ei mahdollinen. Näin voi käydä jos selaimesi on asetettu estämään evästeet, tai jos olet asentanut LocalStorageen pääsyn estävän selainlisäosan. Salli pääsy LocalStorageen selaimesi asetuksista tai kokeile sammuttaa asentamiasi selainlisäosia.",
         "LOCAL_STORAGE_EXCEPTION_DETAILS": "Kriittinen virhe LocalStoragea käyttäessä:: {errorMsg}.<br>Kokeile käynnistää selaimesi uudelleen.",
         "ALREADY_CONNECTED": "Yhteys jo muodostettu",
         "ALREADY_CONNECTED_DETAILS": "Olet jo yhdistetty Threema Webiin toisessa ikkunassa tai toisella välilehdellä!",
-        "VERSION": "Versio",
-        "BACKGROUND_IMAGE": "Taustakuva",
-        "HELP_TRANSLATE": "Auta kääntämään"
+        "VERSION": "Versio"
     },
     "connecting": {
         "CONNECTION_PROBLEMS": "Yhteysongelmia",
@@ -114,8 +108,7 @@
         "SAVE": "Tallenna",
         "DONE": "Valmis",
         "MODIFY": "Muokkaa",
-        "NOTE": "Muistiinpano:",
-        "BETA": "Beta"
+        "NOTE": "Muistiinpano:"
     },
     "messenger": {
         "VERSION": "Versio",

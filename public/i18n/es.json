@@ -43,14 +43,11 @@
         "MANUAL_START_STEP1": "Inicia Threema, toca el botón de menú en la parte superior derecha y seleccióna «Desktop/Web»",
         "MANUAL_START_STEP2": "Pulsa en la sesión relacionada con este navegador",
         "MANUAL_START_STEP3": "Selecciona «Iniciar sesión» para iniciar la sesión.",
-        "MORE_ABOUT_WEB": "Acerca de",
         "LOCAL_STORAGE_MISSING_DETAILS": "El acceso al almacenamiento local no es posible. Esto puede ocurrir si el navegador está configurado para rechazar las cookies, o si se ha instalado un complemento del navegador que bloquea el acceso al almacenamiento local. Por favor, permite el almacenamiento local en la configuración del navegador o deshabilitar los complementos que puedas tener instalado.",
         "LOCAL_STORAGE_EXCEPTION_DETAILS": "Error crítico al acceder al almacenamiento local: {errorMsg}.<br>Intenta reiniciar el navegador.",
         "ALREADY_CONNECTED": "Ya conectado",
         "ALREADY_CONNECTED_DETAILS": "¡Ya estás conectado a Threema Web en otra pestaña o ventana!",
-        "VERSION": "Versión",
-        "BACKGROUND_IMAGE": "Imagen de fondo",
-        "HELP_TRANSLATE": "Ayuda traduciendo"
+        "VERSION": "Versión"
     },
     "connecting": {
         "CONNECTION_PROBLEMS": "Problemas de conexión",
