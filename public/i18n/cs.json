@@ -326,13 +326,11 @@
         },
         "composearea": {
             "COMPOSE_AREA": "Zde napište svůj text",
-            "SUBMIT_KEY_ENTER": "Stisknutím klávesy „Enter“ odešlete zprávu. Stisknutím kláves „Shift + Enter“ přidáte nový řádek.",
-            "SUBMIT_KEY_CTRL_ENTER": "Stisknutím kláves „Ctrl + Enter“ odešlete zprávu. Stisknutím klávesy „Enter“ přidáte nový řádek."
+            "SUBMIT_WITH_CTRL_ENTER": "Send with 'Ctrl+Enter'"
         },
         "ui": {
             "UI": "Uživatelské rozhraní",
-            "DEFAULT": "Výchozí",
-            "MINIMAL": "Minimální"
+            "MINIMAL_LAYOUT": "Use minimal layout"
         }
     },
     "deviceUnreachable": {

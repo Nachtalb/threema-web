@@ -16,30 +16,30 @@
                     </md-subheader>
                     <md-list flex>
                         <md-list-item ng-if="ctrl.notificationApiAvailable && ctrl.notificationPermission !== false">
-                            <md-checkbox
+                            <md-switch
                                     ng-disabled="!ctrl.notificationApiAvailable || ctrl.notificationPermission === false"
                                     ng-model="ctrl.desktopNotifications"
                                     ng-change="ctrl.setWantsNotifications(ctrl.desktopNotifications)"
                                     aria-label="Show desktop notifications">
                                 <span translate>settings.notifications.SHOW_NOTIFICATIONS</span>
-                            </md-checkbox>
+                            </md-switch>
                         </md-list-item>
                         <md-list-item ng-if="ctrl.desktopNotifications && ctrl.notificationApiAvailable && ctrl.notificationPermission !== false">
-                            <md-checkbox
+                            <md-switch
                                     ng-disabled="!ctrl.desktopNotifications"
                                     ng-model="ctrl.notificationPreview"
                                     ng-change="ctrl.setWantsPreview(ctrl.notificationPreview)"
                                     aria-label="Show message preview">
                                 <span translate>settings.notifications.SHOW_PREVIEW</span>
-                            </md-checkbox>
+                            </md-switch>
                         </md-list-item>
                         <md-list-item>
-                            <md-checkbox
+                            <md-switch
                                     ng-model="ctrl.notificationSound"
                                     ng-change="ctrl.setWantsSound(ctrl.notificationSound)"
                                     aria-label="Play notification sound">
                                 <span translate>settings.notifications.PLAY_SOUND</span>
-                            </md-checkbox>
+                            </md-switch>
                         </md-list-item>
                     </md-list>
                     <div ng-if="!ctrl.notificationApiAvailable" class="status status-no">
@@ -59,14 +59,12 @@
                     </md-subheader>
                     <md-list flex>
                         <md-list-item>
-                            <md-radio-group ng-model="ctrl.submitKey" ng-change="ctrl.setSubmitKey(ctrl.submitKey)">
-                                <md-radio-button value="0" class="md-primary">
-                                    <span translate>settings.composearea.SUBMIT_KEY_ENTER</span>
-                                </md-radio-button>
-                                <md-radio-button value="1" class="md-primary">
-                                    <span translate>settings.composearea.SUBMIT_KEY_CTRL_ENTER</span>
-                                </md-radio-button>
-                            </md-radio-group>
+                            <md-switch
+                                    ng-model="ctrl.submitWithCtrlEnter"
+                                    ng-change="ctrl.setSubmitWithCtrlEnter(ctrl.submitWithCtrlEnter)"
+                                    aria-label="Send with Ctrl+Enter">
+                                <span translate>settings.composearea.SUBMIT_WITH_CTRL_ENTER</span>
+                            </md-switch>
                         </md-list-item>
                     </md-list>
                 </section>
@@ -75,14 +73,12 @@
                     </md-subheader>
                     <md-list flex>
                         <md-list-item>
-                            <md-radio-group ng-model="ctrl.userInterface" ng-change="ctrl.setUserInterface(ctrl.userInterface)">
-                                <md-radio-button value="default" class="md-primary">
-                                    <span translate>settings.ui.DEFAULT</span>
-                                </md-radio-button>
-                                <md-radio-button value="minimal" class="md-primary">
-                                    <span translate>settings.ui.MINIMAL</span>
-                                </md-radio-button>
-                            </md-radio-group>
+                            <md-switch
+                                    ng-model="ctrl.minimalUserInterface"
+                                    ng-change="ctrl.setMinimalUserInterface(ctrl.minimalUserInterface)"
+                                    aria-label="Use minimal layout">
+                                <span translate>settings.ui.MINIMAL_LAYOUT</span>
+                            </md-switch>
                         </md-list-item>
                     </md-list>
                 </section>

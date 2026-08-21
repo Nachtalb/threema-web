@@ -326,13 +326,11 @@
         },
         "composearea": {
             "COMPOSE_AREA": "入力欄",
-            "SUBMIT_KEY_ENTER": "「Enter」でメッセージ送信、「Shift+Enter」で改行",
-            "SUBMIT_KEY_CTRL_ENTER": "「Ctrl+Enter」でメッセージ送信、「Enter」で改行"
+            "SUBMIT_WITH_CTRL_ENTER": "Send with 'Ctrl+Enter'"
         },
         "ui": {
             "UI": "ユーザーインターフェース",
-            "DEFAULT": "デフォルト",
-            "MINIMAL": "最小"
+            "MINIMAL_LAYOUT": "Use minimal layout"
         }
     },
     "deviceUnreachable": {

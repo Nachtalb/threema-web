@@ -326,13 +326,11 @@
         },
         "composearea": {
             "COMPOSE_AREA": "撰写区域",
-            "SUBMIT_KEY_ENTER": "按 'Enter' 键发送消息。按 'Shift+Enter' 键添加新行。",
-            "SUBMIT_KEY_CTRL_ENTER": "按 'Ctrl+Enter' 键发送消息。按 'Enter' 键添加新行。"
+            "SUBMIT_WITH_CTRL_ENTER": "Send with 'Ctrl+Enter'"
         },
         "ui": {
             "UI": "用户界面",
-            "DEFAULT": "默认",
-            "MINIMAL": "最小化"
+            "MINIMAL_LAYOUT": "Use minimal layout"
         }
     },
     "deviceUnreachable": {

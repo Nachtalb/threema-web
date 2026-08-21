@@ -314,13 +314,11 @@
         },
         "composearea": {
             "COMPOSE_AREA": "Zona compunere",
-            "SUBMIT_KEY_ENTER": "'Enter' pentru a trimite un mesaj. 'Shift+Enter' pentru a adauga o noua linie",
-            "SUBMIT_KEY_CTRL_ENTER": "'Ctrl+Enter' pentru a trimite un mesaj. 'Enter' pentru a adauga o noua linie"
+            "SUBMIT_WITH_CTRL_ENTER": "Send with 'Ctrl+Enter'"
         },
         "ui": {
             "UI": "Interfata utilizator",
-            "DEFAULT": "Implicit",
-            "MINIMAL": "Minim"
+            "MINIMAL_LAYOUT": "Use minimal layout"
         }
     },
     "deviceUnreachable": {

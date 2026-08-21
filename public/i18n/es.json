@@ -320,13 +320,11 @@
         },
         "composearea": {
             "COMPOSE_AREA": "Área de escritura",
-            "SUBMIT_KEY_ENTER": "Pulsa «Entrar» para enviar un mensaje «Mayúsculas+Entrar» para añadir una nueva línea.",
-            "SUBMIT_KEY_CTRL_ENTER": "Pulsa «Ctrl+Entrar» para enviar un mensaje.\n«Entrar» para añadir una nueva línea."
+            "SUBMIT_WITH_CTRL_ENTER": "Send with 'Ctrl+Enter'"
         },
         "ui": {
             "UI": "Interfaz de usuario",
-            "DEFAULT": "Defecto",
-            "MINIMAL": "Mínimo"
+            "MINIMAL_LAYOUT": "Use minimal layout"
         }
     },
     "deviceUnreachable": {

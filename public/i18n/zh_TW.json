@@ -326,13 +326,11 @@
         },
         "composearea": {
             "COMPOSE_AREA": "撰寫區域",
-            "SUBMIT_KEY_ENTER": "按「Enter」鍵傳送訊息。按「Shift+Enter」鍵以新增新行。",
-            "SUBMIT_KEY_CTRL_ENTER": "按「Ctrl+Enter」鍵傳送訊息。按「Enter」鍵以新增新行。"
+            "SUBMIT_WITH_CTRL_ENTER": "Send with 'Ctrl+Enter'"
         },
         "ui": {
             "UI": "使用者介面",
-            "DEFAULT": "預設",
-            "MINIMAL": "最小化"
+            "MINIMAL_LAYOUT": "Use minimal layout"
         }
     },
     "deviceUnreachable": {

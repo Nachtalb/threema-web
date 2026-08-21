@@ -321,13 +321,11 @@
         },
         "composearea": {
             "COMPOSE_AREA": "Текстове поле",
-            "SUBMIT_KEY_ENTER": "Клавіша ENTER надсилає повідомлення. Комбінація SHIFT + ENTER додає новий рядок.",
-            "SUBMIT_KEY_CTRL_ENTER": "Комбінація CTRL + ENTER надсилає повідомлення. Клавіша ENTER додає новий рядок."
+            "SUBMIT_WITH_CTRL_ENTER": "Send with 'Ctrl+Enter'"
         },
         "ui": {
             "UI": "Інтерфейс користувача",
-            "DEFAULT": "За умовчанням",
-            "MINIMAL": "Мінімальний"
+            "MINIMAL_LAYOUT": "Use minimal layout"
         }
     },
     "deviceUnreachable": {

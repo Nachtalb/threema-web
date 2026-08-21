@@ -326,13 +326,11 @@
         },
         "composearea": {
             "COMPOSE_AREA": "Область компоновки",
-            "SUBMIT_KEY_ENTER": "Отправка по \"Enter\". Перенос строки с помощи \"Shift+Enter\".",
-            "SUBMIT_KEY_CTRL_ENTER": "Отправка по \"Shift+Enter\". Перенос строки с помощи \"Enter\"."
+            "SUBMIT_WITH_CTRL_ENTER": "Send with 'Ctrl+Enter'"
         },
         "ui": {
             "UI": "Пользовательский интерфейс",
-            "DEFAULT": "По умолчанию",
-            "MINIMAL": "Минималистический или строгий"
+            "MINIMAL_LAYOUT": "Use minimal layout"
         }
     },
     "deviceUnreachable": {

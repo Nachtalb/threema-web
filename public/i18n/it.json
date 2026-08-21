@@ -321,13 +321,11 @@
         },
         "composearea": {
             "COMPOSE_AREA": "Compose area",
-            "SUBMIT_KEY_ENTER": "'Invio' per inviare un messaggio; 'Shift+Invio' per andare a capo.",
-            "SUBMIT_KEY_CTRL_ENTER": "'Control+Invio' per inviare un messaggio; 'Invio' per andare a capo."
+            "SUBMIT_WITH_CTRL_ENTER": "Send with 'Ctrl+Enter'"
         },
         "ui": {
             "UI": "Interfaccia utente",
-            "DEFAULT": "Default",
-            "MINIMAL": "Minima"
+            "MINIMAL_LAYOUT": "Use minimal layout"
         }
     },
     "deviceUnreachable": {

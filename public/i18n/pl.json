@@ -326,13 +326,11 @@
         },
         "composearea": {
             "COMPOSE_AREA": "Obszar wprowadzania",
-            "SUBMIT_KEY_ENTER": "'Enter' aby wysłać wiadomość. 'Shift+Enter' aby dodać nowy wiersz.",
-            "SUBMIT_KEY_CTRL_ENTER": "'Ctrl+Enter' aby wysłać wiadomość. 'Enter' aby dodać nowy wiersz."
+            "SUBMIT_WITH_CTRL_ENTER": "Send with 'Ctrl+Enter'"
         },
         "ui": {
             "UI": "Interfejs użytkownika",
-            "DEFAULT": "Domyślne",
-            "MINIMAL": "Minimalne"
+            "MINIMAL_LAYOUT": "Use minimal layout"
         }
     },
     "deviceUnreachable": {

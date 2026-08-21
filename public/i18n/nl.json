@@ -314,13 +314,11 @@
         },
         "composearea": {
             "COMPOSE_AREA": "Invoerveld",
-            "SUBMIT_KEY_ENTER": "'Enter' om een bericht te verzenden. 'Shift+Enter' om een nieuwe regel te beginnen.",
-            "SUBMIT_KEY_CTRL_ENTER": "'Ctrl+Enter' om een bericht te verzenden. 'Enter' om een nieuwe lijn te beginnen."
+            "SUBMIT_WITH_CTRL_ENTER": "Send with 'Ctrl+Enter'"
         },
         "ui": {
             "UI": "Gebruikersinterface",
-            "DEFAULT": "Standaard",
-            "MINIMAL": "Minimaal"
+            "MINIMAL_LAYOUT": "Use minimal layout"
         }
     },
     "deviceUnreachable": {

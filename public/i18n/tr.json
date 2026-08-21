@@ -321,13 +321,11 @@
         },
         "composearea": {
             "COMPOSE_AREA": "Mesaj alanı",
-            "SUBMIT_KEY_ENTER": "Mesaj göndermek için 'Enter' tuşunu, yeni satır eklemek için 'Shift+Enter' kombinasyonunu kullanın.",
-            "SUBMIT_KEY_CTRL_ENTER": "Mesaj göndermek için 'Ctrl+Enter'' kombinasyonunu, yeni satır eklemek için 'Enter' tuşunu kullanın."
+            "SUBMIT_WITH_CTRL_ENTER": "Send with 'Ctrl+Enter'"
         },
         "ui": {
             "UI": "Kullanıcı arayüzü",
-            "DEFAULT": "Varsayılan",
-            "MINIMAL": "Minimal"
+            "MINIMAL_LAYOUT": "Use minimal layout"
         }
     },
     "deviceUnreachable": {

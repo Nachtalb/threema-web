@@ -314,13 +314,11 @@
         },
         "composearea": {
             "COMPOSE_AREA": "작성란",
-            "SUBMIT_KEY_ENTER": "메시지를 보내려면 'Enter'을 누르십시오. 'Shift+Enter'를 눌러 새 줄을 추가하십시오.",
-            "SUBMIT_KEY_CTRL_ENTER": "메시지를 보내려면 'Ctrl+Enter'를 누르십시오. 'Enter'을 눌러 새 줄을 추가하십시오."
+            "SUBMIT_WITH_CTRL_ENTER": "Send with 'Ctrl+Enter'"
         },
         "ui": {
             "UI": "이용자 인터페이스",
-            "DEFAULT": "디폴트",
-            "MINIMAL": "최소"
+            "MINIMAL_LAYOUT": "Use minimal layout"
         }
     },
     "deviceUnreachable": {

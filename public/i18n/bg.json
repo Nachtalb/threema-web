@@ -314,13 +314,11 @@
         },
         "composearea": {
             "COMPOSE_AREA": "Област за съставяне",
-            "SUBMIT_KEY_ENTER": "'Enter', за да изпратите съобщение. 'Shift+Enter', за да добавите нов ред.",
-            "SUBMIT_KEY_CTRL_ENTER": "'Ctrl+Enter', за да изпратите съобщение. 'Enter', за да добавите нов ред."
+            "SUBMIT_WITH_CTRL_ENTER": "Send with 'Ctrl+Enter'"
         },
         "ui": {
             "UI": "User interface",
-            "DEFAULT": "Default",
-            "MINIMAL": "Minimal"
+            "MINIMAL_LAYOUT": "Use minimal layout"
         }
     },
     "deviceUnreachable": {

@@ -326,13 +326,11 @@
         },
         "composearea": {
             "COMPOSE_AREA": "Вобласць кампаноўкі",
-            "SUBMIT_KEY_ENTER": "'Enter' для адпраўкі паведамлення. 'Shift+Enter', каб дадаць новы радок.",
-            "SUBMIT_KEY_CTRL_ENTER": "'Ctrl+Enter', каб адправіць паведамленне. 'Enter', каб дадаць новы радок."
+            "SUBMIT_WITH_CTRL_ENTER": "Send with 'Ctrl+Enter'"
         },
         "ui": {
             "UI": "Інтэрфейс карыстальніка",
-            "DEFAULT": "Прадвызначаны",
-            "MINIMAL": "Мінімальны"
+            "MINIMAL_LAYOUT": "Use minimal layout"
         }
     },
     "deviceUnreachable": {

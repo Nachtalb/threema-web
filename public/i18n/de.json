@@ -326,13 +326,11 @@
         },
         "composearea": {
             "COMPOSE_AREA": "Eingabefeld",
-            "SUBMIT_KEY_ENTER": "'Eingabe'  zum Senden einer Nachricht. 'Umschalt+Eingabe' zum Hinzufügen einer neuen Zeile.",
-            "SUBMIT_KEY_CTRL_ENTER": "'Strg+Eingabe' zum Senden einer Nachricht. 'Eingabe' zum Hinzufügen einer neuen Zeile."
+            "SUBMIT_WITH_CTRL_ENTER": "Send with 'Ctrl+Enter'"
         },
         "ui": {
             "UI": "Benutzeroberfläche",
-            "DEFAULT": "Standard",
-            "MINIMAL": "Minimal"
+            "MINIMAL_LAYOUT": "Use minimal layout"
         }
     },
     "deviceUnreachable": {

@@ -326,13 +326,11 @@
         },
         "composearea": {
             "COMPOSE_AREA": "Kirjoitusalue",
-            "SUBMIT_KEY_ENTER": "Enter lähettää viestin. Shift+Enter tekee rivinvaihdon.",
-            "SUBMIT_KEY_CTRL_ENTER": "Ctrl+Enter lähettää viestin. Enter tekee rivinvaihdon."
+            "SUBMIT_WITH_CTRL_ENTER": "Send with 'Ctrl+Enter'"
         },
         "ui": {
             "UI": "Käyttöliittymä",
-            "DEFAULT": "Vakio",
-            "MINIMAL": "Minimaalinen"
+            "MINIMAL_LAYOUT": "Use minimal layout"
         }
     },
     "deviceUnreachable": {

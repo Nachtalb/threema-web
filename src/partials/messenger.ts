@@ -248,8 +248,7 @@ class SettingsController extends DialogController {
     private notificationPermission: boolean;
     private notificationPreview: boolean;
     private notificationSound: boolean;
-    private submitKey: string;
-    private userInterface: string;
+    private submitWithCtrlEnter: boolean;
     private minimalUserInterface: boolean;
 
     public static $inject = [
@@ -274,9 +273,10 @@ class SettingsController extends DialogController {
         this.notificationPermission = notificationService.getNotificationPermission();
         this.notificationPreview = notificationService.getWantsPreview();
         this.notificationSound = notificationService.getWantsSound();
-        this.submitKey = settingsService.composeArea.getSubmitKey().toString();
-        this.userInterface = settingsService.userInterface.getUserInterface().toString();
-        this.minimalUserInterface = navigation.minimalUserInterface;
+        this.submitWithCtrlEnter =
+            settingsService.composeArea.getSubmitKey() === threema.ComposeAreaSubmitKey.CtrlEnter;
+        this.minimalUserInterface =
+            settingsService.userInterface.getUserInterface() === threema.UserInterface.Minimal;
     }
 
     public setWantsNotifications(desktopNotifications: boolean) {
@@ -291,12 +291,16 @@ class SettingsController extends DialogController {
         this.notificationService.setWantsSound(notificationSound);
     }
 
-    public setSubmitKey(submitKey: string) {
-        this.settingsService.composeArea.setSubmitKey(submitKey);
+    public setSubmitWithCtrlEnter(submitWithCtrlEnter: boolean) {
+        this.settingsService.composeArea.setSubmitKey(submitWithCtrlEnter
+            ? threema.ComposeAreaSubmitKey.CtrlEnter
+            : threema.ComposeAreaSubmitKey.Enter);
     }
 
-    public setUserInterface(userInterface: threema.UserInterface) {
-        this.settingsService.userInterface.setUserInterface(userInterface);
+    public setMinimalUserInterface(minimal: boolean) {
+        this.settingsService.userInterface.setUserInterface(minimal
+            ? threema.UserInterface.Minimal
+            : threema.UserInterface.Default);
     }
 
     public isPersistent(): boolean {
