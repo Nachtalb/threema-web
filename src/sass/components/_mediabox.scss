@@ -99,6 +99,9 @@ mediabox {
             .caption {
                 display: block;
                 margin: 4px 0 0;
+                // Slack around the text so selecting it with a bit of
+                // overshoot does not hit the backdrop and close the box.
+                padding: 4px 24px;
                 max-width: 90%;
                 overflow: hidden;
                 text-overflow: ellipsis;
