@@ -68,7 +68,8 @@
 </head>
 
 <body ng-controller="ThemeController as themeCtrl" class="{{ ctrl.statusClass }} {{ themeCtrl.userInterfaceClass }}" ng-class="{expanded: ctrl.expandStatusBar, messenger: ctrl.showMessenger()}" md-theme="{{ themeCtrl.theme }}">
-    <img src="img/bg.jpg?v=[[VERSION]]" aria-label="Background image: Blurred photo of a mountain" id="background-image" draggable="false">
+    <img aria-label="Background image: Blurred photo" id="background-image" draggable="false">
+    <script src="js/background.js?v=[[VERSION]]"></script>
 
     <noscript class="compat compat-nojs">
         <img class="logo-compat" src="img/logo.svg?v=[[VERSION]]"/>
