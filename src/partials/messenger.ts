@@ -466,6 +466,24 @@ class ConversationController {
         // Close any showing dialogs
         this.$mdDialog.cancel();
 
+        // Escape replaces the back button: close the profile sidebar if it is
+        // open, otherwise leave the conversation.
+        const onKeyDown = (event: KeyboardEvent) => {
+            if (event.key !== 'Escape' || event.defaultPrevented) {
+                return;
+            }
+            const target = event.target as HTMLElement | null;
+            if (target !== null && (target.isContentEditable
+                    || target.tagName === 'INPUT'
+                    || target.tagName === 'TEXTAREA')) {
+                // Let the focused field handle it
+                return;
+            }
+            this.$scope.$apply(() => this.onEscape());
+        };
+        document.addEventListener('keydown', onKeyDown);
+        $scope.$on('$destroy', () => document.removeEventListener('keydown', onKeyDown));
+
         this.maxTextLength = this.webClientService.getMaxTextLength();
         this.allText = this.$translate.instant('messenger.ALL');
 
@@ -1021,6 +1039,18 @@ class ConversationController {
         this.receiverService.setActive(undefined);
         // redirect to messenger home
         this.$state.go('messenger.home');
+    }
+
+    /**
+     * Close the profile sidebar if it is open, otherwise leave the
+     * conversation.
+     */
+    public onEscape(): void {
+        if (this.isDetailOpen()) {
+            this.$state.go('messenger.home.conversation', this.receiver);
+        } else {
+            this.goBack();
+        }
     }
 
     /**
