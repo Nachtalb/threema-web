@@ -64,10 +64,10 @@ class UserInterfaceSettings {
         const value: string = this.settingsService.retrieveUntrustedKeyValuePair('userInterface', false);
 
         switch (value) {
-            case threema.UserInterface.Minimal:
-                return threema.UserInterface.Minimal
-            default:
+            case threema.UserInterface.Default:
                 return threema.UserInterface.Default
+            default:
+                return threema.UserInterface.Minimal
         }
     }
 
