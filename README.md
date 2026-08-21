@@ -66,7 +66,7 @@ is documented [here](https://threema-ch.github.io/app-remote-protocol/).
 
 Threema Web is written using [TypeScript](https://www.typescriptlang.org/) and
 [AngularJS 1](https://www.angularjs.org/). Dependencies are managed with
-[npm](https://www.npmjs.com/). You currently need Node.js 24 to build Threema
+[Bun](https://bun.com/). You currently need Bun 1.x to build Threema
 Web. (Note that Node.js is only a build dependency, the result is plain old
 client-side JavaScript.)
 
@@ -77,11 +77,11 @@ If your default NodeJS version is not 24, use nvm to install it:
 
 Install development dependencies:
 
-    npm install
+    bun install
 
 Run the dev server:
 
-    npm run devserver
+    bun run devserver
 
 Then open the URL in your browser:
 
@@ -96,30 +96,30 @@ Web on a server, please follow the instructions at
 
 To run unit tests:
 
-    npm run build:unittests && npm run testserver
+    bun run build:unittests && bun run testserver
     firefox http://localhost:7777/tests/testsuite.html
 
 To run UI tests:
 
-    npm run build  # Required for CSS to be rebuilt
-    npm run test:ui <browser>
+    bun run build  # Required for CSS to be rebuilt
+    bun run test:ui <browser>
 
 For example:
 
-    npm run test:ui firefox
-    npm run test:ui chrome
+    bun run test:ui firefox
+    bun run test:ui chrome
 
 You can also filter the test cases:
 
-    npm run test:ui firefox emoji
+    bun run test:ui firefox emoji
 
 To run linting checks:
 
-    npm run lint
+    bun run lint
 
 You can also install a pre-push hook to do the linting:
 
-    echo -e '#!/bin/sh\nnpm run lint' > .git/hooks/pre-push
+    echo -e '#!/bin/sh\nbun run lint' > .git/hooks/pre-push
     chmod +x .git/hooks/pre-push
 
 

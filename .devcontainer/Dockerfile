@@ -22,6 +22,10 @@ RUN mkdir -p /code && chown node:node /code
 # Switch to non-root user
 USER node
 
+# Install Bun
+RUN curl -fsSL https://bun.sh/install | bash
+ENV PATH="/home/node/.bun/bin:${PATH}"
+
 # Create persistent config directory with default ownership
 RUN mkdir -p ~/.config-persistent/
 

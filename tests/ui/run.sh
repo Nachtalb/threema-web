@@ -10,5 +10,5 @@ concurrently \
     --kill-others \
     -s first \
     --names \"server,test\" \
-    "npm run testserver" \
+    "bun run testserver" \
     "ts-node --skip-project -O '{\"target\": \"ES2015\"}' tests/ui/run.ts $*"

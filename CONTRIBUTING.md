@@ -14,9 +14,9 @@ you with the implementation.
 Do the necessary changes. After you're done, please run our tests and linting
 checks:
 
-    npm run build
+    bun run build
     chromium tests/testsuite.html
-    npm run lint
+    bun run lint
 
 If no errors appear, you're good to go.
 

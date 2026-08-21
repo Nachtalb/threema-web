@@ -19,7 +19,7 @@ Set variables:
 Update version numbers:
 
     $ vim -p package.json
-    $ npm install
+    $ bun install
 
 Update changelog:
 

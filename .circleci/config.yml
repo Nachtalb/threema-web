@@ -4,18 +4,25 @@ orbs:
   browser-tools: circleci/browser-tools@1.5.3
 
 references:
+  install-bun: &install-bun
+    run:
+      name: Install Bun
+      command: |
+        curl -fsSL https://bun.sh/install | bash
+        echo 'export PATH="$HOME/.bun/bin:$PATH"' >> $BASH_ENV
   test-steps: &test-steps
     - checkout
     - restore_cache:
         keys:
-          - v4-dependencies-{{ .Environment.CIRCLE_JOB }}-{{ arch }}-{{ checksum "package.json" }}
+          - v4-dependencies-{{ .Environment.CIRCLE_JOB }}-{{ arch }}-{{ checksum "bun.lock" }}
     - browser-tools/install-browser-tools
-    - run: npm install
-    - run: npm run build
-    - run: npm run ${BUILDTARGET}
-    - run: npm run ${TESTTARGET}
+    - *install-bun
+    - run: bun install --frozen-lockfile
+    - run: bun run build
+    - run: bun run ${BUILDTARGET}
+    - run: bun run ${TESTTARGET}
     - save_cache:
-        key: v4-dependencies-{{ .Environment.CIRCLE_JOB }}-{{ arch }}-{{ checksum "package.json" }}
+        key: v4-dependencies-{{ .Environment.CIRCLE_JOB }}-{{ arch }}-{{ checksum "bun.lock" }}
         paths:
           - node_modules
 
@@ -48,11 +55,12 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v4-dependencies-lint-node14-{{ arch }}-{{ checksum "package.json" }}
-      - run: npm install
-      - run: npm run lint
+            - v4-dependencies-lint-node14-{{ arch }}-{{ checksum "bun.lock" }}
+      - *install-bun
+      - run: bun install --frozen-lockfile
+      - run: bun run lint
       - save_cache:
-          key: v4-dependencies-lint-node14-{{ arch }}-{{ checksum "package.json" }}
+          key: v4-dependencies-lint-node14-{{ arch }}-{{ checksum "bun.lock" }}
           paths:
             - node_modules
   docker-build:

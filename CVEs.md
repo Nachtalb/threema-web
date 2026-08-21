@@ -1,4 +1,4 @@
-When running `npm audit`, the report includes multiple published CVEs for
+When running `bun audit`, the report includes multiple published CVEs for
 AngularJS. These vulnerabilities listed below don't affect Threema Web.
 
 List of known AngularJS 1.8.x vulnerabilities, and whether or not they affect

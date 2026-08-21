@@ -6,7 +6,7 @@
 
 # First, build Threema Web in a node container
 
-FROM docker.io/node:24 AS builder
+FROM docker.io/oven/bun:1 AS builder
 ENV NODE_ENV=production
 
 COPY . /opt/threema-web/
@@ -14,8 +14,8 @@ WORKDIR /opt/threema-web/
 
 RUN sed -i "s/SELF_HOSTED: [^,]*,/SELF_HOSTED: true,/g" src/config.ts
 
-RUN npm ci
-RUN npm run dist -- d
+RUN bun install --frozen-lockfile
+RUN bun run dist d
 
 # Then, transfer the build artifacts to a minimal nginx container
 
