@@ -1,3 +1,14 @@
+// Floating layout for the minimal user interface.
+//
+// The chat list, chat header and compose area become separate floating panes
+// over the page background, rather than panels inside one opaque card.
+
+$float-gap: 1rem;
+$float-radius: 1rem;
+$float-shadow: 0 2px 8px rgba(0, 0, 0, .18);
+$list-width: 24rem;
+$chat-max-width: 60rem;
+
 .user-interface {
     &-minimal {
         &.messenger {
@@ -19,8 +30,117 @@
             }
         }
 
-        #main {
+        // Let the page background show through behind the messenger. The
+        // welcome screen keeps its card.
+        &.messenger #main {
             border-radius: 0;
+            box-shadow: none;
+            background-color: transparent;
+            overflow: visible;
+        }
+
+        // Round the welcome card and every dialog to match the floating panes
+        &:not(.messenger) #main {
+            border-radius: $float-radius;
+        }
+
+        md-dialog {
+            border-radius: $float-radius;
+        }
+
+        #messenger {
+            gap: $float-gap;
+            padding: $float-gap;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+
+        // The chat list keeps the same size whether or not a chat is open, so
+        // opening one does not shift it around.
+        #navigation {
+            flex: 0 0 $list-width !important;
+            border-right: 0 !important;
+            border-radius: $float-radius;
+            box-shadow: $float-shadow;
+            width: $list-width;
+            min-width: $list-width !important;
+            max-width: $list-width !important;
+            overflow: hidden;
+        }
+
+        #messenger #detail {
+            flex: 1 1 auto !important;
+            min-width: 0;
+            max-width: none !important;
+            background-color: transparent;
+
+            // The generic detail wrapper paints an opaque background, which
+            // would hide the page background behind the messages.
+            > div.ng-scope {
+                background-color: transparent;
+            }
+        }
+
+        #conversation {
+            gap: $float-gap;
+            background-image: none;
+
+            // Header and compose area float; the messages between them scroll
+            // underneath nothing, so no absolute positioning is needed.
+            #conversation-header,
+            #conversation-footer {
+                flex: 0 0 auto;
+                margin: 0 auto;
+                border-radius: $float-radius;
+                box-shadow: $float-shadow;
+                box-sizing: border-box;
+                width: 100%;
+                max-width: $chat-max-width;
+                overflow: hidden;
+            }
+
+            #conversation-header {
+                border-radius: $float-radius;
+            }
+
+            #conversation-chat {
+                margin: 0 auto;
+                box-sizing: border-box;
+                width: 100%;
+                max-width: $chat-max-width;
+
+                // Overlay scrollbar: no track, and the thumb only fades in
+                // while the pointer is over the messages.
+                scrollbar-width: thin;
+                scrollbar-color: transparent transparent;
+                transition: scrollbar-color .25s ease-out;
+
+                &::-webkit-scrollbar {
+                    border: 0;
+                    background-color: transparent;
+                    width: 6px;
+                }
+
+                &::-webkit-scrollbar-thumb {
+                    border-radius: 3px;
+                    background-color: transparent;
+                    transition: background-color .25s ease-out;
+                }
+
+                &:hover {
+                    scrollbar-color: rgba(0, 0, 0, .3) transparent;
+
+                    &::-webkit-scrollbar-thumb {
+                        background-color: rgba(0, 0, 0, .3);
+                    }
+                }
+            }
+
+            #conversation-footer {
+                compose-area > div {
+                    box-shadow: none;
+                }
+            }
         }
     }
 }
