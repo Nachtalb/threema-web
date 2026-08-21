@@ -3,6 +3,10 @@
 .avatar {
     position: relative;
 
+    &.clickable {
+        cursor: pointer;
+    }
+
     > img {
         width: 100%;
     }

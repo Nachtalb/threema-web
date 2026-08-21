@@ -1,7 +1,9 @@
 <div class="form-content">
 	<!-- information list card -->
 	<md-card class="two-row">
-		<div class="avatar">
+		<div class="avatar"
+			 ng-class="{clickable: ctrl.hasAvatar()}"
+			 ng-click="ctrl.showAvatar()">
 			<eee-avatar eee-receiver="ctrl.receiver"
 						eee-resolution="'high'"></eee-avatar>
 		</div>

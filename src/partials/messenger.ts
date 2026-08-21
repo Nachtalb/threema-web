@@ -36,6 +36,7 @@ import {ControllerService} from '../services/controller';
 import {ControllerModelService} from '../services/controller_model';
 import {TrustedKeyStoreService} from '../services/keystore';
 import {LogService} from '../services/log';
+import {MediaboxService} from '../services/mediabox';
 import {MimeService} from '../services/mime';
 import {NotificationService} from '../services/notification';
 import {ReceiverService} from '../services/receiver';
@@ -1559,6 +1560,7 @@ class ReceiverDetailController {
     // Own services
     private contactService: ContactService;
     private webClientService: WebClientService;
+    private mediaboxService: MediaboxService;
 
     public receiver: threema.Receiver;
     public me: threema.MeReceiver;
@@ -1578,16 +1580,19 @@ class ReceiverDetailController {
     public static $inject = [
         '$scope', '$stateParams', '$state', '$mdDialog', '$translate',
         'LogService', 'WebClientService', 'ContactService', 'ControllerModelService',
+        'MediaboxService',
     ];
     constructor($scope: ng.IScope, $stateParams, $state: UiStateService,
                 $mdDialog: ng.material.IDialogService, $translate: ng.translate.ITranslateService,
                 logService: LogService, webClientService: WebClientService,
-                contactService: ContactService, controllerModelService: ControllerModelService) {
+                contactService: ContactService, controllerModelService: ControllerModelService,
+                mediaboxService: MediaboxService) {
         this.$mdDialog = $mdDialog;
         this.$scope = $scope;
         this.$state = $state;
         this.contactService = contactService;
         this.webClientService = webClientService;
+        this.mediaboxService = mediaboxService;
 
         this.receiver = webClientService.receivers.getData($stateParams);
         this.me = webClientService.me;
@@ -1673,6 +1678,34 @@ class ReceiverDetailController {
             id: this.receiver.id,
             initParams: null,
         });
+    }
+
+    /**
+     * Return whether the receiver has an avatar to show.
+     */
+    public hasAvatar(): boolean {
+        return hasValue(this.receiver.avatar)
+            && hasValue(this.receiver.avatar.high ?? this.receiver.avatar.low);
+    }
+
+    /**
+     * Show the avatar in the media box.
+     */
+    public showAvatar(): void {
+        const avatar = this.receiver.avatar;
+        if (!hasValue(avatar)) {
+            return;
+        }
+        const data = avatar.high ?? avatar.low;
+        if (!hasValue(data)) {
+            return;
+        }
+        this.mediaboxService.setMedia(
+            data,
+            `${this.receiver.displayName}.jpg`,
+            this.webClientService.appCapabilities.imageFormat.avatar,
+            this.receiver.displayName,
+        );
     }
 
     public edit(): void {
