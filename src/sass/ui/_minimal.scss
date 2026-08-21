@@ -10,30 +10,6 @@ $list-width: 24rem;
 $detail-width: 24rem;
 $chat-max-width: 60rem;
 
-@keyframes detail-slide-in {
-    from {
-        margin-left: -$float-gap;
-        width: 0;
-    }
-
-    to {
-        margin-left: 0;
-        width: $detail-width;
-    }
-}
-
-@keyframes detail-slide-out {
-    from {
-        margin-left: 0;
-        width: $detail-width;
-    }
-
-    to {
-        margin-left: -$float-gap;
-        width: 0;
-    }
-}
-
 .user-interface {
     &-minimal {
         &.messenger {
@@ -119,18 +95,23 @@ $chat-max-width: 60rem;
             display: flex;
             flex: 0 0 auto;
             margin-top: $float-gap;
+            margin-left: -$float-gap;
             background-color: transparent;
             overflow: hidden;
+            // The container owns the width so it stays single valued while the
+            // panel is being inserted or removed, which is what kept the old
+            // animation overshooting.
+            width: 0;
+            transition: width .25s ease-out, margin-left .25s ease-out;
 
-            // No panel, no gap to leave behind
-            &:empty {
-                margin-left: -$float-gap;
+            &.detail-open {
+                margin-left: 0;
+                width: $detail-width;
             }
 
-            // ng-if creates and destroys this element, which is what lets
-            // ngAnimate run an animation on the way out as well as in.
             .detail-panel {
                 display: block;
+                flex: 0 0 auto;
                 border-radius: $float-radius;
                 box-shadow: $float-shadow;
                 box-sizing: border-box;
@@ -139,14 +120,6 @@ $chat-max-width: 60rem;
                 background-color: $light-background-color;
                 overflow-x: hidden;
                 overflow-y: auto;
-
-                &.ng-enter {
-                    animation: detail-slide-in .25s ease-out;
-                }
-
-                &.ng-leave {
-                    animation: detail-slide-out .25s ease-in;
-                }
 
                 // Overlay the scrollbar so it does not steal width from the
                 // content, which would push it off centre.
