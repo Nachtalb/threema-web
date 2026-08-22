@@ -1129,7 +1129,17 @@ class ConversationController {
      * Scroll to bottom of chat.
      */
     public scrollDown(): void {
-        this.domChatElement.scrollTop = this.domChatElement.scrollHeight;
+        const chat = this.domChatElement;
+        // Jump most of the way, then glide the last stretch. Animating the
+        // whole distance would crawl through long conversations, and jumping
+        // all of it lands with no sense of where you came from.
+        const target = chat.scrollHeight;
+        const remaining = target - (chat.scrollTop + chat.clientHeight);
+        const glide = 180;
+        if (remaining > glide) {
+            chat.scrollTop = target - chat.clientHeight - glide;
+        }
+        chat.scrollTo({top: target, behavior: 'smooth'});
     }
 
     /**
