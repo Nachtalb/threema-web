@@ -401,7 +401,10 @@
                     margin: 0;
                     border-radius: 8px;
                     background-color: rgba(0, 0, 0, .45);
-                    padding: 2px 8px;
+                    padding: 4px 8px 3px;
+                    // The digits sit high in their line box, so an even
+                    // padding reads as squashed against the top.
+                    line-height: 1.2;
                     color: #ffffff;
 
                     .message-date,
@@ -633,6 +636,10 @@
 
                 i {
                     display: block;
+                    // The digits sit high in their line box, so centring the
+                    // icon on the box leaves it low against the text itself.
+                    position: relative;
+                    top: -1.5px;
                     line-height: 1;
                 }
 
