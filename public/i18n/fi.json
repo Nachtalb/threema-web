@@ -147,7 +147,7 @@
         "COPY": "Kopioi",
         "COPIED": "Teksti kopioitu leikepöydälle!",
         "COPY_ERROR": "Virhe: Tekstiä ei voitu kopioida leikepöydälle",
-        "MSG_HISTORY": "Viestihistoria",
+        "MSG_DETAILS": "Viestihistoria",
         "MSG_HISTORY_CREATED": "Luotu",
         "MSG_HISTORY_SENT": "Lähetetty",
         "MSG_HISTORY_DELIVERED": "Toimitettu",

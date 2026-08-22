@@ -135,7 +135,7 @@
         "COPY": "Másolás",
         "COPIED": "Szöveg vágólapra másolva.",
         "COPY_ERROR": "Hiba: Nem lehetett a szöveget vágólapra másolni.",
-        "MSG_HISTORY": "Beszélgetéselőzmények",
+        "MSG_DETAILS": "Beszélgetéselőzmények",
         "MSG_HISTORY_CREATED": "Létrehozva",
         "MSG_HISTORY_SENT": "Elküldve",
         "MSG_HISTORY_DELIVERED": "Kézbesítve",

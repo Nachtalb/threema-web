@@ -140,7 +140,7 @@
         "COPY": "Copier",
         "COPIED": "Le texte a été copié dans le presse-papier !",
         "COPY_ERROR": "Erreur : le texte n’a pas pu être copié dans le presse-papier",
-        "MSG_HISTORY": "Historique des messages",
+        "MSG_DETAILS": "Historique des messages",
         "MSG_HISTORY_CREATED": "Créé",
         "MSG_HISTORY_SENT": "Envoyé",
         "MSG_HISTORY_DELIVERED": "Reçu",

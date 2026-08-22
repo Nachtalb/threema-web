@@ -147,7 +147,7 @@
         "COPY": "复制",
         "COPIED": "文本已经复制到剪切板",
         "COPY_ERROR": "错误：无法将文本复制到剪切板",
-        "MSG_HISTORY": "消息记录",
+        "MSG_DETAILS": "消息记录",
         "MSG_HISTORY_CREATED": "已创建",
         "MSG_HISTORY_SENT": "已发送",
         "MSG_HISTORY_DELIVERED": "已送达",

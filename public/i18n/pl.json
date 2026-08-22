@@ -147,7 +147,7 @@
         "COPY": "Skopiuj",
         "COPIED": "Tekst skopiowany do schowka!",
         "COPY_ERROR": "Błąd: Nie udało się skopiować tekstu do schowka",
-        "MSG_HISTORY": "Historia wiadomości",
+        "MSG_DETAILS": "Historia wiadomości",
         "MSG_HISTORY_CREATED": "Utworzono",
         "MSG_HISTORY_SENT": "Wysłano",
         "MSG_HISTORY_DELIVERED": "Dostarczono",

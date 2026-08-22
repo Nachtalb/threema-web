@@ -140,7 +140,7 @@
         "COPY": "복사",
         "COPIED": "텍스트가 클립보드로 복사됨!",
         "COPY_ERROR": "오류: 텍스트를 클립보드에 복사할 수 없음",
-        "MSG_HISTORY": "메세지 기록",
+        "MSG_DETAILS": "메세지 기록",
         "MSG_HISTORY_CREATED": "생성됨",
         "MSG_HISTORY_SENT": "보냄",
         "MSG_HISTORY_DELIVERED": "전송됨",

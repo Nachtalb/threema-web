@@ -147,7 +147,7 @@
         "COPY": "Copiare",
         "COPIED": "Testo copiato negli appunti!",
         "COPY_ERROR": "Errore: Impossibile copiare il testo negli appunti.",
-        "MSG_HISTORY": "Storia di messaggi ",
+        "MSG_DETAILS": "Storia di messaggi ",
         "MSG_HISTORY_CREATED": "Fatto",
         "MSG_HISTORY_SENT": "Inviato",
         "MSG_HISTORY_DELIVERED": "Mandato",

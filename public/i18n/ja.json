@@ -147,7 +147,7 @@
         "COPY": "コピー",
         "COPIED": "テキストをクリップボードにコピーしました！",
         "COPY_ERROR": "エラー: テキストをクリップボードにコピーできませんでした",
-        "MSG_HISTORY": "メッセージの履歴",
+        "MSG_DETAILS": "メッセージの履歴",
         "MSG_HISTORY_CREATED": "作成日時",
         "MSG_HISTORY_SENT": "送信日時",
         "MSG_HISTORY_DELIVERED": "送信済み",

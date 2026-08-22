@@ -124,7 +124,7 @@
         "COPY": "Copiar",
         "COPIED": "Texto copiado!",
         "COPY_ERROR": "Erro: não foi possível copiar o texto",
-        "MSG_HISTORY": "Histórico de mensagens",
+        "MSG_DETAILS": "Histórico de mensagens",
         "MSG_HISTORY_CREATED": "Criado",
         "MSG_HISTORY_SENT": "Enviado",
         "MSG_HISTORY_DELIVERED": "Entregue",

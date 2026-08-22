@@ -697,3 +697,37 @@ md-menu-item {
         }
     }
 }
+
+// Message details, shown in place of the context menu actions
+.message-details {
+    padding-bottom: 8px;
+    min-width: 240px;
+
+    .message-details-header {
+        display: flex;
+        align-items: center;
+        border-bottom: 1px solid $border-grey;
+        padding-right: 16px;
+
+        span {
+            font-weight: bold;
+        }
+    }
+
+    .message-details-list {
+        margin: 0;
+        padding: 8px 16px 0;
+        font-size: .9em;
+
+        dt {
+            color: $material-grey;
+            font-size: .85em;
+        }
+
+        dd {
+            margin: 0 0 8px;
+            color: $material-grey-dark;
+            word-break: break-all;
+        }
+    }
+}

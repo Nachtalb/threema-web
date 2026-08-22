@@ -147,7 +147,7 @@
         "COPY": "Kopírovat",
         "COPIED": "Text byl zkopírován do schránky!",
         "COPY_ERROR": "Chyba: Nelze zkopírovat text do schránky",
-        "MSG_HISTORY": "Detail zprávy",
+        "MSG_DETAILS": "Detail zprávy",
         "MSG_HISTORY_CREATED": "Vytvořeno",
         "MSG_HISTORY_SENT": "Odesláno",
         "MSG_HISTORY_DELIVERED": "Doručeno",

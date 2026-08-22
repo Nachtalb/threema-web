@@ -140,7 +140,7 @@
         "COPY": "Copiere",
         "COPIED": "Text copiat in clipboard!",
         "COPY_ERROR": "Eroare: Nu s-a putut copia in clipboard",
-        "MSG_HISTORY": "Istoric mesaj",
+        "MSG_DETAILS": "Istoric mesaj",
         "MSG_HISTORY_CREATED": "Creat",
         "MSG_HISTORY_SENT": "Trimis",
         "MSG_HISTORY_DELIVERED": "Trimis",

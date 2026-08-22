@@ -4,6 +4,7 @@
         <i class="material-icons md-dark md-24">more_vert</i>
     </md-button>
     <md-menu-content width="1">
+        <div ng-if="!ctrl.detailsOpen">
         <md-menu-item ng-if="ctrl.access.ack">
             <md-button ng-click="ctrl.ack(true)">
                 <md-icon aria-label="Acknowledge" class="material-icons md-24">thumb_up</md-icon>
@@ -35,9 +36,9 @@
             </md-button>
         </md-menu-item>
         <md-menu-item ng-if="ctrl.message.events">
-            <md-button ng-click="ctrl.showHistory($event)">
-                <md-icon aria-label="Message history" class="material-icons md-24">history</md-icon>
-                <span translate>messenger.MSG_HISTORY</span>
+            <md-button ng-click="ctrl.showHistory($event); $event.stopPropagation();" md-prevent-menu-close="md-prevent-menu-close">
+                <md-icon aria-label="Details" class="material-icons md-24">info_outline</md-icon>
+                <span translate>messenger.MSG_DETAILS</span>
             </md-button>
         </md-menu-item>
         <md-menu-item ng-if="ctrl.message.type === 'location'">
@@ -52,5 +53,31 @@
             <span translate>messenger.DELETE</span>
             </md-button>
         </md-menu-item>
+        </div>
+
+        <!-- Details, shown in place of the actions -->
+        <div class="message-details" ng-if="ctrl.detailsOpen">
+            <div class="message-details-header">
+                <md-button class="md-icon-button" aria-label="Back" ng-click="ctrl.hideHistory($event); $event.stopPropagation();" md-prevent-menu-close="md-prevent-menu-close">
+                    <i class="material-icons md-24">arrow_back</i>
+                </md-button>
+                <span translate>messenger.MSG_DETAILS</span>
+            </div>
+            <dl class="message-details-list">
+                <dt>Message ID</dt>
+                <dd>{{ ctrl.message.id }}</dd>
+                <div ng-repeat="event in ctrl.message.events">
+                    <dt>
+                        <span ng-if="event.type === 'created'" translate>messenger.MSG_HISTORY_CREATED</span>
+                        <span ng-if="event.type === 'sent'" translate>messenger.MSG_HISTORY_SENT</span>
+                        <span ng-if="event.type === 'delivered'" translate>messenger.MSG_HISTORY_DELIVERED</span>
+                        <span ng-if="event.type === 'read'" translate>messenger.MSG_HISTORY_READ</span>
+                        <span ng-if="event.type === 'acked'" translate>messenger.MSG_HISTORY_ACKED</span>
+                        <span ng-if="event.type === 'modified'" translate>messenger.MSG_HISTORY_MODIFIED</span>
+                    </dt>
+                    <dd>{{ event.date | unixToTimestring:true }}</dd>
+                </div>
+            </dl>
+        </div>
     </md-menu-content>
 </md-menu>

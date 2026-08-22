@@ -146,7 +146,7 @@
         "COPY": "Copiar",
         "COPIED": "Texto copiado al portapapeles!",
         "COPY_ERROR": "Error: no se pudo copiar el texto al portapapeles",
-        "MSG_HISTORY": "Historial de mensajes",
+        "MSG_DETAILS": "Historial de mensajes",
         "MSG_HISTORY_CREATED": "Creado",
         "MSG_HISTORY_SENT": "Enviado",
         "MSG_HISTORY_DELIVERED": "Entregado",

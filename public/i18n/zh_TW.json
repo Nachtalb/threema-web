@@ -147,7 +147,7 @@
         "COPY": "複製",
         "COPIED": "文本已複製至剪貼簿",
         "COPY_ERROR": "錯誤：無法將文本複製至剪貼簿",
-        "MSG_HISTORY": "訊息記錄",
+        "MSG_DETAILS": "訊息記錄",
         "MSG_HISTORY_CREATED": "已建立",
         "MSG_HISTORY_SENT": "已傳送",
         "MSG_HISTORY_DELIVERED": "已送達",

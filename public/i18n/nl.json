@@ -140,7 +140,7 @@
         "COPY": "Kopiëren",
         "COPIED": "Tekst naar klembord gekopieerd. ",
         "COPY_ERROR": "Fout: Kon tekst niet naar klembord kopiëren",
-        "MSG_HISTORY": "Berichtenhistorie",
+        "MSG_DETAILS": "Berichtenhistorie",
         "MSG_HISTORY_CREATED": "Aangemaakt",
         "MSG_HISTORY_SENT": "Verstuurd",
         "MSG_HISTORY_DELIVERED": "Bezorgd",

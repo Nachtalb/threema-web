@@ -147,7 +147,7 @@
         "COPY": "Kopírovať",
         "COPIED": "Text skopírovaný do schránky clipboard! ",
         "COPY_ERROR": "Chyba: Nemožno skopírovať text do clipboard!",
-        "MSG_HISTORY": "História správ",
+        "MSG_DETAILS": "História správ",
         "MSG_HISTORY_CREATED": "Vytvorené",
         "MSG_HISTORY_SENT": "Poslané",
         "MSG_HISTORY_DELIVERED": "Doručené",

@@ -147,7 +147,7 @@
         "COPY": "Kopyala",
         "COPIED": "Metin panoya kopyalandı!",
         "COPY_ERROR": "Hata: Metin panoya kopyalanamadı",
-        "MSG_HISTORY": "Mesaj geçmişi",
+        "MSG_DETAILS": "Mesaj geçmişi",
         "MSG_HISTORY_CREATED": "Oluşturuldu",
         "MSG_HISTORY_SENT": "Gönderildi",
         "MSG_HISTORY_DELIVERED": "Teslim edildi",

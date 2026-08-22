@@ -135,7 +135,7 @@
         "COPY": "Copy",
         "COPIED": "Text copied to clipboard!",
         "COPY_ERROR": "Error: Could not copy text to clipboard",
-        "MSG_HISTORY": "Message History",
+        "MSG_DETAILS": "Message History",
         "MSG_HISTORY_CREATED": "Created",
         "MSG_HISTORY_SENT": "Sent",
         "MSG_HISTORY_DELIVERED": "Delivered",

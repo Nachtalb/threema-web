@@ -50,6 +50,12 @@ export default [
                     document.querySelectorAll('.message-selected')
                         .forEach((el) => el.classList.remove('message-selected'));
                     message.classList.add('message-selected');
+                    // Always open on the action list, never on the details
+                    // left behind by a previous visit.
+                    const menuScope = (window as any).angular.element(menu).scope();
+                    if (menuScope !== undefined && menuScope.ctrl !== undefined) {
+                        menuScope.ctrl.detailsOpen = false;
+                    }
                     trigger.click();
                     return true;
                 };
