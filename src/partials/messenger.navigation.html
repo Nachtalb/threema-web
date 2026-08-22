@@ -44,6 +44,7 @@
             ui-sref="messenger.home.conversation({ type: conversation.type, id: conversation.id, initParams: null })"
             aria-label="conversation with {{ conversation.receiver.displayName }}"
             class="conversation-wrapper"
+            eee-conversation-contextmenu
             ng-if="ctrl.isVisible(conversation)">
 
             <div class="conversation"
@@ -89,6 +90,26 @@
                 </section>
 
             </div>
+
+            <!-- Opened by right clicking the conversation -->
+            <md-menu class="conversation-menu" md-position-mode="target target" md-offset="0 0">
+                <md-button class="md-icon-button conversation-menu-trigger" aria-label="Conversation actions" ng-click="$mdMenu.open($event)"></md-button>
+                <md-menu-content width="3">
+                    <md-menu-item ng-if="ctrl.canMarkAsRead(conversation)">
+                        <md-button ng-click="ctrl.markAsRead(conversation)">
+                            <md-icon class="material-icons md-24">done_all</md-icon>
+                            <span translate>messenger.MARK_AS_READ</span>
+                        </md-button>
+                    </md-menu-item>
+                    <md-menu-item>
+                        <md-button ng-click="ctrl.togglePinned(conversation)">
+                            <md-icon class="material-icons md-24">{{ conversation.isStarred ? 'star_border' : 'star' }}</md-icon>
+                            <span ng-if="!conversation.isStarred" translate>messenger.PIN_CONVERSATION</span>
+                            <span ng-if="conversation.isStarred" translate>messenger.UNPIN_CONVERSATION</span>
+                        </md-button>
+                    </md-menu-item>
+                </md-menu-content>
+            </md-menu>
 
         </li>
     </ul>

@@ -25,6 +25,7 @@ import batteryStatus from './directives/battery';
 import clickAction from './directives/click_action';
 import composeArea from './directives/compose_area';
 import contactBadge from './directives/contact_badge';
+import conversationContextmenu from './directives/conversation_contextmenu';
 import distributionListBadge from './directives/distribution_list_badge';
 import dragFile from './directives/drag_file';
 import groupBadge from './directives/group_badge';
@@ -80,6 +81,7 @@ angular.module('3ema.directives').directive('eeeVerificationLevel', verification
 angular.module('3ema.directives').directive('includeReplace', includeReplace);
 angular.module('3ema.directives').directive('location', location);
 angular.module('3ema.directives').directive('eeeMarquee', marquee);
+angular.module('3ema.directives').directive('eeeConversationContextmenu', conversationContextmenu);
 angular.module('3ema.directives').directive('mediabox', mediabox);
 angular.module('3ema.directives').directive('memberListEditor', memberListEditor);
 angular.module('3ema.directives').directive('searchbox', searchbox);

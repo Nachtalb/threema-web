@@ -1133,6 +1133,7 @@ class NavigationController {
     private stateService: StateService;
     private trustedKeyStoreService: TrustedKeyStoreService;
     private notificationService: NotificationService;
+    private log: Logger;
 
     private activeTab: 'contacts' | 'conversations' = 'conversations';
     private searchVisible = false;
@@ -1154,6 +1155,7 @@ class NavigationController {
                 receiverService: ReceiverService, notificationService: NotificationService,
                 trustedKeyStoreService: TrustedKeyStoreService, settingsService: SettingsService) {
         const log = logService.getLogger('Navigation-C');
+        this.log = log;
 
         // Redirect to welcome if necessary
         if (stateService.state === 'error') {
@@ -1178,6 +1180,34 @@ class NavigationController {
         this.$mdDialog = $mdDialog;
         this.$translate = $translate;
         this.$state = $state;
+    }
+
+    /**
+     * Return whether the conversation has anything to mark as read.
+     */
+    public canMarkAsRead(conversation: threema.Conversation): boolean {
+        return conversation.unreadCount > 0 || conversation.isUnread === true;
+    }
+
+    /**
+     * Mark a conversation as read without opening it.
+     */
+    public markAsRead(conversation: threema.Conversation): void {
+        if (!hasValue(conversation.latestMessage)) {
+            return;
+        }
+        this.webClientService.requestRead(
+            {type: conversation.type, id: conversation.id} as threema.Receiver,
+            conversation.latestMessage);
+    }
+
+    /**
+     * Pin or unpin a conversation.
+     */
+    public togglePinned(conversation: threema.Conversation): void {
+        this.webClientService
+            .modifyConversation(conversation, conversation.isStarred !== true)
+            .catch((e) => this.log.error('Pinning conversation failed: ' + e));
     }
 
     public contacts(): threema.ContactReceiver[] {
