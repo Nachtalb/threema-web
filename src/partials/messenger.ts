@@ -986,7 +986,10 @@ class ConversationController {
     }
 
     public showReceiver(ev): void {
-        this.$state.go('messenger.home.conversation.detail', this.receiver);
+        this.$state.go('messenger.home.conversation.detail', {
+            detailType: this.receiver.type,
+            detailId: this.receiver.id,
+        });
     }
 
     /**
@@ -1594,7 +1597,10 @@ class ReceiverDetailController {
         this.webClientService = webClientService;
         this.mediaboxService = mediaboxService;
 
-        this.receiver = webClientService.receivers.getData($stateParams);
+        this.receiver = webClientService.receivers.getData(
+            $stateParams.detailType !== undefined && $stateParams.detailType !== null
+                ? {type: $stateParams.detailType, id: $stateParams.detailId}
+                : $stateParams);
         this.me = webClientService.me;
 
         const log = logService.getLogger('ReceiverDetail-C');
@@ -1678,6 +1684,20 @@ class ReceiverDetailController {
             id: this.receiver.id,
             initParams: null,
         });
+    }
+
+    /**
+     * Return whether a chat with this receiver can be opened. There is no
+     * point in offering it for the conversation that is already open behind
+     * the detail sidebar.
+     */
+    public canChat(): boolean {
+        if (!this.controllerModel.canChat()) {
+            return false;
+        }
+        const conversation = this.$state.params as {type?: string, id?: string};
+        return conversation.type !== this.receiver.type
+            || conversation.id !== this.receiver.id;
     }
 
     /**
@@ -1994,9 +2014,11 @@ angular.module('3ema.messenger', ['ngMaterial'])
         })
 
         // Nested below the conversation so it opens as a sidebar next to the
-        // chat rather than replacing it.
+        // chat rather than replacing it. It carries its own receiver params so
+        // that the profile of any group member can be shown without switching
+        // the conversation behind it.
         .state('messenger.home.conversation.detail', {
-            url: '/detail',
+            url: '/detail/{detailType}/{detailId}',
             templateUrl: 'partials/messenger.receiver.html',
             controller: 'ReceiverDetailController',
             controllerAs: 'ctrl',
