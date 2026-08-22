@@ -59,6 +59,8 @@ export default [
                 type: '=eeeType',
                 receiver: '=eeeReceiver',
                 message: '=eeeMessage',
+                previousMessage: '=?eeePreviousMessage',
+                nextMessage: '=?eeeNextMessage',
                 resolution: '=?eeeResolution',
             },
             controllerAs: 'ctrl',
@@ -90,6 +92,24 @@ export default [
                     this.showName = !this.message.isOutbox && this.isGroup;
                     // show avatar only if a name is shown
                     this.showAvatar = this.showName;
+                    // Only the last message of a run by the same sender gets a
+                    // tail, so a burst reads as one block. The corners facing
+                    // a neighbour in the run are tightened instead.
+                    const sameSender = (other) =>
+                        hasValue(other)
+                        && other.isStatus !== true
+                        && other.isOutbox === this.message.isOutbox
+                        && getSenderIdentity(other, webClientService.me.id)
+                            === getSenderIdentity(this.message, webClientService.me.id);
+                    this.followsSameSender = sameSender(this.previousMessage);
+                    this.precedesSameSender = sameSender(this.nextMessage);
+                    // Captionless media carrying reactions has a transparent
+                    // bubble, so a tail would float unattached beside the
+                    // pills rather than joining anything.
+                    const isMedia = this.message.type === 'image'
+                        || this.message.type === 'video';
+                    this.showTail = !this.precedesSameSender
+                        && !(isMedia && !this.message.caption && hasEmojiReactions(this.message));
                     this.showText = this.message.type === 'text' || this.message.caption;
                     this.showMedia = this.message.type !== 'text';
                     this.showState = messageService.showStatusIcon(this.message as threema.Message, this.receiver);

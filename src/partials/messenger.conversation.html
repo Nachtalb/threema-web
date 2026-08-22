@@ -61,6 +61,8 @@
             </li>
             <li ng-repeat="message in ctrl.messages" id="message-{{message.id}}">
                 <eee-message eee-receiver="ctrl.receiver" eee-type="ctrl.type" eee-message="message"
+                             eee-previous-message="ctrl.messages[$index - 1]"
+                             eee-next-message="ctrl.messages[$index + 1]"
                              in-view="$inview  && !ctrl.locked && ctrl.msgRead(message)"
                              in-view-options="{ considerPageFocus: true }"></eee-message>
             </li>

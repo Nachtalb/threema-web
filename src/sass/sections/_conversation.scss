@@ -268,27 +268,22 @@
 
         // Lift the message the menu belongs to, so it is clear which one the
         // actions apply to. The offset is fixed rather than a scale factor,
-        // which would grow long messages far more than short ones.
-        .message-body,
-        .bubble-triangle {
+        // which would grow long messages far more than short ones. The tail
+        // lives inside the bubble now, so it moves with it.
+        .message-body {
             transition: transform .15s ease-out;
         }
 
         &.message-selected {
-            .message-body,
-            .bubble-triangle {
-                transform: translateY(-2px);
-            }
-
             .message-body {
+                transform: translateY(-2px);
                 box-shadow: 0 4px 10px rgba(0, 0, 0, .25);
             }
         }
 
         // Flash the message a quote jumped to
         &.message-flash {
-            .message-body,
-            .bubble-triangle {
+            .message-body {
                 animation: message-flash 2s ease-out;
             }
         }
@@ -306,24 +301,19 @@
             }
         }
 
-        // arrow
+        // Tail, drawn as an SVG so it curves into the bubble. Only the last
+        // message of a run by the same sender gets one. It is a flex sibling
+        // of the bubble rather than an absolutely positioned child, so no
+        // ancestor can clip it.
         .bubble-triangle {
-            position: relative;
-            width: $bubble-triangle-size;
-            height: $bubble-triangle-size;
-
-            // Below the bubble (z-index 2) so it reads as part of it rather
-            // than a shape drawn on top.
-            &::after {
-                @include message-bubble-triangle;
-                z-index: 1;
-            }
-
-            &::before {
-                @include message-bubble-triangle;
-                @include message-bubble-shadow;
-                z-index: 0;
-            }
+            flex: 0 0 9px;
+            // Bottom of the bubble; the path ends 3px above the 20px viewbox
+            align-self: flex-end;
+            margin-bottom: -3px;
+            width: 9px;
+            height: 20px;
+            overflow: visible;
+            pointer-events: none;
         }
 
     }
@@ -355,11 +345,19 @@
         }
 
         // Media fills the bubble edge to edge. Everything else keeps the
-        // padding, so a caption still lines up with a text message.
+        // padding, so a caption still lines up with a text message. Gifs
+        // arrive as file messages, hence the third selector.
         &.image-message-body,
-        &.video-message-body {
+        &.video-message-body,
+        &.file-message-body:has(.message-media) {
             padding: 0;
-            overflow: hidden;
+
+            // The media is rounded by the bubble, but the tail hangs outside
+            // it, so the clipping goes on the media itself.
+            .message-media {
+                border-radius: inherit;
+                overflow: hidden;
+            }
 
             > *:not(.message-media):not(.message-emoji-reactions) {
                 margin-right: 8px;
@@ -629,17 +627,25 @@
             background-color: $message-bubble-color-in;
         }
 
-        // arrow
+        // Corners facing a neighbour by the same sender are tightened, and the
+        // one the tail attaches to is squared off entirely.
+        &.follows-same-sender .message-body {
+            border-top-left-radius: 4px;
+        }
+
+        &.precedes-same-sender .message-body {
+            border-bottom-left-radius: 4px;
+        }
+
+        &:not(.precedes-same-sender) .message-body {
+            border-bottom-left-radius: 0;
+        }
+
+        // Tail on the left of the bubble, overlapping it slightly
         .bubble-triangle {
-            margin-left: $main-padding;
-
-            &::after {
-                background-color: $message-bubble-color-in;
-            }
-
-            &::before {
-                background-color: $message-bubble-color-in;
-            }
+            order: -1;
+            margin-right: -1px;
+            fill: $message-bubble-color-in;
         }
 
         .message-info {
@@ -655,17 +661,25 @@
             background-color: $message-bubble-color-out;
         }
 
-        // arrow
+        // Mirror of the incoming side
+        &.follows-same-sender .message-body {
+            border-top-right-radius: 4px;
+        }
+
+        &.precedes-same-sender .message-body {
+            border-bottom-right-radius: 4px;
+        }
+
+        &:not(.precedes-same-sender) .message-body {
+            border-bottom-right-radius: 0;
+        }
+
+        // Tail on the right of the bubble, mirrored. The row is reversed, so
+        // order -1 puts it on the right.
         .bubble-triangle {
-            left: 0 - $bubble-triangle-size;
-
-            &::after {
-                background-color: $message-bubble-color-out;
-            }
-
-            &::before {
-                background-color: $message-bubble-color-out;
-            }
+            order: -1;
+            margin-left: -1px;
+            fill: $message-bubble-color-out;
         }
 
         .message-info {
@@ -677,6 +691,10 @@
     .message-avatar {
         flex-shrink: 0;
         cursor: pointer;
+        // Sits beside the tail at the end of the message, not at the top
+        align-self: flex-end;
+        // The tail hangs 8px into this gap, so the spacing has to clear it
+        margin-right: 16px;
     }
 
     .message-status {

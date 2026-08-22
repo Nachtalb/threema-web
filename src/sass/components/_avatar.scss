@@ -2,6 +2,9 @@
 
 .avatar {
     position: relative;
+    // The image is inline by default, so the line box adds a few pixels below
+    // it and the avatar ends up taller than the picture.
+    line-height: 0;
 
     &.clickable {
         cursor: pointer;
