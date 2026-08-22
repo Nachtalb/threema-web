@@ -43,6 +43,7 @@ import {
     isValidReceiverType,
 } from '../typeguards';
 import {BatteryStatusService} from './battery';
+import {BlobCacheService} from './blob_cache';
 import {BrowserService} from './browser';
 import {TrustedKeyStoreService} from './keystore';
 import {LogService} from './log';
@@ -187,6 +188,7 @@ export class WebClientService {
 
     // Custom services
     private batteryStatusService: BatteryStatusService;
+    private blobCacheService: BlobCacheService;
     private browserService: BrowserService;
     private logService: LogService;
     private messageService: MessageService;
@@ -292,6 +294,7 @@ export class WebClientService {
         'StateService', 'NotificationService', 'MessageService', 'PushService', 'BrowserService',
         'TitleService', 'QrCodeService', 'MimeService', 'ReceiverService',
         'VersionService', 'BatteryStatusService', 'ThemeService', 'TimeoutService',
+        'BlobCacheService',
         'CONFIG',
     ];
     constructor($rootScope: any,
@@ -318,10 +321,12 @@ export class WebClientService {
                 batteryStatusService: BatteryStatusService,
                 themeService: ThemeService,
                 timeoutService: TimeoutService,
+                blobCacheService: BlobCacheService,
                 CONFIG: threema.Config) {
 
         // Angular services
         this.$rootScope = $rootScope;
+        this.blobCacheService = blobCacheService;
         this.$q = $q;
         this.$state = $state;
         this.$window = $window;
@@ -1704,7 +1709,8 @@ export class WebClientService {
      * Request a blob.
      */
     public requestBlob(msgId: string, receiver: threema.Receiver): Promise<threema.BlobInfo> {
-        const cached = this.blobCache.get(msgId + receiver.type);
+        const key = msgId + receiver.type;
+        const cached = this.blobCache.get(key);
         if (cached !== undefined) {
             this.arpLog.debug('Use cached blob');
             return new Promise((resolve) => {
@@ -1716,8 +1722,16 @@ export class WebClientService {
             [WebClientService.ARGUMENT_RECEIVER_ID]: receiver.id,
             [WebClientService.ARGUMENT_MESSAGE_ID]: msgId,
         };
-        this.arpLog.debug('Sending blob request for message', msgId);
-        return this.sendRequestWireMessage(WebClientService.SUB_TYPE_BLOB, true, args);
+        // The persistent cache survives a reload, so ask it before the phone.
+        return this.blobCacheService.get(key).then((stored) => {
+            if (stored !== null) {
+                this.arpLog.debug('Use stored blob');
+                this.blobCache.set(key, stored);
+                return stored;
+            }
+            this.arpLog.debug('Sending blob request for message', msgId);
+            return this.sendRequestWireMessage(WebClientService.SUB_TYPE_BLOB, true, args);
+        });
     }
 
     /**
@@ -2901,6 +2915,10 @@ export class WebClientService {
 
         // Store blob
         this.blobCache.set(msgId + receiverType, blobInfo);
+        // Keep it for the rest of the session, so a reload does not have to
+        // fetch it from the phone again.
+        this.blobCacheService.set(msgId + receiverType, blobInfo)
+            .catch((error) => this.arpLog.warn('Could not persist blob: ' + error));
         future.resolve(blobInfo);
     }
 
@@ -3458,6 +3476,8 @@ export class WebClientService {
     public clearCache(): void {
         this._resetFields();
         this.blobCache.clear();
+        this.blobCacheService.clear()
+            .catch((error) => this.log.warn('Could not clear the blob cache: ' + error));
     }
 
     /**

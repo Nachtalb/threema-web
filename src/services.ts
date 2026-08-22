@@ -16,6 +16,7 @@
  */
 
 import {BatteryStatusService} from './services/battery';
+import {BlobCacheService} from './services/blob_cache';
 import {BrowserService} from './services/browser';
 import {ContactService} from './services/contact';
 import {ControllerService} from './services/controller';
@@ -45,6 +46,7 @@ angular.module('3ema.services', [])
 // Register services
 .service('LogService', LogService)
 .service('BatteryStatusService', BatteryStatusService)
+.service('BlobCacheService', BlobCacheService)
 .service('ContactService', ContactService)
 .service('ControllerModelService', ControllerModelService)
 .service('MessageService', MessageService)
