@@ -314,7 +314,6 @@
         },
         "ui": {
             "UI": "Interfata utilizator",
-            "MINIMAL_LAYOUT": "Use minimal layout",
             "BACKGROUND_BLUR": "Blur the background image"
         }
     },

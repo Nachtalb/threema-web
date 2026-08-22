@@ -322,7 +322,6 @@
         },
         "ui": {
             "UI": "使用者介面",
-            "MINIMAL_LAYOUT": "Use minimal layout",
             "BACKGROUND_BLUR": "Blur the background image"
         }
     },

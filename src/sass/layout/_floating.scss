@@ -1,0 +1,244 @@
+// Floating layout: the chat list, chat header and compose area are separate
+// floating panes over the page background, rather than panels inside one
+// opaque card.
+
+$float-gap: 1rem;
+$float-radius: 1rem;
+$float-shadow: 0 2px 8px rgba(0, 0, 0, .18);
+$list-width: 24rem;
+$detail-width: 24rem;
+$chat-max-width: 60rem;
+
+body.messenger {
+    header,
+    footer {
+        display: none;
+    }
+}
+
+#main-wrapper {
+    width: 100%;
+    height: 100%;
+    max-height: none;
+
+    &.wide {
+        margin: 0;
+        max-width: none;
+        max-height: none;
+    }
+}
+
+// Let the page background show through behind the messenger. The welcome
+// screen keeps its card.
+body.messenger #main {
+    border-radius: 0;
+    box-shadow: none;
+    background-color: transparent;
+    overflow: visible;
+}
+
+// Round the welcome card and every dialog to match the floating panes
+body:not(.messenger) #main {
+    border-radius: $float-radius;
+}
+
+md-dialog {
+    border-radius: $float-radius;
+}
+
+#messenger {
+    gap: $float-gap;
+    padding: $float-gap;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+// The chat list keeps the same size whether or not a chat is open, so opening
+// one does not shift it around.
+#navigation {
+    flex: 0 0 $list-width !important;
+    border-right: 0 !important;
+    border-radius: $float-radius;
+    box-shadow: $float-shadow;
+    width: $list-width;
+    min-width: $list-width !important;
+    max-width: $list-width !important;
+    overflow: hidden;
+}
+
+#messenger #detail {
+    flex: 1 1 auto !important;
+    min-width: 0;
+    max-width: none !important;
+    background-color: transparent;
+
+    // The generic detail wrapper paints an opaque background, which would hide
+    // the page background behind the messages.
+    > div.ng-scope {
+        background-color: transparent;
+    }
+}
+
+// Chat and profile sidebar sit side by side
+#conversation-wrapper {
+    display: flex;
+    flex-direction: row;
+    gap: $float-gap;
+    height: 100%;
+    min-width: 0;
+}
+
+#conversation-detail {
+    display: flex;
+    flex: 0 0 auto;
+    margin-top: $float-gap;
+    margin-left: -$float-gap;
+    background-color: transparent;
+    overflow: hidden;
+    // The container owns the width so it stays single valued while the panel
+    // is being inserted or removed, which is what kept the old animation
+    // overshooting.
+    width: 0;
+    transition: width .25s ease-out, margin-left .25s ease-out;
+
+    &.detail-open {
+        margin-left: 0;
+        width: $detail-width;
+    }
+
+    .detail-panel {
+        display: block;
+        flex: 0 0 auto;
+        border-radius: $float-radius;
+        box-shadow: $float-shadow;
+        box-sizing: border-box;
+        width: $detail-width;
+        height: 100%;
+        background-color: $light-background-color;
+        overflow-x: hidden;
+        overflow-y: auto;
+
+        // Overlay the scrollbar so it does not steal width from the content,
+        // which would push it off centre.
+        scrollbar-width: none;
+
+        &::-webkit-scrollbar {
+            border: 0;
+            background-color: transparent;
+            width: 6px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            border-radius: 3px;
+            background-color: transparent;
+            transition: background-color .25s ease-out;
+        }
+
+        &:hover::-webkit-scrollbar-thumb {
+            background-color: rgba(0, 0, 0, .3);
+        }
+    }
+
+    .detail-header {
+        border-radius: $float-radius $float-radius 0 0;
+    }
+
+    // The sidebar is the panel; the cards inside it should not look like
+    // panels of their own, nor be divided up.
+    md-card {
+        margin: 0;
+        border-radius: 0;
+        box-shadow: none;
+    }
+
+    .two-row.div > :first-child {
+        margin-right: 0;
+        border-right: 0;
+        padding-right: 0;
+    }
+
+    // Keep the receiver actions reachable without scrolling to the bottom of a
+    // long member list.
+    .detail-actions {
+        position: sticky;
+        bottom: 0;
+        z-index: 2;
+        background-color: $light-background-color;
+
+        md-card-content {
+            padding: 4px;
+        }
+    }
+}
+
+#conversation {
+    flex: 1 1 auto;
+    gap: $float-gap;
+    min-width: 0;
+    background-image: none;
+
+    // Header and compose area float; the messages between them scroll
+    // underneath nothing, so no absolute positioning is needed.
+    #conversation-header,
+    #conversation-footer {
+        flex: 0 0 auto;
+        margin: 0 auto;
+        border-radius: $float-radius;
+        box-shadow: $float-shadow;
+        box-sizing: border-box;
+        width: 100%;
+        max-width: $chat-max-width;
+        overflow: hidden;
+    }
+
+    #conversation-header {
+        border-radius: $float-radius;
+    }
+
+    #conversation-chat {
+        margin: 0 auto;
+        box-sizing: border-box;
+        width: 100%;
+        max-width: $chat-max-width;
+
+        // Overlay scrollbar: no reserved gutter, so messages line up with the
+        // header and compose area, and the thumb only fades in while the
+        // pointer is over the messages.
+        scrollbar-width: none;
+
+        &::-webkit-scrollbar {
+            border: 0;
+            background-color: transparent;
+            width: 6px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            border-radius: 3px;
+            background-color: transparent;
+            transition: background-color .25s ease-out;
+        }
+
+        &:hover::-webkit-scrollbar-thumb {
+            background-color: rgba(0, 0, 0, .3);
+        }
+    }
+
+    // Keep the scroll-to-bottom button with the chat column rather than the
+    // full width of the conversation area.
+    #scrolljump {
+        align-self: center;
+        right: 0;
+        margin: 0 auto;
+        box-sizing: border-box;
+        padding-right: 1rem;
+        width: 100%;
+        max-width: $chat-max-width;
+        text-align: right;
+    }
+
+    #conversation-footer {
+        compose-area > div {
+            box-shadow: none;
+        }
+    }
+}

@@ -31,9 +31,6 @@ export class ThemeController {
     // Theme name
     public theme: string;
 
-    // User interface class
-    public userInterfaceClass: string;
-
     // Background class
     public backgroundClass: string;
 
@@ -51,16 +48,6 @@ export class ThemeController {
             $scope.$apply(() => this.theme = newTheme);
         });
 
-        // Set user interface class
-        this.userInterfaceClass = ThemeController.getUserInterfaceClass(settingsService.userInterface.getUserInterface())
-
-        // Listen to user interface changes
-        settingsService.userInterfaceChange.attach((newUserInterface: threema.UserInterface) => {
-            const newUserInterfaceClass = ThemeController.getUserInterfaceClass(newUserInterface);
-            this.log.debug(`Updating user interface class: ${this.userInterfaceClass} -> ${newUserInterfaceClass}`);
-            $scope.$apply(() => this.userInterfaceClass = newUserInterfaceClass);
-        })
-
         // Set background class
         this.backgroundClass = ThemeController.getBackgroundClass(settingsService.background.getBlur());
 
@@ -72,15 +59,5 @@ export class ThemeController {
 
     private static getBackgroundClass(blur: boolean): string {
         return blur ? '' : 'background-sharp';
-    }
-
-    private static getUserInterfaceClass(userInterface: threema.UserInterface): string {
-        const base = 'user-interface-'
-        switch (userInterface) {
-            case threema.UserInterface.Minimal:
-                return base + 'minimal'
-            default:
-                return base + 'default'
-        }
     }
 }

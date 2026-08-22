@@ -322,7 +322,6 @@
         },
         "ui": {
             "UI": "Interfejs użytkownika",
-            "MINIMAL_LAYOUT": "Use minimal layout",
             "BACKGROUND_BLUR": "Blur the background image"
         }
     },

@@ -314,7 +314,6 @@
         },
         "ui": {
             "UI": "이용자 인터페이스",
-            "MINIMAL_LAYOUT": "Use minimal layout",
             "BACKGROUND_BLUR": "Blur the background image"
         }
     },

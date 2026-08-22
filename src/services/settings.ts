@@ -53,32 +53,6 @@ class ComposeAreaSettings {
     }
 }
 
-class UserInterfaceSettings {
-    private readonly settingsService: SettingsService;
-
-    constructor(settingsService: SettingsService) {
-        this.settingsService = settingsService;
-    }
-
-    public getUserInterface(): threema.UserInterface {
-        const value: string = this.settingsService.retrieveUntrustedKeyValuePair('userInterface', false);
-
-        switch (value) {
-            case threema.UserInterface.Default:
-                return threema.UserInterface.Default
-            default:
-                return threema.UserInterface.Minimal
-        }
-    }
-
-    public setUserInterface(userInterface: threema.UserInterface): void {
-        this.settingsService.storeUntrustedKeyValuePair('userInterface', userInterface);
-
-        // Emit change
-        this.settingsService.userInterfaceChange.post(userInterface)
-    }
-}
-
 class BackgroundSettings {
     private readonly settingsService: SettingsService;
 
@@ -114,13 +88,11 @@ export class SettingsService {
     public readonly settingsChangedEvent = new AsyncEvent<void>();
     private static STORAGE_KEY_PREFIX = 'settings-';
     public readonly composeArea: ComposeAreaSettings;
-    public readonly userInterface: UserInterfaceSettings;
     public readonly background: BackgroundSettings;
     private readonly log: Logger;
     private storage: Storage;
 
     // Events
-    public userInterfaceChange = new AsyncEvent<threema.UserInterface>();
     public backgroundBlurChange = new AsyncEvent<boolean>();
 
     public static $inject = ['$window', 'LogService'];
@@ -128,7 +100,6 @@ export class SettingsService {
         this.log = logService.getLogger('Settings-S');
         this.storage = $window.localStorage;
         this.composeArea = new ComposeAreaSettings(this);
-        this.userInterface = new UserInterfaceSettings(this);
         this.background = new BackgroundSettings(this);
     }
 

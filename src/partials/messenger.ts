@@ -250,7 +250,6 @@ class SettingsController extends DialogController {
     private notificationPreview: boolean;
     private notificationSound: boolean;
     private submitWithCtrlEnter: boolean;
-    private minimalUserInterface: boolean;
     private backgroundBlur: boolean;
 
     public static $inject = [
@@ -277,8 +276,6 @@ class SettingsController extends DialogController {
         this.notificationSound = notificationService.getWantsSound();
         this.submitWithCtrlEnter =
             settingsService.composeArea.getSubmitKey() === threema.ComposeAreaSubmitKey.CtrlEnter;
-        this.minimalUserInterface =
-            settingsService.userInterface.getUserInterface() === threema.UserInterface.Minimal;
         this.backgroundBlur = settingsService.background.getBlur();
     }
 
@@ -298,12 +295,6 @@ class SettingsController extends DialogController {
         this.settingsService.composeArea.setSubmitKey(submitWithCtrlEnter
             ? threema.ComposeAreaSubmitKey.CtrlEnter
             : threema.ComposeAreaSubmitKey.Enter);
-    }
-
-    public setMinimalUserInterface(minimal: boolean) {
-        this.settingsService.userInterface.setUserInterface(minimal
-            ? threema.UserInterface.Minimal
-            : threema.UserInterface.Default);
     }
 
     public setBackgroundBlur(blur: boolean) {
@@ -1126,7 +1117,6 @@ class AboutDialogController extends DialogController {
 class NavigationController {
 
     public name: string = 'navigation';
-    public minimalUserInterface: boolean = false;
 
     private webClientService: WebClientService;
     private receiverService: ReceiverService;
@@ -1163,14 +1153,6 @@ class NavigationController {
             $state.go('welcome');
             return;
         }
-
-        // Set if is minimal user interface
-        this.minimalUserInterface = this.isMinimalUserInterface(settingsService.userInterface.getUserInterface());
-
-        // Listen to user interface changes
-        settingsService.userInterfaceChange.attach((newUserInterface: threema.UserInterface) => {
-            $scope.$apply(() => this.minimalUserInterface = this.isMinimalUserInterface(newUserInterface));
-        })
 
         this.webClientService = webClientService;
         this.receiverService = receiverService;
@@ -1478,12 +1460,6 @@ class NavigationController {
         return this.notificationService.getDndModeSimplified(conversation);
     }
 
-    /**
-     * Return true if the minimal user interface is selected.
-     */
-    private isMinimalUserInterface(userInterface: threema.UserInterface): boolean {
-        return userInterface === threema.UserInterface.Minimal;
-    }
 }
 
 class MessengerController {

@@ -74,14 +74,6 @@
                     <md-list flex>
                         <md-list-item>
                             <md-switch
-                                    ng-model="ctrl.minimalUserInterface"
-                                    ng-change="ctrl.setMinimalUserInterface(ctrl.minimalUserInterface)"
-                                    aria-label="Use minimal layout">
-                                <span translate>settings.ui.MINIMAL_LAYOUT</span>
-                            </md-switch>
-                        </md-list-item>
-                        <md-list-item>
-                            <md-switch
                                     ng-model="ctrl.backgroundBlur"
                                     ng-change="ctrl.setBackgroundBlur(ctrl.backgroundBlur)"
                                     aria-label="Blur the background image">
@@ -101,7 +93,7 @@
                             <md-icon aria-hidden="true" class="material-icons md-24">info</md-icon>
                             <span translate>messenger.ABOUT</span>
                         </md-list-item>
-                        <md-list-item ng-if="ctrl.minimalUserInterface" ng-click="ctrl.version($event)">
+                        <md-list-item ng-click="ctrl.version($event)">
                             <md-icon aria-hidden="true" class="material-icons md-24">update</md-icon>
                             <span translate>messenger.VERSION</span>
                         </md-list-item>
