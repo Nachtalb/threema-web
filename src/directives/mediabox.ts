@@ -17,20 +17,16 @@
 
 import {saveAs} from 'file-saver';
 
-import {bufferToUrl, firefoxWorkaroundPdfDownload} from '../helpers';
-import {LogService} from '../services/log';
+import {firefoxWorkaroundPdfDownload} from '../helpers';
 import {MediaboxService} from '../services/mediabox';
 
 export default [
     '$rootScope',
     '$document',
-    'LogService',
     'MediaboxService',
     function($rootScope: ng.IRootScopeService,
              $document: ng.IDocumentService,
-             logService: LogService,
              mediaboxService: MediaboxService) {
-        const log = logService.getLogger('Mediabox-C');
         return {
             restrict: 'E',
             scope: {},
@@ -187,15 +183,12 @@ export default [
                         // The media is here, so nothing is pending any more
                         this.loading = false;
                         this.isVideo = mediaboxService.mimetype.startsWith('video/');
-                        if (this.isVideo) {
-                            // A video is far too large to inline as a data url
-                            this.objectUrl = URL.createObjectURL(new Blob(
-                                [mediaboxService.data], {type: mediaboxService.mimetype}));
-                            this.imageDataUrl = this.objectUrl;
-                        } else {
-                            this.imageDataUrl = bufferToUrl(
-                                mediaboxService.data, mediaboxService.mimetype, log);
-                        }
+                        // A blob url hands the bytes to the browser as they
+                        // are. Base64 would grow them by a third and block the
+                        // main thread building the string.
+                        this.objectUrl = URL.createObjectURL(new Blob(
+                            [mediaboxService.data], {type: mediaboxService.mimetype}));
+                        this.imageDataUrl = this.objectUrl;
                         // A new picture starts unzoomed
                         this.resetView();
                     });
@@ -256,7 +249,7 @@ export default [
                          ng-mouseleave="ctrl.panEnd()"
                          ng-dblclick="ctrl.resetView()">
                         <div class="stage">
-                            <img ng-if="!ctrl.isVideo" ng-src="{{ ctrl.imageDataUrl }}"
+                            <img ng-if="!ctrl.isVideo" ng-src="{{ ctrl.imageDataUrl | unsafeResUrl }}"
                                  ng-class="{'placeholder': ctrl.loading}"
                                  ng-style="{transform: 'translate(' + ctrl.panX + 'px, ' + ctrl.panY + 'px) scale(' + ctrl.zoom + ')'}">
                             <video ng-if="ctrl.isVideo" ng-src="{{ ctrl.imageDataUrl | unsafeResUrl }}"
