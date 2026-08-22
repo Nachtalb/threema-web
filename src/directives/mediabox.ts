@@ -228,13 +228,17 @@ export default [
             // tslint:disable:max-line-length
             template: `
                 <div class="box" ng-if="ctrl.open">
-                    <md-icon class="save material-icons" ng-click="ctrl.save()" ng-if="!ctrl.loading" aria-label="Save" translate-attr="{'aria-label': 'common.SAVE', 'title': 'common.SAVE'}">file_download</md-icon>
-                    <md-icon class="close material-icons" ng-click="ctrl.close()" aria-label="Close" translate-attr="{'aria-label': 'common.CLOSE', 'title': 'common.CLOSE'}">close</md-icon>
+                    <div class="action save" ng-click="ctrl.save()" ng-if="!ctrl.loading" role="button" aria-label="Save" translate-attr="{'aria-label': 'common.SAVE', 'title': 'common.SAVE'}">
+                        <svg viewBox="0 0 24 24"><path d="M12 3v13m0 0 5-5m-5 5-5-5M4 20h16"/></svg>
+                    </div>
+                    <div class="action close" ng-click="ctrl.close()" role="button" aria-label="Close" translate-attr="{'aria-label': 'common.CLOSE', 'title': 'common.CLOSE'}">
+                        <svg viewBox="0 0 24 24"><path d="M5 5l14 14M19 5L5 19"/></svg>
+                    </div>
                     <div class="nav previous" ng-if="ctrl.hasNeighbour(false)" ng-click="ctrl.showNeighbour(false, $event)" aria-label="Previous">
-                        <md-icon class="material-icons">chevron_left</md-icon>
+                        <svg viewBox="0 0 24 24"><path d="M15 4L7 12l8 8"/></svg>
                     </div>
                     <div class="nav next" ng-if="ctrl.hasNeighbour(true)" ng-click="ctrl.showNeighbour(true, $event)" aria-label="Next">
-                        <md-icon class="material-icons">chevron_right</md-icon>
+                        <svg viewBox="0 0 24 24"><path d="M9 4l8 8-8 8"/></svg>
                     </div>
                     <div class="inner" ng-class="{'zoomed': ctrl.zoom !== 1, 'panning': ctrl.panning}"
                          ng-click="ctrl.close($event)"

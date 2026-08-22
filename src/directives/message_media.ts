@@ -212,17 +212,35 @@ export default [
 
                         const show = (msg: threema.Message) => {
                             showing = msg;
-                            // Open on the thumbnail at once; the full media
-                            // replaces it when it arrives.
-                            const thumb = hasValue(msg.thumbnail)
-                                ? (msg.thumbnail.previewDataUrl
-                                    || (hasValue(msg.thumbnail.preview)
-                                        ? bufferToUrl(msg.thumbnail.preview, 'image/jpeg', log)
-                                        : null))
-                                : null;
-                            mediaboxService.setPending(thumb, msg.caption || '');
+                            // Open on whatever picture is already to hand,
+                            // rather than waiting for the full media.
+                            let thumb: string | null = null;
+                            if (hasValue(msg.thumbnail)) {
+                                if (hasValue(msg.thumbnail.previewDataUrl)) {
+                                    thumb = msg.thumbnail.previewDataUrl;
+                                } else if (hasValue(msg.thumbnail.img)) {
+                                    thumb = bufferToUrl(
+                                        msg.thumbnail.img,
+                                        webClientService.appCapabilities.imageFormat.thumbnail,
+                                        log);
+                                } else if (hasValue(msg.thumbnail.preview)) {
+                                    thumb = bufferToUrl(msg.thumbnail.preview, 'image/jpeg', log);
+                                }
+                            }
+
+                            // A cached blob arrives in the same tick, so only
+                            // announce a download once it is actually slow.
+                            let settled = false;
+                            timeoutService.register(() => {
+                                if (!settled && showing.id === msg.id) {
+                                    mediaboxService.setPending(thumb, msg.caption || '', true);
+                                }
+                            }, 150, true, 'mediaboxSpinner');
+                            mediaboxService.setPending(thumb, msg.caption || '', false);
+
                             webClientService.requestBlob(msg.id, receiver)
                                 .then((info: threema.BlobInfo) => $rootScope.$apply(() => {
+                                    settled = true;
                                     // The user may have paged on while this
                                     // was in flight
                                     if (showing.id !== msg.id) {
@@ -231,7 +249,10 @@ export default [
                                     mediaboxService.setMedia(
                                         info.buffer, info.filename, info.mimetype, msg.caption || '');
                                 }))
-                                .catch((error) => log.error('Could not load media: ' + error));
+                                .catch((error) => {
+                                    settled = true;
+                                    log.error('Could not load media: ' + error);
+                                });
                         };
 
                         mediaboxService.hasNeighbour = (forward: boolean) => step(forward) !== null;

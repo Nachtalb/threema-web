@@ -52,14 +52,17 @@ export class MediaboxService {
     /**
      * Open the box straight away on the thumbnail, before the full media has
      * arrived. Keeps clicking a picture from feeling slow.
+     *
+     * `loading` drives the spinner, and stays off until the wait is long
+     * enough to be worth mentioning.
      */
-    public setPending(previewUrl: string | null, caption: string) {
+    public setPending(previewUrl: string | null, caption: string, loading: boolean = true) {
         this.data = null;
         this.filename = '';
         this.mimetype = '';
         this.caption = caption;
         this.previewUrl = previewUrl;
-        this.loading = true;
+        this.loading = loading;
         this.evtMediaChanged.post(true);
     }
 

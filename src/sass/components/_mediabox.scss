@@ -47,8 +47,8 @@ mediabox {
         }
 
 
-        // Save and close, drawn plain and large rather than as small discs
-        > md-icon {
+        // Save and close, drawn as thin strokes rather than heavy glyphs
+        .action {
             display: flex;
             position: absolute;
             top: 24px;
@@ -57,18 +57,23 @@ mediabox {
             z-index: 2;
             cursor: pointer;
             width: 56px;
-            min-width: 56px;
             height: 56px;
-            min-height: 56px;
-            color: rgba(255, 255, 255, .8);
-            font-size: 48px;
-            box-sizing: border-box;
             user-select: none;
-            transition: color .15s ease-out;
 
-            &:hover,
-            &:focus {
-                color: rgba(255, 255, 255, 1);
+            svg {
+                transition: opacity .15s ease-out;
+                opacity: .75;
+                width: 34px;
+                height: 34px;
+                fill: none;
+                stroke: #ffffff;
+                stroke-width: 1.5;
+                stroke-linecap: round;
+                stroke-linejoin: round;
+            }
+
+            &:hover svg {
+                opacity: 1;
             }
 
             &.save {
@@ -97,34 +102,29 @@ mediabox {
             &.previous {
                 left: 0;
                 justify-content: flex-start;
-                padding-left: 24px;
+                padding-left: 0;
             }
 
             &.next {
                 right: 0;
                 justify-content: flex-end;
-                padding-right: 24px;
+                padding-right: 0;
             }
 
-            md-icon {
-                display: flex;
-                position: static;
-                align-items: center;
-                justify-content: center;
-                transition: color .15s ease-out;
-                border: 0;
-                border-radius: 0;
-                background: none;
-                width: 72px;
-                min-width: 72px;
-                height: 72px;
-                min-height: 72px;
-                color: rgba(255, 255, 255, .75);
-                font-size: 72px;
+            svg {
+                transition: opacity .15s ease-out;
+                opacity: .75;
+                width: 56px;
+                height: 56px;
+                fill: none;
+                stroke: #ffffff;
+                stroke-width: 1.25;
+                stroke-linecap: round;
+                stroke-linejoin: round;
             }
 
-            &:hover md-icon {
-                color: rgba(255, 255, 255, 1);
+            &:hover svg {
+                opacity: 1;
             }
         }
 

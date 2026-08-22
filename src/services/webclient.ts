@@ -1700,9 +1700,27 @@ export class WebClientService {
             [WebClientService.ARGUMENT_RECEIVER_ID]: receiver.id,
         };
 
-        this.arpLog.debug('Sending thumbnail request for', receiver.type, message.id);
-        const subType = WebClientService.SUB_TYPE_THUMBNAIL;
-        return this.sendRequestWireMessage(subType, true, args);
+        // Thumbnails are dropped from the message as soon as it scrolls out of
+        // view, so without this every scroll back would ask the phone again.
+        const key = 'thumb-' + message.id + receiver.type;
+        return this.blobCacheService.get(key).then((stored) => {
+            if (stored !== null) {
+                if (message.thumbnail !== undefined) {
+                    message.thumbnail.img = stored.buffer;
+                }
+                return stored.buffer;
+            }
+            this.arpLog.debug('Sending thumbnail request for', receiver.type, message.id);
+            const subType = WebClientService.SUB_TYPE_THUMBNAIL;
+            return this.sendRequestWireMessage(subType, true, args).then((img: ArrayBuffer) => {
+                this.blobCacheService.set(key, {
+                    buffer: img,
+                    mimetype: this.appCapabilities.imageFormat.thumbnail,
+                    filename: '',
+                }).catch((error) => this.arpLog.warn('Could not cache thumbnail: ' + error));
+                return img;
+            });
+        });
     }
 
     /**
