@@ -1619,6 +1619,7 @@ class ReceiverDetailController {
     private contactService: ContactService;
     private webClientService: WebClientService;
     private mediaboxService: MediaboxService;
+    private navigationStateService: NavigationStateService;
 
     public receiver: threema.Receiver;
     public me: threema.MeReceiver;
@@ -1638,19 +1639,21 @@ class ReceiverDetailController {
     public static $inject = [
         '$scope', '$stateParams', '$state', '$mdDialog', '$translate',
         'LogService', 'WebClientService', 'ContactService', 'ControllerModelService',
-        'MediaboxService',
+        'MediaboxService', 'NavigationStateService',
     ];
     constructor($scope: ng.IScope, $stateParams, $state: UiStateService,
                 $mdDialog: ng.material.IDialogService, $translate: ng.translate.ITranslateService,
                 logService: LogService, webClientService: WebClientService,
                 contactService: ContactService, controllerModelService: ControllerModelService,
-                mediaboxService: MediaboxService) {
+                mediaboxService: MediaboxService,
+                navigationStateService: NavigationStateService) {
         this.$mdDialog = $mdDialog;
         this.$scope = $scope;
         this.$state = $state;
         this.contactService = contactService;
         this.webClientService = webClientService;
         this.mediaboxService = mediaboxService;
+        this.navigationStateService = navigationStateService;
 
         this.receiver = webClientService.receivers.getData(
             $stateParams.detailType !== undefined && $stateParams.detailType !== null
@@ -1810,7 +1813,16 @@ class ReceiverDetailController {
     }
 
     public goBack(): void {
-        window.history.back();
+        // Close the sidebar rather than walking browser history, which would
+        // jump back to whichever chat was open before.
+        const params = this.$state.params as {type?: string, id?: string};
+        if (params.type !== undefined && params.id !== undefined) {
+            this.navigationStateService.setDetailOpen(false);
+            this.$state.go('messenger.home.conversation',
+                {type: params.type, id: params.id, initParams: null});
+        } else {
+            this.$state.go('messenger.home');
+        }
     }
 
 }
