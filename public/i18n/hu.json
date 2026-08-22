@@ -334,6 +334,7 @@
         "LEVEL_CRITICAL": "Az eszközöd töltöttsége nagyon alacsony ({percent}%)!"
     },
     "date": {
+        "TODAY": "Today",
         "YESTERDAY": "Tegnap",
         "month_short": {
             "JAN": "Jan.",

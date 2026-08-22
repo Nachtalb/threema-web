@@ -400,6 +400,53 @@ angular.module('3ema.filters', [])
 }])
 
 /**
+ * The time of day, without any date. The day a message belongs to is shown by
+ * the separators between them.
+ */
+.filter('unixToTime', [function() {
+    return (timestamp: number) => {
+        const date = new Date(timestamp * 1000);
+        return ('00' + date.getHours()).slice(-2) + ':'
+             + ('00' + date.getMinutes()).slice(-2);
+    };
+}])
+
+/**
+ * The day a message belongs to: "Today", "Yesterday" or a date.
+ */
+.filter('unixToDay', ['$translate', function($translate) {
+    const months = [
+        'JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN',
+        'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC',
+    ];
+
+    function isSameDay(a: Date, b: Date): boolean {
+        return a.getFullYear() === b.getFullYear()
+            && a.getMonth() === b.getMonth()
+            && a.getDate() === b.getDate();
+    }
+
+    return (timestamp: number) => {
+        const date = new Date(timestamp * 1000);
+        const now = new Date();
+        if (isSameDay(date, now)) {
+            return $translate.instant('date.TODAY');
+        }
+
+        const yesterday = new Date(now);
+        yesterday.setDate(now.getDate() - 1);
+        if (isSameDay(date, yesterday)) {
+            return $translate.instant('date.YESTERDAY');
+        }
+
+        const year = date.getFullYear() === now.getFullYear() ? '' : ' ' + date.getFullYear();
+        return date.getDate() + '. '
+             + $translate.instant('date.month_short.' + months[date.getMonth()])
+             + year;
+    };
+}])
+
+/**
  * Mark data as trusted.
  */
 .filter('unsafeResUrl', ['$sce', function($sce: ng.ISCEService) {

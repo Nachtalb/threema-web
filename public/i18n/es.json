@@ -350,6 +350,7 @@
         "LEVEL_CRITICAL": "El nivel de batería de tu dispositivo es crítico ({percent}%)!"
     },
     "date": {
+        "TODAY": "Today",
         "YESTERDAY": "Ayer",
         "month_short": {
             "JAN": "ene.",

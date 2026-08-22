@@ -352,6 +352,7 @@
         "LEVEL_CRITICAL": "端末のバッテリー残量が非常に少なくなっています ({percent}%) 。"
     },
     "date": {
+        "TODAY": "Today",
         "YESTERDAY": "昨日",
         "month_short": {
             "JAN": "1月",

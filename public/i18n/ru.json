@@ -352,6 +352,7 @@
         "LEVEL_CRITICAL": "Уровень заряда аккумулятора вашего устройства является критическим ({percent}%)!"
     },
     "date": {
+        "TODAY": "Today",
         "YESTERDAY": "Вчера",
         "month_short": {
             "JAN": "янв",

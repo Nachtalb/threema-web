@@ -352,6 +352,7 @@
         "LEVEL_CRITICAL": "Узровень зарада батарэі вашай прылады крытычны ({percent}%)!"
     },
     "date": {
+        "TODAY": "Today",
         "YESTERDAY": "Учора",
         "month_short": {
             "JAN": "Студз.",

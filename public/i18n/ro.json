@@ -344,6 +344,7 @@
         "LEVEL_CRITICAL": "Nivelul baterie dispozitivilui dumneavoastra este critic ({percent}%)!"
     },
     "date": {
+        "TODAY": "Today",
         "YESTERDAY": "Ieri",
         "month_short": {
             "JAN": "Ian.",

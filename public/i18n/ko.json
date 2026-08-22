@@ -344,6 +344,7 @@
         "LEVEL_CRITICAL": "배터리가 부족합니다 ({percent}%)!"
     },
     "date": {
+        "TODAY": "Today",
         "YESTERDAY": "어제",
         "month_short": {
             "JAN": "1월.",

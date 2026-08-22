@@ -1097,6 +1097,26 @@ class ConversationController {
         }
     }
 
+    /**
+     * Whether the message at this position is the first one of its day, and so
+     * carries a date separator above it.
+     */
+    public startsNewDayFor(index: number): boolean {
+        const message = this.messages[index];
+        if (message === undefined) {
+            return false;
+        }
+        const previous = this.messages[index - 1];
+        if (previous === undefined) {
+            return true;
+        }
+        const day = (of: threema.Message) => {
+            const date = new Date(of.date * 1000);
+            return date.getFullYear() + '-' + date.getMonth() + '-' + date.getDate();
+        };
+        return day(previous) !== day(message);
+    }
+
     public showReceiver(ev): void {
         this.$state.go('messenger.home.conversation.detail', {
             detailType: this.receiver.type,

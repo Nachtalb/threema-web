@@ -60,6 +60,9 @@
                 </div>
             </li>
             <li ng-repeat="message in ctrl.messages" id="message-{{message.id}}">
+                <div class="day-separator" ng-if="ctrl.startsNewDayFor($index)">
+                    <span>{{ message.date | unixToDay }}</span>
+                </div>
                 <eee-message eee-receiver="ctrl.receiver" eee-type="ctrl.type" eee-message="message"
                              eee-previous-message="ctrl.messages[$index - 1]"
                              eee-next-message="ctrl.messages[$index + 1]"

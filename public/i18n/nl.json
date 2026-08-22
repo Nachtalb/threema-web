@@ -344,6 +344,7 @@
         "LEVEL_CRITICAL": "Het batterijniveau van je apparaat is critisch ({percent}%)!"
     },
     "date": {
+        "TODAY": "Today",
         "YESTERDAY": "Gisteren",
         "month_short": {
             "JAN": "jan.",

@@ -351,6 +351,7 @@
         "LEVEL_CRITICAL": "La batteria sta per esaurirsi ({percent}%)!"
     },
     "date": {
+        "TODAY": "Today",
         "YESTERDAY": "Ieri",
         "month_short": {
             "JAN": "Gen.",

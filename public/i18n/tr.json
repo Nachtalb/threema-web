@@ -351,6 +351,7 @@
         "LEVEL_CRITICAL": "Cihazınızın pil seviyesi kritik ({percent}%)!"
     },
     "date": {
+        "TODAY": "Today",
         "YESTERDAY": "Dün",
         "month_short": {
             "JAN": "Oca.",

@@ -351,6 +351,7 @@
         "LEVEL_CRITICAL": "Úroveň batérie v zariadení je kritická ({percent}%)!"
     },
     "date": {
+        "TODAY": "Today",
         "YESTERDAY": "Včera",
         "month_short": {
             "JAN": "Jan.",

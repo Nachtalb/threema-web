@@ -352,6 +352,7 @@
         "LEVEL_CRITICAL": "您的裝置電量已經嚴重不足 ({percent}%)！"
     },
     "date": {
+        "TODAY": "Today",
         "YESTERDAY": "昨天",
         "month_short": {
             "JAN": "一月",

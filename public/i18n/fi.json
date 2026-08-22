@@ -352,6 +352,7 @@
         "LEVEL_CRITICAL": "Akkusi on kriittisen vähissä ({percent}%)!"
     },
     "date": {
+        "TODAY": "Today",
         "YESTERDAY": "Eilen",
         "month_short": {
             "JAN": "tammi",
