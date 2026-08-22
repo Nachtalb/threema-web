@@ -425,6 +425,8 @@ class ConversationController {
     // Whether the sidebar was already open when this conversation was opened
     public wasDetailOpen: boolean;
     private timeoutService: TimeoutService;
+    // Set while the jump-to-bottom animation runs
+    private glidingDown: boolean = false;
 
     // Third party services
     private $mdDialog: ng.material.IDialogService;
@@ -1267,6 +1269,11 @@ class ConversationController {
         if (target - chat.scrollTop > glide) {
             chat.scrollTop = target - glide;
         }
+        this.glidingDown = true;
+        this.timeoutService.register(() => {
+            this.glidingDown = false;
+            this.updateScrollJump();
+        }, 500, true, 'scrollGlide');
         chat.scrollTo({top: target, behavior: 'smooth'});
     }
 
@@ -1276,7 +1283,13 @@ class ConversationController {
      */
     private updateScrollJump(): void {
         const chat = this.domChatElement;
-        this.showScrollJump = chat.scrollHeight - (chat.scrollTop + chat.offsetHeight) > 1;
+        const away = chat.scrollHeight - (chat.scrollTop + chat.offsetHeight) > 1;
+        // Hiding the button re-arms scroll-glue, which snaps the last stretch
+        // and fights the animation. Keep it shown until the glide is done.
+        if (!away && this.glidingDown) {
+            return;
+        }
+        this.showScrollJump = away;
     }
 
     /**

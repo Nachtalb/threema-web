@@ -83,18 +83,46 @@
 
     #scrolljump {
         $scrolljump-height: 36px;
-        position: relative;
-        right: 16px;
-        bottom: 8px + $scrolljump-height;
-        align-self: flex-end;
+        display: flex;
+        // Taken out of the flow: as a flex item it shortens the chat when it
+        // appears, which shifts the messages just as the glide ends.
+        position: absolute;
+        right: 0;
+        // Clear of the compose area below it
+        bottom: 56px;
+        left: 0;
+        // The chat is centred in a wider column, so the button is centred the
+        // same way and pushed to its right edge, just above the input bar.
+        margin: 0 auto 8px;
+        align-items: center;
+        justify-content: flex-end;
         z-index: 15;
+        box-sizing: border-box;
+        cursor: pointer;
         outline: none;
-        height: 0;
+        width: 100%;
+        max-width: $chat-max-width;
+        height: $scrolljump-height;
+        pointer-events: none;
 
+        // The disc itself, so the full-width box can position it without
+        // catching clicks across the whole chat.
         svg {
-            cursor: pointer;
-            width: $scrolljump-height;
-            height: $scrolljump-height;
+            display: block;
+            box-sizing: content-box;
+            // Matches the context menus
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, .72);
+            backdrop-filter: blur(16px) saturate(140%);
+            padding: 7px;
+            width: 22px;
+            height: 22px;
+            pointer-events: auto;
+            fill: none;
+            stroke: $material-grey-dark;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
         }
     }
 
