@@ -309,11 +309,12 @@
             position: absolute;
             // The path ends 3px above the 20px viewbox
             bottom: -3px;
-            // Behind the bubble, so its shadow does not draw a seam across
-            // the edge the two share.
-            z-index: -1;
-            // Same shadow as the bubble, so the two read as one shape
-            filter: drop-shadow(0 1px 2px $message-bubble-shadow-color);
+            // A child cannot go behind its parent's background, so this only
+            // orders it against its siblings.
+            z-index: 0;
+            // Only downward, so it does not bleed sideways across the edge the
+            // tail shares with the bubble and draw a seam there.
+            filter: drop-shadow(0 2px 1px $message-bubble-shadow-color);
             width: 9px;
             height: 20px;
             overflow: visible;
