@@ -309,7 +309,11 @@
             position: absolute;
             // The path ends 3px above the 20px viewbox
             bottom: -3px;
-            z-index: 1;
+            // Behind the bubble, so its shadow does not draw a seam across
+            // the edge the two share.
+            z-index: -1;
+            // Same shadow as the bubble, so the two read as one shape
+            filter: drop-shadow(0 1px 2px $message-bubble-shadow-color);
             width: 9px;
             height: 20px;
             overflow: visible;
@@ -410,10 +414,11 @@
                         overflow: hidden;
                     }
 
-                    // Keep the timestamp on the media rather than letting it
-                    // drop into the reactions row below it.
+                    // The reactions row sits below the media, so the timestamp
+                    // has to clear both it and its margin to stay inset on the
+                    // picture. 25px pill + 6px margin + the usual 6px inset.
                     .message-info {
-                        bottom: $reaction-row-height + 6px;
+                        bottom: 37px;
                     }
 
                     .message-emoji-reactions {
@@ -424,7 +429,7 @@
                     // The reactions sit below the bubble, so the tail belongs
                     // at the bottom of the media rather than beside the pills.
                     .bubble-triangle {
-                        bottom: $reaction-row-height + 3px;
+                        bottom: 28px;
                     }
                 }
             }
