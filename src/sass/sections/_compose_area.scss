@@ -97,11 +97,17 @@ compose-area {
 
     // Emoji picker window
     .emoji-keyboard {
+        // Slides open rather than appearing. `display: none` cannot be
+        // animated, so the height is collapsed instead.
         transform: scale(1);
+        transition: max-height .2s ease-out, opacity .15s ease-out;
+        max-height: 300px;
+        overflow: hidden;
+        opacity: 1;
 
         &:not(.active) {
-            display: none;
             max-height: 0;
+            opacity: 0;
 
             .tab {
                 float: none;
