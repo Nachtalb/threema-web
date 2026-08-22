@@ -127,7 +127,7 @@ export default [
                     // TODO: Uuuuugly!
                     this.getThumbnailPreviewUriStyle = (): string => {
                         const previewUri = hasValue(message.thumbnail) ? this.getThumbnailPreviewUri() : null;
-                        return previewUri !== null ? `url(${previewUri})` : 'none';
+                        return previewUri !== null ? `url("${previewUri}")` : 'none';
                     };
 
                     // Only show thumbnails for images, videos and GIFs

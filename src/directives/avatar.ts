@@ -283,7 +283,7 @@ export default [
                     <img
                          ng-class="ctrl.avatarClass()"
                          ng-style="{ 'background-color': ctrl.backgroundColor }"
-                         ng-src="{{ ctrl.getAvatarUri() }}"
+                         ng-src="{{ ctrl.getAvatarUri() | unsafeResUrl }}"
                          in-view="ctrl.requestAvatar($inview)"
                          aria-label="avatar {{ ctrl.receiverName }}">
                </div>

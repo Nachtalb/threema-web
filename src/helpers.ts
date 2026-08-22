@@ -321,8 +321,15 @@ export function firstVideoFrame(buffer: ArrayBuffer, mimeType: string): Promise<
 }
 
 /**
- * Convert an ArrayBuffer to a data URL.
+ * The object urls handed out so far, so the same bytes are never wrapped
+ * twice. Weak, so a url stops being held as soon as its buffer is dropped.
  */
+const objectUrls = new WeakMap<ArrayBuffer, string>();
+
+/**
+ * Convert an ArrayBuffer to a URL the browser can load directly.
+ */
+
 export function bufferToUrl(buffer: ArrayBuffer, mimeType: string, log: Logger): string {
     switch (mimeType) {
         case 'image/jpg':
@@ -349,7 +356,13 @@ export function bufferToUrl(buffer: ArrayBuffer, mimeType: string, log: Logger):
             mimeType = fallbackMimeType;
             break;
     }
-    return 'data:' + mimeType + ';base64,' + u8aToBase64(new Uint8Array(buffer));
+    const known = objectUrls.get(buffer);
+    if (known !== undefined) {
+        return known;
+    }
+    const url = URL.createObjectURL(new Blob([buffer], {type: mimeType}));
+    objectUrls.set(buffer, url);
+    return url;
 }
 
 /**

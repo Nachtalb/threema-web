@@ -31,10 +31,10 @@
     <span class="in-view-indicator" ng-if="ctrl.type !== 'location'" in-view="ctrl.thumbnailInView($inview)"></span>
     <img ng-if="ctrl.thumbnail"
          class="preview-image"
-         ng-src="{{ ctrl.thumbnail }}" />
+         ng-src="{{ ctrl.thumbnail | unsafeResUrl }}" />
     <img ng-if="!ctrl.thumbnail && ctrl.hasPreviewThumbnail()"
          class="thumbnail-loader preview-image"
-         ng-src="{{ ctrl.getThumbnailPreviewUri() }}" />
+         ng-src="{{ ctrl.getThumbnailPreviewUri() | unsafeResUrl }}" />
     <div ng-if="!ctrl.thumbnail && !ctrl.hasPreviewThumbnail()" class="circle">
         <i ng-if="ctrl.type === 'image' || ctrl.isGif" class="material-icons md-24">photo</i>
         <i ng-if="ctrl.type === 'video'" class="material-icons md-24">movie</i>
@@ -81,7 +81,7 @@
 
 <!-- GIF (downloaded) -->
 <div class="animgif" ng-if="ctrl.downloaded && ctrl.isGif">
-    <img ng-src="{{ ctrl.blobBufferUrl }}">
+    <img ng-src="{{ ctrl.blobBufferUrl | unsafeResUrl }}">
 </div>
 
 <!-- Other file messages -->
