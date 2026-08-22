@@ -664,31 +664,10 @@
             .message-text {
                 margin-top: 0;
             }
-        }
-    }
 
-    .unread-separator {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: nowrap;
-        align-items: center;
-        justify-content: space-between;
-        margin: 16px 8px;
-        width: 100%;
-
-        .line {
-            flex-grow: 1;
-            border-bottom: 1px solid #bbbbbb;
-            text-align: center;
-            line-height: 0;
-        }
-
-        .text {
-            margin: 0;
-            padding: 0 10px;
-            text-shadow: 0 0 4px #bbbbbb;
-            font-size: .9em;
-            font-weight: 300;
+            p {
+                margin: 0;
+            }
         }
     }
 
