@@ -125,6 +125,13 @@
         @include nav-item-separator;
         display: block;
 
+        // Its context menu covers the list with a backdrop, so :hover stops
+        // applying. Keep the row highlighted while the menu is open.
+        &.menu-open > .conversation {
+            border-color: $dark-background-color;
+            background-color: $dark-background-color;
+        }
+
         .conversation {
             display: flex;
             flex-direction: row;

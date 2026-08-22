@@ -42,8 +42,15 @@ export default [
                     menu.style.left = `${event.clientX - rect.left}px`;
                     menu.style.top = `${event.clientY - rect.top}px`;
                     trigger.click();
+                    // The menu's backdrop swallows the pointer, so :hover no
+                    // longer applies. Keep the row looking hovered until the
+                    // menu is closed again.
+                    row.classList.add('menu-open');
                     return true;
                 };
+
+                // Broadcast by angular-material whenever a menu closes
+                scope.$root.$on('$mdMenuClose', () => row.classList.remove('menu-open'));
 
                 row.addEventListener('contextmenu', (event: MouseEvent) => {
                     // Another row's backdrop handler may already have dealt
