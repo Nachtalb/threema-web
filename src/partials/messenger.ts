@@ -2084,11 +2084,14 @@ angular.module('3ema.messenger', ['ngMaterial'])
         // chat rather than replacing it. It carries its own receiver params so
         // that the profile of any group member can be shown without switching
         // the conversation behind it.
+        //
+        // Deliberately without a url: the sidebar is UI state, so it should
+        // not be addressable or add browser history entries.
         .state('messenger.home.conversation.detail', {
-            url: '/detail/{detailType}/{detailId}',
             templateUrl: 'partials/messenger.receiver.html',
             controller: 'ReceiverDetailController',
             controllerAs: 'ctrl',
+            params: {detailType: null, detailId: null},
         })
 
         // Own profile, which has no conversation to sit next to
