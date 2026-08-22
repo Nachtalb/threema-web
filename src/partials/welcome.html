@@ -98,6 +98,11 @@
                     <p ng-if="ctrl.state === 'peer_handshake'" translate>welcome.CONNECTING_TO_APP</p>
                     <p ng-if="ctrl.state === 'loading' || ctrl.state === 'done'" translate>welcome.LOADING_INITIAL_DATA</p>
 
+                    <md-button role="button" class="md-raised cancel-btn" ng-click="ctrl.cancelConnecting()"
+                               aria-labelledby="aria-label-cancel">
+                        <span translate id="aria-label-cancel">common.CANCEL</span>
+                    </md-button>
+
                     <!-- Troubleshooting: High-priority pushes (FCM & APNs VoIP) -->
                     <div class="troubleshoot" ng-if="ctrl.slowConnect && !ctrl.hasAppleNonVoipPushToken()">
                         <h3 translate>troubleshooting.SLOW_CONNECT</h3>

@@ -751,6 +751,19 @@ class WelcomeController {
     }
 
     /**
+     * Give up on a connection that is taking too long and go back to the
+     * start, without touching the session itself.
+     */
+    public cancelConnecting(): void {
+        this.formLocked = false;
+        this.scan({
+            reason: DisconnectReason.SessionStopped,
+            send: false,
+            close: 'welcome',
+        });
+    }
+
+    /**
      * Reload the page.
      */
     public reload() {

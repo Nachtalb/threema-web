@@ -192,6 +192,13 @@
         .info {
             text-align: center;
 
+            // Give up on a connection that is not going anywhere
+            .cancel-btn {
+                margin: 16px auto 0;
+                padding: 0 16px;
+                height: 35px;
+            }
+
             .percentage {
                 margin-bottom: 8px;
                 vertical-align: center;
