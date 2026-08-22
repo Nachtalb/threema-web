@@ -42,6 +42,9 @@ export default [
                 this.caption = '';
                 this.isVideo = false;
                 this.loading = false;
+                // Read live: the service updates it as bytes arrive
+                this.progress = () => mediaboxService.progress;
+                this.received = () => mediaboxService.received;
                 // The box stays up while the media downloads, so it must not
                 // hang off imageDataUrl, which is null until something arrives
                 this.open = false;
@@ -181,6 +184,8 @@ export default [
                             this.resetView();
                             return;
                         }
+                        // The media is here, so nothing is pending any more
+                        this.loading = false;
                         this.isVideo = mediaboxService.mimetype.startsWith('video/');
                         if (this.isVideo) {
                             // A video is far too large to inline as a data url
@@ -256,7 +261,16 @@ export default [
                                  ng-style="{transform: 'translate(' + ctrl.panX + 'px, ' + ctrl.panY + 'px) scale(' + ctrl.zoom + ')'}">
                             <video ng-if="ctrl.isVideo" ng-src="{{ ctrl.imageDataUrl | unsafeResUrl }}"
                                    controls autoplay ng-click="$event.stopPropagation()"></video>
-                            <div class="loading" ng-if="ctrl.loading"></div>
+                            <div class="loading" ng-if="ctrl.loading">
+                                <svg viewBox="0 0 40 40">
+                                    <circle class="track" cx="20" cy="20" r="17"/>
+                                    <circle class="bar" ng-class="{'indeterminate': ctrl.progress() === null}"
+                                            cx="20" cy="20" r="17"
+                                            ng-attr-stroke-dasharray="{{ ctrl.progress() === null ? '30 200' : (ctrl.progress() * 106.8) + ' 200' }}"/>
+                                </svg>
+                                <span class="percent" ng-if="ctrl.progress() !== null">{{ ctrl.progress() * 100 | number:0 }}%</span>
+                                <span class="percent" ng-if="ctrl.progress() === null && ctrl.received() > 0">{{ ctrl.received() | fileSize }}</span>
+                            </div>
                         </div>
                         <div class="caption" ng-if="ctrl.caption" title="{{ ctrl.caption | escapeHtml}}">
                             <span ng-bind-html="ctrl.caption | escapeHtml | markify | emojify"></span>

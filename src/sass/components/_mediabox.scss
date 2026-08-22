@@ -180,14 +180,48 @@ mediabox {
 
             // Download progress over the thumbnail
             .loading {
+                display: flex;
                 position: absolute;
-                animation: rotater 1.1s infinite linear;
-                border: 5px solid rgba(255, 255, 255, .25);
-                border-radius: 50%;
-                border-left-color: rgba(255, 255, 255, .9);
-                width: 56px;
-                height: 56px;
+                align-items: center;
+                justify-content: center;
+                width: 72px;
+                height: 72px;
                 pointer-events: none;
+
+                svg {
+                    position: absolute;
+                    // Start the arc at twelve o'clock
+                    transform: rotate(-90deg);
+                    width: 100%;
+                    height: 100%;
+
+                    circle {
+                        fill: none;
+                        stroke-width: 3;
+                        stroke-linecap: round;
+                    }
+
+                    .track {
+                        stroke: rgba(255, 255, 255, .25);
+                    }
+
+                    .bar {
+                        transition: stroke-dasharray .2s linear;
+                        stroke: rgba(255, 255, 255, .9);
+
+                        // Nothing to measure: sweep instead of filling
+                        &.indeterminate {
+                            transition: none;
+                            animation: rotater 1.1s infinite linear;
+                            transform-origin: 50% 50%;
+                        }
+                    }
+                }
+
+                .percent {
+                    color: rgba(255, 255, 255, .9);
+                    font-size: 13px;
+                }
             }
 
             // Videos play in the same box as the pictures, so the buttons and

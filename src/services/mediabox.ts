@@ -43,6 +43,17 @@ export class MediaboxService {
     public loading: boolean = false;
 
     /**
+     * How far the download has got, 0..1, or null when the size is not known.
+     */
+    public progress: number | null = null;
+
+    /**
+     * Bytes received so far, for when the size is not known and a percentage
+     * cannot be worked out.
+     */
+    public received: number = 0;
+
+    /**
      * How to reach the media either side of the one on show, so the box can
      * be paged through without knowing anything about conversations.
      */
@@ -63,7 +74,17 @@ export class MediaboxService {
         this.caption = caption;
         this.previewUrl = previewUrl;
         this.loading = loading;
+        this.progress = null;
         this.evtMediaChanged.post(true);
+    }
+
+    /**
+     * How far the current download has got. Called as bytes arrive, so it does
+     * not go through the change event.
+     */
+    public setProgress(fraction: number | null, received: number = 0) {
+        this.progress = fraction;
+        this.received = received;
     }
 
     /**
@@ -76,6 +97,7 @@ export class MediaboxService {
         this.caption = caption;
         this.previewUrl = null;
         this.loading = false;
+        this.progress = null;
         this.evtMediaChanged.post(data !== null);
     }
 

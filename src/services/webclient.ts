@@ -1735,6 +1735,29 @@ export class WebClientService {
     }
 
     /**
+     * Bytes received since a transfer was started, so the UI can show how far
+     * a slow download has got. Only one is tracked at a time: the one the user
+     * is actually waiting on.
+     */
+    private transferBytes: number = 0;
+    private transferExpected: number = 0;
+    private transferListener: ((fraction: number | null, received: number) => void) | null = null;
+
+    /**
+     * Watch the bytes arriving for a transfer of roughly this size.
+     */
+    public watchTransfer(expectedBytes: number, onProgress: (fraction: number | null, received: number) => void): void {
+        this.transferBytes = 0;
+        this.transferExpected = expectedBytes;
+        this.transferListener = onProgress;
+    }
+
+    public stopWatchingTransfer(): void {
+        this.transferListener = null;
+        this.transferExpected = 0;
+    }
+
+    /**
      * Request a blob.
      */
     public requestBlob(msgId: string, receiver: threema.Receiver): Promise<threema.BlobInfo> {
@@ -4196,6 +4219,16 @@ export class WebClientService {
 
         // Cancel scheduled push since data has been received
         this.cancelPush();
+
+        // Report progress on whatever transfer is being waited on
+        if (this.transferListener !== null) {
+            this.transferBytes += chunk.byteLength;
+            this.transferListener(
+                this.transferExpected > 0
+                    ? Math.min(1, this.transferBytes / this.transferExpected)
+                    : null,
+                this.transferBytes);
+        }
 
         // Process chunk
         // Warning: Nothing should be called after the unchunker has processed

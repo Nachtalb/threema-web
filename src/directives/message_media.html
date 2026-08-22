@@ -7,9 +7,16 @@
 
     <!-- Loading indicator -->
     <div class="loading-wrapper" ng-if="ctrl.hasPreviewThumbnail()" ng-class="{active: ctrl.isLoading()}">
-        <div class="loading"></div>
-        <div class="loading-text" ng-if="ctrl.uploading" translate>messenger.UPLOADING</div>
-        <div class="loading-text" ng-if="ctrl.isDownloading()" translate>messenger.DOWNLOADING</div>
+        <div class="loading">
+            <svg viewBox="0 0 40 40">
+                <circle class="track" cx="20" cy="20" r="17"/>
+                <circle class="bar" ng-class="{'indeterminate': ctrl.progress() === null}"
+                        cx="20" cy="20" r="17"
+                        ng-attr-stroke-dasharray="{{ ctrl.progress() === null ? '30 200' : (ctrl.progress() * 106.8) + ' 200' }}"/>
+            </svg>
+            <span class="percent" ng-if="ctrl.progress() !== null">{{ ctrl.progress() * 100 | number:0 }}%</span>
+            <span class="percent" ng-if="ctrl.progress() === null && ctrl.received() > 0">{{ ctrl.received() | fileSize }}</span>
+        </div>
     </div>
 
     <!-- Thumbnail overlays for videos and GIFs -->

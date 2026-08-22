@@ -25,6 +25,20 @@ import {MessageService} from '../services/message';
 import {TimeoutService} from '../services/timeout';
 import {WebClientService} from '../services/webclient';
 
+/**
+ * The size of the media, from whichever field the message type carries it in.
+ * Zero when it is not known, in which case progress cannot be measured.
+ */
+function mediaSize(message: threema.Message): number {
+    if (message.video !== undefined && message.video.size !== undefined) {
+        return message.video.size;
+    }
+    if (message.file !== undefined) {
+        return message.file.size;
+    }
+    return 0;
+}
+
 export default [
     'LogService',
     'WebClientService',
@@ -74,6 +88,12 @@ export default [
                     this.downloading = false;
                     this.thumbnailDownloading = false;
                     this.downloaded = false;
+                    // How far the current download has got, 0..1, or null when
+                    // it cannot be told
+                    this.downloadProgress = null;
+                    this.downloadedBytes = 0;
+                    this.progress = () => this.downloadProgress;
+                    this.received = () => this.downloadedBytes;
 
                     // Uploading
                     this.uploading = message.temporaryId !== undefined
@@ -273,9 +293,20 @@ export default [
                             }, 150, true, 'mediaboxSpinner');
                             mediaboxService.setPending(thumb, msg.caption || '', false);
 
+                            // Follow the bytes so a slow download does not look
+                            // like a hang
+                            const expected = mediaSize(msg);
+                            webClientService.watchTransfer(expected, (fraction, received) => {
+                                if (!settled && showing.id === msg.id) {
+                                    mediaboxService.setProgress(fraction, received);
+                                    $rootScope.$evalAsync();
+                                }
+                            });
+
                             webClientService.requestBlob(msg.id, receiver)
                                 .then((info: threema.BlobInfo) => $rootScope.$apply(() => {
                                     settled = true;
+                                    webClientService.stopWatchingTransfer();
                                     // The user may have paged on while this
                                     // was in flight
                                     if (showing.id !== msg.id) {
@@ -286,6 +317,7 @@ export default [
                                 }))
                                 .catch((error) => {
                                     settled = true;
+                                    webClientService.stopWatchingTransfer();
                                     log.error('Could not load media: ' + error);
                                 });
                         };
@@ -321,10 +353,20 @@ export default [
                             return;
                         }
                         this.downloading = true;
+                        this.downloadProgress = null;
+                        webClientService.watchTransfer(
+                            mediaSize(message),
+                            (fraction, received) => {
+                                this.downloadProgress = fraction;
+                                this.downloadedBytes = received;
+                                $rootScope.$evalAsync();
+                            });
                         webClientService.requestBlob(message.id, receiver)
                             .then((blobInfo: threema.BlobInfo) => {
                                 $rootScope.$apply(() => {
                                     log.debug('Blob loaded');
+                                    webClientService.stopWatchingTransfer();
+                                    this.downloadProgress = null;
                                     this.downloading = false;
                                     this.downloaded = true;
                                     const options = {type: blobInfo.mimetype};
@@ -360,6 +402,8 @@ export default [
                             })
                             .catch((error) => {
                                 $rootScope.$apply(() => {
+                                    webClientService.stopWatchingTransfer();
+                                    this.downloadProgress = null;
                                     this.downloading = false;
                                     let contentString;
                                     switch (error) {
