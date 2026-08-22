@@ -264,24 +264,31 @@ export default [
 
                         const show = (msg: threema.Message) => {
                             showing = msg;
-                            // Open on the picture the message already shows.
+                            // Open on the best picture the message has to hand.
                             // `preview` is a tiny blurred placeholder, so it is
                             // only a last resort.
-                            let thumb: string | null = null;
-                            if (msg.id === start.id && hasValue(this.thumbnail)) {
-                                thumb = this.thumbnail;
-                            } else if (hasValue(msg.thumbnail)) {
+                            const bestThumb = (): string | null => {
+                                if (msg.id === start.id && hasValue(this.thumbnail)) {
+                                    return this.thumbnail;
+                                }
+                                if (!hasValue(msg.thumbnail)) {
+                                    return null;
+                                }
                                 if (hasValue(msg.thumbnail.img)) {
-                                    thumb = bufferToUrl(
+                                    return bufferToUrl(
                                         msg.thumbnail.img,
                                         webClientService.appCapabilities.imageFormat.thumbnail,
                                         log);
-                                } else if (hasValue(msg.thumbnail.previewDataUrl)) {
-                                    thumb = msg.thumbnail.previewDataUrl;
-                                } else if (hasValue(msg.thumbnail.preview)) {
-                                    thumb = bufferToUrl(msg.thumbnail.preview, 'image/jpeg', log);
                                 }
-                            }
+                                if (hasValue(msg.thumbnail.previewDataUrl)) {
+                                    return msg.thumbnail.previewDataUrl;
+                                }
+                                if (hasValue(msg.thumbnail.preview)) {
+                                    return bufferToUrl(msg.thumbnail.preview, 'image/jpeg', log);
+                                }
+                                return null;
+                            };
+                            const thumb = bestThumb();
 
                             // A cached blob arrives in the same tick, so only
                             // announce a download once it is actually slow.
@@ -296,11 +303,21 @@ export default [
                             // Follow the bytes so a slow download does not look
                             // like a hang
                             const expected = mediaSize(msg);
+                            let shownThumb = thumb;
                             webClientService.watchTransfer(expected, (fraction, received) => {
-                                if (!settled && showing.id === msg.id) {
-                                    mediaboxService.setProgress(fraction, received);
-                                    $rootScope.$evalAsync();
+                                if (settled || showing.id !== msg.id) {
+                                    return;
                                 }
+                                // A better thumbnail may have arrived since the
+                                // box opened; show it rather than sitting on the
+                                // blurry one.
+                                const better = bestThumb();
+                                if (better !== null && better !== shownThumb) {
+                                    shownThumb = better;
+                                    mediaboxService.setPending(better, msg.caption || '', true);
+                                }
+                                mediaboxService.setProgress(fraction, received);
+                                $rootScope.$evalAsync();
                             });
 
                             webClientService.requestBlob(msg.id, receiver)

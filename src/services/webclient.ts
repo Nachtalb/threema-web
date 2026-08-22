@@ -1124,6 +1124,7 @@ export class WebClientService {
             };
             dc.onmessage = (event) => {
                 this.arpLogV.debug(`Data channel ${dc.label} incoming chunk of length ${event.data.byteLength}`);
+                this.countTransferred(event.data.byteLength);
                 unchunker.add(new Uint8Array(event.data));
             };
             // noinspection JSUndefinedPropertyAssignment
@@ -1755,6 +1756,23 @@ export class WebClientService {
     public stopWatchingTransfer(): void {
         this.transferListener = null;
         this.transferExpected = 0;
+    }
+
+    /**
+     * Count bytes towards the transfer being waited on. Chunks arrive on two
+     * paths — relayed and, once handed over, the data channel — so both must
+     * report or the count stalls part way.
+     */
+    private countTransferred(byteLength: number): void {
+        if (this.transferListener === null) {
+            return;
+        }
+        this.transferBytes += byteLength;
+        this.transferListener(
+            this.transferExpected > 0
+                ? Math.min(1, this.transferBytes / this.transferExpected)
+                : null,
+            this.transferBytes);
     }
 
     /**
@@ -4221,14 +4239,7 @@ export class WebClientService {
         this.cancelPush();
 
         // Report progress on whatever transfer is being waited on
-        if (this.transferListener !== null) {
-            this.transferBytes += chunk.byteLength;
-            this.transferListener(
-                this.transferExpected > 0
-                    ? Math.min(1, this.transferBytes / this.transferExpected)
-                    : null,
-                this.transferBytes);
-        }
+        this.countTransferred(chunk.byteLength);
 
         // Process chunk
         // Warning: Nothing should be called after the unchunker has processed

@@ -294,7 +294,7 @@ angular.module('3ema.filters', [])
         }
         const i = Math.floor( Math.log(size) / Math.log(1024) );
         const x = (size / Math.pow(1024, i)).toFixed(2);
-        return (x + ' ' + ['B', 'kB', 'MB', 'GB', 'TB'][i]);
+        return (x + ' ' + ['B', 'KiB', 'MiB', 'GiB', 'TiB'][i]);
     };
 })
 
