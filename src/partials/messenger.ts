@@ -1262,11 +1262,10 @@ class ConversationController {
         // Jump most of the way, then glide the last stretch. Animating the
         // whole distance would crawl through long conversations, and jumping
         // all of it lands with no sense of where you came from.
-        const target = chat.scrollHeight;
-        const remaining = target - (chat.scrollTop + chat.clientHeight);
-        const glide = 180;
-        if (remaining > glide) {
-            chat.scrollTop = target - chat.clientHeight - glide;
+        const target = chat.scrollHeight - chat.clientHeight;
+        const glide = 320;
+        if (target - chat.scrollTop > glide) {
+            chat.scrollTop = target - glide;
         }
         chat.scrollTo({top: target, behavior: 'smooth'});
     }
