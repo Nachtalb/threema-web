@@ -322,6 +322,9 @@
         },
         "ui": {
             "UI": "用户界面",
+            "CUSTOM_BACKGROUND": "Own background",
+            "CHOOSE_BACKGROUND": "Choose picture",
+            "RESET_BACKGROUND": "Use the default pictures",
             "BACKGROUND_BLUR": "Blur the background image"
         }
     },

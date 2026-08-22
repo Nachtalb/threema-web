@@ -80,6 +80,19 @@
                                 <span translate>settings.ui.BACKGROUND_BLUR</span>
                             </md-switch>
                         </md-list-item>
+                        <md-list-item class="background-picker">
+                            <span translate>settings.ui.CUSTOM_BACKGROUND</span>
+                            <input type="file" id="background-upload" accept="image/*"
+                                   eee-file-pick="ctrl.setBackground(file)">
+                            <label for="background-upload" class="md-button md-raised">
+                                <span translate>settings.ui.CHOOSE_BACKGROUND</span>
+                            </label>
+                            <button type="button" class="md-button reset-background"
+                                    ng-show="ctrl.hasCustomBackground"
+                                    ng-click="ctrl.clearBackground()">
+                                <span translate>settings.ui.RESET_BACKGROUND</span>
+                            </button>
+                        </md-list-item>
                     </md-list>
                 </section>
                 <section class="settings-actions">

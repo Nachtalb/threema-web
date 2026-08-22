@@ -321,6 +321,9 @@
         },
         "ui": {
             "UI": "Užívateľské rozhranie",
+            "CUSTOM_BACKGROUND": "Own background",
+            "CHOOSE_BACKGROUND": "Choose picture",
+            "RESET_BACKGROUND": "Use the default pictures",
             "BACKGROUND_BLUR": "Blur the background image"
         }
     },

@@ -44,6 +44,18 @@ md-dialog {
         padding-left: 16px;
     }
 
+    // Picking an own background. The real file input is hidden behind its
+    // label, which is styled as a button.
+    .background-picker {
+        input[type="file"] {
+            display: none;
+        }
+
+        label.md-button {
+            margin-left: auto;
+        }
+    }
+
     // Action entries at the bottom of the settings dialog. Clickable
     // md-list-items are rendered as md-buttons, which centre their content by
     // default. angular-material also sets `md-icon { margin-left: auto }`,

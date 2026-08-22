@@ -31,6 +31,7 @@ import {TroubleshootingController} from '../controllers/troubleshooting';
 import {bufferToUrl, hasValue, supportsPassive, u8aToHex} from '../helpers';
 import {emojify} from '../helpers/emoji';
 import {publicKeyGrid} from '../helpers/public_key';
+import {BackgroundStoreService} from '../services/background_store';
 import {ContactService} from '../services/contact';
 import {ControllerService} from '../services/controller';
 import {ControllerModelService} from '../services/controller_model';
@@ -252,9 +253,14 @@ class SettingsController extends DialogController {
     private notificationSound: boolean;
     private submitWithCtrlEnter: boolean;
     private backgroundBlur: boolean;
+    private hasCustomBackground: boolean = false;
+    private backgroundStoreService: BackgroundStoreService;
+    private readonly settingsScope: ng.IScope;
+    private readonly log: Logger;
 
     public static $inject = [
         '$scope', '$mdDialog', '$window', 'SettingsService', 'ThemeService', 'NotificationService', 'navigation',
+        'BackgroundStoreService', 'LogService',
     ];
     constructor(
         $scope: ng.IScope,
@@ -264,12 +270,17 @@ class SettingsController extends DialogController {
         themeService: ThemeService,
         notificationService: NotificationService,
         navigation: NavigationController,
+        backgroundStoreService: BackgroundStoreService,
+        logService: LogService,
     ) {
         super($scope, $mdDialog, themeService);
         this.$window = $window;
         this.settingsService = settingsService;
         this.notificationService = notificationService;
         this.navigation = navigation;
+        this.backgroundStoreService = backgroundStoreService;
+        this.settingsScope = $scope;
+        this.log = logService.getLogger('Settings-C');
         this.desktopNotifications = notificationService.getWantsNotifications();
         this.notificationApiAvailable = notificationService.isNotificationApiAvailable();
         this.notificationPermission = notificationService.getNotificationPermission();
@@ -278,6 +289,12 @@ class SettingsController extends DialogController {
         this.submitWithCtrlEnter =
             settingsService.composeArea.getSubmitKey() === threema.ComposeAreaSubmitKey.CtrlEnter;
         this.backgroundBlur = settingsService.background.getBlur();
+        backgroundStoreService.get().then((blob) => {
+            // A promise callback is outside Angular's digest
+            this.settingsScope.$evalAsync(() => {
+                this.hasCustomBackground = blob !== null;
+            });
+        });
     }
 
     public setWantsNotifications(desktopNotifications: boolean) {
@@ -300,6 +317,44 @@ class SettingsController extends DialogController {
 
     public setBackgroundBlur(blur: boolean) {
         this.settingsService.background.setBlur(blur);
+    }
+
+    /**
+     * Use a picture of the user's own as the page background.
+     */
+    public setBackground(file: File): void {
+        this.backgroundStoreService.set(file)
+            .then(() => this.settingsScope.$evalAsync(() => {
+                this.hasCustomBackground = true;
+                this.showBackground(file);
+            }))
+            .catch((error) => this.log.error('Could not store the background: ' + error));
+    }
+
+    /**
+     * Go back to the random pictures that ship with the app.
+     */
+    public clearBackground(): void {
+        this.backgroundStoreService.clear()
+            .then(() => {
+                this.hasCustomBackground = false;
+                // Reload so one of the defaults is picked again
+                this.$window.location.reload();
+            })
+            .catch((error) => this.log.error('Could not clear the background: ' + error));
+    }
+
+    private showBackground(blob: Blob): void {
+        const image = document.getElementById('background-image') as HTMLImageElement | null;
+        if (image === null) {
+            return;
+        }
+        if (image.dataset.customUrl !== undefined) {
+            URL.revokeObjectURL(image.dataset.customUrl);
+        }
+        const url = URL.createObjectURL(blob);
+        image.dataset.customUrl = url;
+        image.src = url;
     }
 
     public isPersistent(): boolean {

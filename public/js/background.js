@@ -7,7 +7,6 @@
  */
 (function () {
     var COUNT = 19;
-    var index = Math.floor(Math.random() * COUNT) + 1;
     var image = document.getElementById('background-image');
     if (image === null) {
         return;
@@ -22,5 +21,31 @@
         // Storage may be blocked; keep the default
     }
 
+    var index = Math.floor(Math.random() * COUNT) + 1;
     image.src = 'img/backgrounds/bg' + index + (blurred ? '' : '.sharp') + '.avif';
+
+    // A picture of the user's own wins over the shipped ones. It lives in
+    // IndexedDB, so it arrives a moment after the default is already showing.
+    try {
+        var request = indexedDB.open('threema-background', 1);
+        request.onupgradeneeded = function () {
+            request.result.createObjectStore('image');
+        };
+        request.onsuccess = function () {
+            var db = request.result;
+            if (!db.objectStoreNames.contains('image')) {
+                return;
+            }
+            var read = db.transaction('image', 'readonly')
+                .objectStore('image')
+                .get('custom');
+            read.onsuccess = function () {
+                if (read.result) {
+                    image.src = URL.createObjectURL(read.result);
+                }
+            };
+        };
+    } catch (e) {
+        // No IndexedDB: the shipped pictures are already in place
+    }
 })();

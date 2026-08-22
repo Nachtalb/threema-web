@@ -15,6 +15,7 @@
  * along with Threema Web. If not, see <http://www.gnu.org/licenses/>.
  */
 
+import {BackgroundStoreService} from './services/background_store';
 import {BatteryStatusService} from './services/battery';
 import {BlobCacheService} from './services/blob_cache';
 import {BrowserService} from './services/browser';
@@ -46,6 +47,7 @@ angular.module('3ema.services', [])
 // Register services
 .service('LogService', LogService)
 .service('BatteryStatusService', BatteryStatusService)
+.service('BackgroundStoreService', BackgroundStoreService)
 .service('BlobCacheService', BlobCacheService)
 .service('ContactService', ContactService)
 .service('ControllerModelService', ControllerModelService)
