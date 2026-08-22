@@ -45,8 +45,9 @@ The config variables are defined at build time, and the userconfig variables
 can be modified at runtime. Please refer to those files for documentation on
 what variables exist and how to configure them.
 
-In the Docker image, all userconfig variables can be overridden using env
-variables. See [`docs/docker.md`](docs/docker.md) for more information.
+In the Docker image, userconfig variables are set by mounting a
+`userconfig.overrides.js`. See [`docs/docker.md`](docs/docker.md) for the image
+and [`k8s/README.md`](k8s/README.md) for the Kubernetes manifests.
 
 
 ## Self Hosting

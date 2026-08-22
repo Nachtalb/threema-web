@@ -1,6 +1,13 @@
-Dockerfile
+.git
+.github
 node_modules/
 build/
 release/
 dist/*.tar.gz
-docker/rebuild.sh
+dist/generated/
+docker/
+docs/
+k8s/
+tests/
+tools/
+*.md

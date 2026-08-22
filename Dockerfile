@@ -1,39 +1,32 @@
-# Dockerfile for Threema Web, based on the nginx alpine image.
+# Threema Web as a static site, served from a scratch image.
 #
-# WARNING: This Dockerfile does not include TLS termination. Make sure to run
-#          the container behind a reverse proxy (e.g. Nginx) that does proper
-#          TLS termination.
-
-# First, build Threema Web in a node container
+# No TLS, no shell, no package manager: run it behind a reverse proxy or an
+# ingress. Runtime config is a userconfig.overrides.js mounted over
+# /public/userconfig.overrides.js (see k8s/configmap.yaml).
 
 FROM docker.io/oven/bun:1 AS builder
 ENV NODE_ENV=production
+WORKDIR /src
 
-COPY . /opt/threema-web/
-WORKDIR /opt/threema-web/
-
-RUN sed -i "s/SELF_HOSTED: [^,]*,/SELF_HOSTED: true,/g" src/config.ts
-
+COPY package.json bun.lock ./
 RUN bun install --frozen-lockfile
-RUN bun run dist d
 
-# Then, transfer the build artifacts to a minimal nginx container
+COPY . .
+RUN sed -i "s/SELF_HOSTED: [^,]*,/SELF_HOSTED: true,/g" src/config.ts \
+ && bun run dist \
+ && mv release/threema-web-* /site \
+ && find /site -name '*.map' -delete \
+ && : > /site/userconfig.overrides.js \
+ && chmod -R a+rX /site
 
-FROM docker.io/nginx:1.27-alpine
-
-RUN apk add --update bash
-
-RUN rm /usr/share/nginx/html/*
-COPY --from=builder /opt/threema-web/release/threema-web-* /usr/share/nginx/html/
-COPY docker/entrypoint.sh /usr/local/bin/
-
-# Hide nginx version
-RUN echo "server_tokens off;" > /etc/nginx/conf.d/hide_nginx_version.conf
-
-EXPOSE 80
-
-# Set better defaults for production
-ENV VISUALIZE_STATE=false \
-    CONSOLE_LOG_LEVEL=info
-
-CMD ["/bin/bash", "/usr/local/bin/entrypoint.sh"]
+FROM ghcr.io/static-web-server/static-web-server:2
+COPY --from=builder /site /public
+USER 65534:65534
+EXPOSE 8080
+ENV SERVER_PORT=8080 \
+    SERVER_ROOT=/public \
+    SERVER_HEALTH=true \
+    SERVER_COMPRESSION=true \
+    SERVER_CACHE_CONTROL_HEADERS=true \
+    SERVER_SECURITY_HEADERS=true \
+    SERVER_LOG_LEVEL=info
