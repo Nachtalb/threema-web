@@ -53,8 +53,12 @@ md-menu-content {
     overflow: hidden;
 }
 
-md-menu-content {
+md-menu-content,
+md-menu-content.md-threemawork-theme {
     padding: 0;
+    // Slightly translucent, with the backdrop blurred so entries stay readable
+    background-color: rgba(255, 255, 255, .88);
+    backdrop-filter: blur(12px);
 }
 
 #messenger {
