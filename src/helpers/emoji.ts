@@ -3432,6 +3432,26 @@ export function shortnameToUtf8(shortname: string): string | null {
 }
 
 /**
+ * The shortnames starting with the given text, e.g. "smi" for "smile".
+ *
+ * Names come back bare, without the surrounding colons, which is what
+ * `shortnameToUtf8` expects.
+ */
+export function shortnamesStartingWith(prefix: string, limit: number): string[] {
+    const needle = prefix.toLowerCase();
+    const found: string[] = [];
+    for (const shortname of Object.keys(SHORTNAMES)) {
+        if (shortname.startsWith(needle)) {
+            found.push(shortname);
+            if (found.length === limit) {
+                break;
+            }
+        }
+    }
+    return found;
+}
+
+/**
  * Enlarge 1-3 emoji.
  */
 const pattern = /<img class="em([" ])([^>]*>)/g;

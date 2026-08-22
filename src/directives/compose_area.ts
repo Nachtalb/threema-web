@@ -18,7 +18,7 @@
 import {ComposeArea} from '@threema/compose-area';
 
 import {isActionTrigger} from '../helpers';
-import {parseEmoji, shortnameToUtf8} from '../helpers/emoji';
+import {parseEmoji, shortnamesStartingWith, shortnameToUtf8} from '../helpers/emoji';
 import {BrowserService} from '../services/browser';
 import {LogService} from '../services/log';
 import {ReceiverService} from '../services/receiver';
@@ -281,6 +281,34 @@ export default [
                 }
 
                 function onKeyDown(ev: KeyboardEvent): void {
+                    // Walk the emoji suggestions rather than the message
+                    if (suggestions.length > 0) {
+                        switch (ev.key) {
+                            case 'ArrowRight':
+                                ev.preventDefault();
+                                suggestionIndex = (suggestionIndex + 1) % suggestions.length;
+                                renderSuggestions();
+                                return;
+                            case 'ArrowLeft':
+                                ev.preventDefault();
+                                suggestionIndex =
+                                    (suggestionIndex - 1 + suggestions.length) % suggestions.length;
+                                renderSuggestions();
+                                return;
+                            case 'Tab':
+                            case 'Enter':
+                                ev.preventDefault();
+                                insertSuggestion(suggestions[suggestionIndex]);
+                                return;
+                            case 'Escape':
+                                ev.preventDefault();
+                                hideSuggestions();
+                                return;
+                            default:
+                                break;
+                        }
+                    }
+
                     let submit = false;
                     switch (submitKey) {
                         case threema.ComposeAreaSubmitKey.CtrlEnter:
@@ -352,6 +380,7 @@ export default [
                         scope.onTyping(text.trim());
                     }
 
+                    updateSuggestions();
                     updateView();
                 }
 
@@ -665,6 +694,78 @@ export default [
                 //
                 // The `alreadyProcessed` indicates whether the key has already
                 // been processed in the DOM (onKeyUp) or not (onKeyDown).
+                // A one-line strip of emoji suggestions, shown while a
+                // shortcode is being typed.
+                let suggestionStrip: HTMLElement | null = null;
+                let suggestions: string[] = [];
+                let suggestionIndex = 0;
+
+                function hideSuggestions(): void {
+                    if (suggestionStrip !== null) {
+                        suggestionStrip.remove();
+                        suggestionStrip = null;
+                    }
+                    suggestions = [];
+                    suggestionIndex = 0;
+                }
+
+                function insertSuggestion(shortname: string): void {
+                    const emoji = shortnameToUtf8(shortname);
+                    if (emoji !== null) {
+                        composeArea.select_word_at_caret();
+                        composeArea.store_selection_range();
+                        insertSingleEmojiString(emoji);
+                    }
+                    hideSuggestions();
+                }
+
+                function renderSuggestions(): void {
+                    if (suggestionStrip === null) {
+                        suggestionStrip = document.createElement('div');
+                        suggestionStrip.className = 'emoji-suggestions';
+                        wrapper[0].insertBefore(suggestionStrip, wrapper[0].firstChild);
+                    }
+                    suggestionStrip.innerHTML = '';
+                    suggestions.forEach((shortname, at) => {
+                        const item = document.createElement('span');
+                        item.className = 'suggestion' + (at === suggestionIndex ? ' selected' : '');
+                        item.textContent = shortnameToUtf8(shortname);
+                        item.title = `:${shortname}:`;
+                        item.addEventListener('mousedown', (ev) => {
+                            ev.preventDefault();
+                            insertSuggestion(shortname);
+                        });
+                        suggestionStrip.appendChild(item);
+                    });
+                }
+
+                /**
+                 * Offer emoji whose shortcode starts with what has been typed
+                 * after a ':'. At most five, as a single line.
+                 */
+                function updateSuggestions(): void {
+                    const word = composeArea.get_word_at_caret();
+                    if (word === undefined) {
+                        hideSuggestions();
+                        return;
+                    }
+                    const typed = word.before() + word.after();
+                    // Needs a ':' and at least two characters to narrow things
+                    // down; anything shorter matches far too much.
+                    if (!typed.startsWith(':') || typed.length < 3 || typed.endsWith(':')) {
+                        hideSuggestions();
+                        return;
+                    }
+                    const needle = typed.slice(1).toLowerCase();
+                    suggestions = shortnamesStartingWith(needle, 5);
+                    if (suggestions.length === 0) {
+                        hideSuggestions();
+                        return;
+                    }
+                    suggestionIndex = 0;
+                    renderSuggestions();
+                }
+
                 function onEmojiShortcodeKeyPressed(ev, trigger: string, alreadyProcessed: boolean): boolean {
                     const word = composeArea.get_word_at_caret();
                     if (word === undefined) {
