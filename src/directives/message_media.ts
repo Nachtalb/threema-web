@@ -161,15 +161,47 @@ export default [
                                     setThumbnail(message.thumbnail.img);
                                     return;
                                 } else {
-                                    this.thumbnailDownloading = true;
+                                    // Anything fetched earlier this session is
+                                    // put back straight away, with no delay and
+                                    // no spinner.
+                                    webClientService.cachedThumbnail(this.receiver, message)
+                                        .then((cached) => {
+                                            if (cached === null || this.thumbnail !== null) {
+                                                return;
+                                            }
+                                            $timeout(() => {
+                                                message.thumbnail.img = cached;
+                                                setThumbnail(cached);
+                                            });
+                                        })
+                                        .catch(() => {
+                                            // Nothing stored; the request below covers it
+                                        });
+
+                                    // The request is held back a moment so
+                                    // scrolling past does not fetch anything,
+                                    // and the spinner only appears if the
+                                    // thumbnail is genuinely slow to arrive.
                                     loadingThumbnailTimeout = timeoutService.register(() => {
+                                        if (this.thumbnail !== null) {
+                                            return;
+                                        }
+                                        let settled = false;
+                                        timeoutService.register(() => {
+                                            if (!settled) {
+                                                this.thumbnailDownloading = true;
+                                            }
+                                        }, 150, true, 'thumbnailSpinner');
                                         webClientService
                                             .requestThumbnail(this.receiver, message)
                                             .then((img) => $timeout(() => {
+                                                settled = true;
                                                 setThumbnail(img);
                                                 this.thumbnailDownloading = false;
                                             }))
                                             .catch((error) => {
+                                                settled = true;
+                                                this.thumbnailDownloading = false;
                                                 // TODO: Handle this properly / show an error message
                                                 const description = `Thumbnail request has been rejected: ${error}`;
                                                 this.log.error(description);
@@ -212,17 +244,20 @@ export default [
 
                         const show = (msg: threema.Message) => {
                             showing = msg;
-                            // Open on whatever picture is already to hand,
-                            // rather than waiting for the full media.
+                            // Open on the picture the message already shows.
+                            // `preview` is a tiny blurred placeholder, so it is
+                            // only a last resort.
                             let thumb: string | null = null;
-                            if (hasValue(msg.thumbnail)) {
-                                if (hasValue(msg.thumbnail.previewDataUrl)) {
-                                    thumb = msg.thumbnail.previewDataUrl;
-                                } else if (hasValue(msg.thumbnail.img)) {
+                            if (msg.id === start.id && hasValue(this.thumbnail)) {
+                                thumb = this.thumbnail;
+                            } else if (hasValue(msg.thumbnail)) {
+                                if (hasValue(msg.thumbnail.img)) {
                                     thumb = bufferToUrl(
                                         msg.thumbnail.img,
                                         webClientService.appCapabilities.imageFormat.thumbnail,
                                         log);
+                                } else if (hasValue(msg.thumbnail.previewDataUrl)) {
+                                    thumb = msg.thumbnail.previewDataUrl;
                                 } else if (hasValue(msg.thumbnail.preview)) {
                                     thumb = bufferToUrl(msg.thumbnail.preview, 'image/jpeg', log);
                                 }

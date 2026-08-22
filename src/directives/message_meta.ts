@@ -57,7 +57,7 @@ export default [
             template: `
                 <span ng-if="ctrl.isGif" class="message-meta-item">GIF</span>
                 <span ng-if="ctrl.duration !== undefined" class="message-meta-item message-duration">
-                    <md-icon class="material-icons">av_timer</md-icon>
+                    <svg class="duration-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
                     {{ctrl.duration | duration}}
                 </span>
             `,

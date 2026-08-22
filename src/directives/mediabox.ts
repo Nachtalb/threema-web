@@ -162,7 +162,10 @@ export default [
 
                 // Listen to Mediabox service events
                 mediaboxService.evtMediaChanged.attach((dataAvailable: boolean) => {
-                    $rootScope.$apply(() => {
+                    // $apply throws when a digest is already running, which is
+                    // the case when this comes straight off a click. Losing
+                    // that event would leave the box shut until the next one.
+                    $rootScope.$evalAsync(() => {
                         if (!dataAvailable) {
                             this.close();
                             return;

@@ -1685,6 +1685,17 @@ export class WebClientService {
     /**
      * Send a thumbnail request for the specified receiver.
      */
+    /**
+     * A thumbnail that was already fetched this session, if any.
+     */
+    public cachedThumbnail(receiver: threema.Receiver, message: threema.Message): Promise<ArrayBuffer | null> {
+        return this.blobCacheService.get('thumb-' + message.id + receiver.type)
+            .then((stored) => stored === null ? null : stored.buffer);
+    }
+
+    /**
+     * Send a thumbnail request for the specified receiver.
+     */
     public requestThumbnail(receiver: threema.Receiver, message: threema.Message): Promise<any> {
         // Check if the receiver has an avatar or the avatar already exists
         if (message.thumbnail !== undefined && message.thumbnail.img !== undefined) {

@@ -791,6 +791,19 @@
                 content: '|';
             }
         }
+
+        // Takes the colour of the row it sits in, so it stays legible both on
+        // the bubble and on the dark pill over a picture.
+        .duration-icon {
+            vertical-align: -2px;
+            width: 1.1em;
+            height: 1.1em;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
     }
 
 }

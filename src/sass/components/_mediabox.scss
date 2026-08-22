@@ -171,9 +171,10 @@ mediabox {
                 max-height: calc(100vh - 28px - 28px);
                 user-select: none;
 
-                // The thumbnail standing in for the real thing
+                // The thumbnail standing in for the real thing. It is a real
+                // picture, not a blur hash, so it needs only a light blur.
                 &.placeholder {
-                    filter: blur(8px);
+                    filter: blur(2px);
                 }
             }
 
