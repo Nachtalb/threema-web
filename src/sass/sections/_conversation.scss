@@ -55,6 +55,11 @@
         overflow-x: hidden;
         padding: 0 10px;
 
+        // Fade messages out at the top rather than cutting them off against
+        // the floating header.
+        mask-image: linear-gradient(to bottom, transparent 0, #000000 32px);
+        -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000000 32px);
+
         .chat {
             margin-right: -10px;
             margin-left: -10px;
