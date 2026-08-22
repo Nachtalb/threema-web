@@ -25,50 +25,6 @@ import {MessageService} from '../services/message';
 import {TimeoutService} from '../services/timeout';
 import {WebClientService} from '../services/webclient';
 
-/**
- * Play a video in a dialog, with the option to keep it.
- */
-function showVideoDialog(
-    $mdDialog: ng.material.IDialogService,
-    blobInfo: threema.BlobInfo,
-): void {
-    $mdDialog.show({
-        controllerAs: 'ctrl',
-        controller: function() {
-            // A video is far too large to inline as a data url
-            const url = URL.createObjectURL(
-                new Blob([blobInfo.buffer], {type: blobInfo.mimetype}));
-            this.videoSrc = url;
-            this.cancel = () => {
-                URL.revokeObjectURL(url);
-                $mdDialog.cancel();
-            };
-            this.save = () => saveAs(
-                new Blob([blobInfo.buffer], {type: blobInfo.mimetype}),
-                blobInfo.filename,
-            );
-        },
-        template: `
-            <md-dialog class="video-dialog" translate-attr="{'aria-label': 'messageTypes.video'}">
-                    <md-dialog-content>
-                        <video controls autoplay ng-src="{{ ctrl.videoSrc | unsafeResUrl }}">
-                            Your browser does not support the <code>video</code> element.
-                        </video>
-                    </md-dialog-content>
-                    <md-dialog-actions layout="row">
-                      <md-button ng-click="ctrl.save()">
-                         <span translate>common.SAVE</span>
-                      </md-button>
-                      <md-button ng-click="ctrl.cancel()">
-                         <span translate>common.OK</span>
-                      </md-button>
-                    </md-dialog-actions>
-            </md-dialog>`,
-        parent: angular.element(document.body),
-        clickOutsideToClose: true,
-    });
-}
-
 export default [
     'LogService',
     'WebClientService',
@@ -236,6 +192,58 @@ export default [
                         $window.open($filter<any>('mapLink')(this.location), '_blank');
                     };
 
+                    // Show a piece of media in the big viewer, and teach the
+                    // viewer how to walk to the ones either side of it within
+                    // this conversation.
+                    const VIEWABLE = ['image', 'video'];
+                    const openInViewer = (start: threema.Message, receiver: threema.Receiver) => {
+                        let showing: threema.Message = start;
+
+                        const step = (forward: boolean): threema.Message | null => {
+                            const list = webClientService.messages
+                                .getList(receiver)
+                                .filter((m) => VIEWABLE.indexOf(m.type) !== -1);
+                            const at = list.findIndex((m) => m.id === showing.id);
+                            if (at === -1) {
+                                return null;
+                            }
+                            return list[at + (forward ? 1 : -1)] || null;
+                        };
+
+                        const show = (msg: threema.Message) => {
+                            showing = msg;
+                            // Open on the thumbnail at once; the full media
+                            // replaces it when it arrives.
+                            const thumb = hasValue(msg.thumbnail)
+                                ? (msg.thumbnail.previewDataUrl
+                                    || (hasValue(msg.thumbnail.preview)
+                                        ? bufferToUrl(msg.thumbnail.preview, 'image/jpeg', log)
+                                        : null))
+                                : null;
+                            mediaboxService.setPending(thumb, msg.caption || '');
+                            webClientService.requestBlob(msg.id, receiver)
+                                .then((info: threema.BlobInfo) => $rootScope.$apply(() => {
+                                    // The user may have paged on while this
+                                    // was in flight
+                                    if (showing.id !== msg.id) {
+                                        return;
+                                    }
+                                    mediaboxService.setMedia(
+                                        info.buffer, info.filename, info.mimetype, msg.caption || '');
+                                }))
+                                .catch((error) => log.error('Could not load media: ' + error));
+                        };
+
+                        mediaboxService.hasNeighbour = (forward: boolean) => step(forward) !== null;
+                        mediaboxService.loadNeighbour = (forward: boolean) => {
+                            const next = step(forward);
+                            if (next !== null) {
+                                show(next);
+                            }
+                        };
+                        show(start);
+                    };
+
                     // Download function
                     this.download = () => {
                         log.debug('Download blob');
@@ -243,11 +251,19 @@ export default [
                             log.debug('Cannot download, still uploading');
                             return;
                         }
+                        const receiver: threema.Receiver = this.receiver;
+
+                        // Pictures and videos open in the viewer straight away
+                        if (VIEWABLE.indexOf(message.type) !== -1) {
+                            openInViewer(message, receiver);
+                            this.downloaded = true;
+                            return;
+                        }
+
                         if (this.downloading) {
                             log.debug('Download already in progress...');
                             return;
                         }
-                        const receiver: threema.Receiver = this.receiver;
                         this.downloading = true;
                         webClientService.requestBlob(message.id, receiver)
                             .then((blobInfo: threema.BlobInfo) => {
@@ -258,53 +274,6 @@ export default [
                                     const options = {type: blobInfo.mimetype};
 
                                     switch (message.type) {
-                                        case 'image':
-                                            const caption = message.caption || '';
-                                            // Let the box page through the
-                                            // other pictures in this chat.
-                                            let showing: threema.Message = message;
-                                            const step = (forward: boolean): threema.Message | null => {
-                                                const list = webClientService.messages
-                                                    .getList(receiver)
-                                                    .filter((m) => m.type === 'image');
-                                                const at = list.findIndex((m) => m.id === showing.id);
-                                                if (at === -1) {
-                                                    return null;
-                                                }
-                                                return list[at + (forward ? 1 : -1)] || null;
-                                            };
-                                            mediaboxService.hasNeighbour =
-                                                (forward: boolean) => step(forward) !== null;
-                                            mediaboxService.loadNeighbour = (forward: boolean) => {
-                                                const next = step(forward);
-                                                if (next === null) {
-                                                    return;
-                                                }
-                                                webClientService.requestBlob(next.id, receiver)
-                                                    .then((info: threema.BlobInfo) => {
-                                                        $rootScope.$apply(() => {
-                                                            showing = next;
-                                                            mediaboxService.setMedia(
-                                                                info.buffer,
-                                                                info.filename,
-                                                                info.mimetype,
-                                                                next.caption || '',
-                                                            );
-                                                        });
-                                                    })
-                                                    .catch((error) =>
-                                                        log.error('Could not load neighbouring image: ' + error));
-                                            };
-                                            mediaboxService.setMedia(
-                                                blobInfo.buffer,
-                                                blobInfo.filename,
-                                                blobInfo.mimetype,
-                                                caption,
-                                            );
-                                            break;
-                                        case 'video':
-                                            showVideoDialog($mdDialog, blobInfo);
-                                            break;
                                         case 'file':
                                             if (message.file.type === 'image/gif') {
                                                 // Show inline

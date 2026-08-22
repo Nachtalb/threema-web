@@ -47,29 +47,32 @@ mediabox {
         }
 
 
-        md-icon {
-            display: block;
+        // Save and close, drawn plain and large rather than as small discs
+        > md-icon {
+            display: flex;
             position: absolute;
             top: 24px;
-            border: 2px solid rgba(255, 255, 255, .8);
-            border-radius: 50%;
-            background-color: rgba(0, 0, 0, .7);
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
             cursor: pointer;
-            width: 28px;
-            height: 28px;
+            width: 56px;
+            min-width: 56px;
+            height: 56px;
+            min-height: 56px;
             color: rgba(255, 255, 255, .8);
+            font-size: 48px;
             box-sizing: border-box;
             user-select: none;
+            transition: color .15s ease-out;
 
+            &:hover,
             &:focus {
-                border: 2px solid rgba(255, 255, 255, 1);
                 color: rgba(255, 255, 255, 1);
             }
 
             &.save {
-                right: 60px;
-                padding: 2px;
-                font-size: 20px;
+                right: 88px;
             }
 
             &.close {
@@ -104,14 +107,24 @@ mediabox {
             }
 
             md-icon {
+                display: flex;
                 position: static;
-                transition: opacity .15s ease-out;
-                opacity: 0;
-                padding: 2px;
+                align-items: center;
+                justify-content: center;
+                transition: color .15s ease-out;
+                border: 0;
+                border-radius: 0;
+                background: none;
+                width: 72px;
+                min-width: 72px;
+                height: 72px;
+                min-height: 72px;
+                color: rgba(255, 255, 255, .75);
+                font-size: 72px;
             }
 
             &:hover md-icon {
-                opacity: 1;
+                color: rgba(255, 255, 255, 1);
             }
         }
 
@@ -140,11 +153,51 @@ mediabox {
                 }
             }
 
+            // Holds the media and, while it downloads, the spinner over it
+            .stage {
+                display: flex;
+                position: relative;
+                align-items: center;
+                justify-content: center;
+                min-width: 120px;
+                min-height: 120px;
+                max-width: 100%;
+                max-height: calc(100% - 28px - 28px);
+            }
+
             img {
                 box-shadow: 0 0 50px rgba(0, 0, 0, .7);
                 max-width: 100%;
-                max-height: calc(100% - 28px - 28px);
+                max-height: calc(100vh - 28px - 28px);
                 user-select: none;
+
+                // The thumbnail standing in for the real thing
+                &.placeholder {
+                    filter: blur(8px);
+                }
+            }
+
+            // Download progress over the thumbnail
+            .loading {
+                position: absolute;
+                animation: rotater 1.1s infinite linear;
+                border: 5px solid rgba(255, 255, 255, .25);
+                border-radius: 50%;
+                border-left-color: rgba(255, 255, 255, .9);
+                width: 56px;
+                height: 56px;
+                pointer-events: none;
+            }
+
+            // Videos play in the same box as the pictures, so the buttons and
+            // the darkened backdrop are the same everywhere.
+            video {
+                box-shadow: 0 0 50px rgba(0, 0, 0, .7);
+                max-width: 100%;
+                max-height: calc(100% - 28px - 28px);
+                // The controls sit inside the element, so it must take clicks
+                // even though the backdrop around it closes the box.
+                pointer-events: auto;
             }
 
             .caption {

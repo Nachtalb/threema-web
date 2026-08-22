@@ -372,6 +372,11 @@
                 margin: 0;
             }
 
+            // A caption needs to clear the edges of the media above it
+            .message-text {
+                margin: 8px;
+            }
+
             // The media speaks for itself; the avatar already identifies the
             // sender.
             .message-name {
@@ -379,7 +384,7 @@
             }
 
             .message-info {
-                margin-bottom: 8px;
+                margin: 0 8px 8px;
             }
 
             // Without a caption there is no bar to sit in, so the timestamp
@@ -443,10 +448,18 @@
                 display: block;
 
                 .thumbnail,
-                .preview-image,
-                .animgif img {
+                .preview-image {
                     display: block;
                     width: 100%;
+                }
+
+                // A gif has no thumbnail to size the bubble, so it drives its
+                // own width instead of inheriting a collapsed one.
+                .animgif img {
+                    display: block;
+                    width: auto;
+                    max-width: 350px;
+                    max-height: none;
                 }
             }
 

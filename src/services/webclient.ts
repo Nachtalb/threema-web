@@ -3471,11 +3471,21 @@ export class WebClientService {
     }
 
     /**
-     * Reset all Fields and clear the blob cache
+     * Reset all Fields and clear the in-memory blob cache.
+     *
+     * The stored media survives: this runs on every connect, and re-fetching
+     * everything from the phone each time is exactly what it exists to avoid.
+     * `forgetStoredMedia` is for when the session itself goes away.
      */
     public clearCache(): void {
         this._resetFields();
         this.blobCache.clear();
+    }
+
+    /**
+     * Drop the media kept for the session.
+     */
+    public forgetStoredMedia(): void {
         this.blobCacheService.clear()
             .catch((error) => this.log.warn('Could not clear the blob cache: ' + error));
     }

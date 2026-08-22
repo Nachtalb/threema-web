@@ -618,6 +618,8 @@ class WelcomeController {
             this.clearPassword();
             this.formLocked = false;
             this.cancelled = false;
+            // The stored media belonged to the session being thrown away
+            this.webClientService.forgetStoredMedia();
 
             // Force-stop the webclient and initiate scan
             this.scan({

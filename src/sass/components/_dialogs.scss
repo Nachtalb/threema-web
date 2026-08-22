@@ -109,20 +109,3 @@ md-dialog.message-history-dialog {
         }
     }
 }
-
-// Videos play at their own size, bounded by the window rather than the
-// dialog's default width.
-md-dialog.video-dialog {
-    max-width: 90vw;
-
-    md-dialog-content {
-        padding: 0;
-        line-height: 0;
-    }
-
-    video {
-        display: block;
-        max-width: 90vw;
-        max-height: 75vh;
-    }
-}

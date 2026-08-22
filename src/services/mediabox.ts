@@ -29,7 +29,7 @@ export class MediaboxService {
     public evtMediaChanged = new AsyncEvent<boolean>();
 
     /**
-     * The full-resolution media data.
+     * Everything the box needs to show one item, and to walk to the next.
      */
     public data: ArrayBuffer | null = null;
     public caption: string = '';
@@ -37,11 +37,31 @@ export class MediaboxService {
     public mimetype: string = '';
 
     /**
-     * How to reach the images either side of the one on show, so the box can
+     * A picture to show while the real thing is still downloading.
+     */
+    public previewUrl: string | null = null;
+    public loading: boolean = false;
+
+    /**
+     * How to reach the media either side of the one on show, so the box can
      * be paged through without knowing anything about conversations.
      */
     public loadNeighbour: ((forward: boolean) => void) | null = null;
     public hasNeighbour: ((forward: boolean) => boolean) | null = null;
+
+    /**
+     * Open the box straight away on the thumbnail, before the full media has
+     * arrived. Keeps clicking a picture from feeling slow.
+     */
+    public setPending(previewUrl: string | null, caption: string) {
+        this.data = null;
+        this.filename = '';
+        this.mimetype = '';
+        this.caption = caption;
+        this.previewUrl = previewUrl;
+        this.loading = true;
+        this.evtMediaChanged.post(true);
+    }
 
     /**
      * Update media data.
@@ -51,6 +71,8 @@ export class MediaboxService {
         this.filename = filename;
         this.mimetype = mimetype;
         this.caption = caption;
+        this.previewUrl = null;
+        this.loading = false;
         this.evtMediaChanged.post(data !== null);
     }
 
@@ -62,6 +84,8 @@ export class MediaboxService {
         this.filename = '';
         this.mimetype = '';
         this.caption = '';
+        this.previewUrl = null;
+        this.loading = false;
         this.loadNeighbour = null;
         this.hasNeighbour = null;
         this.evtMediaChanged.post(false);

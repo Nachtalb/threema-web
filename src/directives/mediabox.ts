@@ -40,8 +40,20 @@ export default [
                 // Data attributes
                 this.imageDataUrl = null;
                 this.caption = '';
+                this.isVideo = false;
+                this.loading = false;
+                // The box stays up while the media downloads, so it must not
+                // hang off imageDataUrl, which is null until something arrives
+                this.open = false;
 
                 // Close and save
+                this.objectUrl = null;
+                this.releaseUrl = () => {
+                    if (this.objectUrl !== null) {
+                        URL.revokeObjectURL(this.objectUrl);
+                        this.objectUrl = null;
+                    }
+                };
                 this.close = ($event?: Event) => {
                     if ($event !== undefined) {
                         // Dragging a zoomed picture ends on the backdrop, which
@@ -52,13 +64,20 @@ export default [
                         // If this was triggered by a click event, only close the box
                         // if the click was directly on the target element.
                         if ($event.target === $event.currentTarget) {
+                            this.releaseUrl();
                             this.imageDataUrl = null;
+                            this.open = false;
                         }
                     } else {
+                        this.releaseUrl();
                         this.imageDataUrl = null;
+                        this.open = false;
                     }
                 };
                 this.save = () => {
+                    if (mediaboxService.data === null) {
+                        return;
+                    }
                     saveAs(
                         new Blob([mediaboxService.data], {
                             type: firefoxWorkaroundPdfDownload(mediaboxService.mimetype),
@@ -80,6 +99,9 @@ export default [
                 };
 
                 this.wheel = ($event: WheelEvent, inner: HTMLElement) => {
+                    if (this.isVideo) {
+                        return;
+                    }
                     $event.preventDefault();
                     const previous = this.zoom;
                     const next = Math.min(8, Math.max(1, previous * (($event.deltaY < 0) ? 1.15 : 1 / 1.15)));
@@ -104,7 +126,7 @@ export default [
                 };
 
                 this.panStart = ($event: MouseEvent) => {
-                    if (this.zoom === 1) {
+                    if (this.zoom === 1 || this.isVideo) {
                         return;
                     }
                     $event.preventDefault();
@@ -141,15 +163,33 @@ export default [
                 // Listen to Mediabox service events
                 mediaboxService.evtMediaChanged.attach((dataAvailable: boolean) => {
                     $rootScope.$apply(() => {
-                        if (dataAvailable) {
+                        if (!dataAvailable) {
+                            this.close();
+                            return;
+                        }
+                        this.releaseUrl();
+                        this.open = true;
+                        this.loading = mediaboxService.loading;
+                        this.caption = mediaboxService.caption;
+                        if (mediaboxService.data === null) {
+                            // Still downloading: hold on the thumbnail
+                            this.isVideo = false;
+                            this.imageDataUrl = mediaboxService.previewUrl;
+                            this.resetView();
+                            return;
+                        }
+                        this.isVideo = mediaboxService.mimetype.startsWith('video/');
+                        if (this.isVideo) {
+                            // A video is far too large to inline as a data url
+                            this.objectUrl = URL.createObjectURL(new Blob(
+                                [mediaboxService.data], {type: mediaboxService.mimetype}));
+                            this.imageDataUrl = this.objectUrl;
+                        } else {
                             this.imageDataUrl = bufferToUrl(
                                 mediaboxService.data, mediaboxService.mimetype, log);
-                            this.caption = mediaboxService.caption || mediaboxService.filename;
-                            // A new picture starts unzoomed
-                            this.resetView();
-                        } else {
-                            this.close();
                         }
+                        // A new picture starts unzoomed
+                        this.resetView();
                     });
                 });
             }],
@@ -158,7 +198,7 @@ export default [
                 // false to be able to suppress the page scroll.
                 $element[0].addEventListener('wheel', (e: WheelEvent) => {
                     const inner = (e.target as HTMLElement).closest('.inner');
-                    if (inner === null || $scope.ctrl.imageDataUrl === null) {
+                    if (inner === null || !$scope.ctrl.open) {
                         return;
                     }
                     $scope.$apply(() => $scope.ctrl.wheel(e, inner));
@@ -167,7 +207,7 @@ export default [
                 // Escape closes, arrows page between pictures
                 $document.on('keyup', (e: Event) => {
                     const ke = e as KeyboardEvent;
-                    if ($scope.ctrl.imageDataUrl === null) {
+                    if (!$scope.ctrl.open) {
                         return;
                     }
                     switch (ke.key) {
@@ -187,14 +227,14 @@ export default [
             },
             // tslint:disable:max-line-length
             template: `
-                <div class="box" ng-if="ctrl.imageDataUrl !== null">
-                    <md-icon class="save material-icons md-24" ng-click="ctrl.save()" aria-label="Save" translate-attr="{'aria-label': 'common.SAVE', 'title': 'common.SAVE'}">save</md-icon>
-                    <md-icon class="close material-icons md-24" ng-click="ctrl.close()" aria-label="Close" translate-attr="{'aria-label': 'common.CLOSE', 'title': 'common.CLOSE'}">close</md-icon>
+                <div class="box" ng-if="ctrl.open">
+                    <md-icon class="save material-icons" ng-click="ctrl.save()" ng-if="!ctrl.loading" aria-label="Save" translate-attr="{'aria-label': 'common.SAVE', 'title': 'common.SAVE'}">file_download</md-icon>
+                    <md-icon class="close material-icons" ng-click="ctrl.close()" aria-label="Close" translate-attr="{'aria-label': 'common.CLOSE', 'title': 'common.CLOSE'}">close</md-icon>
                     <div class="nav previous" ng-if="ctrl.hasNeighbour(false)" ng-click="ctrl.showNeighbour(false, $event)" aria-label="Previous">
-                        <md-icon class="material-icons md-24">chevron_left</md-icon>
+                        <md-icon class="material-icons">chevron_left</md-icon>
                     </div>
                     <div class="nav next" ng-if="ctrl.hasNeighbour(true)" ng-click="ctrl.showNeighbour(true, $event)" aria-label="Next">
-                        <md-icon class="material-icons md-24">chevron_right</md-icon>
+                        <md-icon class="material-icons">chevron_right</md-icon>
                     </div>
                     <div class="inner" ng-class="{'zoomed': ctrl.zoom !== 1, 'panning': ctrl.panning}"
                          ng-click="ctrl.close($event)"
@@ -203,9 +243,15 @@ export default [
                          ng-mouseup="ctrl.panEnd()"
                          ng-mouseleave="ctrl.panEnd()"
                          ng-dblclick="ctrl.resetView()">
-                        <img ng-src="{{ ctrl.imageDataUrl }}"
-                             ng-style="{transform: 'translate(' + ctrl.panX + 'px, ' + ctrl.panY + 'px) scale(' + ctrl.zoom + ')'}">
-                        <div class="caption" title="{{ ctrl.caption | escapeHtml}}">
+                        <div class="stage">
+                            <img ng-if="!ctrl.isVideo" ng-src="{{ ctrl.imageDataUrl }}"
+                                 ng-class="{'placeholder': ctrl.loading}"
+                                 ng-style="{transform: 'translate(' + ctrl.panX + 'px, ' + ctrl.panY + 'px) scale(' + ctrl.zoom + ')'}">
+                            <video ng-if="ctrl.isVideo" ng-src="{{ ctrl.imageDataUrl | unsafeResUrl }}"
+                                   controls autoplay ng-click="$event.stopPropagation()"></video>
+                            <div class="loading" ng-if="ctrl.loading"></div>
+                        </div>
+                        <div class="caption" ng-if="ctrl.caption" title="{{ ctrl.caption | escapeHtml}}">
                             <span ng-bind-html="ctrl.caption | escapeHtml | markify | emojify"></span>
                         </div>
                     </div>

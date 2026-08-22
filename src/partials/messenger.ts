@@ -1626,6 +1626,8 @@ class NavigationController {
             .ok(this.$translate.instant('common.YES'))
             .cancel(this.$translate.instant('common.CANCEL'));
         this.$mdDialog.show(confirm).then(() => {
+            // The stored media belonged to the session being thrown away
+            this.webClientService.forgetStoredMedia();
             this.webClientService.stop({
                 reason: threema.DisconnectReason.SessionDeleted,
                 send: true,
