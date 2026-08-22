@@ -103,13 +103,7 @@ export default [
                             === getSenderIdentity(this.message, webClientService.me.id);
                     this.followsSameSender = sameSender(this.previousMessage);
                     this.precedesSameSender = sameSender(this.nextMessage);
-                    // Captionless media carrying reactions has a transparent
-                    // bubble, so a tail would float unattached beside the
-                    // pills rather than joining anything.
-                    const isMedia = this.message.type === 'image'
-                        || this.message.type === 'video';
-                    this.showTail = !this.precedesSameSender
-                        && !(isMedia && !this.message.caption && hasEmojiReactions(this.message));
+                    this.showTail = !this.precedesSameSender;
                     this.showText = this.message.type === 'text' || this.message.caption;
                     this.showMedia = this.message.type !== 'text';
                     this.showState = messageService.showStatusIcon(this.message as threema.Message, this.receiver);

@@ -13,13 +13,14 @@
             eee-resolution="ctrl.resolution"
             ui-sref="messenger.home.conversation.detail({ detailType: 'contact', detailId: ctrl.contact.id })"></eee-avatar>
 
-    <svg ng-if="ctrl.showTail" class="bubble-triangle" width="9" height="20" viewBox="0 0 9 20">
-        <path ng-if="!ctrl.message.isOutbox"
-              d="M3 17h6V0c-.193 2.84-.876 5.767-2.05 8.782-.904 2.325-2.446 4.485-4.625 6.48A1 1 0 003 17z"></path>
-        <path ng-if="ctrl.message.isOutbox"
-              d="M6 17H0V0c.193 2.84.876 5.767 2.05 8.782.904 2.325 2.446 4.485 4.625 6.48A1 1 0 016 17z"></path>
-    </svg>
     <section class="message-body {{ ctrl.message.type + '-message-body' }}">
+        <svg ng-if="ctrl.showTail" class="bubble-triangle" eee-message-tail-tint
+             width="9" height="20" viewBox="0 0 9 20">
+            <path ng-if="!ctrl.message.isOutbox"
+                  d="M3 17h6V0c-.193 2.84-.876 5.767-2.05 8.782-.904 2.325-2.446 4.485-4.625 6.48A1 1 0 003 17z"></path>
+            <path ng-if="ctrl.message.isOutbox"
+                  d="M6 17H0V0c.193 2.84.876 5.767 2.05 8.782.904 2.325 2.446 4.485 4.625 6.48A1 1 0 016 17z"></path>
+        </svg>
         <eee-message-contact
             ng-if="ctrl.showName"
             class="message-name"

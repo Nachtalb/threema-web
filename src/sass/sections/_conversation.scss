@@ -302,14 +302,14 @@
         }
 
         // Tail, drawn as an SVG so it curves into the bubble. Only the last
-        // message of a run by the same sender gets one. It is a flex sibling
-        // of the bubble rather than an absolutely positioned child, so no
-        // ancestor can clip it.
+        // message of a run by the same sender gets one. Absolutely positioned
+        // so it overflows the bubble rather than taking layout space and
+        // pushing the message inwards.
         .bubble-triangle {
-            flex: 0 0 9px;
-            // Bottom of the bubble; the path ends 3px above the 20px viewbox
-            align-self: flex-end;
-            margin-bottom: -3px;
+            position: absolute;
+            // The path ends 3px above the 20px viewbox
+            bottom: -3px;
+            z-index: 1;
             width: 9px;
             height: 20px;
             overflow: visible;
@@ -360,8 +360,7 @@
             }
 
             > *:not(.message-media):not(.message-emoji-reactions) {
-                margin-right: 8px;
-                margin-left: 8px;
+                margin: 0;
             }
 
             // The media speaks for itself; the avatar already identifies the
@@ -420,6 +419,12 @@
                     .message-emoji-reactions {
                         // Flush with the edge of the media above
                         margin: 6px 0 0;
+                    }
+
+                    // The reactions sit below the bubble, so the tail belongs
+                    // at the bottom of the media rather than beside the pills.
+                    .bubble-triangle {
+                        bottom: $reaction-row-height + 3px;
                     }
                 }
             }
@@ -625,6 +630,9 @@
         .message-body {
             position: relative;
             background-color: $message-bubble-color-in;
+            // Inset by the tail's width, so the tail fills that gap rather
+            // than overlapping the media inside the bubble.
+            margin-left: 9px;
         }
 
         // Corners facing a neighbour by the same sender are tightened, and the
@@ -641,10 +649,8 @@
             border-bottom-left-radius: 0;
         }
 
-        // Tail on the left of the bubble, overlapping it slightly
         .bubble-triangle {
-            order: -1;
-            margin-right: -1px;
+            left: -9px;
             fill: $message-bubble-color-in;
         }
 
@@ -659,6 +665,7 @@
         .message-body {
             position: relative;
             background-color: $message-bubble-color-out;
+            margin-right: 9px;
         }
 
         // Mirror of the incoming side
@@ -674,11 +681,8 @@
             border-bottom-right-radius: 0;
         }
 
-        // Tail on the right of the bubble, mirrored. The row is reversed, so
-        // order -1 puts it on the right.
         .bubble-triangle {
-            order: -1;
-            margin-left: -1px;
+            right: -9px;
             fill: $message-bubble-color-out;
         }
 
