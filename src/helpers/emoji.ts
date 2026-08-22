@@ -3407,7 +3407,7 @@ export function parseEmoji(text: string): (threema.EmojiInfo | string)[] {
                 .replace(/-fe0[ef]-20e3$/, '-20e3');
             result.push({
                 emojiString: emoji,
-                imgPath: `emoji/png32/${strippedCodepoint}.png`,
+                imgPath: `emoji/png32/${strippedCodepoint}.webp`,
                 codepoint: codepoint,
             });
         }

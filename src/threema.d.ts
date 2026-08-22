@@ -860,7 +860,7 @@ declare namespace threema {
     interface EmojiInfo {
         // The plain emoji string
         emojiString: string;
-        // The image path, e.g. emoji/png32/1f9df-200d-2640-fe0f.png
+        // The image path, e.g. emoji/png32/1f9df-200d-2640-fe0f.webp
         imgPath: string;
         // The codepoint string, e.g. 1f9df-200d-2640-fe0f
         codepoint: string;

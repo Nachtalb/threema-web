@@ -128,7 +128,7 @@
 .em-food-1f32f,
 .em-food-1f32e,
 .em-food-1f32d {
-            background-image: url('food.png?07a5c89d23');
+            background-image: url('food.webp?07a5c89d23');
             background-repeat: no-repeat;
         }
         
@@ -1036,7 +1036,7 @@
     .em-food-1f32f,
     .em-food-1f32e,
     .em-food-1f32d {
-                background-image: url('food.png?07a5c89d23');
+                background-image: url('food.webp?07a5c89d23');
                 -webkit-background-size: 408px 374px;
                 -moz-background-size: 408px 374px;
                 background-size: 408px 374px;
@@ -1173,7 +1173,7 @@
     .em-food-1f32f,
     .em-food-1f32e,
     .em-food-1f32d {
-                background-image: url('food@2x.png?07a5c89d23');
+                background-image: url('food@2x.avif?07a5c89d23');
                 -webkit-background-size: 408px 374px;
                 -moz-background-size: 408px 374px;
                 background-size: 408px 374px;
