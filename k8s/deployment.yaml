@@ -16,7 +16,7 @@ spec:
       automountServiceAccountToken: false
       containers:
         - name: threema-web
-          image: ghcr.io/nachtalb/threema-web:latest
+          image: ghcr.io/nachtalb/threema-web:hate-driven-development
           imagePullPolicy: Always
           ports:
             - containerPort: 8080

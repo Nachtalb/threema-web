@@ -11,7 +11,7 @@ no service account token.
 | `configmap.yaml` | `userconfig.overrides.js`, mounted over the file in the image |
 | `deployment.yaml` | the pod; `cpu: 0` request, 64Mi limit, `/health` probes |
 | `service.yaml` | ClusterIP `:80` → container `:8080` |
-| `httproute.yaml` | Gateway API route via `kgw`, hosts `threema.nachtalb.ch` and `t.naa.gg` |
+| `httproute.yaml` | Gateway API route via `kgw`, hosts `threema.naa.gg`, `t.naa.gg`, `threema.nachtalb.ch` |
 
 `httproute.yaml` is specific to a kgateway + external-dns cluster. On an
 Ingress-based cluster, replace it with an `Ingress` pointing at the

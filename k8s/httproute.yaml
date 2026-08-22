@@ -7,8 +7,9 @@ spec:
     - name: kgw
       namespace: kgateway-system
   hostnames:
-    - threema.nachtalb.ch
+    - threema.naa.gg
     - t.naa.gg
+    - threema.nachtalb.ch
   rules:
     - backendRefs:
         - name: threema-web
