@@ -1,3 +1,17 @@
+// Scroll overflowing text back and forth. Pauses at both ends so the start
+// and end of the text can actually be read.
+@keyframes marquee-scroll {
+    0%,
+    20% {
+        transform: translateX(0);
+    }
+
+    80%,
+    100% {
+        transform: translateX(var(--marquee-distance, 0));
+    }
+}
+
 #background-image {
     position: fixed;
     top: 0;
@@ -128,6 +142,24 @@
                         overflow: hidden;
                         text-overflow: ellipsis;
                         white-space: nowrap;
+
+                        // Always inline-block so the text can be measured
+                        // against the available width.
+                        .marquee-inner {
+                            display: inline-block;
+                        }
+
+                        // Long names scroll back and forth instead of just
+                        // being cut off. The distance and duration are
+                        // measured by the marquee directive.
+                        &.marquee {
+                            text-overflow: clip;
+
+                            .marquee-inner {
+                                animation: marquee-scroll var(--marquee-duration, 6s) ease-in-out infinite alternate;
+                                animation-delay: 1.5s;
+                            }
+                        }
                     }
                 }
 
