@@ -38,7 +38,14 @@
     <div ng-if="!ctrl.thumbnail && !ctrl.hasPreviewThumbnail()" class="circle">
         <i ng-if="ctrl.type === 'image' || ctrl.isGif" class="material-icons md-24">photo</i>
         <i ng-if="ctrl.type === 'video'" class="material-icons md-24">movie</i>
-        <div class="loading" ng-class="{active: ctrl.isLoading()}"></div>
+        <div class="loading" ng-if="ctrl.isLoading()">
+            <svg viewBox="0 0 40 40">
+                <circle class="track" cx="20" cy="20" r="17"/>
+                <circle class="bar" ng-class="{'indeterminate': ctrl.progress() === null}"
+                        cx="20" cy="20" r="17"
+                        ng-attr-stroke-dasharray="{{ ctrl.progress() === null ? '30 200' : (ctrl.progress() * 106.8) + ' 200' }}"/>
+            </svg>
+        </div>
     </div>
 </div>
 
@@ -54,7 +61,14 @@
     <div class="circle">
         <i ng-if="ctrl.uploading" class="material-icons md-24">file_upload</i>
         <i ng-if="!ctrl.uploading" class="material-icons md-24">file_download</i>
-        <div class="loading" ng-class="{active: ctrl.isLoading()}"></div>
+        <div class="loading" ng-if="ctrl.isLoading()">
+            <svg viewBox="0 0 40 40">
+                <circle class="track" cx="20" cy="20" r="17"/>
+                <circle class="bar" ng-class="{'indeterminate': ctrl.progress() === null}"
+                        cx="20" cy="20" r="17"
+                        ng-attr-stroke-dasharray="{{ ctrl.progress() === null ? '30 200' : (ctrl.progress() * 106.8) + ' 200' }}"/>
+            </svg>
+        </div>
     </div>
     <div class="info" translate>messageTypes.AUDIO_MESSAGE</div>
 </div>
@@ -82,7 +96,14 @@
          ng-style="{'background-image': ctrl.getThumbnailPreviewUriStyle() }">
         <i class="material-icons md-24" ng-if="ctrl.uploading">file_upload</i>
         <i class="material-icons md-24" ng-if="!ctrl.uploading">file_download</i>
-        <div class="loading" ng-class="{active: ctrl.isLoading()}"></div>
+        <div class="loading" ng-if="ctrl.isLoading()">
+            <svg viewBox="0 0 40 40">
+                <circle class="track" cx="20" cy="20" r="17"/>
+                <circle class="bar" ng-class="{'indeterminate': ctrl.progress() === null}"
+                        cx="20" cy="20" r="17"
+                        ng-attr-stroke-dasharray="{{ ctrl.progress() === null ? '30 200' : (ctrl.progress() * 106.8) + ' 200' }}"/>
+            </svg>
+        </div>
     </div>
 
     <!-- File type indicator -->

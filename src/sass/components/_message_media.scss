@@ -53,18 +53,43 @@ $loading-ring-thickness: 5px;
         }
     }
 
-    // Loading indicator
-    .loading.active {
+    // Loading indicator, drawn over the icon in the circle
+    .circle .loading {
         display: block;
         position: absolute;
         top: 0;
         left: 0;
-        animation: file-download-rotater 1.1s infinite linear;
-        border: $loading-ring-thickness solid rgba(0, 0, 0, .1);
-        border-radius: 50%;
-        border-left-color: #90ee90;
-        width: $circle-size - (2 * $loading-ring-thickness);
-        height: $circle-size - (2 * $loading-ring-thickness);
+        width: $circle-size;
+        height: $circle-size;
+
+        svg {
+            // Start the arc at twelve o'clock
+            transform: rotate(-90deg);
+            width: 100%;
+            height: 100%;
+
+            circle {
+                fill: none;
+                stroke-width: 3;
+                stroke-linecap: round;
+            }
+
+            .track {
+                stroke: rgba(0, 0, 0, .15);
+            }
+
+            .bar {
+                transition: stroke-dasharray .2s linear;
+                stroke: #90ee90;
+
+                // Nothing to measure: sweep instead of filling
+                &.indeterminate {
+                    transition: none;
+                    animation: file-download-rotater 1.1s infinite linear;
+                    transform-origin: 50% 50%;
+                }
+            }
+        }
     }
 
     .animgif {
