@@ -402,10 +402,10 @@ class ConversationController {
     public msgReadReportPending = false;
     private hasMore = true;
     private latestRefMsgId: string | null = null;
-    // Chat geometry captured when older messages are requested, so the view
-    // can be kept in place once they are prepended.
-    private heightBeforeLoad = 0;
-    private scrollTopBeforeLoad = 0;
+    // The message at the top of the view when older ones are requested, and
+    // its offset from the top, so it can be pinned back afterwards.
+    private anchorMessage: HTMLElement | null = null;
+    private anchorOffset = 0;
     private allText: string;
     public initialData: threema.InitialConversationData = {
         draft: '',
@@ -599,21 +599,22 @@ class ConversationController {
                         //
                         // Older messages are prepended above the viewport, so
                         // scroll anchoring does not apply — the browser only
-                        // anchors to elements inside it. Push the view down by
-                        // exactly how much taller the list got, which keeps the
-                        // message being read where it is. Measured after the
-                        // digest, or the new height is not known yet.
+                        // anchors to elements inside it. Instead the message
+                        // that was at the top of the view is pinned back to
+                        // where it was. Media in the prepended messages can
+                        // load late and change the height above it, so the
+                        // correction is repeated until the list settles.
                         if (this.latestRefMsgId !== null) {
-                            const previousHeight = this.heightBeforeLoad;
-                            const previousTop = this.scrollTopBeforeLoad;
+                            const anchor = this.anchorMessage;
+                            const anchorOffset = this.anchorOffset;
                             this.latestRefMsgId = null;
-                            // $$postDigest runs after the new messages are
-                            // rendered but before the browser paints, so the
-                            // correction is never visible as a jump.
-                            (this.$scope as any).$$postDigest(() => {
-                                const added = this.domChatElement.scrollHeight - previousHeight;
-                                this.domChatElement.scrollTop = previousTop + added;
-                            });
+                            if (anchor !== null) {
+                                // $$postDigest runs after the new messages are
+                                // rendered but before the browser paints, so
+                                // the correction is never visible as a jump.
+                                (this.$scope as any).$$postDigest(
+                                    () => this.pinAnchor(anchor, anchorOffset));
+                            }
                         }
                     },
                 );
@@ -1003,16 +1004,50 @@ class ConversationController {
         if (hasValue(refMsgId)) {
             // New messages are requested, scroll to refMsgId
             this.latestRefMsgId = refMsgId;
-            // Remember the geometry now, while the list is still the old
-            // size, so the view can be kept in place once the older
-            // messages have been prepended.
+            // Remember the message at the top of the view and where it sits.
+            // Pinning that element back afterwards is immune to the scroll
+            // moving on between request and render, and to media above it
+            // loading late and changing the height.
+            this.anchorMessage = null;
             if (this.domChatElement !== undefined && this.domChatElement !== null) {
-                this.heightBeforeLoad = this.domChatElement.scrollHeight;
-                this.scrollTopBeforeLoad = this.domChatElement.scrollTop;
+                const viewTop = this.domChatElement.getBoundingClientRect().top;
+                const messages = this.domChatElement.querySelectorAll('.message');
+                for (const message of Array.from(messages) as HTMLElement[]) {
+                    if (message.getBoundingClientRect().bottom > viewTop) {
+                        this.anchorMessage = message;
+                        this.anchorOffset = message.getBoundingClientRect().top - viewTop;
+                        break;
+                    }
+                }
             }
         } else {
             this.latestRefMsgId = null;
         }
+    }
+
+    /**
+     * Put the anchor message back where it was before older messages were
+     * prepended above it.
+     *
+     * Media in those messages decodes asynchronously, so the height above the
+     * anchor keeps changing for a while. A ResizeObserver on the list corrects
+     * the position each time until it stops moving.
+     */
+    private pinAnchor(anchor: HTMLElement, offset: number): void {
+        const chat = this.domChatElement;
+        const restore = () => {
+            const delta = (anchor.getBoundingClientRect().top - chat.getBoundingClientRect().top)
+                - offset;
+            if (Math.abs(delta) > 0.5) {
+                chat.scrollTop += delta;
+            }
+        };
+        restore();
+
+        const observer = new ResizeObserver(restore);
+        observer.observe(chat.querySelector('.chat') as HTMLElement);
+        this.timeoutService.register(
+            () => observer.disconnect(), 1500, true, 'stopPinningAnchor');
     }
 
     public showReceiver(ev): void {
