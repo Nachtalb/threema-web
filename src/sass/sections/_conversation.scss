@@ -526,6 +526,20 @@
             gap: 4px;
             flex-wrap: wrap;
 
+            // The row appears when the first reaction arrives, which changes
+            // the height of the message. Grow into place instead of jumping.
+            &.ng-enter {
+                transition: max-height .2s ease-out, opacity .2s ease-out;
+                max-height: 0;
+                overflow: hidden;
+                opacity: 0;
+            }
+
+            &.ng-enter-active {
+                max-height: 40px;
+                opacity: 1;
+            }
+
             .bucket {
                 cursor: default;
 
