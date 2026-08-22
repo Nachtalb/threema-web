@@ -215,6 +215,23 @@ md-menu-content.md-threemawork-theme {
         padding-right: 0;
     }
 
+    // Filter box above a long member or group list
+    .list-search {
+        box-sizing: border-box;
+        margin-bottom: 8px;
+        border: 0;
+        border-radius: 8px;
+        background-color: rgba(0, 0, 0, .05);
+        padding: 6px 10px;
+        width: 100%;
+        font-size: .9em;
+
+        &:focus {
+            outline: 0;
+            background-color: rgba(0, 0, 0, .09);
+        }
+    }
+
     // Keep the receiver actions reachable without scrolling to the bottom of a
     // long member list, and pinned to the bottom when the content is short.
     .detail-actions {

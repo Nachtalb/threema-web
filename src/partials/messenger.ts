@@ -1790,6 +1790,9 @@ class ReceiverDetailController {
     private webClientService: WebClientService;
     private mediaboxService: MediaboxService;
     private navigationStateService: NavigationStateService;
+    // Search terms for the member and shared group lists
+    public memberSearch: string = '';
+    public groupSearch: string = '';
 
     public receiver: threema.Receiver;
     public me: threema.MeReceiver;
@@ -1980,6 +1983,36 @@ class ReceiverDetailController {
             clickOutsideToClose: true,
             fullscreen: true,
         });
+    }
+
+    /**
+     * The group members whose name or identity matches the search, or all of
+     * them when nothing has been typed.
+     */
+    public filteredMembers(): string[] {
+        const members = (this.receiver as threema.GroupReceiver).members || [];
+        const needle = (this.memberSearch || '').trim().toLowerCase();
+        if (needle === '') {
+            return members;
+        }
+        return members.filter((identity: string) => {
+            const contact = this.webClientService.contacts.get(identity);
+            const name = contact === undefined ? '' : contact.displayName;
+            return identity.toLowerCase().includes(needle)
+                || name.toLowerCase().includes(needle);
+        });
+    }
+
+    /**
+     * The groups shared with this contact that match the search.
+     */
+    public filteredGroups(): threema.GroupReceiver[] {
+        const needle = (this.groupSearch || '').trim().toLowerCase();
+        if (needle === '') {
+            return this.inGroups;
+        }
+        return this.inGroups.filter(
+            (group: threema.GroupReceiver) => group.displayName.toLowerCase().includes(needle));
     }
 
     public goBack(): void {

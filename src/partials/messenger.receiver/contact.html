@@ -78,8 +78,14 @@
 			</md-card-title-text>
 		</md-card-title>
 		<md-card-content>
+			<input class="list-search"
+				   type="search"
+				   ng-model="ctrl.groupSearch"
+				   ng-if="ctrl.inGroups.length > 5"
+				   translate
+				   translate-attr-placeholder="messenger.SEARCH">
 			<ul class="group-list">
-				<li ng-repeat="groupReceiver in ctrl.inGroups">
+				<li ng-repeat="groupReceiver in ctrl.filteredGroups()">
 					<eee-group-badge class="linked" eee-group-receiver="groupReceiver" eee-contact-receiver="ctrl.receiver"/>
 				</li>
 			</ul>
