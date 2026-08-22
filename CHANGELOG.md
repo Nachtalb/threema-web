@@ -15,6 +15,7 @@ Changes:
 
 * [feature] Keep the session password across reloads in the browser
 * [feature] Add a random set of background images, with a setting to disable the blur
+* [feature] Click a quote to jump to the quoted message (iOS only, see below)
 * [change] Move the overflow menu entries into the settings dialog
 * [change] Default to the minimal user interface
 * [change] Use toggles for the settings entries
@@ -22,6 +23,11 @@ Changes:
 * [change] Link to this fork's repository and issue tracker
 * [change] Use Bun instead of npm
 * [fix] Handle wire message acknowledgements sent as a response
+
+Jumping to a quoted message only works when the phone is an iPhone. Android
+reports a local database id for each message instead of the Threema message id
+a quote references, so there is nothing to resolve the quote against. Quotes
+are not clickable when connected to an Android device.
 
 
 ### [v2.6.5][v2.6.5] (2026-07-03)

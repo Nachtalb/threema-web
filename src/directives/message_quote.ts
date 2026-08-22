@@ -36,8 +36,10 @@ export default [
                 /**
                  * Look up the quoted message in the DOM.
                  *
-                 * The quote carries a hex message id, while iOS reports
-                 * message ids as base64, so both spellings have to be tried.
+                 * A quote references the original by its Threema message id,
+                 * which iOS also reports as the message id, only base64
+                 * encoded. Android reports a local database id instead, which
+                 * a quote cannot be resolved against at all.
                  */
                 const findQuoted = (messageId: string): HTMLElement | null => {
                     const direct = document.getElementById(`message-${messageId}`);
@@ -52,13 +54,19 @@ export default [
                 };
 
                 /**
+                 * Return whether the quoted message can be jumped to. It may
+                 * be out of reach because it is not loaded, or because the
+                 * connected device does not report resolvable message ids.
+                 */
+                this.canJump = () => findQuoted(this.quote.messageId) !== null;
+
+                /**
                  * Scroll to the quoted message and flash it, so it is obvious
                  * which one was jumped to.
                  */
                 this.jumpToQuoted = () => {
                     const target = findQuoted(this.quote.messageId);
                     if (target === null) {
-                        // Not loaded (yet), nothing to jump to
                         return;
                     }
                     target.scrollIntoView({behavior: 'smooth', block: 'center'});
@@ -77,7 +85,7 @@ export default [
             }],
             template: `
                 <div class="message-quote-content" ng-style="{'border-color': ctrl.contact().color}" role="blockquote"
-                     ng-click="ctrl.jumpToQuoted()">
+                     ng-class="{jumpable: ctrl.canJump()}" ng-click="ctrl.jumpToQuoted()">
                     <span class="message-name" ng-style="{'color': ctrl.contact().color}"
                         ng-bind-html="ctrl.contact().displayName | escapeHtml | emojify"></span>
                     <span class="message-quote" ng-bind-html="ctrl.quote.text | escapeHtml | markify | emojify | linkify | mentionify | nlToBr"></span>
