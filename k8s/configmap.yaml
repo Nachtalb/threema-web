@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: threema-web-config
+data:
+  userconfig.overrides.js: |
+    // window.UserConfig.SALTYRTC_HOST = 'saltyrtc.example.org';
+    window.UserConfig.CONSOLE_LOG_LEVEL = 'info';
+    window.UserConfig.VISUALIZE_STATE = false;
