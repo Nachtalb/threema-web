@@ -521,6 +521,8 @@ export default [
                         emojiTrigger.attr('aria-pressed', 'true');
                         emojiTrigger.addClass(TRIGGER_ACTIVE_CSS_CLASS);
 
+                        addEmojiSearch(emojiPicker);
+
                         // Find some selectors
                         const allEmoji = angular.element(emojiPicker.querySelectorAll('.content .em'));
                         const allEmojiTabs = angular.element(emojiPicker.querySelectorAll('.tab label img'));
@@ -536,6 +538,35 @@ export default [
                         // Focus compose area again
                         composeArea.focus();
                     });
+                }
+
+                // Filter the emoji by their shortcode, e.g. ":gleeful:"
+                function applyEmojiSearch(picker: Element, needle: string): void {
+                    const term = needle.trim().toLowerCase();
+                    picker.classList.toggle('searching', term !== '');
+                    picker.querySelectorAll('.content .em').forEach((em: Element) => {
+                        const shortcode = (em.getAttribute('data-s') || '').toLowerCase();
+                        em.classList.toggle(
+                            'search-hidden', term !== '' && !shortcode.includes(term));
+                    });
+                }
+
+                // A search box above the emoji, added here because the picker
+                // library does not offer one.
+                function addEmojiSearch(picker: Element): void {
+                    if (picker.querySelector('.emoji-search') !== null) {
+                        return;
+                    }
+                    const search = document.createElement('input');
+                    search.type = 'search';
+                    search.className = 'emoji-search';
+                    search.setAttribute('aria-label', 'Search emoji');
+                    $translate('messenger.SEARCH').then(
+                        (translated) => search.placeholder = translated);
+                    search.addEventListener('input', () => applyEmojiSearch(picker, search.value));
+                    // Typing must not reach the emoji keyboard navigation
+                    search.addEventListener('keydown', (ev) => ev.stopPropagation());
+                    picker.insertBefore(search, picker.firstChild);
                 }
 
                 // Hide emoji picker element

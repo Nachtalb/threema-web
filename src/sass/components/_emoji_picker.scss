@@ -82,6 +82,47 @@
         height: $content-offset;
     }
 
+    // Filter box above the emoji
+    .emoji-search {
+        display: block;
+        box-sizing: border-box;
+        margin: 8px 0;
+        border: 0;
+        border-radius: 8px;
+        background-color: #ffffff;
+        padding: 6px 10px;
+        width: 100%;
+        font-size: .9em;
+
+        &:focus {
+            outline: 0;
+        }
+    }
+
+    .em.search-hidden {
+        display: none;
+    }
+
+    // While searching, every category is shown at once: the matches are
+    // scattered across all of them.
+    &.searching {
+        .tab {
+            float: none;
+
+            label,
+            .skins {
+                display: none;
+            }
+
+            .content {
+                position: static;
+                border: 0;
+                padding: 0;
+                overflow: visible;
+            }
+        }
+    }
+
     // Hide emoji that don't match the currently selected skintone
     &[data-skintone='0'] .em[data-t]:not([data-t='0']) { display: none; }
     &[data-skintone='1'] .em[data-t]:not([data-t='1']) { display: none; }
