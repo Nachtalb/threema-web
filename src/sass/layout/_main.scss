@@ -114,6 +114,17 @@
                     margin-left: 8px;
                 }
 
+                // Takes the free space so the buttons stay at the right edge
+                // rather than sitting next to a short name.
+                .header-details {
+                    flex: 1 1 auto;
+                    min-width: 0;
+                }
+
+                .header-buttons {
+                    margin-left: auto;
+                }
+
                 .header-detail {
                     display: flex;
                     flex-direction: column;
