@@ -3,6 +3,8 @@
 $message-bubble-color-in: #f7f7f7;
 $message-bubble-color-out: #dff0d8;
 $bubble-triangle-size: $main-padding;
+// Height of a reaction pill, used to keep the timestamp clear of the row
+$reaction-row-height: 24px;
 
 @mixin message-bubble-shadow {
     box-shadow: 0 1px 1px rgba(0, 0, 0, .25);

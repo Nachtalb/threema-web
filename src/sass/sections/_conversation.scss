@@ -361,7 +361,7 @@
             padding: 0;
             overflow: hidden;
 
-            > *:not(.message-media) {
+            > *:not(.message-media):not(.message-emoji-reactions) {
                 margin-right: 8px;
                 margin-left: 8px;
             }
@@ -399,7 +399,7 @@
 
                 // With reactions the bubble ends at the media, so they float
                 // on the page background instead of extending it into a white
-                // strip. The timestamp stays overlaid on the media.
+                // strip.
                 &:has(.message-emoji-reactions) {
                     background-color: transparent;
                     box-shadow: none;
@@ -413,9 +413,15 @@
                         overflow: hidden;
                     }
 
+                    // Keep the timestamp on the media rather than letting it
+                    // drop into the reactions row below it.
+                    .message-info {
+                        bottom: $reaction-row-height + 6px;
+                    }
+
                     .message-emoji-reactions {
-                        margin-top: 6px;
-                        margin-bottom: 0;
+                        // Flush with the edge of the media above
+                        margin: 6px 0 0;
                     }
                 }
             }
@@ -516,13 +522,16 @@
                 justify-content: center;
 
                 padding: 3px 9px;
-                // Reacted to by me reads as a solid pill, everyone else's
-                // stays quieter.
+                // Other people's reactions read as a dark pill; my own is a
+                // frosted light one so it stands out as mine.
                 border-radius: 15px;
-                background-color: rgba(0, 0, 0, .06);
+                background-color: rgba(0, 0, 0, .3);
+                color: #ffffff;
 
                 &.active {
-                    background-color: rgba(0, 0, 0, .12);
+                    background-color: rgba(255, 255, 255, .5);
+                    backdrop-filter: blur(16px) saturate(140%);
+                    color: $material-grey-dark;
                 }
 
                 .emoji,
@@ -548,11 +557,11 @@
 
                 .count {
                     font-weight: bold;
-                    padding-left: 1px;
+                    padding-left: 5px;
                 }
 
                 &:has(> .count) {
-                    padding: 3px 6px 3px 4px;
+                    padding: 3px 9px 3px 7px;
                 }
             }
         }
