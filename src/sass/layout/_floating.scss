@@ -16,12 +16,17 @@ body.messenger {
     }
 }
 
+// `.wide` is only added once the messenger controller has registered itself,
+// which is a digest later than the DOM insert — the chat list would be drawn
+// centred for one frame and then jump left. Matching on the messenger element
+// itself lands in the same paint.
 #main-wrapper {
     width: 100%;
     height: 100%;
     max-height: none;
 
-    &.wide {
+    &.wide,
+    &:has(#messenger) {
         margin: 0;
         max-width: none;
         max-height: none;
