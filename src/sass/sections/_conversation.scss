@@ -652,7 +652,14 @@
         justify-content: center;
 
         .message-body {
-            background-color: #fcf8e3;
+            @include message-bubble-shadow;
+            border-radius: 12px;
+            background-color: rgba(0, 0, 0, .45);
+            padding: 3px 10px;
+            min-width: 0;
+            max-width: 85%;
+            color: #ffffff;
+            font-size: .8em;
 
             .message-text {
                 margin-top: 0;
