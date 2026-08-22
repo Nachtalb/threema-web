@@ -132,10 +132,16 @@
             border-left: $border-width * $border-count solid #ffffff;
             padding: (1.5 * $main-padding) $main-padding - ($border-width * ($border-count - 1));
 
-            &.active,
             &:hover {
                 border-color: $dark-background-color;
                 background-color: $dark-background-color;
+            }
+
+            // The open conversation, distinct from a mere hover
+            &.active {
+                border-color: $theme-b100;
+                background-color: $theme-b100;
+                box-shadow: inset 3px 0 0 0 $theme-primary;
             }
 
             &:hover {
