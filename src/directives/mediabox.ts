@@ -44,6 +44,11 @@ export default [
                 // Close and save
                 this.close = ($event?: Event) => {
                     if ($event !== undefined) {
+                        // Dragging a zoomed picture ends on the backdrop, which
+                        // would otherwise be taken for a click on it.
+                        if (this.zoom !== 1) {
+                            return;
+                        }
                         // If this was triggered by a click event, only close the box
                         // if the click was directly on the target element.
                         if ($event.target === $event.currentTarget) {
@@ -60,6 +65,63 @@ export default [
                         }),
                         mediaboxService.filename || 'image.jpg'
                     );
+                };
+
+                // Zoom and pan
+                this.zoom = 1;
+                this.panX = 0;
+                this.panY = 0;
+                this.panning = false;
+
+                this.resetView = () => {
+                    this.zoom = 1;
+                    this.panX = 0;
+                    this.panY = 0;
+                };
+
+                this.wheel = ($event: WheelEvent, inner: HTMLElement) => {
+                    $event.preventDefault();
+                    const previous = this.zoom;
+                    const next = Math.min(8, Math.max(1, previous * (($event.deltaY < 0) ? 1.15 : 1 / 1.15)));
+                    if (next === previous) {
+                        return;
+                    }
+                    if (next === 1) {
+                        this.resetView();
+                        return;
+                    }
+                    // Keep the point under the cursor still while scaling
+                    const image = inner.querySelector('img');
+                    if (image !== null) {
+                        const box = image.getBoundingClientRect();
+                        const dx = $event.clientX - (box.left + box.width / 2);
+                        const dy = $event.clientY - (box.top + box.height / 2);
+                        const ratio = next / previous;
+                        this.panX += dx * (1 - ratio);
+                        this.panY += dy * (1 - ratio);
+                    }
+                    this.zoom = next;
+                };
+
+                this.panStart = ($event: MouseEvent) => {
+                    if (this.zoom === 1) {
+                        return;
+                    }
+                    $event.preventDefault();
+                    this.panning = true;
+                    this.panFrom = {x: $event.clientX - this.panX, y: $event.clientY - this.panY};
+                };
+
+                this.panMove = ($event: MouseEvent) => {
+                    if (!this.panning) {
+                        return;
+                    }
+                    this.panX = $event.clientX - this.panFrom.x;
+                    this.panY = $event.clientY - this.panFrom.y;
+                };
+
+                this.panEnd = () => {
+                    this.panning = false;
                 };
 
                 // Paging between the pictures of a conversation
@@ -83,6 +145,8 @@ export default [
                             this.imageDataUrl = bufferToUrl(
                                 mediaboxService.data, mediaboxService.mimetype, log);
                             this.caption = mediaboxService.caption || mediaboxService.filename;
+                            // A new picture starts unzoomed
+                            this.resetView();
                         } else {
                             this.close();
                         }
@@ -90,6 +154,16 @@ export default [
                 });
             }],
             link($scope: any, $element: ng.IAugmentedJQuery, attrs) {
+                // AngularJS has no ng-wheel, and the listener must be passive:
+                // false to be able to suppress the page scroll.
+                $element[0].addEventListener('wheel', (e: WheelEvent) => {
+                    const inner = (e.target as HTMLElement).closest('.inner');
+                    if (inner === null || $scope.ctrl.imageDataUrl === null) {
+                        return;
+                    }
+                    $scope.$apply(() => $scope.ctrl.wheel(e, inner));
+                }, {passive: false});
+
                 // Escape closes, arrows page between pictures
                 $document.on('keyup', (e: Event) => {
                     const ke = e as KeyboardEvent;
@@ -122,8 +196,15 @@ export default [
                     <div class="nav next" ng-if="ctrl.hasNeighbour(true)" ng-click="ctrl.showNeighbour(true, $event)" aria-label="Next">
                         <md-icon class="material-icons md-24">chevron_right</md-icon>
                     </div>
-                    <div class="inner" ng-click="ctrl.close($event)">
-                        <img ng-src="{{ ctrl.imageDataUrl }}">
+                    <div class="inner" ng-class="{'zoomed': ctrl.zoom !== 1, 'panning': ctrl.panning}"
+                         ng-click="ctrl.close($event)"
+                         ng-mousedown="ctrl.panStart($event)"
+                         ng-mousemove="ctrl.panMove($event)"
+                         ng-mouseup="ctrl.panEnd()"
+                         ng-mouseleave="ctrl.panEnd()"
+                         ng-dblclick="ctrl.resetView()">
+                        <img ng-src="{{ ctrl.imageDataUrl }}"
+                             ng-style="{transform: 'translate(' + ctrl.panX + 'px, ' + ctrl.panY + 'px) scale(' + ctrl.zoom + ')'}">
                         <div class="caption" title="{{ ctrl.caption | escapeHtml}}">
                             <span ng-bind-html="ctrl.caption | escapeHtml | markify | emojify"></span>
                         </div>

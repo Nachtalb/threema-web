@@ -127,6 +127,19 @@ mediabox {
                 outline: 0;
             }
 
+            &.zoomed {
+                cursor: grab;
+
+                &.panning {
+                    cursor: grabbing;
+                }
+
+                img {
+                    // Panning would fight the browser's own image dragging
+                    -webkit-user-drag: none;
+                }
+            }
+
             img {
                 box-shadow: 0 0 50px rgba(0, 0, 0, .7);
                 max-width: 100%;
