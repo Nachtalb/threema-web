@@ -478,20 +478,38 @@ class ConversationController {
         // Close any showing dialogs
         this.$mdDialog.cancel();
 
-        // Escape replaces the back button: close the profile sidebar if it is
-        // open, otherwise leave the conversation.
+        // Keyboard shortcuts. Escape replaces the back button: close the
+        // profile sidebar if it is open, otherwise leave the conversation.
         const onKeyDown = (event: KeyboardEvent) => {
-            if (event.key !== 'Escape' || event.defaultPrevented) {
+            if (event.defaultPrevented) {
                 return;
             }
             const target = event.target as HTMLElement | null;
-            if (target !== null && (target.isContentEditable
-                    || target.tagName === 'INPUT'
-                    || target.tagName === 'TEXTAREA')) {
-                // Let the focused field handle it
+            const typing = target !== null && (target.isContentEditable
+                || target.tagName === 'INPUT'
+                || target.tagName === 'TEXTAREA');
+
+            // Quote the message before or after the one quoted now. Ctrl is
+            // used so the arrows still move the caret while writing.
+            if (event.ctrlKey && (event.key === 'ArrowUp' || event.key === 'ArrowDown')) {
+                event.preventDefault();
+                this.$scope.$apply(() => this.quoteNeighbour(event.key === 'ArrowUp'));
                 return;
             }
-            this.$scope.$apply(() => this.onEscape());
+
+            if (event.key === 'Escape') {
+                if (typing) {
+                    // Drop the quote rather than leaving the conversation
+                    const quoted = this.webClientService.getQuote(this.receiver);
+                    if (quoted !== undefined) {
+                        event.preventDefault();
+                        this.$scope.$apply(() =>
+                            this.webClientService.setQuote(this.receiver, null));
+                    }
+                    return;
+                }
+                this.$scope.$apply(() => this.onEscape());
+            }
         };
         document.addEventListener('keydown', onKeyDown);
         $scope.$on('$destroy', () => document.removeEventListener('keydown', onKeyDown));
@@ -1050,6 +1068,35 @@ class ConversationController {
             () => observer.disconnect(), 1500, true, 'stopPinningAnchor');
     }
 
+    /**
+     * Quote the message next to the one quoted now, walking backwards through
+     * the conversation from the newest when nothing is quoted yet.
+     */
+    public quoteNeighbour(older: boolean): void {
+        const messages = this.webClientService.messages.getList(this.receiver)
+            .filter((message) => !message.isStatus && message.id != null);
+        if (messages.length === 0) {
+            return;
+        }
+
+        const quote = this.webClientService.getQuote(this.receiver);
+        let at = messages.length;
+        if (quote !== undefined) {
+            const current = messages.findIndex((message) => message.id === quote.messageId);
+            if (current !== -1) {
+                at = current;
+            }
+        }
+
+        const next = messages[at + (older ? -1 : 1)];
+        if (next !== undefined) {
+            this.webClientService.setQuote(this.receiver, next);
+        } else if (!older) {
+            // Past the newest message: stop quoting
+            this.webClientService.setQuote(this.receiver, null);
+        }
+    }
+
     public showReceiver(ev): void {
         this.$state.go('messenger.home.conversation.detail', {
             detailType: this.receiver.type,
@@ -1249,6 +1296,41 @@ class NavigationController {
         this.$mdDialog = $mdDialog;
         this.$translate = $translate;
         this.$state = $state;
+
+        // Alt+arrow steps through the chat list. Alt keeps it clear of the
+        // caret movement and of the quote shortcuts.
+        const onKeyDown = (event: KeyboardEvent) => {
+            if (!event.altKey || event.defaultPrevented) {
+                return;
+            }
+            if (event.key !== 'ArrowUp' && event.key !== 'ArrowDown') {
+                return;
+            }
+            event.preventDefault();
+            $scope.$apply(() => this.showAdjacentConversation(event.key === 'ArrowUp'));
+        };
+        document.addEventListener('keydown', onKeyDown);
+        $scope.$on('$destroy', () => document.removeEventListener('keydown', onKeyDown));
+    }
+
+    /**
+     * Open the conversation above or below the one showing now.
+     */
+    public showAdjacentConversation(previous: boolean): void {
+        const conversations = this.webClientService.conversations.get();
+        if (conversations.length === 0) {
+            return;
+        }
+
+        const at = conversations.findIndex(
+            (conversation) => this.isActive(conversation));
+        // Nothing open yet: start at either end
+        const next = at === -1
+            ? conversations[previous ? conversations.length - 1 : 0]
+            : conversations[at + (previous ? -1 : 1)];
+        if (next !== undefined) {
+            this.$state.go('messenger.home.conversation', next.receiver);
+        }
     }
 
     /**
