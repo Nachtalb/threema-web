@@ -396,6 +396,28 @@
                         color: #ffffff;
                     }
                 }
+
+                // With reactions the bubble ends at the media, so they float
+                // on the page background instead of extending it into a white
+                // strip. The timestamp stays overlaid on the media.
+                &:has(.message-emoji-reactions) {
+                    background-color: transparent;
+                    box-shadow: none;
+                    overflow: visible;
+
+                    // The bubble itself is gone, so the media carries the
+                    // shape and shadow.
+                    .message-media {
+                        @include message-bubble-shadow;
+                        border-radius: inherit;
+                        overflow: hidden;
+                    }
+
+                    .message-emoji-reactions {
+                        margin-top: 6px;
+                        margin-bottom: 0;
+                    }
+                }
             }
 
             .message-media {
@@ -477,6 +499,64 @@
             }
         }
 
+        .message-emoji-reactions {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: start;
+            gap: 4px;
+            flex-wrap: wrap;
+
+            .bucket {
+                cursor: default;
+
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: center;
+
+                padding: 3px 9px;
+                // Reacted to by me reads as a solid pill, everyone else's
+                // stays quieter.
+                border-radius: 15px;
+                background-color: rgba(0, 0, 0, .06);
+
+                &.active {
+                    background-color: rgba(0, 0, 0, .12);
+                }
+
+                .emoji,
+                .count {
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                    justify-content: center;
+                }
+
+                .emoji {
+                    width: 18px;
+                    height: 18px;
+                    font-size: 14px;
+                    line-height: 18px;
+
+                    padding-bottom: 1px;
+
+                    img.em {
+                        margin: 0;
+                    }
+                }
+
+                .count {
+                    font-weight: bold;
+                    padding-left: 1px;
+                }
+
+                &:has(> .count) {
+                    padding: 3px 6px 3px 4px;
+                }
+            }
+        }
+
         .message-info {
             display: flex;
             flex-direction: row;
@@ -518,62 +598,6 @@
                 }
             }
 
-            .message-emoji-reactions {
-                display: flex;
-                flex-direction: row;
-                align-items: center;
-                justify-content: start;
-                gap: 4px;
-                flex-wrap: wrap;
-
-                .bucket {
-                    cursor: default;
-
-                    display: flex;
-                    flex-direction: row;
-                    align-items: center;
-                    justify-content: center;
-
-                    padding: 3px 9px;
-                    background-color: #e0e0e0;
-                    border: #ffffff solid 1px;
-                    border-radius: 15px;
-
-                    &.active {
-                        background-color: #bdbdbd;
-                    }
-
-                    .emoji,
-                    .count {
-                        display: flex;
-                        flex-direction: row;
-                        align-items: center;
-                        justify-content: center;
-                    }
-
-                    .emoji {
-                        width: 18px;
-                        height: 18px;
-                        font-size: 14px;
-                        line-height: 18px;
-
-                        padding-bottom: 1px;
-
-                        img.em {
-                            margin: 0;
-                        }
-                    }
-
-                    .count {
-                        font-weight: bold;
-                        padding-left: 1px;
-                    }
-
-                    &:has(> .count) {
-                        padding: 3px 6px 3px 4px;
-                    }
-                }
-            }
 
             .message-date {
                 text-align: end;
