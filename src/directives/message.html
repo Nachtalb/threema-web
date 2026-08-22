@@ -49,12 +49,7 @@
             eee-receiver="ctrl.receiver"
             eee-message="ctrl.message">
         </eee-message-quote>
-        <eee-message-text
-            ng-if="ctrl.showText"
-            class="message-text"
-            message="ctrl.message">
-        </eee-message-text>
-
+        <!-- Before the text so it can be floated onto its last line -->
         <div class="message-info">
             <span ng-if="ctrl.isEdited" class="message-edited-hint" translate>messenger.MESSAGE_EDITED</span>
             <span eee-message-group-reactions ng-if="ctrl.showGroupReactions" class="message-group-reactions" eee-message="ctrl.message"></span>
@@ -62,6 +57,12 @@
             <span eee-message-date class="message-date" eee-message="ctrl.message"></span>
             <span eee-message-state ng-if="ctrl.showState" class="message-state" eee-message="ctrl.message"></span>
         </div>
+
+        <eee-message-text
+            ng-if="ctrl.showText"
+            class="message-text"
+            message="ctrl.message">
+        </eee-message-text>
 
         <!-- Outside message-info so captionless media does not trap them in
              the timestamp overlay -->

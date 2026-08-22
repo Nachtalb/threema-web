@@ -385,6 +385,8 @@
                 display: none;
             }
 
+            // The timestamp is first in the source so text bubbles can float it
+            // onto the last line; here it belongs at the end again.
             .message-info {
                 margin: 0 8px 8px;
             }
@@ -611,8 +613,34 @@
             }
         }
 
+        // The timestamp shares the last line of the text rather than taking a
+        // row of its own, so a short message stays one line. Floating it means
+        // long text wraps around it instead of running underneath.
+        &.text-message-body {
+            display: block;
+
+            .message-info {
+                float: right;
+                margin-top: 0;
+                // Sits on the text baseline, with a gap so the two never touch
+                padding-left: 12px;
+                // Smaller than the text, and dropped into the corner so it sits
+                // level with the last line's baseline
+                font-size: .7em;
+                transform: translateY(.85em);
+            }
+
+            .message-text {
+                // Nothing to clear: the float is meant to be sat beside
+                display: inline;
+            }
+        }
+
         .message-info {
             display: flex;
+            // First in the source, so text bubbles can float it onto the last
+            // line. Everywhere else it belongs at the end.
+            order: 1;
             flex-direction: row;
             align-items: end;
             margin-top: 4px;
