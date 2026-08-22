@@ -28,7 +28,7 @@ import {ContactControllerModel} from '../controller_model/contact';
 import {DialogController} from '../controllers/dialog';
 import {VersionDialogController} from '../controllers/footer';
 import {TroubleshootingController} from '../controllers/troubleshooting';
-import {bufferToUrl, hasValue, supportsPassive, u8aToHex} from '../helpers';
+import {bufferToUrl, firstVideoFrame, hasValue, supportsPassive, u8aToHex} from '../helpers';
 import {emojify} from '../helpers/emoji';
 import {publicKeyGrid} from '../helpers/public_key';
 import {BackgroundStoreService} from '../services/background_store';
@@ -78,7 +78,14 @@ class SendFileController extends DialogController {
         this.preview = preview;
         this.title = title;
         if (preview !== null) {
-            this.previewDataUrl = bufferToUrl(this.preview.data, this.preview.fileType, log);
+            if (preview.fileType.startsWith('video/')) {
+                // A video has no preview of its own; use its first frame
+                firstVideoFrame(preview.data, preview.fileType)
+                    .then((dataUrl) => $scope.$applyAsync(() => this.previewDataUrl = dataUrl))
+                    .catch((error) => log.debug('No video preview: ' + error));
+            } else {
+                this.previewDataUrl = bufferToUrl(this.preview.data, this.preview.fileType, log);
+            }
         }
     }
 

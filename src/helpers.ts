@@ -278,6 +278,49 @@ export function hasFeature(
 }
 
 /**
+ * The first frame of a video, as a data URL.
+ *
+ * Used as the preview for a video being sent, which has no thumbnail of its
+ * own until the phone makes one.
+ */
+export function firstVideoFrame(buffer: ArrayBuffer, mimeType: string): Promise<string> {
+    return new Promise((resolve, reject) => {
+        const url = URL.createObjectURL(new Blob([buffer], {type: mimeType}));
+        const video = document.createElement('video');
+        video.muted = true;
+        video.preload = 'metadata';
+
+        const done = (result: string | null, error?: string) => {
+            URL.revokeObjectURL(url);
+            if (result === null) {
+                reject(error);
+            } else {
+                resolve(result);
+            }
+        };
+
+        video.addEventListener('error', () => done(null, 'cannot decode'));
+        // `loadeddata` can fire before there is anything to paint, so wait for
+        // the seek to frame zero to complete.
+        video.addEventListener('seeked', () => {
+            const canvas = document.createElement('canvas');
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            const context = canvas.getContext('2d');
+            if (context === null || canvas.width === 0) {
+                done(null, 'no frame');
+                return;
+            }
+            context.drawImage(video, 0, 0);
+            done(canvas.toDataURL('image/jpeg', .7));
+        });
+        video.addEventListener('loadeddata', () => video.currentTime = 0);
+
+        video.src = url;
+    });
+}
+
+/**
  * Convert an ArrayBuffer to a data URL.
  */
 export function bufferToUrl(buffer: ArrayBuffer, mimeType: string, log: Logger): string {
