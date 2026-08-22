@@ -623,11 +623,17 @@
             }
 
             .message-state {
+                display: flex;
+                align-items: center;
                 margin-left: 5px;
+                // The icon is taller than the text line; letting it size the
+                // row would make the pill taller on own messages than on the
+                // other side's.
+                height: 1em;
 
                 i {
-                    position: relative;
-                    top: 2px;
+                    display: block;
+                    line-height: 1;
                 }
 
                 i.timeout {
