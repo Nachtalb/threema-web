@@ -14,7 +14,8 @@ RUN bun install --frozen-lockfile
 COPY . .
 ARG GIT_SHA=dev
 RUN sed -i "s/SELF_HOSTED: [^,]*,/SELF_HOSTED: true,/g" src/config.ts \
- && bun run dist "+$(echo "$GIT_SHA" | cut -c1-7)" \
+ && sed -i "s/\"version\": \"[^\"]*\"/\"version\": \"$(echo "$GIT_SHA" | cut -c1-7)\"/" package.json \
+ && bun run dist \
  && mv release/threema-web-* /site \
  && find /site -name '*.map' -delete \
  && : > /site/userconfig.overrides.js \
