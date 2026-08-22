@@ -88,12 +88,12 @@
         // appears, which shifts the messages just as the glide ends.
         position: absolute;
         right: 0;
-        // Clear of the compose area below it
-        bottom: 56px;
+        // Sits above the compose area, one gap clear of it
+        bottom: 100%;
         left: 0;
         // The chat is centred in a wider column, so the button is centred the
-        // same way and pushed to its right edge, just above the input bar.
-        margin: 0 auto 8px;
+        // same way and pushed to its right edge.
+        margin: 0 auto 1rem;
         align-items: center;
         justify-content: flex-end;
         z-index: 15;
@@ -127,6 +127,8 @@
     }
 
     #conversation-footer {
+        // Anchors the scroll-to-bottom button that sits above it
+        position: relative;
         background-color: $dark-background-color;
 
         .chat-input {

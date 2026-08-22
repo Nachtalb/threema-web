@@ -82,12 +82,13 @@
         </ul>
     </div>
 
-    <div id="scrolljump" ng-click="ctrl.scrollDown()" ng-if="ctrl.showScrollJump && !ctrl.receiver.locked"
-         translate translate-attr-title="messenger.SCROLL_DOWN" role="button" aria-label="scroll to bottom" tabindex="0">
-        <svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
-    </div>
-
     <div id="conversation-footer" ng-if="ctrl.isEnabled() && !ctrl.receiver.locked">
+        <!-- Inside the footer so it hangs above the compose area whatever its
+             height, without being a flex item that resizes the chat -->
+        <div id="scrolljump" ng-click="ctrl.scrollDown()" ng-if="ctrl.showScrollJump && !ctrl.receiver.locked"
+             translate translate-attr-title="messenger.SCROLL_DOWN" role="button" aria-label="scroll to bottom" tabindex="0">
+            <svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
 
         <div ng-if="ctrl.isQuoting()" id="conversation-quote">
             <eee-message-quote

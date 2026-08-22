@@ -324,19 +324,6 @@ md-menu-content.md-threemawork-theme {
         }
     }
 
-    // Keep the scroll-to-bottom button with the chat column rather than the
-    // full width of the conversation area.
-    #scrolljump {
-        align-self: center;
-        right: 0;
-        margin: 0 auto;
-        box-sizing: border-box;
-        padding-right: 1rem;
-        width: 100%;
-        max-width: $chat-max-width;
-        text-align: right;
-    }
-
     #conversation-footer {
         compose-area > div {
             box-shadow: none;
