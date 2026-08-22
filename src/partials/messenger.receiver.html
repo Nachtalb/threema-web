@@ -1,26 +1,38 @@
 <div class="form readonly">
     <div id="receiver-detail-header" class="detail-header">
-        <ng-include src="'partials/messenger.backbutton.html'"></ng-include>
+        <ng-include src="'partials/messenger.backbutton.html'" ng-if="!ctrl.editOpen"></ng-include>
+        <md-button aria-label="Back" class="md-icon-button" ng-if="ctrl.editOpen" ng-click="ctrl.cancelEdit()">
+            <md-icon class="material-icons md-24">arrow_back</md-icon>
+        </md-button>
         <div class="header-details">
             <h2 eee-marquee ng-bind-html="ctrl.controllerModel.subject | escapeHtml | emojify"></h2>
         </div>
 
         <div class="header-buttons">
-            <md-button aria-label="Show QR Code" class="md-icon-button" ng-show="ctrl.controllerModel.canShowQr()" ng-click="ctrl.showQr()">
+            <md-button aria-label="Show QR Code" class="md-icon-button" ng-show="!ctrl.editOpen && ctrl.controllerModel.canShowQr()" ng-click="ctrl.showQr()">
                 <md-icon><img src="img/ic_qr.svg" alt="QR"></md-icon>
             </md-button>
 
-            <md-button aria-label="Edit contact" class="md-icon-button" ng-show="ctrl.controllerModel.canEdit()" ng-click="ctrl.edit()">
+            <md-button aria-label="Edit contact" class="md-icon-button" ng-show="!ctrl.editOpen && ctrl.controllerModel.canEdit()" ng-click="ctrl.edit()">
                 <md-icon class="material-icons md-24">mode_edit</md-icon>
             </md-button>
 
-            <md-button aria-label="Open Chat" class="md-icon-button" ng-show="ctrl.canChat()" ng-click="ctrl.chat()">
+            <md-button aria-label="Open Chat" class="md-icon-button" ng-show="!ctrl.editOpen && ctrl.canChat()" ng-click="ctrl.chat()">
                 <md-icon class="material-icons md-24">message</md-icon>
+            </md-button>
+
+            <md-button aria-label="Save" class="md-icon-button" ng-if="ctrl.editOpen"
+                       ng-disabled="ctrl.isSaving() || !ctrl.controllerModel.isValid()"
+                       ng-click="ctrl.saveEdit()">
+                <md-icon class="material-icons md-24">check</md-icon>
             </md-button>
         </div>
     </div>
     <div class="detail-content">
-        <div ng-include src="'partials/messenger.receiver/' + ctrl.receiver.type + '.html'" scroll-glue in-view-container>
+        <div class="detail-pane" ng-if="!ctrl.editOpen" ng-include src="'partials/messenger.receiver/' + ctrl.receiver.type + '.html'" scroll-glue in-view-container>
+        </div>
+        <div class="detail-pane edit-pane" ng-if="ctrl.editOpen">
+            <div ng-include src="'partials/messenger.receiver/' + ctrl.receiver.type + '.edit.html'"></div>
         </div>
     </div>
 </div>

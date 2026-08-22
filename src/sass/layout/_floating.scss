@@ -215,6 +215,27 @@ md-menu-content.md-threemawork-theme {
         padding-right: 0;
     }
 
+    // The edit form slides in over the profile it belongs to.
+    .edit-pane {
+        &.ng-enter {
+            transition: transform .2s ease-out;
+            transform: translateX(100%);
+        }
+
+        &.ng-enter-active {
+            transform: translateX(0);
+        }
+
+        &.ng-leave {
+            transition: transform .2s ease-in;
+            transform: translateX(0);
+        }
+
+        &.ng-leave-active {
+            transform: translateX(100%);
+        }
+    }
+
     // Filter box above a long member or group list
     .list-search {
         box-sizing: border-box;

@@ -1848,6 +1848,11 @@ class ReceiverDetailController {
     // Search terms for the member and shared group lists
     public memberSearch: string = '';
     public groupSearch: string = '';
+    // Editing happens in place, as a second pane over the profile
+    public editOpen: boolean = false;
+    private viewModel: threema.ControllerModel<threema.Receiver> | null = null;
+    private saving: boolean = false;
+    private controllerModelService: ControllerModelService;
 
     public receiver: threema.Receiver;
     public me: threema.MeReceiver;
@@ -1882,6 +1887,7 @@ class ReceiverDetailController {
         this.webClientService = webClientService;
         this.mediaboxService = mediaboxService;
         this.navigationStateService = navigationStateService;
+        this.controllerModelService = controllerModelService;
 
         this.receiver = webClientService.receivers.getData(
             $stateParams.detailType !== undefined && $stateParams.detailType !== null
@@ -2018,11 +2024,77 @@ class ReceiverDetailController {
         if (!this.controllerModel.canEdit()) {
             return;
         }
-        this.$state.go('messenger.home.edit', {
-            type: this.receiver.type,
-            id: this.receiver.id,
-            initParams: null,
-        });
+        // Edit in place rather than navigating away from the panel. The edit
+        // templates read `controllerModel`, so swap it and put the view model
+        // back when the pane closes.
+        const editModel = this.modelFor(this.receiver, ControllerModelMode.EDIT);
+        if (editModel === null) {
+            return;
+        }
+        this.viewModel = this.controllerModel;
+        this.controllerModel = editModel;
+        this.editOpen = true;
+    }
+
+    /**
+     * Leave the edit pane without keeping the changes.
+     */
+    public cancelEdit(): void {
+        if (this.viewModel !== null) {
+            this.controllerModel = this.viewModel;
+            this.viewModel = null;
+        }
+        this.editOpen = false;
+        this.saving = false;
+    }
+
+    /**
+     * Keep the changes and go back to the profile.
+     */
+    public saveEdit(): void {
+        if (!this.editOpen || !this.controllerModel.isValid()) {
+            return;
+        }
+        this.saving = true;
+        this.controllerModel.save()
+            .then(() => this.$scope.$applyAsync(() => {
+                // The view model still holds the values from before the save
+                this.viewModel = this.modelFor(this.receiver, ControllerModelMode.VIEW);
+                this.cancelEdit();
+            }))
+            .catch(() => this.$scope.$applyAsync(() => this.saving = false));
+    }
+
+    public isSaving(): boolean {
+        return this.saving;
+    }
+
+    /**
+     * Save on Enter, as the edit dialog does.
+     */
+    public keypress($event: KeyboardEvent): void {
+        if ($event.key === 'Enter') {
+            this.saveEdit();
+        }
+    }
+
+    private modelFor(
+        receiver: threema.Receiver,
+        mode: ControllerModelMode,
+    ): threema.ControllerModel<threema.Receiver> | null {
+        switch (receiver.type) {
+            case 'me':
+                return this.controllerModelService.me(receiver as threema.MeReceiver, mode);
+            case 'contact':
+                return this.controllerModelService.contact(receiver as threema.ContactReceiver, mode);
+            case 'group':
+                return this.controllerModelService.group(receiver as threema.GroupReceiver, mode);
+            case 'distributionList':
+                return this.controllerModelService.distributionList(
+                    receiver as threema.DistributionListReceiver, mode);
+            default:
+                return null;
+        }
     }
 
     /**
