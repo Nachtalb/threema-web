@@ -46,20 +46,32 @@
 		</div>
 	</md-card>
 
-	<md-card>
+	<md-card class="detail-actions">
 		<md-card-content>
-			<section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
-				<md-button ng-disabled="!ctrl.receiver.access.canSync" class="md-raised" ng-click="ctrl.controllerModel.sync($event)">
-					<span translate>messenger.GROUP_SYNC</span>
+			<section layout="row" layout-align="center center">
+				<md-button class="md-icon-button"
+						   ng-if="ctrl.receiver.access.canSync"
+						   ng-click="ctrl.controllerModel.sync($event)"
+						   translate-attr="{'aria-label': 'messenger.GROUP_SYNC', 'title': 'messenger.GROUP_SYNC'}">
+					<md-icon class="material-icons md-24">sync</md-icon>
 				</md-button>
-				<md-button ng-disabled="!ctrl.controllerModel.canClean()" class="md-raised" ng-click="ctrl.controllerModel.clean($event)">
-					<span translate>messenger.DELETE_THREAD</span>
+				<md-button class="md-icon-button md-warn"
+						   ng-if="ctrl.controllerModel.canClean()"
+						   ng-click="ctrl.controllerModel.clean($event)"
+						   translate-attr="{'aria-label': 'messenger.DELETE_THREAD', 'title': 'messenger.DELETE_THREAD'}">
+					<md-icon class="material-icons md-24">delete_sweep</md-icon>
 				</md-button>
-				<md-button ng-disabled="!ctrl.receiver.access.canLeave" class="md-raised " ng-click="ctrl.controllerModel.leave($event)">
-					<span translate>messenger.GROUP_LEAVE</span>
+				<md-button class="md-icon-button"
+						   ng-if="ctrl.receiver.access.canLeave"
+						   ng-click="ctrl.controllerModel.leave($event)"
+						   translate-attr="{'aria-label': 'messenger.GROUP_LEAVE', 'title': 'messenger.GROUP_LEAVE'}">
+					<md-icon class="material-icons md-24">exit_to_app</md-icon>
 				</md-button>
-				<md-button ng-disabled="!ctrl.receiver.access.canDelete" class="md-raised md-warn" ng-click="ctrl.controllerModel.delete()">
-					<span translate>messenger.GROUP_DELETE</span>
+				<md-button class="md-icon-button md-warn"
+						   ng-if="ctrl.receiver.access.canDelete"
+						   ng-click="ctrl.controllerModel.delete()"
+						   translate-attr="{'aria-label': 'messenger.GROUP_DELETE', 'title': 'messenger.GROUP_DELETE'}">
+					<md-icon class="material-icons md-24">delete_forever</md-icon>
 				</md-button>
 			</section>
 		</md-card-content>

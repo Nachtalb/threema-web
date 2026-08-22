@@ -15,14 +15,20 @@
 		</md-card-content>
 	</md-card>
 
-	<md-card>
+	<md-card class="detail-actions">
 		<md-card-content>
-			<section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
-				<md-button ng-disabled="!ctrl.controllerModel.canClean()" class="md-raised" ng-click="ctrl.controllerModel.clean($event)">
-					<span translate>messenger.DELETE_THREAD</span>
+			<section layout="row" layout-align="center center">
+				<md-button class="md-icon-button md-warn"
+						   ng-if="ctrl.controllerModel.canClean()"
+						   ng-click="ctrl.controllerModel.clean($event)"
+						   translate-attr="{'aria-label': 'messenger.DELETE_THREAD', 'title': 'messenger.DELETE_THREAD'}">
+					<md-icon class="material-icons md-24">delete_sweep</md-icon>
 				</md-button>
-				<md-button ng-disabled="!ctrl.receiver.access.canDelete" class="md-raised md-warn" ng-click="ctrl.controllerModel.delete()">
-					<span translate>messenger.DISTRIBUTION_LIST_DELETE</span>
+				<md-button class="md-icon-button md-warn"
+						   ng-if="ctrl.receiver.access.canDelete"
+						   ng-click="ctrl.controllerModel.delete()"
+						   translate-attr="{'aria-label': 'messenger.DISTRIBUTION_LIST_DELETE', 'title': 'messenger.DISTRIBUTION_LIST_DELETE'}">
+					<md-icon class="material-icons md-24">delete_forever</md-icon>
 				</md-button>
 			</section>
 		</md-card-content>

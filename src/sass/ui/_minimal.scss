@@ -145,6 +145,33 @@ $chat-max-width: 60rem;
             .detail-header {
                 border-radius: $float-radius $float-radius 0 0;
             }
+
+            // The sidebar is the panel; the cards inside it should not look
+            // like panels of their own, nor be divided up.
+            md-card {
+                margin: 0;
+                border-radius: 0;
+                box-shadow: none;
+            }
+
+            .two-row.div > :first-child {
+                margin-right: 0;
+                border-right: 0;
+                padding-right: 0;
+            }
+
+            // Keep the receiver actions reachable without scrolling to the
+            // bottom of a long member list.
+            .detail-actions {
+                position: sticky;
+                bottom: 0;
+                z-index: 2;
+                background-color: $light-background-color;
+
+                md-card-content {
+                    padding: 4px;
+                }
+            }
         }
 
         #conversation {
