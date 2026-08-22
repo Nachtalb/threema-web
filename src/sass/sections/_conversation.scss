@@ -202,8 +202,14 @@
         font-weight: bold;
     }
 
+    // A quote is a reference, not a reprint: two lines is enough to recognise
+    // the message being answered.
     .message-quote {
         @include word-wrap;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        overflow: hidden;
     }
 }
 
