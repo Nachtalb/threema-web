@@ -118,10 +118,9 @@ md-dialog {
         overflow-x: hidden;
         overflow-y: auto;
 
-        // Overlay the scrollbar so it does not steal width from the content,
-        // which would push it off centre.
-        scrollbar-width: none;
-
+        // Only the thumb, and only while the pointer is over the panel.
+        // `scrollbar-width` is deliberately not set: it suppresses the
+        // ::-webkit-scrollbar rendering entirely.
         &::-webkit-scrollbar {
             border: 0;
             background-color: transparent;
@@ -196,16 +195,20 @@ md-dialog {
     }
 
     #conversation-chat {
+        // The scrollbar lives in a 6px gutter on the right. The box is that
+        // much wider so the messages keep the full width, and is nudged right
+        // by the 3px that centring takes off, so they line up with the header
+        // and compose area.
+        position: relative;
+        left: 3px;
         margin: 0 auto;
         box-sizing: border-box;
-        width: 100%;
-        max-width: $chat-max-width;
+        width: calc(100% + 6px);
+        max-width: calc(#{$chat-max-width} + 6px);
 
-        // Overlay scrollbar: no reserved gutter, so messages line up with the
-        // header and compose area, and the thumb only fades in while the
-        // pointer is over the messages.
-        scrollbar-width: none;
-
+        // Only the thumb, and only while the pointer is over the messages.
+        // `scrollbar-width` is deliberately not set: it suppresses the
+        // ::-webkit-scrollbar rendering entirely.
         &::-webkit-scrollbar {
             border: 0;
             background-color: transparent;

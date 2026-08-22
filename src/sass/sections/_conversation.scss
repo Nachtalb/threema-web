@@ -2,7 +2,6 @@
     display: flex;
     position: relative;
     flex-direction: column;
-    background-image: url('../img/wallpaper_light.png?');
     height: 100%;
 
     .detail-header {
@@ -46,7 +45,6 @@
     }
 
     #conversation-chat {
-        @include scrollbar;
         flex-grow: 1;
         overflow-y: scroll;
         // A selected message lifts slightly; the padding keeps that from being
