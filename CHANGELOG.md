@@ -22,6 +22,8 @@ Changes:
 * [change] Remove the desktop app banner and trim the welcome screen
 * [change] Link to this fork's repository and issue tracker
 * [change] Use Bun instead of npm
+* [change] Ship the emoji images as WebP and AVIF, halving their size
+* [change] Require a browser from 2021 or newer
 * [fix] Handle wire message acknowledgements sent as a response
 
 Jumping to a quoted message is exact when the phone is an iPhone. Android

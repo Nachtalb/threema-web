@@ -75,12 +75,12 @@ angular.module('3ema', [
 
 // Constants to be used by controllers
 .constant('BROWSER_MIN_VERSIONS', {
-    FF: 60,
-    FF_IOS: 8,
-    CHROME: 65,
-    OPERA: 52,
-    SAFARI: 11,
-    EDGE: 79,
+    FF: 93,
+    FF_IOS: 16,
+    CHROME: 85,
+    OPERA: 71,
+    SAFARI: 16,
+    EDGE: 85,
 })
 
 // Set default route
