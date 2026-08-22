@@ -79,6 +79,9 @@ class WelcomeController {
     private password: string = '';
     private passwordStrength: {score: number, strength: Strength} = {score: 0, strength: Strength.BAD};
     private formLocked: boolean = false;
+    // Set when the user gives up on a connection attempt, so the loading
+    // screen makes way for the buttons that get them out of it
+    public cancelled: boolean = false;
     private pleaseUpdateAppMsg: string = null;
     private browser: BrowserInfo;
     private browserWarningShown: boolean = false;
@@ -243,6 +246,9 @@ class WelcomeController {
      * Whether or not to show the loading indicator.
      */
     public get showLoadingIndicator(): boolean {
+        if (this.cancelled) {
+            return false;
+        }
         switch (this.stateService.connectionBuildupState) {
             case 'push':
             case 'peer_handshake':
@@ -598,7 +604,7 @@ class WelcomeController {
     /**
      * Forget trusted keys.
      */
-    private deleteSession(ev) {
+    public deleteSession(ev) {
         const confirm = this.$mdDialog.confirm()
              .title(this.$translate.instant('common.SESSION_DELETE'))
              .textContent(this.$translate.instant('common.CONFIRM_DELETE_BODY'))
@@ -611,6 +617,7 @@ class WelcomeController {
             this.mode = 'scan';
             this.clearPassword();
             this.formLocked = false;
+            this.cancelled = false;
 
             // Force-stop the webclient and initiate scan
             this.scan({
@@ -751,12 +758,13 @@ class WelcomeController {
     }
 
     /**
-     * Give up on a connection that is taking too long and go back to the
-     * start, without touching the session itself.
+     * Give up on a connection that is taking too long. Stops the client and
+     * offers a way out, rather than immediately reconnecting.
      */
     public cancelConnecting(): void {
         this.formLocked = false;
-        this.scan({
+        this.cancelled = true;
+        this.webClientService.stop({
             reason: DisconnectReason.SessionStopped,
             send: false,
             close: 'welcome',

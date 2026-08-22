@@ -13,6 +13,7 @@
         "RETRY": "Opakovat",
         "PLEASE_RELOAD": "Obnovte prosím stránku a zkuste to znovu.",
         "RELOAD": "Načíst znovu",
+        "CONNECTION_CANCELLED": "Connection cancelled",
         "RESTART_SESSION": "Restartovat relaci",
         "PASSWORD": "Heslo",
         "CHOOSE_PASSWORD": "Pokud chcete zůstat trvale přihlášeni, zadejte prosím<br>heslo relace před naskenováním QR kódu.",

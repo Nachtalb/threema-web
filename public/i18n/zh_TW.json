@@ -13,6 +13,7 @@
         "RETRY": "重試",
         "PLEASE_RELOAD": "請重新整理頁面後再嘗試動作",
         "RELOAD": "重新整理頁面",
+        "CONNECTION_CANCELLED": "Connection cancelled",
         "RESTART_SESSION": "重新啟動工作階段",
         "PASSWORD": "密碼",
         "CHOOSE_PASSWORD": "如果你要保持登入狀態，請在掃描QR碼之前輸入<br>工作階段密碼。",

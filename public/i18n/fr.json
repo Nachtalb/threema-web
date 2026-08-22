@@ -3,6 +3,7 @@
         "DESCRIPTION": "Discutez depuis votre ordinateur avec Threema Web et ayez accès à toutes vos discussions, vos contacts et vos fichiers média."
     },
     "welcome": {
+        "CONNECTION_CANCELLED": "Connection cancelled",
         "ABORT": "Annuler",
         "CONTINUE_ANYWAY": "Continuer",
         "PLEASE_SCAN": "Scannez ce code QR avec votre application Threema",

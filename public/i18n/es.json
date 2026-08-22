@@ -13,6 +13,7 @@
         "RETRY": "Reintentar",
         "PLEASE_RELOAD": "Por favor, vuelve a cargar la página para volver a intentarlo.",
         "RELOAD": "Recargar página",
+        "CONNECTION_CANCELLED": "Connection cancelled",
         "RESTART_SESSION": "Reinicia la sesión",
         "PASSWORD": "Contraseña",
         "CHOOSE_PASSWORD": "Si deseas mantenerte conectado, por favor, introduce<br>una contraseña de sesión antes de escanear.",

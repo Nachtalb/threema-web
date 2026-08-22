@@ -13,6 +13,7 @@
         "RETRY": "Skúsiť znova",
         "PLEASE_RELOAD": "Prosím obnovte stránku a skúste znova.",
         "RELOAD": "Obnoviť stránku",
+        "CONNECTION_CANCELLED": "Connection cancelled",
         "RESTART_SESSION": "Obnoviť reláciu",
         "PASSWORD": "Heslo",
         "CHOOSE_PASSWORD": "Pokiaľ chcete zostať trvalo prihlásený, zadajte prosím <br> heslo pred naskenovaním QR kódu.",

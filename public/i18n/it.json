@@ -13,6 +13,7 @@
         "RETRY": "Riprova",
         "PLEASE_RELOAD": "Per favore aggiorna la pagina e riprova.",
         "RELOAD": "Aggiorna la pagina",
+        "CONNECTION_CANCELLED": "Connection cancelled",
         "RESTART_SESSION": "Riavviare la sessione",
         "PASSWORD": "Password",
         "CHOOSE_PASSWORD": "Se vuoi rimanere collegato, inserisci <br>la password per questa sessione prima di eseguire la scansione del codice QR.",

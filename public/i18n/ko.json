@@ -3,6 +3,7 @@
         "DESCRIPTION": "Threema Web으로 pc버전으로 채팅하세요 모든 채팅, 연락처 및 미디어 파일을 이용할 수 있습니다"
     },
     "welcome": {
+        "CONNECTION_CANCELLED": "Connection cancelled",
         "ABORT": "중단",
         "CONTINUE_ANYWAY": "계속하기",
         "PLEASE_SCAN": "Threema 앱으로 이 QR 코드 스캔하세요",

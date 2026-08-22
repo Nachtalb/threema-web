@@ -13,6 +13,7 @@
         "RETRY": "Yritä uudelleen",
         "PLEASE_RELOAD": "Päivitä sivu yrittääksesi uudelleen",
         "RELOAD": "Päivitä sivu",
+        "CONNECTION_CANCELLED": "Connection cancelled",
         "RESTART_SESSION": "Käynnistä istunto uudelleen",
         "PASSWORD": "Salasana",
         "CHOOSE_PASSWORD": "Mikäli haluat pysyä kirjautuneena, anna istuntosalasana ennen skannaamista.",

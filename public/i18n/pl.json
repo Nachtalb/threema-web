@@ -13,6 +13,7 @@
         "RETRY": "Ponów",
         "PLEASE_RELOAD": "Odśwież stronę i spróbuj ponownie ",
         "RELOAD": "Odśwież stronę",
+        "CONNECTION_CANCELLED": "Connection cancelled",
         "RESTART_SESSION": "Uruchom ponownie sesję",
         "PASSWORD": "Hasło",
         "CHOOSE_PASSWORD": "Jeśli chcesz pozostać zalogowanym, wprowadź<br>hasło sesji przed zeskanowaniem.",

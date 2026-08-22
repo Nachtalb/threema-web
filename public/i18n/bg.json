@@ -3,6 +3,7 @@
         "DESCRIPTION": "Разговаряйте от вашия работен плот с Threema Web и имайте пълен достъп до всички чатове, контакти и медийни файлове."
     },
     "welcome": {
+        "CONNECTION_CANCELLED": "Connection cancelled",
         "ABORT": "Прекъсване",
         "CONTINUE_ANYWAY": "Продължете все пак",
         "PLEASE_SCAN": "Сканирайте този QR код с приложението си Threema",

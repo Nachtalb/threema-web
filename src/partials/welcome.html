@@ -184,6 +184,14 @@
                 <li translate>welcome.MANUAL_START_STEP2</li>
                 <li translate>welcome.MANUAL_START_STEP3</li>
             </ol>
+            <div class="dead-end-actions">
+                <md-button class="md-raised md-primary" ng-click="ctrl.reload()">
+                    <i class="material-icons">refresh</i> <span translate>welcome.RESTART_SESSION</span>
+                </md-button>
+                <md-button class="md-raised md-warn" ng-click="ctrl.deleteSession($event)">
+                    <span translate>welcome.FORGET_SESSION_BTN</span>
+                </md-button>
+            </div>
         </div>
 
         <div class="already-connected" ng-if="ctrl.state === 'already_connected'">
@@ -196,15 +204,32 @@
             </md-button>
         </div>
 
+        <div class="cancelled" ng-if="ctrl.cancelled">
+            <h2 class="instructions centered" translate>welcome.CONNECTION_CANCELLED</h2>
+            <div class="dead-end-actions">
+                <md-button class="md-raised md-primary" ng-click="ctrl.reload()">
+                    <i class="material-icons">refresh</i> <span translate>welcome.RESTART_SESSION</span>
+                </md-button>
+                <md-button class="md-raised md-warn" ng-click="ctrl.deleteSession($event)">
+                    <span translate>welcome.FORGET_SESSION_BTN</span>
+                </md-button>
+            </div>
+        </div>
+
         <div ng-if="ctrl.state === 'closed'">
             <p class="state error">
                 <strong><span translate>common.ERROR</span>:</strong> <span translate>connecting.CONNECTION_CLOSED</span><br>
                 <span translate>welcome.PLEASE_RELOAD</span>
             </p>
             <br>
-            <md-button class="md-raised md-primary" ng-click="ctrl.reload()">
-                <i class="material-icons">refresh</i> <span translate>welcome.RESTART_SESSION</span>
-            </md-button>
+            <div class="dead-end-actions">
+                <md-button class="md-raised md-primary" ng-click="ctrl.reload()">
+                    <i class="material-icons">refresh</i> <span translate>welcome.RESTART_SESSION</span>
+                </md-button>
+                <md-button class="md-raised md-warn" ng-click="ctrl.deleteSession($event)">
+                    <span translate>welcome.FORGET_SESSION_BTN</span>
+                </md-button>
+            </div>
         </div>
 
         <div ng-if="ctrl.state === 'reconnect_failed'">
@@ -213,9 +238,14 @@
                 <span translate>welcome.PLEASE_RELOAD</span>
             </p>
             <br>
-            <md-button class="md-raised md-primary" ng-click="ctrl.reload()">
-                <i class="material-icons">refresh</i> <span translate>welcome.RESTART_SESSION</span>
-            </md-button>
+            <div class="dead-end-actions">
+                <md-button class="md-raised md-primary" ng-click="ctrl.reload()">
+                    <i class="material-icons">refresh</i> <span translate>welcome.RESTART_SESSION</span>
+                </md-button>
+                <md-button class="md-raised md-warn" ng-click="ctrl.deleteSession($event)">
+                    <span translate>welcome.FORGET_SESSION_BTN</span>
+                </md-button>
+            </div>
         </div>
 
     </div>

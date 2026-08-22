@@ -13,6 +13,7 @@
         "RETRY": "Tekrar dene",
         "PLEASE_RELOAD": "Tekrar denemek için lütfen sayfayı tekrar yükleyiniz.",
         "RELOAD": "Sayfayı tekrar yükleyiniz.",
+        "CONNECTION_CANCELLED": "Connection cancelled",
         "RESTART_SESSION": "Oturumu yeniden başlat",
         "PASSWORD": "Şifre",
         "CHOOSE_PASSWORD": "Eğer giriş yapmış olarak kalmak istiyorsanız, taratmadan önce, <br> bir oturum şifresi yazın.",

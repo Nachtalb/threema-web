@@ -13,6 +13,7 @@
         "RETRY": "Erneut versuchen",
         "PLEASE_RELOAD": "Bitte laden Sie die Seite neu.",
         "RELOAD": "Seite neu laden",
+        "CONNECTION_CANCELLED": "Connection cancelled",
         "RESTART_SESSION": "Sitzung neustarten",
         "PASSWORD": "Passwort",
         "CHOOSE_PASSWORD": "Falls Sie die Sitzung speichern möchten,<br>legen Sie vor dem Scannen ein Passwort fest.",

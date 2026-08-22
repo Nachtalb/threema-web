@@ -3,6 +3,9 @@
     src: url('MaterialIcons-Regular.woff2?v=2') format('woff2');
     font-style: normal;
     font-weight: 400;
+    /* Without this the ligature name ("refresh") is drawn as plain text until
+       the font arrives. */
+    font-display: block;
 }
 
 .material-icons {

@@ -3,6 +3,7 @@
         "DESCRIPTION": "Chat vanaf uw bureaublad met Threema Web en heb zo volledig toegang tot alle chats, contacten en mediabestanden."
     },
     "welcome": {
+        "CONNECTION_CANCELLED": "Connection cancelled",
         "ABORT": "Afbreken",
         "CONTINUE_ANYWAY": "Toch doorgaan",
         "PLEASE_SCAN": "Scan deze QR-code met uw Threema-app",

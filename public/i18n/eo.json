@@ -3,6 +3,7 @@
         "DESCRIPTION": "Babilu per via komputilo pere de Threema Web kaj havu kompletan atingon al ĉiuj babilaĵoj, kontaktoj kaj aŭdvidaj dosieroj."
     },
     "welcome": {
+        "CONNECTION_CANCELLED": "Connection cancelled",
         "ABORT": "Ĉesigi",
         "CONTINUE_ANYWAY": "Daŭrigi tamen",
         "PLEASE_SCAN": "Skani la QR-kodon per via Threema-apo",

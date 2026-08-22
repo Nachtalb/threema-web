@@ -3,6 +3,7 @@
         "DESCRIPTION": "Converseaza de pe desktop cu Threema Web si ai access total la toate conversatiile, contacte si fisiere media."
     },
     "welcome": {
+        "CONNECTION_CANCELLED": "Connection cancelled",
         "ABORT": "Renunta",
         "CONTINUE_ANYWAY": "Continua oricum",
         "PLEASE_SCAN": "Scaneaza acest QR code cu aplicatia Threema",

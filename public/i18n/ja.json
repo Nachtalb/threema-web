@@ -13,6 +13,7 @@
         "RETRY": "再試行",
         "PLEASE_RELOAD": "お手数ですが、ページを再読み込みしてお試しください。",
         "RELOAD": "ページを再読み込み",
+        "CONNECTION_CANCELLED": "Connection cancelled",
         "RESTART_SESSION": "セッションを再開",
         "PASSWORD": "パスワード",
         "CHOOSE_PASSWORD": "あなたがログインを維持したい場合はスキャン前に、<br>セッションパスワードを設定してください。",

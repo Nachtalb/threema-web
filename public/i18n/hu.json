@@ -3,6 +3,7 @@
         "DESCRIPTION": "Beszélgess a számítógépedről a Threema Weben keresztül, férj hozzá a beszélgetéseidhez, kapcsolataidhoz és a médiafájljaidhoz."
     },
     "welcome": {
+        "CONNECTION_CANCELLED": "Connection cancelled",
         "ABORT": "Megszakítás",
         "CONTINUE_ANYWAY": "Folytatás ennek ellenére",
         "PLEASE_SCAN": "Olvasd be ezt a QR-kódot a Threema alkalmazással",

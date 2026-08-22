@@ -13,6 +13,7 @@
         "RETRY": "Повторить",
         "PLEASE_RELOAD": "Перезагрузите страницу для повторной попытки",
         "RELOAD": "Перезагрузить страницу",
+        "CONNECTION_CANCELLED": "Connection cancelled",
         "RESTART_SESSION": "Перезапустить сеанс",
         "PASSWORD": "Пароль",
         "CHOOSE_PASSWORD": "Если вы хотите оставаться в системе, введите <br>пароль сеанса перед сканированием.",
