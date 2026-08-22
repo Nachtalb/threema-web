@@ -33,6 +33,7 @@ import includeReplace from './directives/include_replace';
 import latestMessage from './directives/latest_message';
 import location from './directives/location';
 import marquee from './directives/marquee';
+import menuPanes from './directives/menu_panes';
 import mediabox from './directives/mediabox';
 import memberListEditor from './directives/member_list_editor';
 import message from './directives/message';
@@ -81,6 +82,7 @@ angular.module('3ema.directives').directive('eeeVerificationLevel', verification
 angular.module('3ema.directives').directive('includeReplace', includeReplace);
 angular.module('3ema.directives').directive('location', location);
 angular.module('3ema.directives').directive('eeeMarquee', marquee);
+angular.module('3ema.directives').directive('eeeMenuPanes', menuPanes);
 angular.module('3ema.directives').directive('eeeConversationContextmenu', conversationContextmenu);
 angular.module('3ema.directives').directive('mediabox', mediabox);
 angular.module('3ema.directives').directive('memberListEditor', memberListEditor);

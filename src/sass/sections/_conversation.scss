@@ -696,36 +696,82 @@ md-menu-item {
     }
 }
 
-// Message details, shown in place of the context menu actions
+// Message details, slides in over the context menu actions
+.message-menu-panes {
+    position: relative;
+    // The size follows whichever pane is showing, set by eee-menu-panes
+    overflow: hidden;
+    transition: width .2s ease-out, height .2s ease-out;
+
+    .message-menu-pane {
+        position: absolute;
+        top: 0;
+        left: 0;
+        transition: transform .2s ease-out;
+    }
+
+    .message-details {
+        transform: translateX(100%);
+    }
+
+    &.details-open {
+        .message-menu-actions {
+            transform: translateX(-100%);
+        }
+
+        .message-details {
+            transform: translateX(0);
+        }
+    }
+}
+
 .message-details {
-    padding-bottom: 8px;
-    min-width: 240px;
-
     .message-details-header {
-        display: flex;
-        align-items: center;
         border-bottom: 1px solid $border-grey;
-        padding-right: 16px;
 
-        span {
+        .md-button {
             font-weight: bold;
         }
     }
 
-    .message-details-list {
-        margin: 0;
-        padding: 8px 16px 0;
-        font-size: .9em;
+    .message-details-item {
+        display: flex;
+        align-items: flex-start;
+        // Rows narrower than the pane would otherwise centre their content
+        justify-content: flex-start;
+        padding: 10px 16px;
+        // The value must not wrap, so the pane is as wide as its content
+        white-space: nowrap;
 
-        dt {
+        md-icon {
+            flex: 0 0 24px;
+            justify-content: flex-start;
+            // angular-material centres md-icon with `margin: auto`, which
+            // eats the slack in a row narrower than the pane.
+            margin: 0 16px 0 0;
+            width: 24px;
+            min-width: 24px;
             color: $material-grey;
-            font-size: .85em;
         }
+    }
 
-        dd {
-            margin: 0 0 8px;
-            color: $material-grey-dark;
-            word-break: break-all;
-        }
+    .message-details-text {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        min-width: 0;
+    }
+
+    // The label reads like a menu entry, the value sits quieter below it
+    .message-details-title {
+        margin-bottom: 4px;
+        color: $material-grey-dark;
+        font-size: 14px;
+    }
+
+    .message-details-value {
+        color: $material-grey;
+        font-size: .85em;
+        word-break: break-all;
     }
 }

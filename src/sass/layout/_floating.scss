@@ -46,6 +46,17 @@ md-dialog {
     border-radius: $float-radius;
 }
 
+// Context menus match the floating panes, with entries running to the edge
+.md-open-menu-container,
+md-menu-content {
+    border-radius: $float-radius;
+    overflow: hidden;
+}
+
+md-menu-content {
+    padding: 0;
+}
+
 #messenger {
     gap: $float-gap;
     padding: $float-gap;

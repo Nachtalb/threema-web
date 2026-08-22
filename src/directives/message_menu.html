@@ -4,7 +4,9 @@
         <i class="material-icons md-dark md-24">more_vert</i>
     </md-button>
     <md-menu-content width="1">
-        <div ng-if="!ctrl.detailsOpen">
+        <!-- Both panes stay rendered so switching is instant -->
+        <div class="message-menu-panes" ng-class="{'details-open': ctrl.detailsOpen}" eee-menu-panes>
+        <div class="message-menu-pane message-menu-actions">
         <md-menu-item ng-if="ctrl.access.ack">
             <md-button ng-click="ctrl.ack(true)">
                 <md-icon aria-label="Acknowledge" class="material-icons md-24">thumb_up</md-icon>
@@ -55,29 +57,43 @@
         </md-menu-item>
         </div>
 
-        <!-- Details, shown in place of the actions -->
-        <div class="message-details" ng-if="ctrl.detailsOpen">
-            <div class="message-details-header">
-                <md-button class="md-icon-button" aria-label="Back" ng-click="ctrl.hideHistory($event); $event.stopPropagation();" md-prevent-menu-close="md-prevent-menu-close">
-                    <i class="material-icons md-24">arrow_back</i>
+        <!-- Details, slides in over the actions -->
+        <div class="message-menu-pane message-details">
+            <md-menu-item class="message-details-header">
+                <md-button ng-click="ctrl.hideHistory($event); $event.stopPropagation();" md-prevent-menu-close="md-prevent-menu-close">
+                    <md-icon aria-label="Back" class="material-icons md-24">arrow_back</md-icon>
+                    <span translate>messenger.MSG_DETAILS</span>
                 </md-button>
-                <span translate>messenger.MSG_DETAILS</span>
+            </md-menu-item>
+            <div class="message-details-item">
+                <md-icon class="material-icons md-24"><span>fingerprint</span></md-icon>
+                <div class="message-details-text">
+                    <span class="message-details-title">Message ID</span>
+                    <span class="message-details-value">{{ ctrl.message.id }}</span>
+                </div>
             </div>
-            <dl class="message-details-list">
-                <dt>Message ID</dt>
-                <dd>{{ ctrl.message.id }}</dd>
-                <div ng-repeat="event in ctrl.message.events">
-                    <dt>
+            <div class="message-details-item" ng-repeat="event in ctrl.message.events">
+                <md-icon class="material-icons md-24">
+                    <span ng-if="event.type === 'created'">schedule</span>
+                    <span ng-if="event.type === 'sent'">send</span>
+                    <span ng-if="event.type === 'delivered'">done</span>
+                    <span ng-if="event.type === 'read'">done_all</span>
+                    <span ng-if="event.type === 'acked'">thumb_up</span>
+                    <span ng-if="event.type === 'modified'">edit</span>
+                </md-icon>
+                <div class="message-details-text">
+                    <span class="message-details-title">
                         <span ng-if="event.type === 'created'" translate>messenger.MSG_HISTORY_CREATED</span>
                         <span ng-if="event.type === 'sent'" translate>messenger.MSG_HISTORY_SENT</span>
                         <span ng-if="event.type === 'delivered'" translate>messenger.MSG_HISTORY_DELIVERED</span>
                         <span ng-if="event.type === 'read'" translate>messenger.MSG_HISTORY_READ</span>
                         <span ng-if="event.type === 'acked'" translate>messenger.MSG_HISTORY_ACKED</span>
                         <span ng-if="event.type === 'modified'" translate>messenger.MSG_HISTORY_MODIFIED</span>
-                    </dt>
-                    <dd>{{ event.date | unixToTimestring:true }}</dd>
+                    </span>
+                    <span class="message-details-value">{{ event.date | unixToTimestring:true }}</span>
                 </div>
-            </dl>
+            </div>
+        </div>
         </div>
     </md-menu-content>
 </md-menu>
