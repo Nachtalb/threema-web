@@ -77,6 +77,44 @@ mediabox {
             }
         }
 
+        // Paging between the pictures of a conversation. The hit area runs the
+        // full height and is deliberately wide, but only the centred chevron
+        // is drawn, and only while the pointer is near that edge.
+        .nav {
+            display: flex;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            z-index: 1;
+            align-items: center;
+            cursor: pointer;
+            width: 25%;
+            max-width: 280px;
+
+            &.previous {
+                left: 0;
+                justify-content: flex-start;
+                padding-left: 24px;
+            }
+
+            &.next {
+                right: 0;
+                justify-content: flex-end;
+                padding-right: 24px;
+            }
+
+            md-icon {
+                position: static;
+                transition: opacity .15s ease-out;
+                opacity: 0;
+                padding: 2px;
+            }
+
+            &:hover md-icon {
+                opacity: 1;
+            }
+        }
+
         .inner {
             display: flex;
             flex-direction: column;

@@ -37,6 +37,13 @@ export class MediaboxService {
     public mimetype: string = '';
 
     /**
+     * How to reach the images either side of the one on show, so the box can
+     * be paged through without knowing anything about conversations.
+     */
+    public loadNeighbour: ((forward: boolean) => void) | null = null;
+    public hasNeighbour: ((forward: boolean) => boolean) | null = null;
+
+    /**
      * Update media data.
      */
     public setMedia(data: ArrayBuffer, filename: string, mimetype: string, caption: string) {
@@ -55,6 +62,8 @@ export class MediaboxService {
         this.filename = '';
         this.mimetype = '';
         this.caption = '';
+        this.loadNeighbour = null;
+        this.hasNeighbour = null;
         this.evtMediaChanged.post(false);
     }
 

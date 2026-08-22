@@ -62,6 +62,20 @@ export default [
                     );
                 };
 
+                // Paging between the pictures of a conversation
+                this.hasNeighbour = (forward: boolean) =>
+                    mediaboxService.hasNeighbour !== null
+                    && mediaboxService.hasNeighbour(forward);
+                this.showNeighbour = (forward: boolean, $event?: Event) => {
+                    if ($event !== undefined) {
+                        // The backdrop closes the box on click
+                        $event.stopPropagation();
+                    }
+                    if (mediaboxService.loadNeighbour !== null) {
+                        mediaboxService.loadNeighbour(forward);
+                    }
+                };
+
                 // Listen to Mediabox service events
                 mediaboxService.evtMediaChanged.attach((dataAvailable: boolean) => {
                     $rootScope.$apply(() => {
@@ -76,11 +90,24 @@ export default [
                 });
             }],
             link($scope: any, $element: ng.IAugmentedJQuery, attrs) {
-                // Register event handler for ESC key
+                // Escape closes, arrows page between pictures
                 $document.on('keyup', (e: Event) => {
                     const ke = e as KeyboardEvent;
-                    if (ke.key === 'Escape' && $scope.ctrl.imageDataUrl !== null) {
-                        $scope.$apply($scope.ctrl.close);
+                    if ($scope.ctrl.imageDataUrl === null) {
+                        return;
+                    }
+                    switch (ke.key) {
+                        case 'Escape':
+                            $scope.$apply($scope.ctrl.close);
+                            break;
+                        case 'ArrowLeft':
+                            $scope.$apply(() => $scope.ctrl.showNeighbour(false));
+                            break;
+                        case 'ArrowRight':
+                            $scope.$apply(() => $scope.ctrl.showNeighbour(true));
+                            break;
+                        default:
+                            break;
                     }
                 });
             },
@@ -89,6 +116,12 @@ export default [
                 <div class="box" ng-if="ctrl.imageDataUrl !== null">
                     <md-icon class="save material-icons md-24" ng-click="ctrl.save()" aria-label="Save" translate-attr="{'aria-label': 'common.SAVE', 'title': 'common.SAVE'}">save</md-icon>
                     <md-icon class="close material-icons md-24" ng-click="ctrl.close()" aria-label="Close" translate-attr="{'aria-label': 'common.CLOSE', 'title': 'common.CLOSE'}">close</md-icon>
+                    <div class="nav previous" ng-if="ctrl.hasNeighbour(false)" ng-click="ctrl.showNeighbour(false, $event)" aria-label="Previous">
+                        <md-icon class="material-icons md-24">chevron_left</md-icon>
+                    </div>
+                    <div class="nav next" ng-if="ctrl.hasNeighbour(true)" ng-click="ctrl.showNeighbour(true, $event)" aria-label="Next">
+                        <md-icon class="material-icons md-24">chevron_right</md-icon>
+                    </div>
                     <div class="inner" ng-click="ctrl.close($event)">
                         <img ng-src="{{ ctrl.imageDataUrl }}">
                         <div class="caption" title="{{ ctrl.caption | escapeHtml}}">

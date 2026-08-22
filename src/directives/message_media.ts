@@ -244,6 +244,41 @@ export default [
                                     switch (message.type) {
                                         case 'image':
                                             const caption = message.caption || '';
+                                            // Let the box page through the
+                                            // other pictures in this chat.
+                                            let showing: threema.Message = message;
+                                            const step = (forward: boolean): threema.Message | null => {
+                                                const list = webClientService.messages
+                                                    .getList(receiver)
+                                                    .filter((m) => m.type === 'image');
+                                                const at = list.findIndex((m) => m.id === showing.id);
+                                                if (at === -1) {
+                                                    return null;
+                                                }
+                                                return list[at + (forward ? 1 : -1)] || null;
+                                            };
+                                            mediaboxService.hasNeighbour =
+                                                (forward: boolean) => step(forward) !== null;
+                                            mediaboxService.loadNeighbour = (forward: boolean) => {
+                                                const next = step(forward);
+                                                if (next === null) {
+                                                    return;
+                                                }
+                                                webClientService.requestBlob(next.id, receiver)
+                                                    .then((info: threema.BlobInfo) => {
+                                                        $rootScope.$apply(() => {
+                                                            showing = next;
+                                                            mediaboxService.setMedia(
+                                                                info.buffer,
+                                                                info.filename,
+                                                                info.mimetype,
+                                                                next.caption || '',
+                                                            );
+                                                        });
+                                                    })
+                                                    .catch((error) =>
+                                                        log.error('Could not load neighbouring image: ' + error));
+                                            };
                                             mediaboxService.setMedia(
                                                 blobInfo.buffer,
                                                 blobInfo.filename,
