@@ -37,7 +37,9 @@
         <eee-message-quote
             ng-if="ctrl.showQuote"
             class="message-quote"
-            eee-quote="ctrl.message.quote">
+            eee-quote="ctrl.message.quote"
+            eee-receiver="ctrl.receiver"
+            eee-message="ctrl.message">
         </eee-message-quote>
         <eee-message-text
             ng-if="ctrl.showText"

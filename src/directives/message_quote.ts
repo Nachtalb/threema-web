@@ -16,56 +16,105 @@
  */
 
 import {hexToU8a, u8aToBase64} from '../helpers';
+import {MessageService} from '../services/message';
 import {WebClientService} from '../services/webclient';
 
 // tslint:disable:max-line-length
 
 export default [
+    'MessageService',
     'WebClientService',
-    function(webClientService: WebClientService) {
+    function(messageService: MessageService, webClientService: WebClientService) {
         return {
             restrict: 'EA',
             scope: {},
             bindToController: {
                 quote: '=eeeQuote',
+                receiver: '=?eeeReceiver',
+                message: '=?eeeMessage',
             },
             controllerAs: 'ctrl',
             controller: [function() {
                 this.contact = () => webClientService.contacts.get(this.quote.identity);
 
                 /**
-                 * Look up the quoted message in the DOM.
+                 * Resolve the quoted message by its id.
                  *
-                 * A quote references the original by its Threema message id,
-                 * which iOS also reports as the message id, only base64
-                 * encoded. Android reports a local database id instead, which
-                 * a quote cannot be resolved against at all.
+                 * iOS reports the Threema message id as the message id, base64
+                 * encoded, so the hex id a quote carries has to be converted.
                  */
-                const findQuoted = (messageId: string): HTMLElement | null => {
-                    const direct = document.getElementById(`message-${messageId}`);
-                    if (direct !== null) {
-                        return direct;
-                    }
-                    try {
-                        return document.getElementById(`message-${u8aToBase64(hexToU8a(messageId))}`);
-                    } catch {
+                const findById = (messageId: string): threema.Message | null => {
+                    if (this.receiver === undefined) {
                         return null;
                     }
+                    const candidates = [messageId];
+                    try {
+                        candidates.push(u8aToBase64(hexToU8a(messageId)));
+                    } catch { /* not hex, only try it verbatim */ }
+                    for (const message of webClientService.messages.getList(this.receiver)) {
+                        if (candidates.indexOf(message.id) !== -1) {
+                            return message;
+                        }
+                    }
+                    return null;
                 };
 
                 /**
-                 * Return whether the quoted message can be jumped to. It may
-                 * be out of reach because it is not loaded, or because the
-                 * connected device does not report resolvable message ids.
+                 * Resolve the quoted message by its content.
+                 *
+                 * Android reports a local database id rather than the Threema
+                 * message id, so a quote cannot be resolved by id at all
+                 * there. The quoted text and its author are known though,
+                 * which identifies the message in practice.
                  */
-                this.canJump = () => findQuoted(this.quote.messageId) !== null;
+                const findByContent = (): threema.Message | null => {
+                    if (this.receiver === undefined || this.message === undefined) {
+                        return null;
+                    }
+                    const wanted = this.quote.text;
+                    if (wanted === undefined || wanted === null || wanted.length === 0) {
+                        return null;
+                    }
+                    const me = webClientService.me.id;
+                    let match: threema.Message | null = null;
+                    for (const message of webClientService.messages.getList(this.receiver)) {
+                        // Only look at messages older than the quoting one
+                        if (message.sortKey >= this.message.sortKey) {
+                            break;
+                        }
+                        const identity = message.isOutbox ? me : message.partnerId;
+                        if (identity !== this.quote.identity) {
+                            continue;
+                        }
+                        if (messageService.getQuoteText(message) !== wanted) {
+                            continue;
+                        }
+                        // Keep looking; the newest match before the quote wins
+                        match = message;
+                    }
+                    return match;
+                };
+
+                const findQuoted = (): HTMLElement | null => {
+                    const message = findById(this.quote.messageId) ?? findByContent();
+                    return message === null
+                        ? null
+                        : document.getElementById(`message-${message.id}`);
+                };
+
+                /**
+                 * Return whether the quoted message is currently reachable. It
+                 * may not be loaded, or may be too old to still be in the
+                 * conversation.
+                 */
+                this.canJump = () => findQuoted() !== null;
 
                 /**
                  * Scroll to the quoted message and flash it, so it is obvious
                  * which one was jumped to.
                  */
                 this.jumpToQuoted = () => {
-                    const target = findQuoted(this.quote.messageId);
+                    const target = findQuoted();
                     if (target === null) {
                         return;
                     }
