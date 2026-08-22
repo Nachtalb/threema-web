@@ -10,3 +10,12 @@ input[type=button]:focus-visible,
 md-menu-item .md-button:focus-visible {
     outline: none;
 }
+
+// It also focuses the first item when a menu opens, and shares the hover
+// background with `.md-focused` — so that item looks stuck in a hover state.
+// The theme rule is heavily qualified, so this has to match its weight.
+md-menu-content md-menu-item .md-button.md-threema-theme:not([disabled]).md-focused:not(:hover),
+md-menu-content md-menu-item .md-button.md-threemawork-theme:not([disabled]).md-focused:not(:hover),
+md-menu-content md-menu-item .md-button:not([disabled]).md-focused:not(:hover) {
+    background-color: transparent;
+}
