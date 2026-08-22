@@ -122,7 +122,9 @@
         <li ng-repeat="contact in ctrl.contacts() | filter:ctrl.searchContact"
             ui-sref="messenger.home.conversation({ type: 'contact', id: contact.id, initParams: null })"
             class="contact"
-            ng-class="{'inactive': contact.state === 'INACTIVE', 'invalid': contact.state === 'INVALID'}">
+            ng-class="{'inactive': contact.state === 'INACTIVE',
+                       'invalid': contact.state === 'INVALID',
+                       'active': ctrl.isActive({type: 'contact', id: contact.id})}">
 
             <section class="avatar-box">
                 <eee-avatar eee-receiver="contact"
