@@ -3407,7 +3407,7 @@ export function parseEmoji(text: string): (threema.EmojiInfo | string)[] {
                 .replace(/-fe0[ef]-20e3$/, '-20e3');
             result.push({
                 emojiString: emoji,
-                imgPath: `emoji/png32/${strippedCodepoint}.webp`,
+                imgPath: `emoji/32/${strippedCodepoint}.webp`,
                 codepoint: codepoint,
             });
         }
@@ -3466,7 +3466,7 @@ export function enlargeSingleEmoji(text: string, enlarge: boolean = false): stri
         if (text.replace(pattern, '').length === 0) {
             text = text
                 .replace(pattern, '<img class="em ' + singleEmojiClassName + '$1$2')
-                .replace(/\/png32\//g, '/png64/');
+                .replace(/emoji\/32\//g, 'emoji/64/');
         }
     }
     return text;

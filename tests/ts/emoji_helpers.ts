@@ -31,8 +31,8 @@ function makeEmoji(emojiString: string, codepoint?: string, imgCodepoint?: strin
         codepoint = twemoji.convert.toCodePoint(emojiString);
     }
     const imgPath = imgCodepoint === undefined
-        ? `emoji/png32/${codepoint}.webp`
-        : `emoji/png32/${imgCodepoint}.webp`;
+        ? `emoji/32/${codepoint}.webp`
+        : `emoji/32/${imgCodepoint}.webp`;
     return {
         emojiString: emojiString,
         imgPath: imgPath,
@@ -46,7 +46,7 @@ describe('Emoji Helpers', () => {
         it('emojifies with img tag', function() {
             expect(emojify('hello 🐦'))
                 .toEqual('hello <img class="em" draggable="false" '
-                       + 'alt="🐦" src="emoji/png32/1f426.webp" data-c="1f426">');
+                       + 'alt="🐦" src="emoji/32/1f426.webp" data-c="1f426">');
         });
 
         it('ignores certain codepoints', function() {
@@ -144,13 +144,13 @@ describe('Emoji Helpers', () => {
 
         const singleEmojiClassName = 'large-emoji';
         const crazy = '<img class="em" draggable="false"'
-            + ' alt="🤪" src="emoji/png32/1f92a.webp" data-c="1f92a">';
+            + ' alt="🤪" src="emoji/32/1f92a.webp" data-c="1f92a">';
         const crazyLarge = '<img class="em ' + singleEmojiClassName
-            + '" draggable="false" alt="🤪" src="emoji/png64/1f92a.webp" data-c="1f92a">';
+            + '" draggable="false" alt="🤪" src="emoji/64/1f92a.webp" data-c="1f92a">';
         const copyright = '<img class="em anotherclass" draggable="false"'
-            + ' alt="©️" src="emoji/png32/a9.webp" data-c="a9">';
+            + ' alt="©️" src="emoji/32/a9.webp" data-c="a9">';
         const copyrightLarge = '<img class="em ' + singleEmojiClassName
-            + ' anotherclass" draggable="false" alt="©️" src="emoji/png64/a9.webp" data-c="a9">';
+            + ' anotherclass" draggable="false" alt="©️" src="emoji/64/a9.webp" data-c="a9">';
 
         it('enlarges 1 emoji', () => {
             expect(process(crazy)).toEqual(crazyLarge);
