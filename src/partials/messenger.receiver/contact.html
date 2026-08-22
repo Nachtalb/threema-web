@@ -45,19 +45,6 @@
 		</md-card-content>
 	</md-card>
 
-	<md-card class="detail-actions">
-		<md-card-content>
-			<section layout="row" layout-align="center center">
-				<md-button class="md-icon-button md-warn"
-						   ng-if="ctrl.controllerModel.canClean()"
-						   ng-click="ctrl.controllerModel.clean($event)"
-						   translate-attr="{'aria-label': 'messenger.DELETE_THREAD', 'title': 'messenger.DELETE_THREAD'}">
-					<md-icon class="material-icons md-24">delete_sweep</md-icon>
-				</md-button>
-			</section>
-		</md-card-content>
-	</md-card>
-
 	<!-- system contact list card -->
 	<md-card ng-if="ctrl.hasSystemEmails || ctrl.hasSystemPhones">
 		<md-card-title>
@@ -112,6 +99,19 @@
 					<eee-distribution-list-badge eee-distribution-list-receiver="distributionListReceiver"/>
 				</li>
 			</ul>
+		</md-card-content>
+	</md-card>
+
+	<md-card class="detail-actions">
+		<md-card-content>
+			<section layout="row" layout-align="center center">
+				<md-button class="md-icon-button md-warn"
+						   ng-if="ctrl.controllerModel.canClean()"
+						   ng-click="ctrl.controllerModel.clean($event)"
+						   translate-attr="{'aria-label': 'messenger.DELETE_THREAD', 'title': 'messenger.DELETE_THREAD'}">
+					<md-icon class="material-icons md-24">delete_sweep</md-icon>
+				</md-button>
+			</section>
 		</md-card-content>
 	</md-card>
 </div>
