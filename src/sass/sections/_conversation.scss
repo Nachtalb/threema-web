@@ -358,7 +358,9 @@
         // arrive as file messages, hence the third selector.
         &.image-message-body,
         &.video-message-body,
-        &.file-message-body:has(.message-media) {
+        // `.message-media` is the wrapper and always there, so the edge-to-edge
+        // treatment keys on a picture actually being shown.
+        &.file-message-body:has(.thumbnail, .animgif) {
             padding: 0;
 
             // The media is rounded by the bubble, but the tail hangs outside
