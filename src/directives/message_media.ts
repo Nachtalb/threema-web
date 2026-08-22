@@ -25,41 +25,6 @@ import {MessageService} from '../services/message';
 import {TimeoutService} from '../services/timeout';
 import {WebClientService} from '../services/webclient';
 
-function showAudioDialog(
-    $mdDialog: ng.material.IDialogService,
-    logService: LogService,
-    blobInfo: threema.BlobInfo,
-): void {
-    const log = logService.getLogger('AudioPlayerDialog-C');
-    $mdDialog.show({
-        controllerAs: 'ctrl',
-        controller: function() {
-            this.cancel = () => $mdDialog.cancel();
-            this.audioSrc = bufferToUrl(blobInfo.buffer, blobInfo.mimetype, log);
-        },
-        template: `
-            <md-dialog translate-attr="{'aria-label': 'messageTypes.AUDIO_MESSAGE'}">
-                    <md-toolbar>
-                        <div class="md-toolbar-tools">
-                            <h2 translate>messageTypes.AUDIO_MESSAGE</h2>
-                            </div>
-                    </md-toolbar>
-                    <md-dialog-content layout="row" layout-align="center">
-                        <audio controls autoplay ng-src="{{ ctrl.audioSrc | unsafeResUrl }}">
-                            Your browser does not support the <code>audio</code> element.
-                        </audio>
-                    </md-dialog-content>
-                    <md-dialog-actions layout="row" >
-                      <md-button ng-click="ctrl.cancel()">
-                         <span translate>common.OK</span>
-                      </md-button>
-                    </md-dialog-actions>
-            </md-dialog>`,
-        parent: angular.element(document.body),
-        clickOutsideToClose: true,
-    });
-}
-
 /**
  * Play a video in a dialog, with the option to keep it.
  */
@@ -261,9 +226,6 @@ export default [
                         $window.open($filter<any>('mapLink')(this.location), '_blank');
                     };
 
-                    // Play a Audio file in a dialog
-                    this.playAudio = (blobInfo: threema.BlobInfo) => showAudioDialog($mdDialog, logService, blobInfo);
-
                     // Download function
                     this.download = () => {
                         log.debug('Download blob');
@@ -352,8 +314,9 @@ export default [
                                             }
                                             break;
                                         case 'audio':
-                                            // Show inline
-                                            this.playAudio(blobInfo);
+                                            // Plays inline, in the message
+                                            this.blobBufferUrl = URL.createObjectURL(
+                                                new Blob([blobInfo.buffer], options));
                                             break;
                                         default:
                                             log.warn('Ignored download request for message type', message.type);

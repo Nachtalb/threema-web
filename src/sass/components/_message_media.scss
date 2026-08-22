@@ -194,4 +194,12 @@ $loading-ring-thickness: 5px;
         }
 
     }
+
+    // A downloaded voice message plays in place, sized to the bubble rather
+    // than the browser's default player width.
+    audio.inline-audio {
+        display: block;
+        width: 280px;
+        max-width: 100%;
+    }
 }

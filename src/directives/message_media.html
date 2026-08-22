@@ -40,23 +40,23 @@
 
 <!-- Audio file -->
 <div class="file-message"
-     ng-if="ctrl.type === 'audio'"
+     ng-if="ctrl.type === 'audio' && !ctrl.downloaded"
      ng-class="{clickable: !ctrl.uploading}"
      ng-click="ctrl.download()">
     <!-- Loading indicator -->
-    <div class="circle"
-         ng-if="!ctrl.downloaded">
+    <div class="circle">
         <i ng-if="ctrl.uploading" class="material-icons md-24">file_upload</i>
         <i ng-if="!ctrl.uploading" class="material-icons md-24">file_download</i>
         <div class="loading" ng-class="{active: ctrl.isLoading()}"></div>
     </div>
-
-    <!-- Play Indicator -->
-    <div class="circle" ng-if="ctrl.downloaded">
-        <i class="material-icons md-24">play_arrow</i>
-    </div>
     <div class="info" translate>messageTypes.AUDIO_MESSAGE</div>
 </div>
+
+<!-- Audio file (downloaded): plays in place -->
+<audio class="inline-audio"
+       ng-if="ctrl.type === 'audio' && ctrl.downloaded"
+       controls autoplay
+       ng-src="{{ ctrl.blobBufferUrl | unsafeResUrl }}"></audio>
 
 <!-- GIF (downloaded) -->
 <div class="animgif" ng-if="ctrl.downloaded && ctrl.isGif">
