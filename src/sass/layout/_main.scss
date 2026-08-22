@@ -450,6 +450,9 @@ md-toast.md-center {
 }
 
 md-toast .md-toast-content {
+    // Rounded like the panels and dialogs
+    border-radius: 16px;
+
     span {
         text-align: center;
     }
