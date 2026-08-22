@@ -25,6 +25,7 @@ import {LogService} from './services/log';
 import {MediaboxService} from './services/mediabox';
 import {MessageService} from './services/message';
 import {MimeService} from './services/mime';
+import {NavigationStateService} from './services/navigation_state';
 import {NotificationService} from './services/notification';
 import {PushService} from './services/push';
 import {QrCodeService} from './services/qrcode';
@@ -47,6 +48,7 @@ angular.module('3ema.services', [])
 .service('ContactService', ContactService)
 .service('ControllerModelService', ControllerModelService)
 .service('MessageService', MessageService)
+.service('NavigationStateService', NavigationStateService)
 .service('NotificationService', NotificationService)
 .service('PushService', PushService)
 .service('QrCodeService', QrCodeService)

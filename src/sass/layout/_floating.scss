@@ -123,6 +123,12 @@ md-menu-content.md-threemawork-theme {
         width: $detail-width;
     }
 
+    // Opening a chat while the sidebar is already open rebuilds this element,
+    // so it would animate open again. Skip the transition in that case.
+    &.detail-instant {
+        transition: none;
+    }
+
     .detail-panel {
         display: block;
         flex: 0 0 auto;

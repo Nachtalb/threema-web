@@ -38,6 +38,7 @@ import {TrustedKeyStoreService} from '../services/keystore';
 import {LogService} from '../services/log';
 import {MediaboxService} from '../services/mediabox';
 import {MimeService} from '../services/mime';
+import {NavigationStateService} from '../services/navigation_state';
 import {NotificationService} from '../services/notification';
 import {ReceiverService} from '../services/receiver';
 import {SettingsService} from '../services/settings';
@@ -358,6 +359,9 @@ class ConversationController {
     private receiverService: ReceiverService;
     private stateService: StateService;
     private mimeService: MimeService;
+    private navigationStateService: NavigationStateService;
+    // Whether the sidebar was already open when this conversation was opened
+    public wasDetailOpen: boolean;
     private timeoutService: TimeoutService;
 
     // Third party services
@@ -418,7 +422,7 @@ class ConversationController {
         '$mdDialog', '$mdToast', '$translate', '$filter',
         '$state', '$transitions',
         'LogService', 'WebClientService', 'StateService', 'ReceiverService', 'MimeService',
-        'VersionService', 'ControllerModelService', 'TimeoutService',
+        'VersionService', 'ControllerModelService', 'TimeoutService', 'NavigationStateService',
     ];
     constructor($stateParams: ConversationStateParams,
                 $scope: ng.IScope,
@@ -436,8 +440,20 @@ class ConversationController {
                 mimeService: MimeService,
                 versionService: VersionService,
                 controllerModelService: ControllerModelService,
-                timeoutService: TimeoutService) {
+                timeoutService: TimeoutService,
+                navigationStateService: NavigationStateService) {
         this.$stateParams = $stateParams;
+        this.navigationStateService = navigationStateService;
+        // The whole conversation is rebuilt when switching chats. If the
+        // sidebar was already open, it should appear open rather than
+        // animating from nothing again. The flag is cleared after the first
+        // paint so closing it still animates.
+        this.wasDetailOpen = navigationStateService.isDetailOpen();
+        if (this.wasDetailOpen) {
+            timeoutService.register(() => {
+                $scope.$apply(() => this.wasDetailOpen = false);
+            }, 0, true, 'clearDetailInstant');
+        }
         this.webClientService = webClientService;
         this.receiverService = receiverService;
         this.stateService = stateService;
@@ -1042,6 +1058,9 @@ class ConversationController {
      */
     public onEscape(): void {
         if (this.isDetailOpen()) {
+            // Record the intent first, or the transition hook that keeps the
+            // sidebar open across conversations reopens it immediately.
+            this.navigationStateService.setDetailOpen(false);
             this.$state.go('messenger.home.conversation', this.receiver);
         } else {
             this.goBack();
@@ -1469,12 +1488,15 @@ class MessengerController {
     private webClientService: WebClientService;
 
     public static $inject = [
-        '$scope', '$state', '$mdDialog', '$translate',
+        '$scope', '$state', '$mdDialog', '$translate', '$transitions',
         'LogService', 'StateService', 'ReceiverService', 'WebClientService', 'ControllerService',
+        'NavigationStateService',
     ];
     constructor($scope, $state, $mdDialog: ng.material.IDialogService, $translate: ng.translate.ITranslateService,
+                $transitions: UiTransitionService,
                 logService: LogService, stateService: StateService, receiverService: ReceiverService,
-                webClientService: WebClientService, controllerService: ControllerService) {
+                webClientService: WebClientService, controllerService: ControllerService,
+                navigationStateService: NavigationStateService) {
         const log = logService.getLogger('Messenger-C');
 
         // Redirect to welcome if necessary
@@ -1489,6 +1511,33 @@ class MessengerController {
         this.receiverService = receiverService;
         this.$state = $state;
         this.webClientService = webClientService;
+
+        // Remember where we are, so a reload comes back to the same place
+        $transitions.onSuccess({}, (transition) => {
+            const name = transition.to().name;
+            const params = transition.params();
+            if (name === 'messenger.home.conversation'
+                    || name === 'messenger.home.conversation.detail') {
+                navigationStateService.setConversation(params.type, params.id);
+                navigationStateService.setDetailOpen(
+                    name === 'messenger.home.conversation.detail');
+            } else if (name === 'messenger.home') {
+                navigationStateService.clearConversation();
+            }
+        });
+
+        // Keep the profile sidebar open across conversations: opening a chat
+        // from the list targets the plain conversation state, which would
+        // otherwise close it.
+        $transitions.onBefore({to: 'messenger.home.conversation'}, (transition) => {
+            if (!navigationStateService.isDetailOpen()) {
+                return;
+            }
+            const params = transition.params();
+            return transition.router.stateService.target(
+                'messenger.home.conversation.detail',
+                {...params, detailType: params.type, detailId: params.id});
+        });
 
         // watch for alerts
         $scope.$watch(() => webClientService.alerts, (alerts: threema.Alert[]) => {

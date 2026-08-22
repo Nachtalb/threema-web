@@ -35,6 +35,7 @@ import {ControllerService} from '../services/controller';
 import {InMemorySession} from '../helpers/in_memory_session';
 import {TrustedKeyStoreService} from '../services/keystore';
 import {LogService} from '../services/log';
+import {NavigationStateService} from '../services/navigation_state';
 import {PushService} from '../services/push';
 import {SettingsService} from '../services/settings';
 import {StateService} from '../services/state';
@@ -64,6 +65,7 @@ class WelcomeController {
     private pushService: PushService;
     private stateService: StateService;
     private settingsService: SettingsService;
+    private navigationStateService: NavigationStateService;
     private timeoutService: TimeoutService;
     private config: threema.Config;
 
@@ -86,6 +88,7 @@ class WelcomeController {
         '$scope', '$state', '$window', '$mdDialog', '$translate',
         'LogService', 'WebClientService', 'TrustedKeyStore', 'StateService', 'PushService', 'BrowserService',
         'VersionService', 'SettingsService', 'TimeoutService', 'ControllerService',
+        'NavigationStateService',
         'BROWSER_MIN_VERSIONS', 'CONFIG',
     ];
     constructor(
@@ -104,10 +107,12 @@ class WelcomeController {
         settingsService: SettingsService,
         timeoutService: TimeoutService,
         controllerService: ControllerService,
+        navigationStateService: NavigationStateService,
         minVersions: threema.BrowserMinVersions,
         config: threema.Config,
     ) {
         controllerService.setControllerName('welcome');
+        this.navigationStateService = navigationStateService;
 
         // Angular services
         this.$scope = $scope;
@@ -669,6 +674,28 @@ class WelcomeController {
     }
 
     /**
+     * Go to the conversation that was open before the reload, or to the
+     * conversation list if there was none.
+     */
+    private goToLastLocation(): void {
+        const last = this.navigationStateService.getConversation();
+        if (last === null) {
+            this.$state.go('messenger.home');
+            return;
+        }
+        const params = {type: last.type, id: last.id, initParams: null};
+        if (this.navigationStateService.isDetailOpen()) {
+            this.$state.go('messenger.home.conversation.detail', {
+                ...params,
+                detailType: last.type,
+                detailId: last.id,
+            });
+        } else {
+            this.$state.go('messenger.home.conversation', params);
+        }
+    }
+
+    /**
      * Actually start the webclient.
      *
      * It must be initialized before calling this method.
@@ -698,9 +725,10 @@ class WelcomeController {
                 this.clearPassword();
                 this.formLocked = false;
 
-                // Redirect to home
+                // Redirect to home, or back to the conversation that was open
+                // before the reload.
                 this.timeoutService.register(
-                    () => this.$state.go('messenger.home'),
+                    () => this.goToLastLocation(),
                     WelcomeController.REDIRECT_DELAY,
                     true,
                     'redirectToHome',

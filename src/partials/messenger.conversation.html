@@ -131,7 +131,8 @@
 </div>
 
 <!-- Receiver detail: messenger.receiver.html -->
-<div id="conversation-detail" ng-class="{'detail-open': ctrl.isDetailOpen()}">
+<div id="conversation-detail"
+     ng-class="{'detail-open': ctrl.isDetailOpen(), 'detail-instant': ctrl.wasDetailOpen}">
     <aside class="detail-panel" ui-view ng-if="ctrl.isDetailOpen()"></aside>
 </div>
 </div>
