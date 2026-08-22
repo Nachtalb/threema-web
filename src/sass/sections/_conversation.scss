@@ -656,19 +656,31 @@
             .message-state {
                 display: flex;
                 align-items: center;
-                margin-left: 5px;
+                // The flex gap already separates it from the time
+                margin-left: 0;
                 // The icon is taller than the text line; letting it size the
                 // row would make the pill taller on own messages than on the
                 // other side's.
                 height: 1em;
 
-                i {
+                i,
+                i.md-14 {
                     display: block;
-                    // The digits sit high in their line box, so centring the
-                    // icon on the box leaves it low against the text itself.
+                    // The glyph carries `md-14`, a fixed 14px that dwarfs the
+                    // small pill text, so it is sized against the pill instead.
                     position: relative;
-                    top: -1.5px;
-                    line-height: 1;
+                    // The digits sit high in their line box, so the icon has to
+                    // rise with them to look centred.
+                    top: -.05em;
+                    width: 1.2em;
+                    min-width: 1.2em;
+                    height: 1.2em;
+                    min-height: 1.2em;
+                    // `md-dark` would colour it separately from the time it
+                    // sits next to
+                    color: inherit;
+                    line-height: 1.2;
+                    font-size: inherit;
                 }
 
                 i.timeout {
