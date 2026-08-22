@@ -69,9 +69,9 @@ export default [
                     }
                 };
 
-                const image = body.querySelector('.message-media img') as HTMLImageElement | null;
-                if (image !== null && !image.complete) {
-                    image.addEventListener('load', tint, {once: true});
+                const initial = body.querySelector('.message-media img') as HTMLImageElement | null;
+                if (initial !== null && !initial.complete) {
+                    initial.addEventListener('load', tint, {once: true});
                 }
                 tint();
 

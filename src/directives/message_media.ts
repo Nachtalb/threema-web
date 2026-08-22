@@ -60,6 +60,50 @@ function showAudioDialog(
     });
 }
 
+/**
+ * Play a video in a dialog, with the option to keep it.
+ */
+function showVideoDialog(
+    $mdDialog: ng.material.IDialogService,
+    blobInfo: threema.BlobInfo,
+): void {
+    $mdDialog.show({
+        controllerAs: 'ctrl',
+        controller: function() {
+            // A video is far too large to inline as a data url
+            const url = URL.createObjectURL(
+                new Blob([blobInfo.buffer], {type: blobInfo.mimetype}));
+            this.videoSrc = url;
+            this.cancel = () => {
+                URL.revokeObjectURL(url);
+                $mdDialog.cancel();
+            };
+            this.save = () => saveAs(
+                new Blob([blobInfo.buffer], {type: blobInfo.mimetype}),
+                blobInfo.filename,
+            );
+        },
+        template: `
+            <md-dialog class="video-dialog" translate-attr="{'aria-label': 'messageTypes.video'}">
+                    <md-dialog-content>
+                        <video controls autoplay ng-src="{{ ctrl.videoSrc | unsafeResUrl }}">
+                            Your browser does not support the <code>video</code> element.
+                        </video>
+                    </md-dialog-content>
+                    <md-dialog-actions layout="row">
+                      <md-button ng-click="ctrl.save()">
+                         <span translate>common.SAVE</span>
+                      </md-button>
+                      <md-button ng-click="ctrl.cancel()">
+                         <span translate>common.OK</span>
+                      </md-button>
+                    </md-dialog-actions>
+            </md-dialog>`,
+        parent: angular.element(document.body),
+        clickOutsideToClose: true,
+    });
+}
+
 export default [
     'LogService',
     'WebClientService',
@@ -287,13 +331,7 @@ export default [
                                             );
                                             break;
                                         case 'video':
-                                            saveAs(
-                                                new Blob(
-                                                    [blobInfo.buffer],
-                                                    options
-                                                ),
-                                                blobInfo.filename
-                                            );
+                                            showVideoDialog($mdDialog, blobInfo);
                                             break;
                                         case 'file':
                                             if (message.file.type === 'image/gif') {

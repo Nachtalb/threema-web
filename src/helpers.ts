@@ -293,6 +293,11 @@ export function bufferToUrl(buffer: ArrayBuffer, mimeType: string, log: Logger):
         case 'audio/aac':
         case 'audio/ogg':
         case 'audio/webm':
+        case 'video/mp4':
+        case 'video/mpeg4':
+        case 'video/webm':
+        case 'video/ogg':
+        case 'video/quicktime':
             // OK
             break;
         default:
