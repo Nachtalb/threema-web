@@ -169,11 +169,21 @@ export default [
 
                     this.wasInView = false;
                     this.thumbnailInView = (inView: boolean) => {
-                        if (this.uploading || message.thumbnail === undefined || this.wasInView === inView) {
+                        if (this.uploading || this.wasInView === inView) {
                             // do nothing
                             return;
                         }
                         this.wasInView = inView;
+
+                        // Gifs are short and meant to loop, so fetch them as
+                        // soon as they are on screen rather than on a click.
+                        if (inView && this.isGif && !this.downloaded && !this.downloading) {
+                            this.download();
+                        }
+
+                        if (message.thumbnail === undefined) {
+                            return;
+                        }
 
                         if (!inView) {
                             if (loadingThumbnailTimeout !== null) {
