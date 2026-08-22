@@ -402,6 +402,10 @@ class ConversationController {
     public msgReadReportPending = false;
     private hasMore = true;
     private latestRefMsgId: string | null = null;
+    // Chat geometry captured when older messages are requested, so the view
+    // can be kept in place once they are prepended.
+    private heightBeforeLoad = 0;
+    private scrollTopBeforeLoad = 0;
     private allText: string;
     public initialData: threema.InitialConversationData = {
         draft: '',
@@ -572,7 +576,6 @@ class ConversationController {
             this.receiverService.setActive(this.receiver);
 
             if (!this.receiver.locked) {
-                let latestHeight = 0;
 
                 // Subscribe to messages
                 this.messages = this.webClientService.messages.register(
@@ -593,12 +596,25 @@ class ConversationController {
                         }
 
                         // Autoscroll
+                        //
+                        // Older messages are prepended above the viewport, so
+                        // scroll anchoring does not apply — the browser only
+                        // anchors to elements inside it. Push the view down by
+                        // exactly how much taller the list got, which keeps the
+                        // message being read where it is. Measured after the
+                        // digest, or the new height is not known yet.
                         if (this.latestRefMsgId !== null) {
-                            // scroll to div..
-                            this.domChatElement.scrollTop = this.domChatElement.scrollHeight - latestHeight;
+                            const previousHeight = this.heightBeforeLoad;
+                            const previousTop = this.scrollTopBeforeLoad;
                             this.latestRefMsgId = null;
+                            // $$postDigest runs after the new messages are
+                            // rendered but before the browser paints, so the
+                            // correction is never visible as a jump.
+                            (this.$scope as any).$$postDigest(() => {
+                                const added = this.domChatElement.scrollHeight - previousHeight;
+                                this.domChatElement.scrollTop = previousTop + added;
+                            });
                         }
-                        latestHeight = this.domChatElement.scrollHeight;
                     },
                 );
 
@@ -987,6 +1003,13 @@ class ConversationController {
         if (hasValue(refMsgId)) {
             // New messages are requested, scroll to refMsgId
             this.latestRefMsgId = refMsgId;
+            // Remember the geometry now, while the list is still the old
+            // size, so the view can be kept in place once the older
+            // messages have been prepended.
+            if (this.domChatElement !== undefined && this.domChatElement !== null) {
+                this.heightBeforeLoad = this.domChatElement.scrollHeight;
+                this.scrollTopBeforeLoad = this.domChatElement.scrollTop;
+            }
         } else {
             this.latestRefMsgId = null;
         }
