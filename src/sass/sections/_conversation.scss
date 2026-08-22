@@ -702,4 +702,12 @@ md-menu-item {
     a span {
         color: $material-grey-dark;
     }
+
+    // Destructive action stands out from the rest of the menu
+    .message-menu-delete {
+        md-icon,
+        span {
+            color: $status-error;
+        }
+    }
 }
