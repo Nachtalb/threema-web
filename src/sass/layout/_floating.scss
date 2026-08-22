@@ -135,16 +135,51 @@ md-menu-content.md-threemawork-theme {
     }
 
     .detail-panel {
-        display: block;
+        display: flex;
         flex: 0 0 auto;
+        flex-direction: column;
         border-radius: $float-radius;
         box-shadow: $float-shadow;
         box-sizing: border-box;
         width: $detail-width;
         height: 100%;
         background-color: $light-background-color;
+        // The header stays put; the content below it scrolls.
+        overflow: hidden;
+
+        // The template wraps everything in a .form, so that has to carry the
+        // panel's height through to the header and scrolling content.
+        > .form {
+            display: flex;
+            flex: 1 1 auto;
+            flex-direction: column;
+            min-height: 0;
+        }
+    }
+
+    .detail-header {
+        flex: 0 0 auto;
+        border-radius: $float-radius $float-radius 0 0;
+    }
+
+    // Everything below the header scrolls, and grows to fill the panel so the
+    // action bar sits at the bottom even when there is little content.
+    .detail-content {
+        display: flex;
+        flex: 1 1 auto;
+        flex-direction: column;
         overflow-x: hidden;
         overflow-y: auto;
+
+        // The included template is the only child; it and the wrapper inside
+        // it have to fill the height for the sticky action bar to sit at the
+        // bottom of a short panel.
+        > *,
+        .form-content {
+            display: flex;
+            flex: 1 1 auto;
+            flex-direction: column;
+        }
 
         // Only the thumb, and only while the pointer is over the panel.
         // `scrollbar-width` is deliberately not set: it suppresses the
@@ -166,10 +201,6 @@ md-menu-content.md-threemawork-theme {
         }
     }
 
-    .detail-header {
-        border-radius: $float-radius $float-radius 0 0;
-    }
-
     // The sidebar is the panel; the cards inside it should not look like
     // panels of their own, nor be divided up.
     md-card {
@@ -185,11 +216,12 @@ md-menu-content.md-threemawork-theme {
     }
 
     // Keep the receiver actions reachable without scrolling to the bottom of a
-    // long member list.
+    // long member list, and pinned to the bottom when the content is short.
     .detail-actions {
         position: sticky;
         bottom: 0;
         z-index: 2;
+        margin-top: auto;
         background-color: $light-background-color;
 
         md-card-content {
