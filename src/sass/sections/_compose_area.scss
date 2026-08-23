@@ -135,13 +135,13 @@ compose-area {
         overflow: hidden;
         opacity: 1;
 
+        .twemoji-picker {
+            height: 300px;
+        }
+
         &:not(.active) {
             max-height: 0;
             opacity: 0;
-
-            .tab {
-                float: none;
-            }
         }
     }
 }

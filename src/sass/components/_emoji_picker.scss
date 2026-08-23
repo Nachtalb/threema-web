@@ -1,11 +1,12 @@
 .twemoji-picker {
-    $label-height: 32px;
-    $label-padding: 4px;
-    $content-offset: $label-height + 2 * $label-padding + 1px;
+    $tab-size: 32px;
+    $emoji-size: 28px;
 
+    display: flex;
+    flex-direction: column;
     margin: 0;
     background-color: $background-grey;
-    padding: 0 8px;
+    padding: 0 8px 8px;
     min-height: 216px;
 
     &.outline {
@@ -14,83 +15,131 @@
         width: 366px;
     }
 
-    .tab {
-        float: left;
-
-        .em {
-            display: inline-block;
-            margin-right: 5px;
-            margin-bottom: 8px;
-            cursor: pointer;
-            text-indent: -99999px;
-        }
+    // A row of category icons across the top, as Windows does it
+    .tabs {
+        display: flex;
+        flex: 0 0 auto;
+        gap: 2px;
+        justify-content: space-between;
+        padding: 4px 2px 0;
 
         label {
-            display: block;
-            position: relative;
-            left: 1px;
-            margin-left: -1px;
-            border: 1px solid $background-grey;
-            background: $background-grey;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: border-color .15s ease-out;
+            border-bottom: 2px solid transparent;
             cursor: pointer;
-            padding: $label-padding;
-            height: $label-height;
+            padding: 4px 0 3px;
+            width: $tab-size;
 
             img {
-                position: relative;
-                margin: 3px 4px 0;
+                opacity: .55;
+                transition: opacity .15s ease-out;
             }
-        }
 
-        .content {
-            @include scrollbar;
-            position: absolute;
-            top: $content-offset;
-            right: 0;
-            bottom: 0;
-            left: 0;
-            border: 1px solid #ffffff;
-            background: #ffffff;
-            padding: 10px 10px 0;
-            overflow-y: scroll;
-
-            &::selection {
-                background: rgba(255, 255, 255, 0);
+            &:hover img {
+                opacity: .85;
             }
         }
 
         [type='radio'] {
             display: none;
+        }
+    }
 
-            &:checked ~ label {
-                z-index: 2;
-                border-bottom: 1px solid #ffffff;
-                background: #ffffff;
-            }
+    // Only the checked tab's grid is on screen. The inputs sit in `.tabs`, so
+    // the panels are reached through the shared parent rather than a sibling
+    // selector.
+    @for $i from 0 through 7 {
+        .tabs [type='radio']:nth-of-type(#{$i + 1}):checked ~ label:nth-of-type(#{$i + 1}) {
+            border-bottom-color: $theme-primary;
 
-            &:checked ~ label ~ .content {
-                z-index: 1;
+            img {
+                opacity: 1;
             }
         }
+
+        &:has(.tabs [type='radio']:nth-of-type(#{$i + 1}):checked) .tab-#{$i} {
+            display: flex;
+        }
+    }
+
+    .tab {
+        display: none;
+        flex: 1 1 auto;
+        flex-direction: column;
+        // Without this the grid refuses to shrink and pushes the skin tones
+        // out of the picker.
+        min-height: 0;
+    }
+
+    .content {
+        @include scrollbar;
+        flex: 1 1 auto;
+        border-radius: 8px;
+        background: #ffffff;
+        padding: 4px 8px 8px;
+        min-height: 0;
+        overflow-y: scroll;
+
+        &::selection {
+            background: rgba(255, 255, 255, 0);
+        }
+    }
+
+    // The category's name above its grid, as a heading rather than a tooltip
+    .category-name {
+        position: sticky;
+        top: 0;
+        margin: 0;
+        background: #ffffff;
+        padding: 6px 2px 4px;
+        color: $material-grey;
+        font-size: .75em;
+        font-weight: 500;
+        text-transform: uppercase;
+    }
+
+    .em {
+        display: inline-block;
+        cursor: pointer;
+        width: $emoji-size;
+        height: $emoji-size;
+        // The span carries the character so it can be read back when picked,
+        // but the sprite is what gets drawn.
+        text-indent: -99999px;
+        overflow: hidden;
     }
 
     .skins {
         display: flex;
+        flex: 0 0 auto;
         align-items: center;
         justify-content: flex-end;
         cursor: pointer;
-        height: $content-offset;
+        padding: 4px 2px 0;
+
+        img {
+            opacity: .6;
+            margin-left: 4px;
+
+            &:hover {
+                opacity: 1;
+            }
+        }
     }
 
     // Filter box above the emoji
     .emoji-search {
         display: block;
+        flex: 0 0 auto;
         box-sizing: border-box;
-        margin: 8px 0;
+        margin: 4px 0;
         border: 0;
         border-radius: 8px;
         background-color: #ffffff;
-        padding: 6px 10px;
+        padding: 5px 10px;
         width: 100%;
         font-size: .9em;
 
@@ -103,23 +152,24 @@
         display: none;
     }
 
-    // While searching, every category is shown at once: the matches are
-    // scattered across all of them.
+    // Searching looks across every category at once, so they all come on
+    // screen and their headings are dropped.
     &.searching {
         .tab {
-            float: none;
+            display: block;
+        }
 
-            label,
-            .skins {
-                display: none;
-            }
+        .tabs,
+        .skins,
+        .category-name {
+            display: none;
+        }
 
-            .content {
-                position: static;
-                border: 0;
-                padding: 0;
-                overflow: visible;
-            }
+        .content {
+            border-radius: 0;
+            padding: 0;
+            height: auto;
+            overflow: visible;
         }
     }
 

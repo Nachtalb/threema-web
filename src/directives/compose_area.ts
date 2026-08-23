@@ -554,7 +554,7 @@ export default [
 
                         // Find some selectors
                         const allEmoji = angular.element(emojiPicker.querySelectorAll('.content .em'));
-                        const allEmojiTabs = angular.element(emojiPicker.querySelectorAll('.tab label img'));
+                        const allEmojiTabs = angular.element(emojiPicker.querySelectorAll('.tabs label img'));
                         const skinSelectors = angular.element(emojiPicker.querySelectorAll('.skins img'));
 
                         // Add event handlers
@@ -610,7 +610,7 @@ export default [
 
                     // Find some selectors
                     const allEmoji = angular.element(emojiPicker.querySelectorAll('.content .em'));
-                    const allEmojiTabs = angular.element(emojiPicker.querySelectorAll('.tab label img'));
+                    const allEmojiTabs = angular.element(emojiPicker.querySelectorAll('.tabs label img'));
 
                     // Remove event handlers
                     allEmoji.off('click', onEmojiChosen as any);
@@ -663,8 +663,12 @@ export default [
                 // Emoji tab is selected
                 function onEmojiTabSelected(ev: KeyboardEvent): void {
                     if (isActionTrigger(ev)) {
-                        // Warning: Hacky
-                        (ev.target as any).parentElement.previousElementSibling.checked = true;
+                        const label = (ev.target as Element).closest('label');
+                        const input = label === null ? null
+                            : document.getElementById(label.getAttribute('for'));
+                        if (input !== null) {
+                            (input as HTMLInputElement).checked = true;
+                        }
                     }
                 }
 
