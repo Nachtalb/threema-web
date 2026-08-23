@@ -27,7 +27,7 @@ import {Logger} from 'ts-log';
 import {ContactControllerModel} from '../controller_model/contact';
 import {DialogController} from '../controllers/dialog';
 import {TroubleshootingController} from '../controllers/troubleshooting';
-import {bufferToUrl, firstVideoFrame, hasValue, jumpToMessage, supportsPassive, u8aToHex} from '../helpers';
+import {bufferToUrl, firstVideoFrame, glideScrollTo, hasValue, jumpToMessage, supportsPassive, u8aToHex} from '../helpers';
 import {emojify} from '../helpers/emoji';
 import {publicKeyGrid} from '../helpers/public_key';
 import {BackgroundStoreService} from '../services/background_store';
@@ -1279,34 +1279,11 @@ class ConversationController {
      */
     public scrollDown(): void {
         const chat = this.domChatElement;
-        // Jump most of the way, then glide the last stretch. Animating the
-        // whole distance would crawl through long conversations, and jumping
-        // all of it lands with no sense of where you came from.
-        const target = chat.scrollHeight - chat.clientHeight;
-        const glide = 320;
-        if (target - chat.scrollTop > glide) {
-            chat.scrollTop = target - glide;
-        }
         this.glidingDown = true;
-
-        // Hand-rolled rather than `behavior: 'smooth'`, which picks its own
-        // duration and is over before the eye can follow it.
-        const from = chat.scrollTop;
-        const distance = target - from;
-        const duration = 450;
-        const start = performance.now();
-        const step = (now: number) => {
-            const elapsed = Math.min((now - start) / duration, 1);
-            // Ease out, so it arrives gently instead of stopping dead
-            chat.scrollTop = from + distance * (1 - Math.pow(1 - elapsed, 3));
-            if (elapsed < 1) {
-                requestAnimationFrame(step);
-            } else {
-                this.glidingDown = false;
-                this.$scope.$evalAsync(() => this.updateScrollJump());
-            }
-        };
-        requestAnimationFrame(step);
+        glideScrollTo(chat, chat.scrollHeight - chat.clientHeight, () => {
+            this.glidingDown = false;
+            this.$scope.$evalAsync(() => this.updateScrollJump());
+        });
     }
 
     /**

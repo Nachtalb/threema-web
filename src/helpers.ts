@@ -552,6 +552,41 @@ export function replaceWhitespace(text: string): string {
 }
 
 /**
+ * Scroll a container to a position: jump most of the way, then glide the last
+ * stretch. Animating the whole distance would crawl through a long
+ * conversation, and jumping all of it lands with no sense of where you came
+ * from. Hand-rolled rather than `behavior: 'smooth'`, which picks its own
+ * duration and is over before the eye can follow it.
+ */
+export function glideScrollTo(
+    container: HTMLElement,
+    target: number,
+    onDone?: () => void,
+    glide: number = 320,
+    duration: number = 450,
+): void {
+    const clamped = Math.max(0, Math.min(target, container.scrollHeight - container.clientHeight));
+    if (Math.abs(clamped - container.scrollTop) > glide) {
+        container.scrollTop = clamped + (clamped > container.scrollTop ? -glide : glide);
+    }
+
+    const from = container.scrollTop;
+    const distance = clamped - from;
+    const start = performance.now();
+    const step = (now: number) => {
+        const elapsed = Math.min((now - start) / duration, 1);
+        // Ease out, so it arrives gently instead of stopping dead
+        container.scrollTop = from + distance * (1 - Math.pow(1 - elapsed, 3));
+        if (elapsed < 1) {
+            requestAnimationFrame(step);
+        } else if (onDone !== undefined) {
+            onDone();
+        }
+    };
+    requestAnimationFrame(step);
+}
+
+/**
  * Scroll to a message and flash it, so it is obvious which one was jumped to.
  * Returns whether the message is currently in the DOM.
  */
@@ -560,7 +595,14 @@ export function jumpToMessage(messageId: string): boolean {
     if (target === null) {
         return false;
     }
-    target.scrollIntoView({behavior: 'smooth', block: 'center'});
+    const chat = target.closest('#conversation-chat') as HTMLElement | null;
+    if (chat === null) {
+        target.scrollIntoView({block: 'center'});
+    } else {
+        // Centre the message in the chat, same easing as the jump-to-bottom
+        const offset = target.offsetTop - (chat.clientHeight - target.offsetHeight) / 2;
+        glideScrollTo(chat, offset);
+    }
 
     const message = target.querySelector('.message');
     if (message !== null) {
