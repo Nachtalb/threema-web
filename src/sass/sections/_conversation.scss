@@ -642,10 +642,17 @@
         }
 
         // The timestamp shares the last line of the text rather than taking a
-        // row of its own, so a short message stays one line. Floating it means
-        // long text wraps around it instead of running underneath.
+        // row of its own, so a short message stays one line. It is floated
+        // ahead of the text so long messages wrap around it, and the last line
+        // reserves room for it on the right.
         &.text-message-body {
             display: block;
+
+            // The bubble is a block, so its children run inline; the sender's
+            // name has to claim a line of its own.
+            .message-name {
+                display: block;
+            }
 
             .message-info {
                 float: right;
@@ -656,11 +663,6 @@
                 // level with the last line's baseline
                 font-size: .7em;
                 transform: translateY(.85em);
-            }
-
-            .message-text {
-                // Nothing to clear: the float is meant to be sat beside
-                display: inline;
             }
         }
 
