@@ -80,6 +80,7 @@ declare namespace threema {
         previewDataUrl?: string, // Note: Does not exist in ARP
         width: number;
         height: number;
+        tailColor?: string; // Note: Does not exist in ARP
     }
 
     const enum EventType {

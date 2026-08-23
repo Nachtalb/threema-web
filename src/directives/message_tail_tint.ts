@@ -33,15 +33,34 @@ export default [
                     return;
                 }
 
+                const paint = (colour: string) => {
+                    const path = tail.querySelector('path');
+                    if (path !== null) {
+                        path.style.fill = colour;
+                    }
+                };
+
                 const tint = () => {
                     // Only for media without a caption; anything else has a
                     // bubble whose own colour is correct.
                     if (body.querySelector('.message-text') !== null) {
                         return;
                     }
+                    const thumbnail = (scope as any).ctrl.message.thumbnail as threema.Thumbnail | undefined;
+                    if (thumbnail !== undefined && thumbnail.tailColor !== undefined) {
+                        paint(thumbnail.tailColor);
+                        return;
+                    }
                     const image = body.querySelector(
                         '.message-media img') as HTMLImageElement | null;
-                    if (image === null || !image.complete || image.naturalWidth === 0) {
+                    if (image === null) {
+                        return;
+                    }
+                    // A picture put back from the cache is handed over as a
+                    // fresh blob url, so it is never decoded on the tick its
+                    // element appears.
+                    if (!image.complete || image.naturalWidth === 0) {
+                        image.addEventListener('load', tint, {once: true});
                         return;
                     }
 
@@ -60,19 +79,18 @@ export default [
                         const isOutbox = tail.closest('.message-out') !== null;
                         const x = isOutbox ? canvas.width - 1 : 0;
                         const pixel = context.getImageData(x, canvas.height - 1, 1, 1).data;
-                        const path = tail.querySelector('path');
-                        if (path !== null) {
-                            path.style.fill = `rgb(${pixel[0]}, ${pixel[1]}, ${pixel[2]})`;
+                        const colour = `rgb(${pixel[0]}, ${pixel[1]}, ${pixel[2]})`;
+                        // The blurred placeholder is replaced by the real
+                        // thumbnail, so only the latter is worth keeping.
+                        if (thumbnail !== undefined && !image.classList.contains('thumbnail-loader')) {
+                            thumbnail.tailColor = colour;
                         }
+                        paint(colour);
                     } catch (error) {
                         // Tainted canvas: keep the bubble colour
                     }
                 };
 
-                const initial = body.querySelector('.message-media img') as HTMLImageElement | null;
-                if (initial !== null && !initial.complete) {
-                    initial.addEventListener('load', tint, {once: true});
-                }
                 tint();
 
                 // The thumbnail is replaced once the full picture arrives
