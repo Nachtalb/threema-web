@@ -77,6 +77,16 @@
             }
         }
 
+        .session-persistence {
+            display: flex;
+            justify-content: center;
+            margin-top: 16px;
+
+            md-switch {
+                margin: 0;
+            }
+        }
+
         .password-entry {
             margin-top: 16px;
             text-align: center;

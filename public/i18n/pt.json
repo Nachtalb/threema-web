@@ -13,6 +13,7 @@
         "PLEASE_RELOAD": "Por favor atualize a página para tentar de novo",
         "RELOAD": "Atualize a página",
         "PASSWORD": "Password",
+        "SAVE_SESSION": "Stay logged in after closing Threema Web",
         "CHOOSE_PASSWORD": "Se você quiser ficar logado, por favor digite <br> a senha da sessão antes de digitalizar.",
         "UNLOCK_FAILED_TEXT": "A palavra-passe está incorreta, a sessão não pode ser restaurada.",
         "ENTER_PASSWORD": "Para se reconectar à sua sessão anterior,<br> digite a senha:",

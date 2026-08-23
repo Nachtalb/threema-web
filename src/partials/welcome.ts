@@ -77,6 +77,10 @@ class WelcomeController {
     private mode: 'scan' | 'unlock';
     private qrCode;
     private password: string = '';
+    // Keep the session across restarts without asking for a password. Turn it
+    // off and a password becomes what decides: one given saves the session,
+    // none leaves it alive only as long as the tab is.
+    public saveSession: boolean = true;
     private passwordStrength: {score: number, strength: Strength} = {score: 0, strength: Strength.BAD};
     private formLocked: boolean = false;
     // Set when the user gives up on a connection attempt, so the loading
@@ -265,7 +269,8 @@ class WelcomeController {
      */
     public get inMemorySessionPasswordEnabled(): boolean {
         return this.config.IN_MEMORY_SESSION_PASSWORD
-            && this.inMemorySession.storeAvailable();
+            && this.inMemorySession.storeAvailable()
+            && this.saveSession;
     }
 
     /**
@@ -330,7 +335,7 @@ class WelcomeController {
         });
 
         // Initialize QR code params
-        this.$scope.$watch(() => this.password, () => {
+        this.$scope.$watchGroup([() => this.password, () => this.saveSession], () => {
             const payload = this.webClientService.buildQrCodePayload(this.inMemorySessionPasswordEnabled || this.password.length > 0);
             this.qrCode = this.buildQrCode(payload);
             this.passwordStrength = scorePassword(this.password);

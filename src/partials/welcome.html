@@ -23,10 +23,15 @@
                 data="{{ ctrl.qrCode.data }}"
             ></qrcode>
 
-            <div class="password-entry">
+            <div class="session-persistence">
+                <md-switch ng-model="ctrl.saveSession" aria-labelledby="aria-label-save-session">
+                    <span id="aria-label-save-session" translate>welcome.SAVE_SESSION</span>
+                </md-switch>
+            </div>
+
+            <div class="password-entry" ng-if="!ctrl.inMemorySessionPasswordEnabled">
                 <label>
-                    <p translate id="aria-label-password-create" ng-if="!ctrl.inMemorySessionPasswordEnabled">welcome.CHOOSE_PASSWORD</p>
-                    <p translate id="aria-label-password-create" ng-if="ctrl.inMemorySessionPasswordEnabled">welcome.CHOOSE_PASSWORD_AUTOPW</p>
+                    <p translate id="aria-label-password-create">welcome.CHOOSE_PASSWORD</p>
                     <form>
                         <md-input-container md-no-float class="md-block">
                             <input type="password"
