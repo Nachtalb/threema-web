@@ -190,12 +190,19 @@ md-dialog.settings-dialog {
     // Sits at the foot of the dialog, quieter than the settings above it.
     .settings-footer {
         display: flex;
-        justify-content: space-between;
-        gap: 16px;
-        background-color: rgba(0, 0, 0, .06);
-        padding: 8px 24px;
+        justify-content: center;
+        padding: 16px 24px 8px;
         color: $material-grey;
         font-size: .75em;
+
+        // Same dot separator as the welcome page's footer
+        span:not(:last-child)::after {
+            position: relative;
+            top: -1px;
+            margin: 0 6px;
+            font-size: 8px;
+            content: '\25CF';
+        }
 
         a {
             color: inherit;
