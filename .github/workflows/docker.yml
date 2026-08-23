@@ -43,3 +43,32 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+
+  deploy:
+    needs: build
+    if: github.ref == 'refs/heads/hate-driven-development'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Roll the deployment and verify the running version
+        env:
+          K8S_SERVER: ${{ secrets.K8S_SERVER }}
+          K8S_TOKEN: ${{ secrets.K8S_TOKEN }}
+          K8S_CA: ${{ secrets.K8S_CA }}
+          K8S_NAMESPACE: ${{ secrets.K8S_NAMESPACE }}
+          K8S_DEPLOYMENT: ${{ secrets.K8S_DEPLOYMENT }}
+          APP_URL: ${{ secrets.APP_URL }}
+        run: |
+          set -euo pipefail
+          echo "$K8S_CA" | base64 -d > /tmp/ca.crt
+          k() { kubectl --server="$K8S_SERVER" --token="$K8S_TOKEN" \
+                        --certificate-authority=/tmp/ca.crt -n "$K8S_NAMESPACE" "$@"; }
+          k rollout restart "deploy/$K8S_DEPLOYMENT"
+          k rollout status "deploy/$K8S_DEPLOYMENT" --timeout=180s
+          want=$(echo "${{ github.sha }}" | cut -c1-7)
+          for i in $(seq 1 12); do
+            got=$(curl -sf "$APP_URL/version.txt" || true)
+            [ "$got" = "$want" ] && echo "deployed $got" && exit 0
+            sleep 5
+          done
+          echo "version.txt is '$got', expected '$want'" >&2
+          exit 1
