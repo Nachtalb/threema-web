@@ -327,6 +327,65 @@ export function firstVideoFrame(buffer: ArrayBuffer, mimeType: string): Promise<
 const objectUrls = new WeakMap<ArrayBuffer, string>();
 
 /**
+ * Whether an encoded image can carry transparency, read from its header.
+ *
+ * Cheaper and more reliable than decoding it: a picture only needs showing
+ * whole rather than cropped when there is transparency to see, and the
+ * formats that have none can be answered without touching a canvas.
+ */
+export function mayHaveAlpha(buffer: ArrayBuffer, mimeType: string): boolean {
+    const bytes = new Uint8Array(buffer);
+    const ascii = (at: number, text: string) => {
+        for (let i = 0; i < text.length; i++) {
+            if (bytes[at + i] !== text.charCodeAt(i)) {
+                return false;
+            }
+        }
+        return true;
+    };
+
+    switch (mimeType) {
+        case 'image/png':
+            if (bytes.length < 26 || !ascii(12, 'IHDR')) {
+                return false;
+            }
+            // Colour types 4 (grey + alpha) and 6 (RGBA) carry an alpha
+            // channel; the palletted and truecolour ones can still be given
+            // transparency by a tRNS chunk.
+            if (bytes[25] === 4 || bytes[25] === 6) {
+                return true;
+            }
+            for (let i = 8; i + 8 <= bytes.length; i++) {
+                if (ascii(i, 'tRNS')) {
+                    return true;
+                }
+                if (ascii(i, 'IDAT')) {
+                    return false;
+                }
+            }
+            return false;
+        case 'image/webp':
+            if (bytes.length < 21 || !ascii(0, 'RIFF') || !ascii(8, 'WEBP')) {
+                return false;
+            }
+            if (ascii(12, 'VP8X')) {
+                // Bit 4 of the flags byte is the alpha flag
+                // tslint:disable-next-line:no-bitwise
+                return (bytes[20] & 0x10) !== 0;
+            }
+            if (ascii(12, 'VP8L')) {
+                // Bit 4 of the byte after the 0x2f signature
+                // tslint:disable-next-line:no-bitwise
+                return (bytes[24] & 0x10) !== 0;
+            }
+            return false;
+        default:
+            // JPEG and the video formats have no alpha channel at all
+            return false;
+    }
+}
+
+/**
  * Convert an ArrayBuffer to a URL the browser can load directly.
  */
 

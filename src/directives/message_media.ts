@@ -18,7 +18,7 @@
 import {Transition as UiTransition, TransitionService as UiTransitionService} from '@uirouter/angularjs';
 import {saveAs} from 'file-saver';
 
-import {bufferToUrl, firefoxWorkaroundPdfDownload, hasValue} from '../helpers';
+import {bufferToUrl, firefoxWorkaroundPdfDownload, hasValue, mayHaveAlpha} from '../helpers';
 import {LogService} from '../services/log';
 import {MediaboxService} from '../services/mediabox';
 import {MessageService} from '../services/message';
@@ -91,6 +91,7 @@ export default [
                     this.downloading = false;
                     this.thumbnailDownloading = false;
                     this.downloaded = false;
+                    this.isTransparent = false;
                     // How far the current download has got, 0..1, or null when
                     // it cannot be told
                     this.downloadProgress = null;
@@ -174,9 +175,14 @@ export default [
                         } else {
                             if (this.thumbnail === null) {
                                 const setThumbnail = (buf: ArrayBuffer) => {
+                                    const format = webClientService.appCapabilities.imageFormat.thumbnail;
+                                    // A cropped picture would cut the shape a
+                                    // transparent one is drawn as, so it is
+                                    // shown whole instead.
+                                    this.isTransparent = mayHaveAlpha(buf, format);
                                     this.thumbnail = bufferToUrl(
                                         buf,
-                                        webClientService.appCapabilities.imageFormat.thumbnail,
+                                        format,
                                         log,
                                     );
                                 };

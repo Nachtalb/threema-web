@@ -1,7 +1,8 @@
 <!-- Image, Video, GIF (not downloaded) -->
 <div ng-if="ctrl.type === 'image' || ctrl.type === 'video' || (!ctrl.downloaded && ctrl.isGif)"
      class="thumbnail {{ ctrl.type }}"
-     ng-class="{clickable: !ctrl.uploading, 'large-preview': ctrl.hasPreviewThumbnail()}"
+     ng-class="{clickable: !ctrl.uploading, 'large-preview': ctrl.hasPreviewThumbnail(),
+                transparent: ctrl.isTransparent}"
      ng-click="ctrl.download()"
      ng-style="ctrl.thumbnailStyle">
 
