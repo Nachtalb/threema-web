@@ -447,6 +447,12 @@ class ConversationController {
     private navigationStateService: NavigationStateService;
     // Whether the sidebar was already open when this conversation was opened
     public wasDetailOpen: boolean;
+    // Whether the sidebar is in the DOM. It outlives `isDetailOpen()` by the
+    // length of the closing animation, or the panel would vanish before it has
+    // finished sliding out. Matches the transition in `_floating.scss`.
+    private static readonly DETAIL_ANIMATION_MS = 250;
+    public detailVisible: boolean = false;
+    private detailHideTimer: number | null = null;
     private timeoutService: TimeoutService;
     // Set while the jump-to-bottom animation runs
     private glidingDown: boolean = false;
@@ -552,6 +558,23 @@ class ConversationController {
                 $scope.$apply(() => this.wasDetailOpen = false);
             }, 0, true, 'clearDetailInstant');
         }
+
+        // Keep the panel in the DOM until it has finished sliding out.
+        this.detailVisible = this.isDetailOpen();
+        $scope.$watch(() => this.isDetailOpen(), (open: boolean) => {
+            if (this.detailHideTimer !== null) {
+                clearTimeout(this.detailHideTimer);
+                this.detailHideTimer = null;
+            }
+            if (open) {
+                this.detailVisible = true;
+            } else {
+                this.detailHideTimer = window.setTimeout(() => {
+                    this.detailHideTimer = null;
+                    $scope.$apply(() => this.detailVisible = false);
+                }, ConversationController.DETAIL_ANIMATION_MS);
+            }
+        });
         this.webClientService = webClientService;
         this.receiverService = receiverService;
         this.stateService = stateService;
@@ -610,6 +633,9 @@ class ConversationController {
             document.removeEventListener('keydown', onKeyDown);
             if (this.floatingDayTimer !== null) {
                 clearTimeout(this.floatingDayTimer);
+            }
+            if (this.detailHideTimer !== null) {
+                clearTimeout(this.detailHideTimer);
             }
         });
 
