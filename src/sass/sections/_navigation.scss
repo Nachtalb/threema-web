@@ -146,8 +146,8 @@
 
             // The open conversation, distinct from a mere hover
             &.active {
-                border-color: $theme-b100;
-                background-color: $theme-b100;
+                border-color: var(--selected-row);
+                background-color: var(--selected-row);
             }
 
             &:hover {
@@ -399,7 +399,7 @@
 
         // The open conversation, matching the chat list
         &.active {
-            background-color: $theme-b100;
+            background-color: var(--selected-row);
         }
     }
 

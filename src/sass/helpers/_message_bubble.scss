@@ -1,7 +1,7 @@
 @use "sass:math";
 
-$message-bubble-color-in: #f7f7f7;
-$message-bubble-color-out: #dff0d8;
+$message-bubble-color-in: var(--bubble-in);
+$message-bubble-color-out: var(--bubble-out);
 $bubble-triangle-size: $main-padding;
 
 // Soft enough that the tail can carry the same shadow without the seam
