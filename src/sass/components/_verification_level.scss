@@ -1,10 +1,14 @@
 // Verification level
 .verification-dots {
+    // An empty dot still has to read as a dot: on a dark panel a plain fill
+    // sits too close to the surface behind it, so it carries a rim as well.
     div {
         display: inline-block;
         margin-right: 2px;
+        box-sizing: border-box;
+        border: 1px solid var(--dot-empty-border);
         border-radius: 50%;
-        background-color: var(--surface-grey);
+        background-color: var(--dot-empty);
         width: 11px;
         height: 11px;
     }
@@ -12,6 +16,7 @@
     &.level1 {
         div {
             &:nth-of-type(1) {
+                border-color: transparent;
                 background-color: $status-error;
             }
         }
@@ -21,6 +26,7 @@
         div {
             &:nth-of-type(1),
             &:nth-of-type(2) {
+                border-color: transparent;
                 background-color: $status-warning;
             }
         }
@@ -29,6 +35,7 @@
             div {
                 &:nth-of-type(1),
                 &:nth-of-type(2) {
+                    border-color: transparent;
                     background-color: $work-primary;
                 }
             }
@@ -37,6 +44,7 @@
 
     &.level3 {
         div {
+            border-color: transparent;
             background-color: $status-ok;
         }
 
@@ -45,6 +53,7 @@
                 &:nth-of-type(1),
                 &:nth-of-type(2),
                 &:nth-of-type(3) {
+                    border-color: transparent;
                     background-color: $work-primary;
                 }
             }

@@ -29,6 +29,9 @@
     --bubble-in: #f7f7f7;
     --bubble-out: #dff0d8;
     --selected-row: #e1f4e7;
+    // An unfilled verification dot
+    --dot-empty: rgba(0, 0, 0, .08);
+    --dot-empty-border: rgba(0, 0, 0, .28);
 
     // Chrome
     --scrollbar-bg: #f6f6f6;
@@ -71,6 +74,8 @@
     --bubble-in: #262b31;
     --bubble-out: #204d31;
     --selected-row: #22372a;
+    --dot-empty: rgba(255, 255, 255, .1);
+    --dot-empty-border: rgba(255, 255, 255, .45);
 
     // Chrome
     --scrollbar-bg: #17191c;
@@ -174,6 +179,24 @@ body.scheme-dark {
         md-select .md-select-value.md-select-placeholder,
         .md-subheader {
             color: var(--text-muted);
+        }
+
+        // Focusing an input floats its label and recolours it for a light
+        // surface, which leaves it unreadable here.
+        md-input-container.md-input-focused label,
+        md-input-container.md-input-has-value label,
+        md-input-container .md-input-message-animation,
+        md-input-container.md-input-focused .md-input {
+            color: var(--text) !important;
+        }
+
+        md-input-container .md-input {
+            border-bottom-color: var(--border);
+        }
+
+        md-input-container.md-input-focused .md-input {
+            // Literal: this file is imported before the brand variables exist
+            border-bottom-color: #05a63f;
         }
 
         md-divider {
