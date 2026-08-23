@@ -9,13 +9,21 @@
     }
 
     drag-file {
+        // The overlay inside is absolute, so the host has no size of its own.
+        // Left in the flow it still counts as a flex item and the parent's gap
+        // pushes everything below it down.
+        position: absolute;
+        inset: 0;
+        // Only the overlay reacts to a drag; the host must not swallow clicks
+        pointer-events: none;
+
         > .drag-file-overlay {
             display: none;
             position: absolute;
+            inset: 0;
             z-index: 19;
             background-color: rgba(0, 0, 0, .4);
-            width: calc(100%);
-            height: calc(100%);
+            pointer-events: auto;
 
             > div {
                 display: flex;
