@@ -40,6 +40,25 @@ export class ThemeService {
         this.$interval = $interval;
         this.log = logService.getLogger('Theme-S', 'color: #fff; background-color: #cc9900');
 
+        // The stylesheet follows the colour scheme on its own, but the
+        // angular-material theme is a class applied from here, so anything
+        // already on screen has to be told when the scheme changes.
+        settingsService.colourSchemeChange.attach(() => this.evtThemeChange.post(this._theme));
+
+        // ... including when the system flips while the setting follows it.
+        const media = window.matchMedia('(prefers-color-scheme: dark)');
+        const onSchemeChange = () => {
+            if (settingsService.appearance.getColourScheme() === 'system') {
+                this.evtThemeChange.post(this._theme);
+            }
+        };
+        if (typeof media.addEventListener === 'function') {
+            media.addEventListener('change', onSchemeChange);
+        } else {
+            // Safari below 14 only has the deprecated API
+            media.addListener(onSchemeChange);
+        }
+
         this.log.debug(`Initializing with theme ${this.theme}`);
     }
 

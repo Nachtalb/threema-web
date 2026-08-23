@@ -15,9 +15,6 @@
  * along with Threema Web. If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {Logger} from 'ts-log';
-
-import {LogService} from '../services/log';
 import {SettingsService} from '../services/settings'
 import {ThemeService} from '../services/theme';
 
@@ -25,9 +22,6 @@ import {ThemeService} from '../services/theme';
  * This controller handles theming.
  */
 export class ThemeController {
-    // Logging
-    private readonly log: Logger;
-
     // Theme name, as registered with angular-material
     public theme: string;
 
@@ -41,17 +35,15 @@ export class ThemeController {
     private readonly settingsService: SettingsService;
     private readonly themeService: ThemeService;
 
-    public static $inject = ['$scope', 'LogService', 'ThemeService', 'SettingsService'];
-    constructor($scope, logService: LogService, themeService: ThemeService, settingsService: SettingsService) {
-        // Logging
-        this.log = logService.getLogger('Theme-C', 'color: #000; background-color: #ffff99');
-
+    public static $inject = ['$scope', 'ThemeService', 'SettingsService'];
+    constructor($scope, themeService: ThemeService, settingsService: SettingsService) {
         this.settingsService = settingsService;
         this.themeService = themeService;
 
-        // Listen to theme changes
-        themeService.evtThemeChange.attach((newTheme: threema.Theme) => {
-            this.log.debug(`Updating theme: ${newTheme}`);
+        // Listen to theme changes. ThemeService posts this for a brand change
+        // and for a colour scheme change alike, including when the system
+        // flips while the setting follows it.
+        themeService.evtThemeChange.attach(() => {
             $scope.$apply(() => this.applyScheme());
         });
 
@@ -65,17 +57,6 @@ export class ThemeController {
 
         // Colour scheme
         this.applyScheme();
-        settingsService.colourSchemeChange.attach(() => {
-            $scope.$apply(() => this.applyScheme());
-        });
-
-        // angular-material needs a concrete palette, so unlike the stylesheet
-        // it cannot leave the system case to CSS.
-        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
-            if (this.settingsService.appearance.getColourScheme() === 'system') {
-                $scope.$apply(() => this.applyScheme());
-            }
-        });
     }
 
     private applyScheme(): void {
