@@ -147,11 +147,11 @@
                             <md-icon aria-hidden="true" class="material-icons md-24">info</md-icon>
                             <span translate>messenger.ABOUT</span>
                         </md-list-item>
-                        <md-list-item ng-click="ctrl.closeSession($event)">
+                        <md-list-item class="destructive" ng-click="ctrl.closeSession($event)">
                             <md-icon aria-hidden="true" class="material-icons md-24">exit_to_app</md-icon>
                             <span translate>common.SESSION_CLOSE</span>
                         </md-list-item>
-                        <md-list-item ng-if="ctrl.isPersistent()" ng-click="ctrl.deleteSession($event)">
+                        <md-list-item class="destructive" ng-if="ctrl.isPersistent()" ng-click="ctrl.deleteSession($event)">
                             <md-icon aria-hidden="true" class="material-icons md-24">delete</md-icon>
                             <span translate>common.SESSION_DELETE</span>
                         </md-list-item>

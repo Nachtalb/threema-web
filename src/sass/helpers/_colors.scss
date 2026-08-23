@@ -63,9 +63,16 @@ $active-placeholder-color: var(--placeholder);
 md-icon.material-icons:not(.md-light):not(.md-primary):not(.md-warn) {
     color: var(--text-muted);
 
-    .md-warn & {
+    .md-warn &,
+    .destructive & {
         color: $status-error;
     }
+}
+
+// Rows that close or delete something, which are list items rather than
+// buttons and so cannot carry `md-warn`.
+md-list-item.destructive .md-list-item-inner > span {
+    color: $status-error;
 }
 
 .material-icons.md-medium-dark { color: var(--text-muted); }
