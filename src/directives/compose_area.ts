@@ -18,7 +18,7 @@
 import {ComposeArea} from '@threema/compose-area';
 
 import {isActionTrigger} from '../helpers';
-import {parseEmoji, shortnamesStartingWith, shortnameToUtf8, utf8ToShortname} from '../helpers/emoji';
+import {emojify, parseEmoji, shortnamesStartingWith, shortnameToUtf8, utf8ToShortname} from '../helpers/emoji';
 import {BrowserService} from '../services/browser';
 import {LogService} from '../services/log';
 import {ReceiverService} from '../services/receiver';
@@ -894,13 +894,16 @@ export default [
                     if (suggestionStrip === null) {
                         suggestionStrip = document.createElement('div');
                         suggestionStrip.className = 'emoji-suggestions';
-                        wrapper[0].insertBefore(suggestionStrip, wrapper[0].firstChild);
+                        // Appended, not prepended: a `:first-child` rule gives
+                        // the input row its layout.
+                        wrapper[0].appendChild(suggestionStrip);
                     }
                     suggestionStrip.innerHTML = '';
                     suggestions.forEach((shortname, at) => {
                         const item = document.createElement('span');
                         item.className = 'suggestion' + (at === suggestionIndex ? ' selected' : '');
-                        item.textContent = shortnameToUtf8(shortname);
+                        // The picker's art, not the system font
+                        item.innerHTML = emojify(shortnameToUtf8(shortname));
                         item.title = `:${shortname}:`;
                         item.addEventListener('mousedown', (ev) => {
                             ev.preventDefault();
@@ -926,7 +929,9 @@ export default [
                         return;
                     }
                     const typed = word.before() + word.after();
-                    if (!typed.startsWith(':') || typed.endsWith(':')) {
+                    // A lone ':' opens the list; a closing one means the
+                    // shortcode is finished and gets replaced instead.
+                    if (!typed.startsWith(':') || (typed.length > 1 && typed.endsWith(':'))) {
                         hideSuggestions();
                         return;
                     }
