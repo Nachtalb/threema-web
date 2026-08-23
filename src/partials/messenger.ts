@@ -1185,7 +1185,9 @@ class ConversationController {
      */
     public startsNewDayFor(index: number): boolean {
         const message = this.messages[index];
-        if (message === undefined) {
+        // The unread marker is inserted locally and carries no date, so it
+        // never begins a day of its own.
+        if (message === undefined || !hasValue(message.date)) {
             return false;
         }
         const previous = this.messages[index - 1];
@@ -1196,7 +1198,15 @@ class ConversationController {
             const date = new Date(of.date * 1000);
             return date.getFullYear() + '-' + date.getMonth() + '-' + date.getDate();
         };
-        return day(previous) !== day(message);
+        // A dated message after the marker keeps the separator it would have
+        // had, so look past anything without one.
+        for (let at = index - 1; at >= 0; at--) {
+            const earlier = this.messages[at];
+            if (hasValue(earlier.date)) {
+                return day(earlier) !== day(message);
+            }
+        }
+        return true;
     }
 
     public showReceiver(ev): void {
