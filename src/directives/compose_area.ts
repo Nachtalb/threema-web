@@ -717,11 +717,18 @@ export default [
                 function applyEmojiSearch(picker: Element, needle: string): void {
                     const term = needle.trim().toLowerCase().replace(/[-_\s:]/g, '');
                     picker.classList.toggle('searching', term !== '');
+                    // The recently used row holds copies of emoji that also sit
+                    // in their own category, so a match would show up twice.
+                    const seen = new Set<string>();
                     Array.from(picker.querySelectorAll('.content .em')).forEach((em: Element) => {
                         const shortcode = (em.getAttribute('data-s') || '')
                             .toLowerCase().replace(/[-_\s:]/g, '');
-                        em.classList.toggle(
-                            'search-hidden', term !== '' && !shortcode.includes(term));
+                        const codepoint = em.getAttribute('data-c') || '';
+                        const matches = term !== '' && shortcode.includes(term) && !seen.has(codepoint);
+                        if (matches) {
+                            seen.add(codepoint);
+                        }
+                        em.classList.toggle('search-hidden', term !== '' && !matches);
                     });
                     // The best match is ready for enter, no arrows needed
                     setFocusedEmoji(term === '' ? null : visibleEmoji(picker)[0] ?? null);
