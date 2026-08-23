@@ -140,25 +140,23 @@
         // Its context menu covers the list with a backdrop, so :hover stops
         // applying. Keep the row highlighted while the menu is open.
         &.menu-open > .conversation {
-            border-color: $dark-background-color;
-            background-color: $dark-background-color;
+            background-color: var(--hover);
         }
 
         .conversation {
             display: flex;
             flex-direction: row;
             align-items: center;
-            border-left: $border-width * $border-count solid var(--surface);
+            // Reserved for the unread and starred markers; invisible otherwise
+            border-left: $border-width * $border-count solid transparent;
             padding: (1.5 * $main-padding) $main-padding - ($border-width * ($border-count - 1));
 
             &:hover {
-                border-color: var(--hover);
                 background-color: var(--hover);
             }
 
             // The open conversation, distinct from a mere hover
             &.active {
-                border-color: var(--selected-row);
                 background-color: var(--selected-row);
             }
 
@@ -174,8 +172,8 @@
                     to right,
                     $status-error,
                     $status-error 50%,
-                    var(--surface) 50%,
-                    var(--surface) 100%
+                    transparent 50%,
+                    transparent 100%
                 ) 1 100%;
 
                 &.active {
@@ -183,8 +181,8 @@
                         to right,
                         $status-error,
                         $status-error 50%,
-                        $dark-background-color 50%,
-                        $dark-background-color 100%
+                        transparent 50%,
+                        transparent 100%
                     ) 1 100%;
                 }
             }
@@ -195,8 +193,8 @@
                     to right,
                     $status-starred,
                     $status-starred 50%,
-                    var(--surface) 50%,
-                    var(--surface) 100%
+                    transparent 50%,
+                    transparent 100%
                 ) 1 100%;
 
                 &.active {
@@ -204,8 +202,8 @@
                         to right,
                         $status-starred,
                         $status-starred 50%,
-                        $dark-background-color 50%,
-                        $dark-background-color 100%
+                        transparent 50%,
+                        transparent 100%
                     ) 1 100%;
                 }
             }
@@ -377,7 +375,8 @@
         flex-direction: row;
         align-items: center;
         justify-content: flex-start;
-        border-left: 4px solid var(--surface);
+        // Matches the chat list's marker slot so both align
+        border-left: 4px solid transparent;
         padding: 12px 8px;
 
         .avatar-box {
