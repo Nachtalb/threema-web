@@ -104,13 +104,20 @@ export default [
                     this.showName = !this.message.isOutbox && this.isGroup;
                     // Only the last message of a run by the same sender gets a
                     // tail, so a burst reads as one block. The corners facing
-                    // a neighbour in the run are tightened instead.
+                    // a neighbour in the run are tightened instead. A day
+                    // separator ends the run: the message above it is the last
+                    // of its day and gets the tail.
+                    const day = (of) => {
+                        const date = new Date(of.date * 1000);
+                        return date.getFullYear() + '-' + date.getMonth() + '-' + date.getDate();
+                    };
                     const sameSender = (other) =>
                         hasValue(other)
                         && other.isStatus !== true
                         && other.isOutbox === this.message.isOutbox
                         && getSenderIdentity(other, webClientService.me.id)
-                            === getSenderIdentity(this.message, webClientService.me.id);
+                            === getSenderIdentity(this.message, webClientService.me.id)
+                        && day(other) === day(this.message);
                     this.followsSameSender = sameSender(this.previousMessage);
                     this.precedesSameSender = sameSender(this.nextMessage);
                     this.showTail = !this.precedesSameSender;
