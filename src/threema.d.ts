@@ -755,6 +755,9 @@ declare namespace threema {
         Work = 'threemawork',
     }
 
+    /** Which colour scheme to draw in; 'system' follows the OS. */
+    type ColourScheme = 'light' | 'dark' | 'system';
+
     interface ClientInfo {
         // The device name
         device: string;

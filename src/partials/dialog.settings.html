@@ -105,6 +105,16 @@
                                 <span translate>settings.ui.CACHE_MEDIA</span>
                             </md-switch>
                         </md-list-item>
+                        <md-list-item class="colour-scheme">
+                            <span translate>settings.ui.COLOUR_SCHEME</span>
+                            <md-select ng-model="ctrl.colourScheme"
+                                       ng-change="ctrl.setColourScheme(ctrl.colourScheme)"
+                                       aria-label="Colour scheme" class="md-secondary">
+                                <md-option value="system"><span translate>settings.ui.SCHEME_SYSTEM</span></md-option>
+                                <md-option value="light"><span translate>settings.ui.SCHEME_LIGHT</span></md-option>
+                                <md-option value="dark"><span translate>settings.ui.SCHEME_DARK</span></md-option>
+                            </md-select>
+                        </md-list-item>
                         <md-list-item class="background-picker">
                             <span translate>settings.ui.CUSTOM_BACKGROUND</span>
                             <input type="file" id="background-upload" accept="image/*"

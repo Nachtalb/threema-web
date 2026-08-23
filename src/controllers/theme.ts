@@ -34,6 +34,9 @@ export class ThemeController {
     // Background class
     public backgroundClass: string;
 
+    // 'dark' while the dark scheme applies, empty otherwise
+    public darkClass: string;
+
     public static $inject = ['$scope', 'LogService', 'ThemeService', 'SettingsService'];
     constructor($scope, logService: LogService, themeService: ThemeService, settingsService: SettingsService) {
         // Logging
@@ -55,6 +58,24 @@ export class ThemeController {
         settingsService.backgroundBlurChange.attach((blur: boolean) => {
             $scope.$apply(() => this.backgroundClass = ThemeController.getBackgroundClass(blur));
         })
+
+        // Colour scheme, which may follow the system
+        this.darkClass = settingsService.appearance.prefersDark() ? 'dark' : '';
+        settingsService.colourSchemeChange.attach(() => {
+            $scope.$apply(() => {
+                this.darkClass = settingsService.appearance.prefersDark() ? 'dark' : '';
+            });
+        });
+
+        // Follow the system while it is what the setting asks for
+        const system = window.matchMedia('(prefers-color-scheme: dark)');
+        system.addEventListener('change', () => {
+            if (settingsService.appearance.getColourScheme() === 'system') {
+                $scope.$apply(() => {
+                    this.darkClass = settingsService.appearance.prefersDark() ? 'dark' : '';
+                });
+            }
+        });
     }
 
     private static getBackgroundClass(blur: boolean): string {

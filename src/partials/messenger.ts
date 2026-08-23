@@ -262,6 +262,7 @@ class SettingsController extends DialogController {
     private backgroundBlur: boolean;
     private autoLoadGifs: boolean;
     private cacheMedia: boolean;
+    private colourScheme: threema.ColourScheme;
     private hasCustomBackground: boolean = false;
     private backgroundStoreService: BackgroundStoreService;
     private readonly version: string;
@@ -304,6 +305,7 @@ class SettingsController extends DialogController {
         this.backgroundBlur = settingsService.background.getBlur();
         this.autoLoadGifs = settingsService.media.getAutoLoadGifs();
         this.cacheMedia = settingsService.media.getCacheMedia();
+        this.colourScheme = settingsService.appearance.getColourScheme();
         backgroundStoreService.get().then((blob) => {
             // A promise callback is outside Angular's digest
             this.settingsScope.$evalAsync(() => {
@@ -344,6 +346,10 @@ class SettingsController extends DialogController {
 
     public setCacheMedia(enabled: boolean) {
         this.settingsService.media.setCacheMedia(enabled);
+    }
+
+    public setColourScheme(scheme: threema.ColourScheme) {
+        this.settingsService.appearance.setColourScheme(scheme);
     }
 
     /**

@@ -80,6 +80,33 @@ class BackgroundSettings {
     }
 }
 
+class AppearanceSettings {
+    private readonly settingsService: SettingsService;
+
+    constructor(settingsService: SettingsService) {
+        this.settingsService = settingsService;
+    }
+
+    public getColourScheme(): threema.ColourScheme {
+        const stored = this.settingsService.retrieveUntrustedKeyValuePair('colourScheme', false);
+        return stored === 'dark' || stored === 'light' ? stored : 'system';
+    }
+
+    public setColourScheme(scheme: threema.ColourScheme): void {
+        this.settingsService.storeUntrustedKeyValuePair('colourScheme', scheme);
+        this.settingsService.colourSchemeChange.post(scheme);
+    }
+
+    /** Whether the dark theme applies, following the system when asked to. */
+    public prefersDark(): boolean {
+        const scheme = this.getColourScheme();
+        if (scheme !== 'system') {
+            return scheme === 'dark';
+        }
+        return window.matchMedia('(prefers-color-scheme: dark)').matches;
+    }
+}
+
 class MediaSettings {
     private readonly settingsService: SettingsService;
 
@@ -168,12 +195,14 @@ export class SettingsService {
     public readonly media: MediaSettings;
     public readonly notifications: NotificationSettings;
     public readonly emoji: EmojiSettings;
+    public readonly appearance: AppearanceSettings;
     private readonly log: Logger;
     private storage: Storage;
 
     // Events
     public backgroundBlurChange = new AsyncEvent<boolean>();
     public cacheMediaChange = new AsyncEvent<boolean>();
+    public colourSchemeChange = new AsyncEvent<threema.ColourScheme>();
 
     public static $inject = ['$window', 'LogService'];
     constructor($window: ng.IWindowService, logService: LogService) {
@@ -184,6 +213,7 @@ export class SettingsService {
         this.media = new MediaSettings(this);
         this.notifications = new NotificationSettings(this);
         this.emoji = new EmojiSettings(this);
+        this.appearance = new AppearanceSettings(this);
     }
 
     /**

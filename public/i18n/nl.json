@@ -326,6 +326,10 @@
             "RESET_BACKGROUND": "Use the default pictures",
             "AUTO_LOAD_GIFS": "Load GIFs automatically",
             "CACHE_MEDIA": "Keep downloaded media",
+        "COLOUR_SCHEME": "Colour scheme",
+        "SCHEME_SYSTEM": "System",
+        "SCHEME_LIGHT": "Light",
+        "SCHEME_DARK": "Dark",
             "BACKGROUND_BLUR": "Blur the background image"
         }
     },
