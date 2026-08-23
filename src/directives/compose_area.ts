@@ -569,8 +569,12 @@ export default [
                         content.addEventListener('scroll', onPickerScroll);
                         onPickerScroll();
 
-                        // Focus compose area again
-                        composeArea.focus();
+                        // Typing goes straight into the filter; the arrows
+                        // still walk the grid from there.
+                        const search = emojiPicker.querySelector('.emoji-search') as HTMLInputElement;
+                        if (search !== null) {
+                            search.focus();
+                        }
                     });
                 }
 
@@ -736,10 +740,12 @@ export default [
                         (translated) => search.placeholder = translated);
                     search.addEventListener('input', () => applyEmojiSearch(picker, search.value));
                     // Typing must not reach the emoji keyboard navigation, but
-                    // the arrows and enter still walk the results.
+                    // the arrows and enter still walk the results rather than
+                    // moving the caret inside the box.
                     search.addEventListener('keydown', (ev) => {
                         if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Enter', 'Escape']
                                 .includes(ev.key)) {
+                            ev.preventDefault();
                             onPickerKeyDown(ev);
                             return;
                         }
@@ -770,6 +776,9 @@ export default [
                     content.removeEventListener('keydown', onPickerKeyDown);
                     content.removeEventListener('scroll', onPickerScroll);
                     setFocusedEmoji(null);
+
+                    // The search box had focus; hand it back to the message
+                    composeArea.focus();
                 }
 
                 // Emoji trigger is clicked
@@ -1055,6 +1064,16 @@ export default [
                         });
                     }
                 });
+
+                // Ctrl+. opens the picker from anywhere in the conversation
+                const onEmojiShortcut = (ev: KeyboardEvent) => {
+                    if (ev.key === '.' && ev.ctrlKey && !ev.altKey && !ev.metaKey) {
+                        ev.preventDefault();
+                        $rootScope.$apply(() => onEmojiTrigger(ev));
+                    }
+                };
+                document.addEventListener('keydown', onEmojiShortcut);
+                scope.$on('$destroy', () => document.removeEventListener('keydown', onEmojiShortcut));
 
                 // Handle click on file trigger
                 fileTrigger.on('click', onFileTrigger as any);
