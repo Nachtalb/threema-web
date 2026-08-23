@@ -16,14 +16,12 @@
  */
 
 import {FooterController} from './controllers/footer';
-import {HeaderController} from './controllers/header';
 import {StatusController} from './controllers/status';
 import {ThemeController} from './controllers/theme';
 
 angular.module('3ema.controllers', ['3ema.services'])
 
 .controller('FooterController', FooterController)
-.controller('HeaderController', HeaderController)
 .controller('StatusController', StatusController)
 .controller('ThemeController', ThemeController)
 
