@@ -274,6 +274,9 @@ export class WebClientService {
     private pcHelper: PeerConnectionHelper = null;
     private trustedKeyStore: TrustedKeyStoreService;
     public clientInfo: threema.ClientInfo = null;
+    // Used when the app omits a value, and before it has answered at all
+    private static readonly DEFAULT_MAX_GROUP_SIZE = 50;
+    private static readonly DEFAULT_MAX_MESSAGE_BODY_SIZE = 3500;
     public version = null;
 
     private blobCache = new Map<string, threema.BlobInfo>();
@@ -3439,9 +3442,11 @@ export class WebClientService {
                 showInactiveIDs: getOrDefault<boolean>(data.configuration.showInactiveIDs, true),
             },
             capabilities: {
-                maxGroupSize: getOrDefault<number>(data.capabilities.maxGroupSize, 50),
+                maxGroupSize: getOrDefault<number>(
+                    data.capabilities.maxGroupSize, WebClientService.DEFAULT_MAX_GROUP_SIZE),
                 maxFileSize: getOrDefault<number>(data.capabilities.maxFileSize, 50 * 1024 * 1024),
-                maxMessageBodySize: getOrDefault<number>(data.capabilities.maxMessageBodySize, 3500),
+                maxMessageBodySize: getOrDefault<number>(
+                    data.capabilities.maxMessageBodySize, WebClientService.DEFAULT_MAX_MESSAGE_BODY_SIZE),
                 distributionLists: getOrDefault<boolean>(data.capabilities.distributionLists, true),
                 imageFormat: data.capabilities.imageFormat,
                 groupReactions: getOrDefault<boolean>(data.capabilities.groupReactions, false),
@@ -3572,16 +3577,23 @@ export class WebClientService {
 
     /**
      * Return the max text length
+     *
+     * The client info only arrives once the app has answered, so this falls
+     * back to the same default used when the app omits the value.
      */
     public getMaxTextLength(): number {
-        return this.clientInfo.capabilities.maxMessageBodySize;
+        return this.clientInfo === null
+            ? WebClientService.DEFAULT_MAX_MESSAGE_BODY_SIZE
+            : this.clientInfo.capabilities.maxMessageBodySize;
     }
 
     /**
      * Returns the max group member size
      */
     public getMaxGroupMemberSize(): number {
-        return this.clientInfo.capabilities.maxGroupSize;
+        return this.clientInfo === null
+            ? WebClientService.DEFAULT_MAX_GROUP_SIZE
+            : this.clientInfo.capabilities.maxGroupSize;
     }
 
     /**
