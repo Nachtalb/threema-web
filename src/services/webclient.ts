@@ -374,12 +374,13 @@ export class WebClientService {
         this.stateService = stateService;
 
         // Push session configuration
+        //
+        // Upstream pinned this to a single try with a 90s TTL while app-side
+        // push issues were open (threema-web#802). That is why a reconnect
+        // gives up after one attempt instead of escalating, so the default
+        // three tries are used again.
         this.pushSessionConfig = PushSession.defaultConfig;
         this.pushSessionConfig.triesMax = WebClientService.MAX_CONNECT_ATTEMPTS;
-        // TODO: Remove below config overwrite lines once the app-related push issues have been resolved in #802
-        this.pushSessionConfig = {
-            retryTimeoutInitMs: 14000, retryTimeoutMaxMs: 30000, triesMax: 1, timeToLiveRange: [90],
-        };
         this.pushSessionExpectedPeriodMaxMs = PushSession.expectedPeriodMaxMs(this.pushSessionConfig);
 
         // Other properties
