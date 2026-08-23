@@ -304,7 +304,8 @@
             "NOTIFICATIONS": "Notifications",
             "SHOW_NOTIFICATIONS": "Show desktop notifications",
             "SHOW_PREVIEW": "Show message contents in notifications",
-            "PLAY_SOUND": "Play sound"
+            "PLAY_SOUND": "Play sound",
+            "NOTIFY_REACTIONS": "Notify on reactions"
         },
         "composearea": {
             "COMPOSE_AREA": "Compose area",

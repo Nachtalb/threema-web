@@ -309,7 +309,8 @@
             "NOTIFICATIONS": "Notifications",
             "SHOW_NOTIFICATIONS": "Afficher les notifications sur l’ordinateur",
             "SHOW_PREVIEW": "Montrer le contenu des messages dans des notifications.",
-            "PLAY_SOUND": "Jouer les sons"
+            "PLAY_SOUND": "Jouer les sons",
+            "NOTIFY_REACTIONS": "Notify on reactions"
         },
         "composearea": {
             "COMPOSE_AREA": "Zone de rédaction",

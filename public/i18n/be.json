@@ -317,7 +317,8 @@
             "NOTIFICATIONS": "Апавяшчэнні",
             "SHOW_NOTIFICATIONS": "Паказваць апавяшчэння на працоўным стале",
             "SHOW_PREVIEW": "Паказваць змесціва паведамлення ў апавяшчэннях",
-            "PLAY_SOUND": "Прайграваць гук"
+            "PLAY_SOUND": "Прайграваць гук",
+            "NOTIFY_REACTIONS": "Notify on reactions"
         },
         "composearea": {
             "COMPOSE_AREA": "Вобласць кампаноўкі",

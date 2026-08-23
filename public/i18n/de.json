@@ -317,7 +317,8 @@
             "NOTIFICATIONS": "Benachrichtigungen",
             "SHOW_NOTIFICATIONS": "Desktopbenachrichtigungen anzeigen",
             "SHOW_PREVIEW": "Nachrichteninhalt in Benachrichtigungen anzeigen",
-            "PLAY_SOUND": "Ton abspielen"
+            "PLAY_SOUND": "Ton abspielen",
+            "NOTIFY_REACTIONS": "Notify on reactions"
         },
         "composearea": {
             "COMPOSE_AREA": "Eingabefeld",

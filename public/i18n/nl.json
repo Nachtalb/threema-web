@@ -309,7 +309,8 @@
             "NOTIFICATIONS": "Meldingen",
             "SHOW_NOTIFICATIONS": "Toon desktop notificaties",
             "SHOW_PREVIEW": "Toon berichtinhoud in meldingen",
-            "PLAY_SOUND": "Speel geluid af"
+            "PLAY_SOUND": "Speel geluid af",
+            "NOTIFY_REACTIONS": "Notify on reactions"
         },
         "composearea": {
             "COMPOSE_AREA": "Invoerveld",

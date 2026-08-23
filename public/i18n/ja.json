@@ -317,7 +317,8 @@
             "NOTIFICATIONS": "通知",
             "SHOW_NOTIFICATIONS": "デスクトップ通知を表示",
             "SHOW_PREVIEW": "通知にメッセージの内容を表示",
-            "PLAY_SOUND": "通知音を再生"
+            "PLAY_SOUND": "通知音を再生",
+            "NOTIFY_REACTIONS": "Notify on reactions"
         },
         "composearea": {
             "COMPOSE_AREA": "入力欄",

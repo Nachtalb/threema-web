@@ -309,7 +309,8 @@
             "NOTIFICATIONS": "Notificari",
             "SHOW_NOTIFICATIONS": "Arata notificarile dekstop",
             "SHOW_PREVIEW": "Arata continutul mesajelor in notificari",
-            "PLAY_SOUND": "Reda sunet"
+            "PLAY_SOUND": "Reda sunet",
+            "NOTIFY_REACTIONS": "Notify on reactions"
         },
         "composearea": {
             "COMPOSE_AREA": "Zona compunere",

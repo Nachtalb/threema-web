@@ -54,6 +54,7 @@ import {PeerConnectionHelper} from './peerconnection';
 import {PushService, PushSession} from './push';
 import {QrCodeService} from './qrcode';
 import {ReceiverService} from './receiver';
+import {SettingsService} from './settings';
 import {StateService} from './state';
 import {ThemeService} from './theme';
 import {TimeoutService} from './timeout';
@@ -197,6 +198,7 @@ export class WebClientService {
     private pushService: PushService;
     private qrCodeService: QrCodeService;
     private receiverService: ReceiverService;
+    private settingsService: SettingsService;
     private themeService: ThemeService;
     private timeoutService: TimeoutService;
     private titleService: TitleService; // Don't remove, needs to be initialized to handle events
@@ -294,7 +296,7 @@ export class WebClientService {
         'StateService', 'NotificationService', 'MessageService', 'PushService', 'BrowserService',
         'TitleService', 'QrCodeService', 'MimeService', 'ReceiverService',
         'VersionService', 'BatteryStatusService', 'ThemeService', 'TimeoutService',
-        'BlobCacheService',
+        'BlobCacheService', 'SettingsService',
         'CONFIG',
     ];
     constructor($rootScope: any,
@@ -322,6 +324,7 @@ export class WebClientService {
                 themeService: ThemeService,
                 timeoutService: TimeoutService,
                 blobCacheService: BlobCacheService,
+                settingsService: SettingsService,
                 CONFIG: threema.Config) {
 
         // Angular services
@@ -349,6 +352,7 @@ export class WebClientService {
         this.timeoutService = timeoutService;
         this.titleService = titleService;
         this.versionService = versionService;
+        this.settingsService = settingsService;
 
         // Configuration object
         this.config = CONFIG;
@@ -3068,6 +3072,7 @@ export class WebClientService {
                     notify = true;
                     break;
                 case WebClientService.ARGUMENT_MODE_MODIFIED:
+                    const reaction = this.newReaction(receiver, message);
                     if (!this.messages.update(receiver, message)) {
                         const log = `Received message update for unknown message (id ${message.id})`;
                         this.arpLog.error(log);
@@ -3075,6 +3080,8 @@ export class WebClientService {
                             this.messages.addStatusMessage(receiver, 'Warning: ' + log);
                             notify = true;
                         }
+                    } else if (reaction !== null) {
+                        this.onNewReaction(receiver, message, reaction);
                     }
                     break;
                 case WebClientService.ARGUMENT_MODE_REMOVED:
@@ -3601,6 +3608,76 @@ export class WebClientService {
         } else {
             return true;
         }
+    }
+
+    /**
+     * The emoji another person has just added to a message of mine, if this
+     * update carries one. Reactions arrive as a whole new copy of the message,
+     * so the buckets are compared against the copy already held.
+     */
+    private newReaction(receiver: threema.BaseReceiver, updated: threema.Message): string | null {
+        if (!updated.isOutbox) {
+            return null;
+        }
+        const known = this.messages.getList(receiver).find((m) => m.id === updated.id);
+        if (known === undefined) {
+            return null;
+        }
+        const before = new Set<string>();
+        for (const bucket of known.emojiReactions ?? []) {
+            for (const identity of bucket.identities) {
+                before.add(`${bucket.emoji}\u0000${identity}`);
+            }
+        }
+        for (const bucket of updated.emojiReactions ?? []) {
+            for (const identity of bucket.identities) {
+                if (identity !== this.me.id && !before.has(`${bucket.emoji}\u0000${identity}`)) {
+                    return bucket.emoji;
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Called when somebody reacts to one of my messages.
+     */
+    private onNewReaction(
+        receiver: threema.BaseReceiver,
+        message: threema.Message,
+        emoji: string,
+    ): void {
+        if (!this.settingsService.notifications.getNotifyReactions()) {
+            return;
+        }
+        const sender = this.receivers.getData(receiver);
+        if (sender === undefined || sender.locked === true) {
+            return;
+        }
+        const conversation = this.conversations.find(sender);
+        if (conversation === null) {
+            return;
+        }
+        // Reacting to what is already on screen needs no notification
+        if (document.hasFocus()
+                && this.receiverService.compare(conversation, this.receiverService.getActive())) {
+            return;
+        }
+        const senderName = sender.displayName
+            || (isContactReceiver(sender) ? '~' + sender.publicNickname : sender.id);
+        const preview = this.messageService.getQuoteText(message);
+        const body = preview === null ? emoji : `${emoji} ${preview}`;
+        const avatar = (sender.avatar && sender.avatar.low)
+            ? bufferToUrl(sender.avatar.low, 'image/png', this.arpLog)
+            : null;
+        this.notificationService.showNotification(
+            `reaction-${conversation.type}-${conversation.id}-${message.id}`,
+            senderName, body, avatar,
+            () => this.$state.go('messenger.home.conversation', {
+                type: conversation.type,
+                id: conversation.id,
+                initParams: null,
+            }));
     }
 
     /**

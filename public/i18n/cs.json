@@ -317,7 +317,8 @@
             "NOTIFICATIONS": "Oznámení",
             "SHOW_NOTIFICATIONS": "Zobrazovat oznámení v prohlížeči",
             "SHOW_PREVIEW": "V oznámení zobrazit i obsah zprávy",
-            "PLAY_SOUND": "Přehrát zvuk"
+            "PLAY_SOUND": "Přehrát zvuk",
+            "NOTIFY_REACTIONS": "Notify on reactions"
         },
         "composearea": {
             "COMPOSE_AREA": "Zde napište svůj text",

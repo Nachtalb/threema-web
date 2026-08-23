@@ -291,7 +291,8 @@
             "NOTIFICATIONS": "Notificações",
             "SHOW_NOTIFICATIONS": "Mostrar notificações de desktop",
             "SHOW_PREVIEW": "Mostrar conteúdo das mensagens nas notificações",
-            "PLAY_SOUND": "Tocar música"
+            "PLAY_SOUND": "Tocar música",
+            "NOTIFY_REACTIONS": "Notify on reactions"
         }
     },
     "deviceUnreachable": {

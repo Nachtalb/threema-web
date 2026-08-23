@@ -317,7 +317,8 @@
             "NOTIFICATIONS": "Ilmoitukset",
             "SHOW_NOTIFICATIONS": "Näytä työpöytäilmoituksia",
             "SHOW_PREVIEW": "Näytä viestien sisältö ilmoituksissa",
-            "PLAY_SOUND": "Soita ääni"
+            "PLAY_SOUND": "Soita ääni",
+            "NOTIFY_REACTIONS": "Notify on reactions"
         },
         "composearea": {
             "COMPOSE_AREA": "Kirjoitusalue",

@@ -41,6 +41,15 @@
                                 <span translate>settings.notifications.PLAY_SOUND</span>
                             </md-switch>
                         </md-list-item>
+                        <md-list-item>
+                            <md-switch
+                                    ng-disabled="!ctrl.desktopNotifications"
+                                    ng-model="ctrl.notifyReactions"
+                                    ng-change="ctrl.setNotifyReactions(ctrl.notifyReactions)"
+                                    aria-label="Notify on reactions">
+                                <span translate>settings.notifications.NOTIFY_REACTIONS</span>
+                            </md-switch>
+                        </md-list-item>
                     </md-list>
                     <div ng-if="!ctrl.notificationApiAvailable" class="status status-no">
                         <i class="material-icons md-24">error</i>

@@ -316,7 +316,8 @@
             "NOTIFICATIONS": "Notifiche",
             "SHOW_NOTIFICATIONS": "Mostra le notifiche sul desktop",
             "SHOW_PREVIEW": "Mostra il contenuto dei messaggi nelle notifiche",
-            "PLAY_SOUND": "Ascuola suono"
+            "PLAY_SOUND": "Ascuola suono",
+            "NOTIFY_REACTIONS": "Notify on reactions"
         },
         "composearea": {
             "COMPOSE_AREA": "Compose area",

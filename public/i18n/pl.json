@@ -317,7 +317,8 @@
             "NOTIFICATIONS": "Powiadomienia",
             "SHOW_NOTIFICATIONS": "Pokaż powiadomienia pulpitu",
             "SHOW_PREVIEW": "Pokaż zawartość wiadomości w powiadomieniach",
-            "PLAY_SOUND": "Odtwórz dźwięk"
+            "PLAY_SOUND": "Odtwórz dźwięk",
+            "NOTIFY_REACTIONS": "Notify on reactions"
         },
         "composearea": {
             "COMPOSE_AREA": "Obszar wprowadzania",

@@ -309,7 +309,8 @@
             "NOTIFICATIONS": "Известия",
             "SHOW_NOTIFICATIONS": "Показване на известия на работния плот",
             "SHOW_PREVIEW": "Показване на съдържанието на съобщението в известията",
-            "PLAY_SOUND": "Възпроизвеждане на звук"
+            "PLAY_SOUND": "Възпроизвеждане на звук",
+            "NOTIFY_REACTIONS": "Notify on reactions"
         },
         "composearea": {
             "COMPOSE_AREA": "Област за съставяне",

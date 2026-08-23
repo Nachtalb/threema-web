@@ -315,7 +315,8 @@
             "NOTIFICATIONS": "Notificaciones",
             "SHOW_NOTIFICATIONS": "Mostrar notificaciones de escritorio",
             "SHOW_PREVIEW": "Mostrar contenido de los mensajes en las notificaciones",
-            "PLAY_SOUND": "Hacer sonar un sonido"
+            "PLAY_SOUND": "Hacer sonar un sonido",
+            "NOTIFY_REACTIONS": "Notify on reactions"
         },
         "composearea": {
             "COMPOSE_AREA": "Área de escritura",

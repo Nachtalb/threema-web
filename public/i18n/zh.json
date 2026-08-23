@@ -317,7 +317,8 @@
             "NOTIFICATIONS": "通知",
             "SHOW_NOTIFICATIONS": "显示桌面通知",
             "SHOW_PREVIEW": "通知里显示消息详情",
-            "PLAY_SOUND": "播放声音"
+            "PLAY_SOUND": "播放声音",
+            "NOTIFY_REACTIONS": "Notify on reactions"
         },
         "composearea": {
             "COMPOSE_AREA": "撰写区域",

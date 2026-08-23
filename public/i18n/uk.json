@@ -316,7 +316,8 @@
             "NOTIFICATIONS": "Сповіщення",
             "SHOW_NOTIFICATIONS": "Показувати сповіщення на робочому столі",
             "SHOW_PREVIEW": "Показувати вміст повідомлень в сповіщеннях",
-            "PLAY_SOUND": "Відтворювати звук"
+            "PLAY_SOUND": "Відтворювати звук",
+            "NOTIFY_REACTIONS": "Notify on reactions"
         },
         "composearea": {
             "COMPOSE_AREA": "Текстове поле",

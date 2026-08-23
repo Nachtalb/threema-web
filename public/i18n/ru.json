@@ -317,7 +317,8 @@
             "NOTIFICATIONS": "Уведомления",
             "SHOW_NOTIFICATIONS": "Показывать уведомления на рабочем столе",
             "SHOW_PREVIEW": "Показывать содержимое сообщения в уведомлениях",
-            "PLAY_SOUND": "Воспроизвести звук"
+            "PLAY_SOUND": "Воспроизвести звук",
+            "NOTIFY_REACTIONS": "Notify on reactions"
         },
         "composearea": {
             "COMPOSE_AREA": "Область компоновки",

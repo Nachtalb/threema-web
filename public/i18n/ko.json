@@ -309,7 +309,8 @@
             "NOTIFICATIONS": "알림",
             "SHOW_NOTIFICATIONS": "pc 알림 표시",
             "SHOW_PREVIEW": "알림에 메시지 내용 표시",
-            "PLAY_SOUND": "사운드 재생"
+            "PLAY_SOUND": "사운드 재생",
+            "NOTIFY_REACTIONS": "Notify on reactions"
         },
         "composearea": {
             "COMPOSE_AREA": "작성란",

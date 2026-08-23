@@ -316,7 +316,8 @@
             "NOTIFICATIONS": "Oznámenia",
             "SHOW_NOTIFICATIONS": "Zobraziť oznámenia aplikácie",
             "SHOW_PREVIEW": "Zobraziť obsah správy v oznámení",
-            "PLAY_SOUND": "Prehrať zvuk"
+            "PLAY_SOUND": "Prehrať zvuk",
+            "NOTIFY_REACTIONS": "Notify on reactions"
         },
         "composearea": {
             "COMPOSE_AREA": "Tu napíšte svoj text",

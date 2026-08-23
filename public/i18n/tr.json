@@ -316,7 +316,8 @@
             "NOTIFICATIONS": "Bildirimler",
             "SHOW_NOTIFICATIONS": "Masaüstü bildirimlerini göster",
             "SHOW_PREVIEW": "Bildirimlerde mesaj içeriğini göster",
-            "PLAY_SOUND": "Ses çal"
+            "PLAY_SOUND": "Ses çal",
+            "NOTIFY_REACTIONS": "Notify on reactions"
         },
         "composearea": {
             "COMPOSE_AREA": "Mesaj alanı",

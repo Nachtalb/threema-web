@@ -105,6 +105,22 @@ class MediaSettings {
     }
 }
 
+class NotificationSettings {
+    private readonly settingsService: SettingsService;
+
+    constructor(settingsService: SettingsService) {
+        this.settingsService = settingsService;
+    }
+
+    public getNotifyReactions(): boolean {
+        return this.settingsService.retrieveUntrustedKeyValuePair('notifyReactions', false) === 'true';
+    }
+
+    public setNotifyReactions(enabled: boolean): void {
+        this.settingsService.storeUntrustedKeyValuePair('notifyReactions', enabled ? 'true' : 'false');
+    }
+}
+
 /**
  * The settings service can update variables for settings and persist them to
  * LocalStorage.
@@ -115,6 +131,7 @@ export class SettingsService {
     public readonly composeArea: ComposeAreaSettings;
     public readonly background: BackgroundSettings;
     public readonly media: MediaSettings;
+    public readonly notifications: NotificationSettings;
     private readonly log: Logger;
     private storage: Storage;
 
@@ -129,6 +146,7 @@ export class SettingsService {
         this.composeArea = new ComposeAreaSettings(this);
         this.background = new BackgroundSettings(this);
         this.media = new MediaSettings(this);
+        this.notifications = new NotificationSettings(this);
     }
 
     /**

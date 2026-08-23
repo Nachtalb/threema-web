@@ -304,7 +304,8 @@
             "NOTIFICATIONS": "Értesítések",
             "SHOW_NOTIFICATIONS": "Asztali értesítések megjelenítése",
             "SHOW_PREVIEW": "Üzenetek tartalmának megjelenítése az értesítésekben",
-            "PLAY_SOUND": "Hang lejátszása"
+            "PLAY_SOUND": "Hang lejátszása",
+            "NOTIFY_REACTIONS": "Notify on reactions"
         },
         "composearea": {
             "COMPOSE_AREA": "Compose area",
