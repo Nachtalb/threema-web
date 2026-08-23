@@ -287,13 +287,15 @@ md-menu-content.md-threemawork-theme {
 
         // The corners are clipped on the input row itself, so the emoji
         // suggestion strip can still rise above the footer.
-        compose-area > div:not(.emoji-suggestions) {
+        compose-area > div:not(.emoji-suggestions):not(.emoji-keyboard) {
             border-radius: inherit;
             overflow: hidden;
         }
 
         // The picker is the bottom of the footer while it is open, so it
-        // carries the frame's rounding rather than ending square.
+        // carries the frame's rounding rather than ending square. The keyboard
+        // clips its own contents, so it has to be rounded too or the corners
+        // are squared off while it slides open.
         .emoji-keyboard,
         .twemoji-picker {
             border-bottom-right-radius: $float-radius;
