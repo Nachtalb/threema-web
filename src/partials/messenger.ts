@@ -1476,13 +1476,9 @@ class NavigationController {
         const log = logService.getLogger('Navigation-C');
         this.log = log;
 
-        // Redirect to welcome if necessary
-        if (stateService.state === 'error') {
-            log.debug('WebClient not yet running, redirecting to welcome screen');
-            $state.go('welcome');
-            return;
-        }
-
+        // Assigned before the redirect below: `$state.go` only takes effect on
+        // a later digest, so the template still renders against this
+        // controller once and every getter would fault on a missing field.
         this.webClientService = webClientService;
         this.receiverService = receiverService;
         this.stateService = stateService;
@@ -1491,6 +1487,13 @@ class NavigationController {
         this.$mdDialog = $mdDialog;
         this.$translate = $translate;
         this.$state = $state;
+
+        // Redirect to welcome if necessary
+        if (stateService.state === 'error') {
+            log.debug('WebClient not yet running, redirecting to welcome screen');
+            $state.go('welcome');
+            return;
+        }
 
         // Alt+arrow steps through the chat list. Alt keeps it clear of the
         // caret movement and of the quote shortcuts.
