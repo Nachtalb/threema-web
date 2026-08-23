@@ -33,6 +33,9 @@ compose-area {
 
                     // This is where the user enters text
                     div.compose {
+                        // A flex item does not fill its line by default, which
+                        // would leave only the typed text clickable.
+                        flex: 1 1 auto;
                         top: 0;
                         left: 0;
                         outline: none;
