@@ -181,6 +181,8 @@
         "GROUP_SYNC_DONE": "Grupo sincronizado.",
         "SCROLL_DOWN": "Desplazarse hacia abajo",
         "JUMP_TO_MESSAGE": "Jump to message",
+        "AUDIO_PLAY": "Play",
+        "AUDIO_PAUSE": "Pause",
         "UPLOAD_AVATAR": "Subir avatar",
         "CREATE_DISTRIBUTION_LIST": "Nueva lista de distribución",
         "DISTRIBUTION_LIST_NAME": "Nombre",

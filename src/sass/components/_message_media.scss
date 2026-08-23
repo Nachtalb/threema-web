@@ -262,11 +262,83 @@ $loading-ring-thickness: 5px;
 
     }
 
-    // A downloaded voice message plays in place, sized to the bubble rather
-    // than the browser's default player width.
-    audio.inline-audio {
-        display: block;
+    // A downloaded voice message plays in place: a button, a track to scrub
+    // with and the time. The audio element itself is never shown.
+    .inline-audio {
+        display: flex;
+        align-items: center;
+        gap: 10px;
         width: 280px;
         max-width: 100%;
+
+        audio {
+            display: none;
+        }
+
+        .play {
+            display: flex;
+            flex: 0 0 32px;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border: 0;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, .08);
+            padding: 0;
+            width: 32px;
+            height: 32px;
+
+            svg {
+                width: 20px;
+                height: 20px;
+                fill: $material-grey-dark;
+            }
+        }
+
+        .track {
+            position: relative;
+            flex: 1 1 auto;
+            cursor: pointer;
+            border-radius: 2px;
+            background: rgba(0, 0, 0, .12);
+            height: 4px;
+
+            // A 4px bar is too thin to hit reliably, so the grabbable area
+            // reaches above and below it.
+            &::before {
+                position: absolute;
+                top: -8px;
+                right: 0;
+                bottom: -8px;
+                left: 0;
+                content: '';
+            }
+
+            .elapsed {
+                border-radius: inherit;
+                background: $theme-green;
+                height: 100%;
+            }
+
+            .knob {
+                position: absolute;
+                top: 50%;
+                border-radius: 50%;
+                background: $theme-green;
+                width: 10px;
+                height: 10px;
+                // Centred on the position rather than starting at it
+                transform: translate(-50%, -50%);
+            }
+        }
+
+        .time {
+            flex: 0 0 auto;
+            color: $material-grey;
+            font-size: .75em;
+            // Digits are proportional in the body font, so the row would
+            // shuffle sideways every second without this.
+            font-variant-numeric: tabular-nums;
+        }
     }
 }

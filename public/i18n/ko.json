@@ -175,6 +175,8 @@
         "GROUP_SYNC_DONE": "그룹 동기화됨.",
         "SCROLL_DOWN": "스크롤 내리기",
         "JUMP_TO_MESSAGE": "Jump to message",
+        "AUDIO_PLAY": "Play",
+        "AUDIO_PAUSE": "Pause",
         "UPLOAD_AVATAR": "아바타 업로드",
         "CREATE_DISTRIBUTION_LIST": "새 그룹 목록",
         "DISTRIBUTION_LIST_NAME": "이름",

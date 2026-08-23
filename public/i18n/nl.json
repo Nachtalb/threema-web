@@ -175,6 +175,8 @@
         "GROUP_SYNC_DONE": "Groep gesynchroniseerd.",
         "SCROLL_DOWN": "Naar beneden scrollen",
         "JUMP_TO_MESSAGE": "Jump to message",
+        "AUDIO_PLAY": "Play",
+        "AUDIO_PAUSE": "Pause",
         "UPLOAD_AVATAR": "Avatar uploaden",
         "CREATE_DISTRIBUTION_LIST": "Nieuwe distributielijst",
         "DISTRIBUTION_LIST_NAME": "Naam",

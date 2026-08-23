@@ -18,6 +18,7 @@
 angular.module('3ema.directives', []);
 
 import autofocus from './directives/autofocus';
+import audioPlayer from './directives/audio_player';
 import avatar from './directives/avatar';
 import avatarArea from './directives/avatar_area';
 import avatarEditor from './directives/avatar_editor';
@@ -56,6 +57,7 @@ import statusBar from './directives/status_bar';
 import verificationLevel from './directives/verification_level';
 
 angular.module('3ema.directives').directive('autofocus', autofocus);
+angular.module('3ema.directives').directive('eeeAudioPlayer', audioPlayer);
 angular.module('3ema.directives').directive('avatarArea', avatarArea);
 angular.module('3ema.directives').directive('avatarEditor', avatarEditor);
 angular.module('3ema.directives').directive('batteryStatus', batteryStatus);

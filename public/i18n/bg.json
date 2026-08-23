@@ -175,6 +175,8 @@
         "GROUP_SYNC_DONE": "Групата е синхронизирана.",
         "SCROLL_DOWN": "Плъзнете надолу",
         "JUMP_TO_MESSAGE": "Jump to message",
+        "AUDIO_PLAY": "Play",
+        "AUDIO_PAUSE": "Pause",
         "UPLOAD_AVATAR": "Качване на аватар",
         "CREATE_DISTRIBUTION_LIST": "Нов списък за разпространение",
         "DISTRIBUTION_LIST_NAME": "Име",

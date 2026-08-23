@@ -75,10 +75,9 @@
 </div>
 
 <!-- Audio file (downloaded): plays in place -->
-<audio class="inline-audio"
-       ng-if="ctrl.type === 'audio' && ctrl.downloaded"
-       controls autoplay
-       ng-src="{{ ctrl.blobBufferUrl | unsafeResUrl }}"></audio>
+<eee-audio-player ng-if="ctrl.type === 'audio' && ctrl.downloaded"
+                  eee-src="ctrl.blobBufferUrl"
+                  eee-duration="ctrl.message.audio.duration"></eee-audio-player>
 
 <!-- GIF (downloaded) -->
 <div class="animgif" ng-if="ctrl.downloaded && ctrl.isGif">

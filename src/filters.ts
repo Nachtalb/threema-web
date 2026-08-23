@@ -188,8 +188,9 @@ angular.module('3ema.filters', [])
  */
 .filter('duration', function() {
     return function(seconds) {
-        const left = Math.floor(seconds / 60);
-        const right = seconds % 60;
+        const whole = Math.floor(seconds);
+        const left = Math.floor(whole / 60);
+        const right = whole % 60;
         const padLeft = left < 10 ? '0' : '';
         const padRight = right < 10 ? '0' : '';
         return padLeft + left + ':' + padRight + right;

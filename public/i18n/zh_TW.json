@@ -182,6 +182,8 @@
         "GROUP_SYNC_DONE": "群組已同步。",
         "SCROLL_DOWN": "向下捲動",
         "JUMP_TO_MESSAGE": "Jump to message",
+        "AUDIO_PLAY": "Play",
+        "AUDIO_PAUSE": "Pause",
         "UPLOAD_AVATAR": "上傳大頭貼",
         "CREATE_DISTRIBUTION_LIST": "建立通訊群組清單",
         "DISTRIBUTION_LIST_NAME": "名稱",

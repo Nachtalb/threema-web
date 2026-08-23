@@ -182,6 +182,8 @@
         "GROUP_SYNC_DONE": "Группа синхронизирована.",
         "SCROLL_DOWN": "Прокрутить вниз",
         "JUMP_TO_MESSAGE": "Jump to message",
+        "AUDIO_PLAY": "Play",
+        "AUDIO_PAUSE": "Pause",
         "UPLOAD_AVATAR": "Загрузить аватар",
         "CREATE_DISTRIBUTION_LIST": "Новый список рассылки",
         "DISTRIBUTION_LIST_NAME": "Имя",
