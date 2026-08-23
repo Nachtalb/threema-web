@@ -81,19 +81,19 @@
         }
     }
 
+    // Taken out of the flow: as a flex item the button shortens the chat when
+    // it appears, which shifts the messages just as the glide ends.
     #scrolljump {
         $scrolljump-height: 36px;
         display: flex;
-        // Taken out of the flow: as a flex item it shortens the chat when it
-        // appears, which shifts the messages just as the glide ends.
         position: absolute;
         right: 0;
-        // Sits above the compose area, one gap clear of it
-        bottom: 100%;
+        // Clears the compose area below it, plus one gap
+        bottom: 72px;
         left: 0;
-        // The chat is centred in a wider column, so the button is centred the
-        // same way and pushed to its right edge.
-        margin: 0 auto 1rem;
+        // The chat is centred in a wider column, so the button is centred
+        // the same way and pushed to its right edge.
+        margin: 0 auto;
         align-items: center;
         justify-content: flex-end;
         z-index: 15;
@@ -127,8 +127,6 @@
     }
 
     #conversation-footer {
-        // Anchors the scroll-to-bottom button that sits above it
-        position: relative;
         background-color: $dark-background-color;
 
         .chat-input {
