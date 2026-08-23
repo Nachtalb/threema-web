@@ -107,6 +107,13 @@
                 flex: 1 1 auto;
                 width: 100%;
             }
+
+            // The avatar is capped for the sidebar, which is narrower than
+            // the panel is here.
+            &.detail-open .avatar.avatar-high {
+                max-width: none;
+                max-height: none;
+            }
         }
 
         &.detail-open #conversation {
