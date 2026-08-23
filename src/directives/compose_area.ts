@@ -829,12 +829,16 @@ export default [
                 /** Put an emoji from the picker into the message. */
                 function pickEmoji(em: Element): void {
                     const emoji = em.textContent;
-                    // The search box may hold the caret; the message has to
-                    // have it back before anything can be written there.
+                    // Writing needs the message's caret, but focus goes back to
+                    // wherever it was so picking several in a row keeps working.
+                    const previous = document.activeElement as HTMLElement | null;
                     composeArea.focus();
                     composeArea.store_selection_range();
                     insertSingleEmojiString(emoji);
                     settingsService.emoji.addRecent(emoji);
+                    if (previous !== null && previous !== document.activeElement) {
+                        previous.focus();
+                    }
                     updateView();
                 }
 
