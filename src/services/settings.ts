@@ -113,7 +113,7 @@ class NotificationSettings {
     }
 
     public getNotifyReactions(): boolean {
-        return this.settingsService.retrieveUntrustedKeyValuePair('notifyReactions', false) === 'true';
+        return this.settingsService.retrieveUntrustedKeyValuePair('notifyReactions', false) !== 'false';
     }
 
     public setNotifyReactions(enabled: boolean): void {

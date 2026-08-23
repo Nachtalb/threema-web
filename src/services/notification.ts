@@ -166,14 +166,14 @@ export class NotificationService {
             this.notificationPreview = true;
             this.storeSetting(NotificationService.SETTINGS_NOTIFICATION_PREVIEW, 'true');
         }
-        if (sound === 'true') {
+        if (sound === 'false') {
             this.log.debug('Notification sound:', sound);
-            this.notificationSound = true;
-        } else {
-            // set the flag false if false/nothing or sth. else is in local storage (default setting)
-            this.log.debug('Notification sound:', sound, 'Using default value (false)');
             this.notificationSound = false;
-            this.storeSetting(NotificationService.SETTINGS_NOTIFICATION_SOUND, 'false');
+        } else {
+            // set the flag true if true/nothing or sth. else is in local storage (default setting)
+            this.log.debug('Notification sound:', sound, 'Using default value (true)');
+            this.notificationSound = true;
+            this.storeSetting(NotificationService.SETTINGS_NOTIFICATION_SOUND, 'true');
         }
     }
 
