@@ -1,4 +1,4 @@
-<div id="messenger" ng-class="{'show-detail': ctrl.showDetail()}">
+<div id="messenger" ng-class="{'show-detail': ctrl.showDetail() && ctrl.conversationReady}">
 
     <!-- Navigation: messenger.navigation.html -->
     <section id="navigation" ui-view="navigation"></section>

@@ -1856,6 +1856,12 @@ class NavigationController {
 
 class MessengerController {
     public name = 'messenger';
+    // True once a conversation's template has been built. `showDetail()` flips
+    // as soon as the route changes, which is before the content exists.
+    // Matches the transition in `_responsive.scss`.
+    private static readonly PANEL_ANIMATION_MS = 250;
+    public conversationReady: boolean = false;
+    private conversationHideTimer: number | null = null;
     private receiverService: ReceiverService;
     private $state;
     private webClientService: WebClientService;
@@ -1885,6 +1891,9 @@ class MessengerController {
         this.$state = $state;
         this.webClientService = webClientService;
 
+        // A reload straight into a conversation never fires a transition
+        this.conversationReady = !$state.is('messenger.home');
+
         // Remember where we are, so a reload comes back to the same place
         $transitions.onSuccess({}, (transition) => {
             const name = transition.to().name;
@@ -1896,6 +1905,27 @@ class MessengerController {
                     name === 'messenger.home.conversation.detail');
             } else if (name === 'messenger.home') {
                 navigationStateService.clearConversation();
+            }
+
+            // Only slide once the conversation's template exists, or the
+            // panel animates in while it is still empty and its content
+            // appears part way through. On the way back the flag is held for
+            // the length of the animation, or the conversation empties before
+            // it has slid off screen.
+            if (name === 'messenger.home') {
+                if (this.conversationHideTimer !== null) {
+                    clearTimeout(this.conversationHideTimer);
+                }
+                this.conversationHideTimer = window.setTimeout(() => {
+                    this.conversationHideTimer = null;
+                    $scope.$apply(() => this.conversationReady = false);
+                }, MessengerController.PANEL_ANIMATION_MS);
+            } else {
+                if (this.conversationHideTimer !== null) {
+                    clearTimeout(this.conversationHideTimer);
+                    this.conversationHideTimer = null;
+                }
+                this.conversationReady = true;
             }
         });
 
