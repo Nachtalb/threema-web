@@ -559,7 +559,20 @@ class ConversationController {
             }, 0, true, 'clearDetailInstant');
         }
 
-        // Keep the panel in the DOM until it has finished sliding out.
+        this.webClientService = webClientService;
+        this.receiverService = receiverService;
+        this.stateService = stateService;
+        this.mimeService = mimeService;
+        this.timeoutService = timeoutService;
+
+        this.log = logService.getLogger('Conversation-C');
+
+        this.$state = $state;
+        this.$scope = $scope;
+        this.$filter = $filter;
+
+        // Keep the panel in the DOM until it has finished sliding out. Set up
+        // after `$state` is assigned, since `isDetailOpen` reads it.
         this.detailVisible = this.isDetailOpen();
         $scope.$watch(() => this.isDetailOpen(), (open: boolean) => {
             if (this.detailHideTimer !== null) {
@@ -575,17 +588,6 @@ class ConversationController {
                 }, ConversationController.DETAIL_ANIMATION_MS);
             }
         });
-        this.webClientService = webClientService;
-        this.receiverService = receiverService;
-        this.stateService = stateService;
-        this.mimeService = mimeService;
-        this.timeoutService = timeoutService;
-
-        this.log = logService.getLogger('Conversation-C');
-
-        this.$state = $state;
-        this.$scope = $scope;
-        this.$filter = $filter;
         this.$rootScope = $rootScope;
 
         this.$mdDialog = $mdDialog;
