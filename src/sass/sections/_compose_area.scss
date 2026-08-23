@@ -8,11 +8,15 @@ compose-area {
         &:first-child {
             display: flex;
             flex-direction: row;
+            // The triggers are shorter than the text area, so they line up on
+            // its centre rather than sitting where their margins leave them.
+            align-items: center;
             margin: 0;
             max-height: calc(1.3em * 7);
 
             > div {
-                align-content: center;
+                display: flex;
+                align-items: center;
                 justify-content: center;
                 margin: $main-padding $main-padding $main-padding 0;
 
@@ -53,7 +57,6 @@ compose-area {
 
                 &:first-child,
                 &:last-child {
-                    padding-top: $main-padding;
                     text-align: center;
                 }
             }
