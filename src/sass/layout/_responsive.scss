@@ -50,21 +50,32 @@
             top: $float-gap;
             left: $float-gap;
             flex: none !important;
+            // The floating layout pins the list to a fixed width with
+            // `!important`, which would leave it short of the screen here.
             width: calc(100% - #{$float-gap * 2}) !important;
             min-width: 0 !important;
             max-width: none !important;
             height: calc(100% - #{$float-gap * 2});
             transition: transform .25s ease-out;
+            // The conversation renders while it slides. Giving each panel its
+            // own layer keeps that work off the animated frames.
+            will-change: transform;
         }
 
-        // The conversation waits off screen to the right until a chat is open
+        // The wide layout hides the conversation when no chat is open. Here it
+        // has to stay in the layout, or there is nothing on screen to slide.
+        &:not(.show-detail) #detail {
+            display: block;
+        }
+
+        // The conversation waits off screen to the right until a chat is open.
         #detail {
-            transform: translateX(calc(100% + #{$float-gap}));
+            transform: translateX(110%);
         }
 
         &.show-detail {
             #navigation {
-                transform: translateX(calc(-100% - #{$float-gap}));
+                transform: translateX(-110%);
             }
 
             #detail {

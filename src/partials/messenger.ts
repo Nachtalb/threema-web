@@ -1858,10 +1858,7 @@ class MessengerController {
     public name = 'messenger';
     // True once a conversation's template has been built. `showDetail()` flips
     // as soon as the route changes, which is before the content exists.
-    // Matches the transition in `_responsive.scss`.
-    private static readonly PANEL_ANIMATION_MS = 250;
     public conversationReady: boolean = false;
-    private conversationHideTimer: number | null = null;
     private receiverService: ReceiverService;
     private $state;
     private webClientService: WebClientService;
@@ -1907,26 +1904,16 @@ class MessengerController {
                 navigationStateService.clearConversation();
             }
 
-            // Only slide once the conversation's template exists, or the
-            // panel animates in while it is still empty and its content
-            // appears part way through. On the way back the flag is held for
-            // the length of the animation, or the conversation empties before
-            // it has slid off screen.
-            if (name === 'messenger.home') {
-                if (this.conversationHideTimer !== null) {
-                    clearTimeout(this.conversationHideTimer);
-                }
-                this.conversationHideTimer = window.setTimeout(() => {
-                    this.conversationHideTimer = null;
-                    $scope.$apply(() => this.conversationReady = false);
-                }, MessengerController.PANEL_ANIMATION_MS);
-            } else {
-                if (this.conversationHideTimer !== null) {
-                    clearTimeout(this.conversationHideTimer);
-                    this.conversationHideTimer = null;
-                }
-                this.conversationReady = true;
+            // The panel slides once the route settles. The class is applied a
+            // frame later so the browser has laid the new view out first,
+            // otherwise the transition starts mid-layout and stutters.
+            const ready = name !== 'messenger.home';
+            if (ready === this.conversationReady) {
+                return;
             }
+            requestAnimationFrame(() => {
+                $scope.$apply(() => this.conversationReady = ready);
+            });
         });
 
         // Keep the profile sidebar open across conversations: opening a chat
