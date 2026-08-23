@@ -444,6 +444,13 @@ class ConversationController {
     // Set while the jump-to-bottom animation runs
     private glidingDown: boolean = false;
 
+    // The day of the message at the top of the view, shown while scrolling
+    public floatingDay: string = '';
+    public floatingDayVisible: boolean = false;
+    private floatingDayTimer: number | null = null;
+    private static readonly FLOATING_DAY_TOP = 40;
+    private static readonly FLOATING_DAY_LINGER = 1200;
+
     // Third party services
     private $mdDialog: ng.material.IDialogService;
     private $mdToast: ng.material.IToastService;
@@ -592,7 +599,12 @@ class ConversationController {
             }
         };
         document.addEventListener('keydown', onKeyDown);
-        $scope.$on('$destroy', () => document.removeEventListener('keydown', onKeyDown));
+        $scope.$on('$destroy', () => {
+            document.removeEventListener('keydown', onKeyDown);
+            if (this.floatingDayTimer !== null) {
+                clearTimeout(this.floatingDayTimer);
+            }
+        });
 
         this.maxTextLength = this.webClientService.getMaxTextLength();
         this.allText = this.$translate.instant('messenger.ALL');
@@ -619,6 +631,7 @@ class ConversationController {
 
             // Add custom event handlers
             this.domChatElement.addEventListener('scroll', () => {
+                this.updateFloatingDay();
                 $rootScope.$apply(() => {
                     this.updateScrollJump();
                 });
@@ -1207,6 +1220,47 @@ class ConversationController {
             }
         }
         return true;
+    }
+
+    /**
+     * Report the day of whatever message is at the top of the view, and hide
+     * the pill again once scrolling stops.
+     *
+     * Runs outside Angular: this fires on every scroll frame, and a digest per
+     * frame is what makes a list feel heavy.
+     */
+    private updateFloatingDay(): void {
+        const chat = this.domChatElement;
+        if (chat === undefined || chat === null) {
+            return;
+        }
+
+        const top = chat.getBoundingClientRect().top + ConversationController.FLOATING_DAY_TOP;
+        let current: number | null = null;
+        for (const li of Array.from(chat.querySelectorAll('li[id^="message-"]')) as HTMLElement[]) {
+            if (li.getBoundingClientRect().bottom > top) {
+                const index = this.messages.findIndex((m) => `message-${m.id}` === li.id);
+                current = index === -1 ? null : this.messages[index].date;
+                break;
+            }
+        }
+
+        const day = hasValue(current) ? (this.$filter('unixToDay') as any)(current) : '';
+        const wasVisible = this.floatingDayVisible;
+        if (day !== this.floatingDay || !wasVisible) {
+            this.floatingDay = day;
+            this.floatingDayVisible = day !== '';
+            this.$scope.$evalAsync();
+        }
+
+        if (this.floatingDayTimer !== null) {
+            clearTimeout(this.floatingDayTimer);
+        }
+        this.floatingDayTimer = window.setTimeout(() => {
+            this.floatingDayVisible = false;
+            this.floatingDayTimer = null;
+            this.$scope.$evalAsync();
+        }, ConversationController.FLOATING_DAY_LINGER);
     }
 
     public showReceiver(ev): void {

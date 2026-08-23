@@ -53,6 +53,9 @@
     </div>
 
     <div id="conversation-chat" scroll-glue="!ctrl.showScrollJump" in-view-container ng-show="!ctrl.locked">
+        <div class="floating-day" ng-class="{visible: ctrl.floatingDayVisible}" aria-hidden="true">
+            <span>{{ ctrl.floatingDay }}</span>
+        </div>
         <ul class="chat">
             <li in-view="$inview && !ctrl.locked && ctrl.topOfChat()" class="load-more">
                 <div ng-if="ctrl.hasMoreMessages()" class="loading">
