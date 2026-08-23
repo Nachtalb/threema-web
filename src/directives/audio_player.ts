@@ -68,7 +68,9 @@ export default [
 
                 ctrl.toggle = () => {
                     if (audio.paused) {
-                        audio.play();
+                        // A rejected play leaves the element paused, and the
+                        // 'pause' listener already keeps the button in step.
+                        audio.play().catch(() => undefined);
                     } else {
                         audio.pause();
                     }

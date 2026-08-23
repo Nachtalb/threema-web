@@ -340,7 +340,11 @@ export class NotificationService {
         // Play sound on new message if the user wants to
         if (this.notificationSound && !forceMute) {
             const audio = new Audio(NotificationService.NOTIFICATION_SOUND);
-            audio.play();
+            // Browsers refuse to play until the page has been interacted with.
+            // A silent notification is better than an unhandled rejection.
+            audio.play().catch((error) => {
+                this.log.debug('Could not play the notification sound:', error);
+            });
         }
 
         // Only show notifications if user granted permission to do so
