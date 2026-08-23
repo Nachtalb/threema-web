@@ -71,12 +71,23 @@
             &[type='search'] {
                 margin: 0;
                 border: 1px solid var(--border);
-                background-color: var(--nav-search);
                 border-radius: $material-radius;
-                background-color: var(--surface);
+                background-color: var(--nav-search);
                 padding: $main-padding;
                 width: 100%;
                 box-sizing: border-box;
+                color: var(--text);
+
+                &:focus {
+                    // Without this the browser draws its own outline, which is
+                    // white and jarring on a dark list.
+                    outline: none;
+                    border-color: $theme-primary;
+                }
+
+                &::placeholder {
+                    color: var(--text-faint);
+                }
             }
         }
 
@@ -141,8 +152,8 @@
             padding: (1.5 * $main-padding) $main-padding - ($border-width * ($border-count - 1));
 
             &:hover {
-                border-color: $dark-background-color;
-                background-color: $dark-background-color;
+                border-color: var(--hover);
+                background-color: var(--hover);
             }
 
             // The open conversation, distinct from a mere hover
@@ -394,7 +405,7 @@
         }
 
         &:hover {
-            background-color: var(--nav-tabs);
+            background-color: var(--hover);
             cursor: pointer;
         }
 
