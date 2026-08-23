@@ -33,6 +33,7 @@ Changes:
 * [fix] Stop a finished download from reopening a media viewer that was closed
 * [fix] Show transparent images whole rather than cropped
 * [fix] Colour the bubble tail of images restored from the cache
+* [fix] Reconnect to an iPhone after a reload instead of failing with a protocol error
 
 Jumping to a quoted message is exact when the phone is an iPhone. Android
 reports a local database id for each message instead of the Threema message id

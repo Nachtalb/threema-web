@@ -22,12 +22,10 @@ import {stringToUtf8a, u8aToBase64} from '../helpers';
  */
 export class QrCodeService {
 
-    private config: threema.Config;
     private protocolVersion: number;
 
-    public static $inject = ['CONFIG', 'PROTOCOL_VERSION'];
-    constructor(CONFIG: threema.Config, PROTOCOL_VERSION: number) {
-        this.config = CONFIG;
+    public static $inject = ['PROTOCOL_VERSION'];
+    constructor(PROTOCOL_VERSION: number) {
         this.protocolVersion = PROTOCOL_VERSION;
     }
 
@@ -46,8 +44,14 @@ export class QrCodeService {
         const buf = new ArrayBuffer(2 + 1 + 32 + 32 + 32 + 2 + saltyRtcHostBytes.byteLength);
 
         // Options bitfield
+        //
+        // The self-hosted flag is documented as only affecting the error
+        // messages the app displays (see `docs/qr_code.md`), but the iOS app
+        // treats a self-hosted session differently: setting it stops the app
+        // rejoining after a reload, while the very same build with the flag
+        // cleared reconnects. It is reported as not self-hosted for that
+        // reason.
         let options = 0;
-        options |= (this.config.SELF_HOSTED === true ? 1 : 0) << 0;
         options |= (persistent ? 1 : 0) << 1;
 
         // Write version and options

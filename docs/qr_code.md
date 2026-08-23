@@ -34,8 +34,10 @@ supported flags:
     +---------------+
 
     - S: Self-hosted. Set this to 1 if the webclient is self-hosted, or to 0 if
-         this is the officially hosted version. This only has an influence on
-         displayed error messages for improved usability.
+         this is the officially hosted version. Upstream documents this as only
+         influencing displayed error messages, but the iOS app also refuses to
+         rejoin a self-hosted session after a browser reload, so this fork
+         always reports 0.
     - P: Whether this session is permanent or not. Set this to 1 if the user
          defined a password.
 
