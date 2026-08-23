@@ -155,11 +155,17 @@ body.scheme-dark {
         md-dialog md-content,
         md-dialog md-list,
         md-dialog md-list-item,
-        md-dialog md-list-item .md-no-style,
         md-dialog md-list-item .md-list-item-inner,
         md-dialog .md-subheader,
         md-dialog .md-subheader .md-subheader-inner {
             background-color: var(--surface-raised);
+            color: var(--text);
+        }
+
+        // The clickable overlay angular-material injects is a sibling of the
+        // row's icon and label, so a background on it paints over both.
+        md-dialog md-list-item .md-no-style {
+            background-color: transparent;
             color: var(--text);
         }
 

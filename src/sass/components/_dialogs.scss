@@ -152,6 +152,7 @@ md-dialog.settings-dialog {
 
     // Icons sit centred on the same column as the toggles beside them: the
     // 36px switch starts at 24px, so its centre is at 42px.
+    md-list-item > md-icon:first-child,
     md-list-item .md-list-item-inner > md-icon:first-child,
     md-list-item .md-button.md-no-style > md-icon:first-child {
         margin: 0 20px 0 24px;
@@ -174,12 +175,6 @@ md-dialog.settings-dialog {
     }
 
     // Three-way switch: the selected segment's backing slides between them
-    .colour-scheme {
-        // Line the label up with the switch rows above it
-        > span {
-            margin-left: 40px;
-        }
-    }
 
     .scheme-pill {
         display: flex;
