@@ -55,7 +55,7 @@
             </div>
         </div>
 
-        <div ng-if="(ctrl.state === 'new' || ctrl.state === 'connecting') && ctrl.mode === 'unlock'" class="unlock">
+        <div ng-if="!ctrl.cancelled && (ctrl.state === 'new' || ctrl.state === 'connecting') && ctrl.mode === 'unlock'" class="unlock">
             <h2 class="instructions centered" translate>welcome.PLEASE_UNLOCK</h2>
             <div class="password-entry">
                 <label>
@@ -213,7 +213,7 @@
             <h2 class="instructions centered" translate>welcome.CONNECTION_CANCELLED</h2>
             <div class="dead-end-actions">
                 <md-button class="md-raised md-primary" ng-click="ctrl.reload()">
-                    <i class="material-icons">refresh</i> <span translate>welcome.RESTART_SESSION</span>
+                    <i class="material-icons">refresh</i> <span translate>welcome.RETRY</span>
                 </md-button>
                 <md-button class="md-raised md-warn" ng-click="ctrl.deleteSession($event)">
                     <span translate>welcome.FORGET_SESSION_BTN</span>
