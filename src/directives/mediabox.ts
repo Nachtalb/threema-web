@@ -66,11 +66,13 @@ export default [
                             this.releaseUrl();
                             this.imageDataUrl = null;
                             this.open = false;
+                            mediaboxService.dismiss();
                         }
                     } else {
                         this.releaseUrl();
                         this.imageDataUrl = null;
                         this.open = false;
+                        mediaboxService.dismiss();
                     }
                 };
                 this.jumpToMessage = () => {

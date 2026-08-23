@@ -66,6 +66,12 @@ export class MediaboxService {
     public messageId: string | null = null;
 
     /**
+     * Whether the box is on screen. A download still in flight must not put
+     * it back up once the user has closed it.
+     */
+    public isOpen: boolean = false;
+
+    /**
      * Open the box straight away on the thumbnail, before the full media has
      * arrived. Keeps clicking a picture from feeling slow.
      *
@@ -80,6 +86,7 @@ export class MediaboxService {
         this.previewUrl = previewUrl;
         this.loading = loading;
         this.progress = null;
+        this.isOpen = true;
         this.evtMediaChanged.post(true);
     }
 
@@ -103,6 +110,7 @@ export class MediaboxService {
         this.previewUrl = null;
         this.loading = false;
         this.progress = null;
+        this.isOpen = true;
         this.evtMediaChanged.post(data !== null);
     }
 
@@ -110,6 +118,15 @@ export class MediaboxService {
      * Clear media data.
      */
     public clearMedia() {
+        this.dismiss();
+        this.evtMediaChanged.post(false);
+    }
+
+    /**
+     * The user shut the box. Same as clearing it, but without an event, which
+     * the box has no use for having closed itself.
+     */
+    public dismiss() {
         this.data = null;
         this.filename = '';
         this.mimetype = '';
@@ -119,7 +136,7 @@ export class MediaboxService {
         this.loadNeighbour = null;
         this.hasNeighbour = null;
         this.messageId = null;
-        this.evtMediaChanged.post(false);
+        this.isOpen = false;
     }
 
 }

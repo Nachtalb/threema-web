@@ -299,7 +299,7 @@ export default [
                             // announce a download once it is actually slow.
                             let settled = false;
                             timeoutService.register(() => {
-                                if (!settled && showing.id === msg.id) {
+                                if (!settled && showing.id === msg.id && mediaboxService.isOpen) {
                                     mediaboxService.setPending(thumb, msg.caption || '', true);
                                 }
                             }, 150, true, 'mediaboxSpinner');
@@ -310,7 +310,7 @@ export default [
                             const expected = mediaSize(msg);
                             let shownThumb = thumb;
                             webClientService.watchTransfer(expected, (fraction, received) => {
-                                if (settled || showing.id !== msg.id) {
+                                if (settled || showing.id !== msg.id || !mediaboxService.isOpen) {
                                     return;
                                 }
                                 // A better thumbnail may have arrived since the
@@ -329,9 +329,9 @@ export default [
                                 .then((info: threema.BlobInfo) => $rootScope.$apply(() => {
                                     settled = true;
                                     webClientService.stopWatchingTransfer();
-                                    // The user may have paged on while this
-                                    // was in flight
-                                    if (showing.id !== msg.id) {
+                                    // The user may have paged on, or shut the
+                                    // box, while this was in flight
+                                    if (showing.id !== msg.id || !mediaboxService.isOpen) {
                                         return;
                                     }
                                     mediaboxService.setMedia(
