@@ -1,4 +1,4 @@
-<div id="conversation-wrapper">
+<div id="conversation-wrapper" ng-class="{'detail-open': ctrl.isDetailOpen()}">
 <div id="conversation" class="drag-container">
     <drag-file
             ng-if="!ctrl.locked && !ctrl.receiver.isBlocked"

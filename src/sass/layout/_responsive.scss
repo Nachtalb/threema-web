@@ -35,27 +35,38 @@
 }
 
 @media (max-width: 630px) {
-    // Too narrow for two columns: the chat list and the conversation take
-    // turns at full width, and the back button in the conversation header is
-    // the way back to the list.
+    // Too narrow for two columns. Rather than sharing the width, each panel
+    // takes all of it and slides the previous one off screen, so nothing is
+    // ever squeezed into a strip.
     #messenger {
-        #navigation {
-            flex: 1 1 100% !important;
+        position: relative;
+        overflow: hidden;
+
+        #navigation,
+        #detail {
+            position: absolute;
+            top: 0;
+            left: 0;
+            flex: none !important;
             width: 100% !important;
             min-width: 0 !important;
             max-width: none !important;
+            height: 100%;
+            transition: transform .25s ease-out;
+        }
+
+        // The conversation waits off screen to the right until a chat is open
+        #detail {
+            transform: translateX(100%);
         }
 
         &.show-detail {
             #navigation {
-                display: none;
-                flex: 0 !important;
-                min-width: 0 !important;
-                max-width: none !important;
+                transform: translateX(-100%);
             }
 
             #detail {
-                max-width: 100%;
+                transform: translateX(0);
             }
         }
     }
@@ -64,9 +75,36 @@
         display: inline-block;
     }
 
-    // The profile takes the whole screen rather than sharing it
-    #conversation-wrapper #conversation-detail.detail-open {
-        width: 100%;
+    // Same again one level down: the profile slides in over the chat instead
+    // of taking space from it.
+    #conversation-wrapper {
+        position: relative;
+        overflow: hidden;
+
+        #conversation {
+            width: 100%;
+            transition: transform .25s ease-out;
+        }
+
+        #conversation-detail {
+            position: absolute;
+            top: 0;
+            left: 0;
+            margin-left: 0;
+            width: 100%;
+            height: 100%;
+            transform: translateX(100%);
+            transition: transform .25s ease-out;
+
+            &.detail-open {
+                width: 100%;
+                transform: translateX(0);
+            }
+        }
+
+        &.detail-open #conversation {
+            transform: translateX(-100%);
+        }
     }
 }
 
