@@ -16,7 +16,7 @@
         "CONNECTION_CANCELLED": "Connection cancelled",
         "RESTART_SESSION": "Uruchom ponownie sesję",
         "PASSWORD": "Hasło",
-        "SAVE_SESSION": "Stay logged in after closing Threema Web",
+        "SAVE_SESSION": "Stay logged in",
         "CHOOSE_PASSWORD": "Jeśli chcesz pozostać zalogowanym, wprowadź<br>hasło sesji przed zeskanowaniem.",
         "UNLOCK_FAILED_TEXT": "Wprowadzono złe hasło, sesja nie może być przywrócona.",
         "ENTER_PASSWORD": "Aby połączyć się ponownie z poprzednią sesją,<br>wprowadź hasło.",

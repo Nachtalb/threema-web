@@ -16,7 +16,7 @@
         "CONNECTION_CANCELLED": "Connection cancelled",
         "RESTART_SESSION": "Obnoviť reláciu",
         "PASSWORD": "Heslo",
-        "SAVE_SESSION": "Stay logged in after closing Threema Web",
+        "SAVE_SESSION": "Stay logged in",
         "CHOOSE_PASSWORD": "Pokiaľ chcete zostať trvalo prihlásený, zadajte prosím <br> heslo pred naskenovaním QR kódu.",
         "UNLOCK_FAILED_TEXT": "Zadali ste zlé heslo, relácia nemôže byť obnovená.",
         "ENTER_PASSWORD": "Pre znovu pripojenie Vašej predchádzajúcej relácie, <br>prosím zadajte heslo:",

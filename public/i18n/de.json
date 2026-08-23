@@ -16,7 +16,7 @@
         "CONNECTION_CANCELLED": "Connection cancelled",
         "RESTART_SESSION": "Sitzung neustarten",
         "PASSWORD": "Passwort",
-        "SAVE_SESSION": "Stay logged in after closing Threema Web",
+        "SAVE_SESSION": "Stay logged in",
         "CHOOSE_PASSWORD": "Falls Sie die Sitzung speichern möchten,<br>legen Sie vor dem Scannen ein Passwort fest.",
         "UNLOCK_FAILED_TEXT": "Sie haben das falsche Passwort eingegeben. Die Verbindung kann nicht aufgebaut werden.",
         "ENTER_PASSWORD": "Um die letzte Sitzung wiederherzustellen, <br> geben Sie bitte das entsprechende Passwort ein.",

@@ -13,7 +13,7 @@
         "PLEASE_RELOAD": "Az újrapróbálkozáshoz töltsd újra az oldalat.",
         "RELOAD": "Oldal újratöltése",
         "PASSWORD": "Jelszó",
-        "SAVE_SESSION": "Stay logged in after closing Threema Web",
+        "SAVE_SESSION": "Stay logged in",
         "CHOOSE_PASSWORD": "Ha bejelentkezve szeretnél maradni, <br>írj be egy munkafolyamat-jelszót a QR-kód beolvasása előtt.",
         "UNLOCK_FAILED_TEXT": "Rossz jelszót adtál meg; a munkafolyamatot nem lehet visszaállítani.",
         "ENTER_PASSWORD": "Hogy újra csatlakozhass az előző munkamenethez,<br>írd be a jelszót:",

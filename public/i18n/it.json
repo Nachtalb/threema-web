@@ -16,7 +16,7 @@
         "CONNECTION_CANCELLED": "Connection cancelled",
         "RESTART_SESSION": "Riavviare la sessione",
         "PASSWORD": "Password",
-        "SAVE_SESSION": "Stay logged in after closing Threema Web",
+        "SAVE_SESSION": "Stay logged in",
         "CHOOSE_PASSWORD": "Se vuoi rimanere collegato, inserisci <br>la password per questa sessione prima di eseguire la scansione del codice QR.",
         "UNLOCK_FAILED_TEXT": "La password è errata, non è possibile ripristinare la sessione.",
         "ENTER_PASSWORD": "Per ripristinare la tua sessione precedente,<br>digita la password:",

@@ -16,7 +16,7 @@
         "CONNECTION_CANCELLED": "Connection cancelled",
         "RESTART_SESSION": "重新啟動工作階段",
         "PASSWORD": "密碼",
-        "SAVE_SESSION": "Stay logged in after closing Threema Web",
+        "SAVE_SESSION": "Stay logged in",
         "CHOOSE_PASSWORD": "如果你要保持登入狀態，請在掃描QR碼之前輸入<br>工作階段密碼。",
         "UNLOCK_FAILED_TEXT": "您所輸入的密碼錯誤，無法還原工作階段。",
         "ENTER_PASSWORD": "如要還原之前的工作階段，<br>請輸入密碼。",

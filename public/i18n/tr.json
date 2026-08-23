@@ -16,7 +16,7 @@
         "CONNECTION_CANCELLED": "Connection cancelled",
         "RESTART_SESSION": "Oturumu yeniden başlat",
         "PASSWORD": "Şifre",
-        "SAVE_SESSION": "Stay logged in after closing Threema Web",
+        "SAVE_SESSION": "Stay logged in",
         "CHOOSE_PASSWORD": "Eğer giriş yapmış olarak kalmak istiyorsanız, taratmadan önce, <br> bir oturum şifresi yazın.",
         "UNLOCK_FAILED_TEXT": "Yanlış şifre girdiniz, oturum geri yüklenemiyor.",
         "ENTER_PASSWORD": "Önceki oturuma tekrar bağlanmak için,<br>lütfen şifrenizi girin:",

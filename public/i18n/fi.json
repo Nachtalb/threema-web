@@ -16,7 +16,7 @@
         "CONNECTION_CANCELLED": "Connection cancelled",
         "RESTART_SESSION": "Käynnistä istunto uudelleen",
         "PASSWORD": "Salasana",
-        "SAVE_SESSION": "Stay logged in after closing Threema Web",
+        "SAVE_SESSION": "Stay logged in",
         "CHOOSE_PASSWORD": "Mikäli haluat pysyä kirjautuneena, anna istuntosalasana ennen skannaamista.",
         "UNLOCK_FAILED_TEXT": "Väärä salasana, istuntoa ei voida palauttaa.",
         "ENTER_PASSWORD": "Anna salasana palataksesi edelliseen istuntoon.",

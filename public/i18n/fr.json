@@ -14,7 +14,7 @@
         "PLEASE_RELOAD": "Veuillez recharger cette page pour réessayer",
         "RELOAD": "Rafraichir la page",
         "PASSWORD": "Mot de passe",
-        "SAVE_SESSION": "Stay logged in after closing Threema Web",
+        "SAVE_SESSION": "Stay logged in",
         "CHOOSE_PASSWORD": "Si vous souhaitez rester connecté, veuillez saisir <br>un mot de passe de session avant le scan.",
         "UNLOCK_FAILED_TEXT": "Vous avez saisi un mauvais mot de passe. La session ne peut pas être restaurée.",
         "ENTER_PASSWORD": "Pour rétablir votre précédente session, <br>veuillez saisir le mot de passe :",
