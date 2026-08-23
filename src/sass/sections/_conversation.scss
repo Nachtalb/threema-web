@@ -398,7 +398,8 @@
                 overflow: hidden;
             }
 
-            > *:not(.message-media):not(.message-emoji-reactions) {
+            // Media sits flush; the caption and timestamp keep their insets.
+            > *:not(.message-media):not(.message-emoji-reactions):not(.message-text):not(.message-info) {
                 margin: 0;
             }
 
