@@ -41,7 +41,7 @@
     --shadow-colour-strong: rgba(0, 0, 0, .23);
 }
 
-body.dark {
+@mixin dark-scheme {
     // Surfaces
     --surface: #1e2124;
     --surface-raised: #282b30;
@@ -73,70 +73,92 @@ body.dark {
     --shadow-colour-strong: rgba(0, 0, 0, .5);
 }
 
+// The scheme follows the system unless the setting overrides it. The media
+// query does the OS switching itself, so nothing has to listen for it.
+@media (prefers-color-scheme: dark) {
+    body:not(.scheme-light) {
+        @include dark-scheme;
+    }
+}
+
+body.scheme-dark {
+    @include dark-scheme;
+}
+
 // angular-material ships its own light palette and sets these directly, so
 // they have to be taken back rather than tokenised.
-body.dark {
-    color: var(--text);
-
-    md-content,
-    md-dialog,
-    md-list,
-    md-list-item,
-    md-menu-content,
-    md-select-menu,
-    md-tabs,
-    md-toolbar:not(.md-primary),
-    .md-default-theme.md-content,
-    .md-default-theme.md-menu-content {
-        background-color: var(--surface);
+@mixin dark-material {
         color: var(--text);
-    }
 
-    md-dialog,
-    md-menu-content,
-    md-select-menu {
-        background-color: var(--surface-raised);
-    }
+        md-content,
+        md-dialog,
+        md-list,
+        md-list-item,
+        md-menu-content,
+        md-select-menu,
+        md-tabs,
+        md-toolbar:not(.md-primary),
+        .md-default-theme.md-content,
+        .md-default-theme.md-menu-content {
+            background-color: var(--surface);
+            color: var(--text);
+        }
 
-    // The rows inside a dialog sit on their own surface
-    md-dialog md-content,
-    md-dialog md-list,
-    md-dialog md-list-item,
-    md-dialog md-list-item .md-no-style,
-    md-dialog md-list-item .md-list-item-inner,
-    md-dialog .md-subheader,
-    md-dialog .md-subheader .md-subheader-inner {
-        background-color: var(--surface-raised);
-        color: var(--text);
-    }
+        md-dialog,
+        md-menu-content,
+        md-select-menu {
+            background-color: var(--surface-raised);
+        }
 
-    md-dialog .md-subheader,
-    md-dialog .md-subheader .md-subheader-inner {
-        color: var(--text-muted);
-    }
+        // The rows inside a dialog sit on their own surface
+        md-dialog md-content,
+        md-dialog md-list,
+        md-dialog md-list-item,
+        md-dialog md-list-item .md-no-style,
+        md-dialog md-list-item .md-list-item-inner,
+        md-dialog .md-subheader,
+        md-dialog .md-subheader .md-subheader-inner {
+            background-color: var(--surface-raised);
+            color: var(--text);
+        }
 
-    md-input-container input,
-    md-input-container textarea,
-    md-select .md-select-value,
-    md-list-item .md-list-item-inner {
-        color: var(--text);
-    }
+        md-dialog .md-subheader,
+        md-dialog .md-subheader .md-subheader-inner {
+            color: var(--text-muted);
+        }
 
-    md-input-container label,
-    md-select .md-select-value.md-select-placeholder,
-    .md-subheader {
-        color: var(--text-muted);
-    }
+        md-input-container input,
+        md-input-container textarea,
+        md-select .md-select-value,
+        md-list-item .md-list-item-inner {
+            color: var(--text);
+        }
 
-    md-divider {
-        border-top-color: var(--divider);
-    }
+        md-input-container label,
+        md-select .md-select-value.md-select-placeholder,
+        .md-subheader {
+            color: var(--text-muted);
+        }
 
-    // The list rows carry the palette's own text colour
-    #conversations,
-    #contacts,
-    .conversation-wrapper,
-    .receiver-badge {
-        color: var(--text);
+        md-divider {
+            border-top-color: var(--divider);
+        }
+
+        // The list rows carry the palette's own text colour
+        #conversations,
+        #contacts,
+        .conversation-wrapper,
+        .receiver-badge {
+            color: var(--text);
+        }
+}
+
+@media (prefers-color-scheme: dark) {
+    body:not(.scheme-light) {
+        @include dark-material;
     }
+}
+
+body.scheme-dark {
+    @include dark-material;
 }

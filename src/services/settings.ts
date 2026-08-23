@@ -96,15 +96,6 @@ class AppearanceSettings {
         this.settingsService.storeUntrustedKeyValuePair('colourScheme', scheme);
         this.settingsService.colourSchemeChange.post(scheme);
     }
-
-    /** Whether the dark theme applies, following the system when asked to. */
-    public prefersDark(): boolean {
-        const scheme = this.getColourScheme();
-        if (scheme !== 'system') {
-            return scheme === 'dark';
-        }
-        return window.matchMedia('(prefers-color-scheme: dark)').matches;
-    }
 }
 
 class MediaSettings {

@@ -34,8 +34,9 @@ export class ThemeController {
     // Background class
     public backgroundClass: string;
 
-    // 'dark' while the dark scheme applies, empty otherwise
-    public darkClass: string;
+    // 'scheme-light' or 'scheme-dark' when the setting overrides the system,
+    // empty while it follows it
+    public schemeClass: string;
 
     public static $inject = ['$scope', 'LogService', 'ThemeService', 'SettingsService'];
     constructor($scope, logService: LogService, themeService: ThemeService, settingsService: SettingsService) {
@@ -59,23 +60,18 @@ export class ThemeController {
             $scope.$apply(() => this.backgroundClass = ThemeController.getBackgroundClass(blur));
         })
 
-        // Colour scheme, which may follow the system
-        this.darkClass = settingsService.appearance.prefersDark() ? 'dark' : '';
-        settingsService.colourSchemeChange.attach(() => {
-            $scope.$apply(() => {
-                this.darkClass = settingsService.appearance.prefersDark() ? 'dark' : '';
-            });
+        // Colour scheme. 'system' adds no class at all: the stylesheet's
+        // prefers-color-scheme query handles that case natively, including
+        // when the system flips while the app is open.
+        this.schemeClass = ThemeController.getSchemeClass(
+            settingsService.appearance.getColourScheme());
+        settingsService.colourSchemeChange.attach((scheme: threema.ColourScheme) => {
+            $scope.$apply(() => this.schemeClass = ThemeController.getSchemeClass(scheme));
         });
+    }
 
-        // Follow the system while it is what the setting asks for
-        const system = window.matchMedia('(prefers-color-scheme: dark)');
-        system.addEventListener('change', () => {
-            if (settingsService.appearance.getColourScheme() === 'system') {
-                $scope.$apply(() => {
-                    this.darkClass = settingsService.appearance.prefersDark() ? 'dark' : '';
-                });
-            }
-        });
+    private static getSchemeClass(scheme: threema.ColourScheme): string {
+        return scheme === 'system' ? '' : `scheme-${scheme}`;
     }
 
     private static getBackgroundClass(blur: boolean): string {
