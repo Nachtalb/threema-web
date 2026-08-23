@@ -181,6 +181,7 @@
         "GROUP_SYNC": "Resync group",
         "GROUP_SYNC_DONE": "Group synced.",
         "SCROLL_DOWN": "Scroll down",
+        "JUMP_TO_MESSAGE": "Jump to message",
         "UPLOAD_AVATAR": "Upload avatar",
         "CREATE_DISTRIBUTION_LIST": "New distribution list",
         "DISTRIBUTION_LIST_NAME": "Name",

@@ -181,6 +181,7 @@
         "GROUP_SYNC": "Повторно синхронізувати групу",
         "GROUP_SYNC_DONE": "Групу синхронізовано.",
         "SCROLL_DOWN": "Прокрутити вниз",
+        "JUMP_TO_MESSAGE": "Jump to message",
         "UPLOAD_AVATAR": "Завантажити аватар",
         "CREATE_DISTRIBUTION_LIST": "Створити список розсилки",
         "DISTRIBUTION_LIST_NAME": "Назва",

@@ -181,6 +181,7 @@
         "GROUP_SYNC": "Gruppe neu synchronisieren",
         "GROUP_SYNC_DONE": "Gruppe wurde neu synchronisiert",
         "SCROLL_DOWN": "Nach unten scrollen",
+        "JUMP_TO_MESSAGE": "Jump to message",
         "UPLOAD_AVATAR": "Bild hochladen",
         "CREATE_DISTRIBUTION_LIST": "Neue Verteilerliste",
         "DISTRIBUTION_LIST_NAME": "Name",

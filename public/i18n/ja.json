@@ -181,6 +181,7 @@
         "GROUP_SYNC": "グループの再同期",
         "GROUP_SYNC_DONE": "グループを動悸しました",
         "SCROLL_DOWN": "最新のメッセージへ",
+        "JUMP_TO_MESSAGE": "Jump to message",
         "UPLOAD_AVATAR": "アバターをアップロード",
         "CREATE_DISTRIBUTION_LIST": "新しい Distribution list",
         "DISTRIBUTION_LIST_NAME": "名前",

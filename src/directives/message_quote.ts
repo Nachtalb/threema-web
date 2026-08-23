@@ -15,7 +15,7 @@
  * along with Threema Web. If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {hexToU8a, u8aToBase64} from '../helpers';
+import {hexToU8a, jumpToMessage, u8aToBase64} from '../helpers';
 import {MessageService} from '../services/message';
 import {WebClientService} from '../services/webclient';
 
@@ -95,11 +95,11 @@ export default [
                     return match;
                 };
 
-                const findQuoted = (): HTMLElement | null => {
+                const findQuoted = (): threema.Message | null => {
                     const message = findById(this.quote.messageId) ?? findByContent();
-                    return message === null
-                        ? null
-                        : document.getElementById(`message-${message.id}`);
+                    return message !== null && document.getElementById(`message-${message.id}`) !== null
+                        ? message
+                        : null;
                 };
 
                 /**
@@ -109,26 +109,10 @@ export default [
                  */
                 this.canJump = () => findQuoted() !== null;
 
-                /**
-                 * Scroll to the quoted message and flash it, so it is obvious
-                 * which one was jumped to.
-                 */
                 this.jumpToQuoted = () => {
-                    const target = findQuoted();
-                    if (target === null) {
-                        return;
-                    }
-                    target.scrollIntoView({behavior: 'smooth', block: 'center'});
-
-                    const message = target.querySelector('.message');
-                    if (message === null) {
-                        return;
-                    }
-                    // Restart the animation if the same message is hit twice
-                    message.classList.remove('message-flash');
-                    const reflow = (message as HTMLElement).offsetWidth;
-                    if (reflow >= 0) {
-                        message.classList.add('message-flash');
+                    const message = findQuoted();
+                    if (message !== null) {
+                        jumpToMessage(message.id);
                     }
                 };
             }],

@@ -181,6 +181,7 @@
         "GROUP_SYNC": "Grubu yeniden eşitle",
         "GROUP_SYNC_DONE": "Grup eşitlendi.",
         "SCROLL_DOWN": "Aşağı kaydır",
+        "JUMP_TO_MESSAGE": "Jump to message",
         "UPLOAD_AVATAR": "Simge yükle",
         "CREATE_DISTRIBUTION_LIST": "Yeni dağıtım listesi",
         "DISTRIBUTION_LIST_NAME": "Ad",

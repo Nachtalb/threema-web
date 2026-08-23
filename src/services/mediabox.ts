@@ -61,6 +61,11 @@ export class MediaboxService {
     public hasNeighbour: ((forward: boolean) => boolean) | null = null;
 
     /**
+     * The message the shown media belongs to, so the box can jump back to it.
+     */
+    public messageId: string | null = null;
+
+    /**
      * Open the box straight away on the thumbnail, before the full media has
      * arrived. Keeps clicking a picture from feeling slow.
      *
@@ -113,6 +118,7 @@ export class MediaboxService {
         this.loading = false;
         this.loadNeighbour = null;
         this.hasNeighbour = null;
+        this.messageId = null;
         this.evtMediaChanged.post(false);
     }
 

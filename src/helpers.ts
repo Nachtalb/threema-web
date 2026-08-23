@@ -493,6 +493,29 @@ export function replaceWhitespace(text: string): string {
 }
 
 /**
+ * Scroll to a message and flash it, so it is obvious which one was jumped to.
+ * Returns whether the message is currently in the DOM.
+ */
+export function jumpToMessage(messageId: string): boolean {
+    const target = document.getElementById(`message-${messageId}`);
+    if (target === null) {
+        return false;
+    }
+    target.scrollIntoView({behavior: 'smooth', block: 'center'});
+
+    const message = target.querySelector('.message');
+    if (message !== null) {
+        // Restart the animation if the same message is hit twice
+        message.classList.remove('message-flash');
+        const reflow = (message as HTMLElement).offsetWidth;
+        if (reflow >= 0) {
+            message.classList.add('message-flash');
+        }
+    }
+    return true;
+}
+
+/**
  * Work around nonstandard Firefox behavior when downloading a PDF by changing
  * a PDF mimetype to application/octet-stream.
  *

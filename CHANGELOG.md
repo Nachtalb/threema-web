@@ -16,6 +16,7 @@ Changes:
 * [feature] Keep the session password across reloads in the browser
 * [feature] Add a random set of background images, with a setting to disable the blur
 * [feature] Click a quote to jump to the quoted message
+* [feature] Jump from the media viewer back to the message the media belongs to
 * [change] Move the overflow menu entries into the settings dialog
 * [change] Default to the minimal user interface
 * [change] Use toggles for the settings entries

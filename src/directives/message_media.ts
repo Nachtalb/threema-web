@@ -264,6 +264,7 @@ export default [
 
                         const show = (msg: threema.Message) => {
                             showing = msg;
+                            mediaboxService.messageId = msg.id;
                             // Open on the best picture the message has to hand.
                             // `preview` is a tiny blurred placeholder, so it is
                             // only a last resort.

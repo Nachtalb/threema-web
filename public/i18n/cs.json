@@ -181,6 +181,7 @@
         "GROUP_SYNC": "Synchronizovat skupinu",
         "GROUP_SYNC_DONE": "Skupina byla synchronizována.",
         "SCROLL_DOWN": "Posunout dolů",
+        "JUMP_TO_MESSAGE": "Jump to message",
         "UPLOAD_AVATAR": "Nahrát profilový obrázek",
         "CREATE_DISTRIBUTION_LIST": "Vytvořit distribuční seznam",
         "DISTRIBUTION_LIST_NAME": "Název",

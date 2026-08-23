@@ -181,6 +181,7 @@
         "GROUP_SYNC": "Uudelleensynkronoi ryhmä",
         "GROUP_SYNC_DONE": "Ryhmä synkronoitu",
         "SCROLL_DOWN": "Selaa alaspäin",
+        "JUMP_TO_MESSAGE": "Jump to message",
         "UPLOAD_AVATAR": "Lataa avatar-kuva",
         "CREATE_DISTRIBUTION_LIST": "Uusi jakelulista",
         "DISTRIBUTION_LIST_NAME": "Nimi",

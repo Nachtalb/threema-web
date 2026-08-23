@@ -168,6 +168,7 @@
         "GROUP_SYNC": "Csoport szinkronizálása",
         "GROUP_SYNC_DONE": "Csoport szinkronizálva.",
         "SCROLL_DOWN": "Scroll down",
+        "JUMP_TO_MESSAGE": "Jump to message",
         "UPLOAD_AVATAR": "Avatar feltöltése",
         "CREATE_DISTRIBUTION_LIST": "New distribution list",
         "DISTRIBUTION_LIST_NAME": "Név",
