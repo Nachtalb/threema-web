@@ -723,7 +723,8 @@ export default [
                         em.classList.toggle(
                             'search-hidden', term !== '' && !shortcode.includes(term));
                     });
-                    setFocusedEmoji(null);
+                    // The best match is ready for enter, no arrows needed
+                    setFocusedEmoji(term === '' ? null : visibleEmoji(picker)[0] ?? null);
                 }
 
                 // A search box above the emoji, added here because the picker
@@ -747,6 +748,10 @@ export default [
                                 .includes(ev.key)) {
                             ev.preventDefault();
                             onPickerKeyDown(ev);
+                            return;
+                        }
+                        // Ctrl+. still closes the picker from in here
+                        if (ev.key === '.' && ev.ctrlKey) {
                             return;
                         }
                         ev.stopPropagation();
@@ -776,6 +781,13 @@ export default [
                     content.removeEventListener('keydown', onPickerKeyDown);
                     content.removeEventListener('scroll', onPickerScroll);
                     setFocusedEmoji(null);
+
+                    // Reopen on the full list rather than the last search
+                    const search = emojiPicker.querySelector('.emoji-search') as HTMLInputElement;
+                    if (search !== null && search.value !== '') {
+                        search.value = '';
+                        applyEmojiSearch(emojiPicker, '');
+                    }
 
                     // The search box had focus; hand it back to the message
                     composeArea.focus();
@@ -810,6 +822,10 @@ export default [
                 /** Put an emoji from the picker into the message. */
                 function pickEmoji(em: Element): void {
                     const emoji = em.textContent;
+                    // The search box may hold the caret; the message has to
+                    // have it back before anything can be written there.
+                    composeArea.focus();
+                    composeArea.store_selection_range();
                     insertSingleEmojiString(emoji);
                     settingsService.emoji.addRecent(emoji);
                     updateView();
