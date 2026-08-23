@@ -82,6 +82,15 @@ const SHORTNAMES: Map<string, string> = (() => {
 })();
 
 /**
+ * A shortname reduced to what a search should match: lowercase, with the
+ * separators dropped. `flag-ch`, `flag_ch` and `flagch` all reduce to the
+ * same thing.
+ */
+function searchKey(name: string): string {
+    return name.toLowerCase().replace(/[-_\s]/g, '');
+}
+
+/**
  * The name each emoji is best known by, for labelling one that has no
  * shortname of its own in the picker.
  */
@@ -90,6 +99,21 @@ const NAMES_BY_EMOJI: Map<string, string> = (() => {
     for (const [shortname, emoji] of SHORTNAMES) {
         if (!names.has(emoji)) {
             names.set(emoji, shortname);
+        }
+    }
+    return names;
+})();
+
+/**
+ * The same names again, keyed without their separators, so `flag_ch` and
+ * `flagch` both find `flag-ch`.
+ */
+const BY_SEARCH_KEY: Map<string, string> = (() => {
+    const names = new Map<string, string>();
+    for (const [shortname, emoji] of SHORTNAMES) {
+        const key = searchKey(shortname);
+        if (!names.has(key)) {
+            names.set(key, emoji);
         }
     }
     return names;
@@ -191,11 +215,13 @@ export function shortnameToUtf8(shortname: string): string | null {
     // The picker names skin tones `wave_tone3`; the library addresses them as
     // `:wave::skin-tone-4:`, counting the toneless variant as the first.
     const toned = /^(.+)_tone([1-5])$/.exec(name);
-    if (toned === null || !SHORTNAMES.has(toned[1])) {
-        return null;
+    if (toned !== null && SHORTNAMES.has(toned[1])) {
+        const rendered = toNative.replace_colons(`:${toned[1]}::skin-tone-${Number(toned[2]) + 1}:`);
+        return rendered.startsWith(':') ? null : rendered;
     }
-    const rendered = toNative.replace_colons(`:${toned[1]}::skin-tone-${Number(toned[2]) + 1}:`);
-    return rendered.startsWith(':') ? null : rendered;
+
+    // `flag_ch` and `flagch` should find `flag-ch`
+    return BY_SEARCH_KEY.get(searchKey(name)) ?? null;
 }
 
 /**
@@ -204,21 +230,30 @@ export function shortnameToUtf8(shortname: string): string | null {
  * An empty prefix offers everything, in the order the picker lists it, so a
  * bare ':' opens with the first category rather than an alphabetical jumble.
  *
+ * Separators are ignored, so `flag-ch` is found by `flag_ch` and `flagch`
+ * alike. Names that match exactly come first.
+ *
  * Names come back bare, without the surrounding colons, which is what
  * `shortnameToUtf8` expects.
  */
 export function shortnamesStartingWith(prefix: string, limit: number): string[] {
     const needle = prefix.toLowerCase();
-    const found: string[] = [];
+    const loose = searchKey(prefix);
+    const exact: string[] = [];
+    const fuzzy: string[] = [];
+
     for (const shortname of SHORTNAMES.keys()) {
         if (shortname.startsWith(needle)) {
-            found.push(shortname);
-            if (found.length === limit) {
+            exact.push(shortname);
+            if (exact.length === limit) {
                 break;
             }
+        } else if (fuzzy.length < limit && searchKey(shortname).startsWith(loose)) {
+            fuzzy.push(shortname);
         }
     }
-    return found;
+
+    return [...exact, ...fuzzy].slice(0, limit);
 }
 
 /**

@@ -707,12 +707,15 @@ export default [
                     return [...emoji].map((c) => c.codePointAt(0).toString(16)).join('-');
                 }
 
-                // Filter the emoji by their shortcode, e.g. ":smirk:"
+                // Filter the emoji by their shortcode, e.g. ":smirk:".
+                // Separators are ignored, so "flag_ch" and "flagch" both find
+                // ":flag-ch:".
                 function applyEmojiSearch(picker: Element, needle: string): void {
-                    const term = needle.trim().toLowerCase();
+                    const term = needle.trim().toLowerCase().replace(/[-_\s:]/g, '');
                     picker.classList.toggle('searching', term !== '');
                     Array.from(picker.querySelectorAll('.content .em')).forEach((em: Element) => {
-                        const shortcode = (em.getAttribute('data-s') || '').toLowerCase();
+                        const shortcode = (em.getAttribute('data-s') || '')
+                            .toLowerCase().replace(/[-_\s:]/g, '');
                         em.classList.toggle(
                             'search-hidden', term !== '' && !shortcode.includes(term));
                     });

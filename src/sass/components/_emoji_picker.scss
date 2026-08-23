@@ -147,8 +147,11 @@
             display: none;
         }
 
+        // The sections are only a grouping for scrolling; while searching the
+        // matches run together as one list rather than one row per section.
+        .section,
         .section[hidden] {
-            display: block;
+            display: inline;
         }
     }
 
