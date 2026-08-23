@@ -55,6 +55,12 @@ $active-placeholder-color: var(--placeholder);
     color: $status-error;
 }
 
+// angular-material colours a bare `md-icon` for a light surface. These follow
+// the page instead, so they stay legible in either scheme.
+md-icon.material-icons:not(.md-light):not(.md-primary):not(.md-warn) {
+    color: var(--text-muted);
+}
+
 .material-icons.md-medium-dark { color: var(--text-muted); }
 .material-icons.md-medium-dark.md-inactive { color: var(--text-faint); }
 

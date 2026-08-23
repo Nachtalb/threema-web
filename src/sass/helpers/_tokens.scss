@@ -44,6 +44,8 @@
     --nav-tabs: #f5f5f5;
     --nav-search: #f5f5f5;
     --scroll-jump: rgba(255, 255, 255, .72);
+    // Translucent surfaces that blur what is behind them
+    --menu-surface: rgba(255, 255, 255, .72);
     --avatar-brightness: 1;
     --background-brightness: 1;
     // Monochrome icons that ship as black image files
@@ -52,30 +54,30 @@
 
 @mixin dark-scheme {
     // Surfaces
-    --surface: #1e2124;
-    --surface-raised: #282b30;
-    --surface-sunken: #17191c;
-    --surface-grey: #2f3336;
-    --surface-grey-dim: #3a3f43;
-    --border: #3a3f43;
+    --surface: #1c1f23;
+    --surface-raised: #24282d;
+    --surface-sunken: #131518;
+    --surface-grey: #32373c;
+    --surface-grey-dim: #454b52;
+    --border: #454b52;
 
     // Text
     --text: rgba(255, 255, 255, .87);
-    --text-muted: rgba(255, 255, 255, .6);
-    --text-faint: rgba(255, 255, 255, .38);
+    --text-muted: rgba(255, 255, 255, .7);
+    --text-faint: rgba(255, 255, 255, .5);
     --placeholder: rgba(255, 255, 255, .3);
 
     // Message bubbles
-    --bubble-in: #282b30;
-    --bubble-out: #1f3d2b;
+    --bubble-in: #262b31;
+    --bubble-out: #204d31;
     --selected-row: #22372a;
 
     // Chrome
     --scrollbar-bg: #17191c;
     --scrollbar-thumb: #454a4f;
-    --hover: rgba(255, 255, 255, .09);
-    --hover-soft: rgba(255, 255, 255, .05);
-    --divider: rgba(255, 255, 255, .12);
+    --hover: rgba(255, 255, 255, .12);
+    --hover-soft: rgba(255, 255, 255, .07);
+    --divider: rgba(255, 255, 255, .22);
     --shadow-colour: rgba(0, 0, 0, .4);
     --shadow-colour-strong: rgba(0, 0, 0, .5);
 
@@ -83,6 +85,7 @@
     --nav-tabs: #202327;
     --nav-search: #202327;
     --scroll-jump: rgba(40, 43, 48, .85);
+    --menu-surface: rgba(28, 31, 35, .8);
     // The generated avatars are bright pastels; knock them back a little
     --avatar-brightness: .8;
     --background-brightness: .55;
@@ -177,7 +180,27 @@ body.scheme-dark {
             border-top-color: var(--divider);
         }
 
-        // The list rows carry the palette's own text colour
+        // The profile sidebar is built from cards, which paint their own surface
+    // and would otherwise sit brighter than every other panel.
+    .detail-panel,
+    .detail-panel md-card,
+    .detail-panel md-card-content,
+    .detail-panel md-content,
+    .detail-panel md-list,
+    .detail-panel md-list-item,
+    .detail-panel .md-list-item-inner,
+    .detail-panel .detail-header {
+        background-color: var(--surface-raised);
+        color: var(--text);
+    }
+
+    // The sender colour is written inline by ng-style from contact data and
+    // assumes a light bubble, so it has to be overridden outright.
+    .message-name {
+        color: var(--text) !important;
+    }
+
+    // The list rows carry the palette's own text colour
         #conversations,
         #contacts,
         .conversation-wrapper,

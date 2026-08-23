@@ -174,11 +174,19 @@ md-dialog.settings-dialog {
     }
 
     // Three-way switch: the selected segment's backing slides between them
+    .colour-scheme {
+        // Line the label up with the switch rows above it
+        > span {
+            margin-left: 40px;
+        }
+    }
+
     .scheme-pill {
         display: flex;
         position: relative;
+        border: 1px solid var(--border);
         border-radius: 14px;
-        background-color: var(--surface-grey);
+        background-color: var(--surface-sunken);
         padding: 2px;
 
         .thumb {
@@ -186,8 +194,9 @@ md-dialog.settings-dialog {
             top: 2px;
             left: 2px;
             transition: transform .2s ease-out;
+            box-shadow: 0 1px 3px var(--shadow-colour);
             border-radius: 12px;
-            background-color: var(--surface);
+            background-color: $theme-primary;
             width: calc((100% - 4px) / 3);
             height: calc(100% - 4px);
             pointer-events: none;
@@ -214,7 +223,9 @@ md-dialog.settings-dialog {
             font-size: .8rem;
 
             &.selected {
-                color: var(--text);
+                // On the accent-coloured thumb, which is green in both schemes
+                color: var(--text-on-dark);
+                font-weight: 500;
             }
         }
     }

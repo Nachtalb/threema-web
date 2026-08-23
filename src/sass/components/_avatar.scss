@@ -69,6 +69,8 @@
     .home-indicator {
         $indicator-size: 18px;
         position: absolute;
+        // Above the avatar, which would otherwise cover it
+        z-index: 1;
         top: 48px - $indicator-size;
 
         img {

@@ -290,10 +290,16 @@
                 @include message-bubble-shadow;
                 display: inline-block;
                 border-radius: 50%;
-                background-color: var(--surface);
+                background-color: var(--bubble-in);
                 padding: 6px;
                 width: 30px;
                 height: 30px;
+
+                // The gif has an opaque white background baked in, which
+                // shows as a square on a dark surface.
+                img {
+                    filter: invert(var(--icon-invert));
+                }
             }
         }
 
@@ -1057,4 +1063,41 @@ md-menu-item {
         font-size: .85em;
         word-break: break-all;
     }
+}
+
+// A message that is nothing but emoji needs no bubble around it: the emoji are
+// the message. The selector matches the bubble rules' specificity, which set
+// the background per direction.
+#conversation .message-in .message-body:has(.em.large-emoji),
+#conversation .message-out .message-body:has(.em.large-emoji) {
+    box-shadow: none;
+    background-color: transparent;
+    // Nothing to fill, so the bubble's minimum does not apply
+    min-width: 0;
+
+    .bubble-triangle {
+        display: none;
+    }
+
+    // With no bubble the timestamp sits under the emoji rather than beside it
+    .message-text {
+        display: block;
+        padding: 0;
+    }
+
+    .message-info {
+        justify-content: flex-start;
+        margin: 0;
+        padding: 0;
+    }
+}
+
+// The bubble is inset to leave room for its tail; without a bubble that gap is
+// just a stray indent.
+#conversation .message-in .message-body:has(.em.large-emoji) {
+    margin-left: 0;
+}
+
+#conversation .message-out .message-body:has(.em.large-emoji) {
+    margin-right: 0;
 }
