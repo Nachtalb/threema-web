@@ -98,7 +98,7 @@
         height: 100%;
 
         > div.ng-scope {
-            background-color: #efebe9;
+            background-color: var(--surface-sunken);
             height: 100%;
 
             // Default style for the header in the detail

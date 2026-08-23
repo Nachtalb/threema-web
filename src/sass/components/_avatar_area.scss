@@ -10,7 +10,7 @@
             position: relative;
             margin: auto;
             border-radius: 50%;
-            background-color: rgb(198, 198, 198);
+            background-color: var(--surface-grey);
             width: $avatar-area-size;
             height: $avatar-area-size;
             overflow: hidden;

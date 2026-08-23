@@ -19,6 +19,7 @@ import {AsyncEvent} from 'ts-events';
 import {Logger} from 'ts-log';
 
 import {LogService} from './log';
+import {SettingsService} from './settings';
 
 export class ThemeService {
     // Angular services
@@ -33,8 +34,9 @@ export class ThemeService {
     // Private attributes
     private _theme: threema.Theme = threema.Theme.Regular;
 
-    public static $inject = ['$interval', 'LogService'];
-    constructor($interval: ng.IIntervalService, logService: LogService) {
+    public static $inject = ['$interval', 'LogService', 'SettingsService'];
+    constructor($interval: ng.IIntervalService, logService: LogService,
+                private readonly settingsService: SettingsService) {
         this.$interval = $interval;
         this.log = logService.getLogger('Theme-S', 'color: #fff; background-color: #cc9900');
 
@@ -46,6 +48,21 @@ export class ThemeService {
      */
     public get theme(): threema.Theme {
         return this._theme;
+    }
+
+    /**
+     * The angular-material theme to draw with, which is the brand theme plus
+     * its dark variant when the dark scheme applies.
+     *
+     * Every md-theme in the app resolves through here, so the naming lives in
+     * one place.
+     */
+    public get materialTheme(): string {
+        const scheme = this.settingsService.appearance.getColourScheme();
+        const dark = scheme === 'system'
+            ? window.matchMedia('(prefers-color-scheme: dark)').matches
+            : scheme === 'dark';
+        return dark ? `${this._theme}dark` : this._theme;
     }
 
     /**

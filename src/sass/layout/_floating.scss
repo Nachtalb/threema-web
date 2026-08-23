@@ -64,7 +64,7 @@ md-menu-content.md-threema-theme,
 md-menu-content.md-threemawork-theme {
     padding: 0;
     // Translucent, with the backdrop blurred so entries stay readable
-    background-color: rgba(255, 255, 255, .72);
+    background-color: var(--scroll-jump);
     backdrop-filter: blur(16px) saturate(140%);
 }
 

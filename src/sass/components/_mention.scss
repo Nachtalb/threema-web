@@ -5,7 +5,7 @@
 
     &.me,
     &.all {
-        background-color: #8b8b8b;
+        background-color: var(--surface-grey-dim);
         color: var(--text-on-dark);
     }
 

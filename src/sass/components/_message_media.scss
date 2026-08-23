@@ -39,7 +39,7 @@ $loading-ring-thickness: 5px;
         position: relative;
         outline: none;
         border-radius: math.div($circle-size, 2);
-        background-color: #808080;
+        background-color: var(--surface-grey-dim);
         background-size: cover;
         width: $circle-size;
         min-width: $circle-size;

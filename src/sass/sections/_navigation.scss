@@ -71,6 +71,7 @@
             &[type='search'] {
                 margin: 0;
                 border: 1px solid var(--border);
+                background-color: var(--nav-search);
                 border-radius: $material-radius;
                 background-color: var(--surface);
                 padding: $main-padding;

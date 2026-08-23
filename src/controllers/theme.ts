@@ -39,7 +39,7 @@ export class ThemeController {
     public schemeClass: string;
 
     private readonly settingsService: SettingsService;
-    private brand: threema.Theme;
+    private readonly themeService: ThemeService;
 
     public static $inject = ['$scope', 'LogService', 'ThemeService', 'SettingsService'];
     constructor($scope, logService: LogService, themeService: ThemeService, settingsService: SettingsService) {
@@ -47,15 +47,12 @@ export class ThemeController {
         this.log = logService.getLogger('Theme-C', 'color: #000; background-color: #ffff99');
 
         this.settingsService = settingsService;
-        this.brand = themeService.theme;
+        this.themeService = themeService;
 
         // Listen to theme changes
         themeService.evtThemeChange.attach((newTheme: threema.Theme) => {
-            this.log.debug(`Updating theme: ${this.brand} -> ${newTheme}`);
-            $scope.$apply(() => {
-                this.brand = newTheme;
-                this.applyScheme();
-            });
+            this.log.debug(`Updating theme: ${newTheme}`);
+            $scope.$apply(() => this.applyScheme());
         });
 
         // Set background class
@@ -81,18 +78,10 @@ export class ThemeController {
         });
     }
 
-    /** Whether the dark scheme applies right now. */
-    private isDark(): boolean {
-        const scheme = this.settingsService.appearance.getColourScheme();
-        return scheme === 'system'
-            ? window.matchMedia('(prefers-color-scheme: dark)').matches
-            : scheme === 'dark';
-    }
-
     private applyScheme(): void {
         const scheme = this.settingsService.appearance.getColourScheme();
         this.schemeClass = scheme === 'system' ? '' : `scheme-${scheme}`;
-        this.theme = this.isDark() ? `${this.brand}dark` : this.brand;
+        this.theme = this.themeService.materialTheme;
     }
 
     private static getBackgroundClass(blur: boolean): string {

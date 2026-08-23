@@ -269,7 +269,7 @@
         height: 2px;
 
         .reached {
-            background-color: #999999;
+            background-color: var(--surface-grey-dim);
         }
 
         .unreached {

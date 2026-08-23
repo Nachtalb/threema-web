@@ -39,9 +39,12 @@ export class DialogController {
         // Unfortunately md-dialog does not properly update when the root theme is changed.
         // This means that we have to listen to theme changes manually and
         // update the md-theme attribute on the dialog template.
-        this.theme = themeService.theme;
+        //
+        // `materialTheme` resolves the dark variant, so a dialog opened while
+        // the dark scheme is on does not come up in the light palette.
+        this.theme = themeService.materialTheme;
         themeService.evtThemeChange.attach(
-            (newTheme: threema.Theme) => $scope.$apply(() => this.theme = newTheme),
+            () => $scope.$apply(() => this.theme = themeService.materialTheme),
         );
     }
 

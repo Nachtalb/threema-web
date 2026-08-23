@@ -21,7 +21,6 @@
     --text: rgba(0, 0, 0, .87);
     --text-muted: rgba(0, 0, 0, .54);
     --text-faint: rgba(0, 0, 0, .38);
-    --text-on-accent: #ffffff;
     // Text drawn on a backdrop that is dark in both schemes
     --text-on-dark: #ffffff;
     --placeholder: #d3d3d3;
@@ -29,14 +28,11 @@
     // Message bubbles
     --bubble-in: #f7f7f7;
     --bubble-out: #dff0d8;
-    --bubble-quote-border: rgba(0, 0, 0, .2);
     --selected-row: #e1f4e7;
 
     // Chrome
     --scrollbar-bg: #f6f6f6;
     --scrollbar-thumb: #cccccc;
-    --overlay: rgba(0, 0, 0, .45);
-    --overlay-strong: rgba(0, 0, 0, .7);
     --hover: rgba(0, 0, 0, .09);
     --hover-soft: rgba(0, 0, 0, .05);
     --divider: rgba(0, 0, 0, .12);
@@ -72,14 +68,11 @@
     // Message bubbles
     --bubble-in: #282b30;
     --bubble-out: #1f3d2b;
-    --bubble-quote-border: rgba(255, 255, 255, .25);
     --selected-row: #22372a;
 
     // Chrome
     --scrollbar-bg: #17191c;
     --scrollbar-thumb: #454a4f;
-    --overlay: rgba(0, 0, 0, .6);
-    --overlay-strong: rgba(0, 0, 0, .8);
     --hover: rgba(255, 255, 255, .09);
     --hover-soft: rgba(255, 255, 255, .05);
     --divider: rgba(255, 255, 255, .12);

@@ -1,6 +1,6 @@
 // Webkit specific global styling
 ::-webkit-scrollbar {
-    border: 1px solid #f9f9f9;
+    border: 1px solid var(--surface-sunken);
     background-color: $scrollbar-color-bg;
     width: 6px;
 }
