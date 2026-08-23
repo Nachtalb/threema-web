@@ -349,6 +349,7 @@ class SettingsController extends DialogController {
     }
 
     public setColourScheme(scheme: threema.ColourScheme) {
+        this.colourScheme = scheme;
         this.settingsService.appearance.setColourScheme(scheme);
     }
 

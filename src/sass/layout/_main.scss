@@ -24,11 +24,13 @@
     -webkit-user-select: none;
     user-select: none;
     pointer-events: none;
+    // Dimmed in the dark scheme so the chrome above it stays readable
+    filter: brightness(var(--background-brightness));
 
     // Scaled up so the blur doesn't bleed transparent edges into the viewport
     body:not(.background-sharp) & {
         transform: scale(1.05);
-        filter: blur(12px);
+        filter: blur(12px) brightness(var(--background-brightness));
     }
 }
 
@@ -137,7 +139,7 @@
                         flex-grow: 1;
                         justify-content: space-between;
                         line-height: 100%;
-                        color: #000000;
+                        color: var(--text);
 
                         &:first-child {
                             font-weight: bold;

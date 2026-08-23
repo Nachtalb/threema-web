@@ -107,13 +107,18 @@
                         </md-list-item>
                         <md-list-item class="colour-scheme">
                             <span translate>settings.ui.COLOUR_SCHEME</span>
-                            <md-select ng-model="ctrl.colourScheme"
-                                       ng-change="ctrl.setColourScheme(ctrl.colourScheme)"
-                                       aria-label="Colour scheme" class="md-secondary">
-                                <md-option value="system"><span translate>settings.ui.SCHEME_SYSTEM</span></md-option>
-                                <md-option value="light"><span translate>settings.ui.SCHEME_LIGHT</span></md-option>
-                                <md-option value="dark"><span translate>settings.ui.SCHEME_DARK</span></md-option>
-                            </md-select>
+                            <div class="scheme-pill md-secondary" role="radiogroup"
+                                 aria-label="Colour scheme"
+                                 ng-class="'at-' + ctrl.colourScheme">
+                                <span class="thumb" aria-hidden="true"></span>
+                                <button type="button" role="radio"
+                                        ng-repeat="option in ['system', 'light', 'dark']"
+                                        ng-class="{selected: ctrl.colourScheme === option}"
+                                        aria-checked="{{ ctrl.colourScheme === option }}"
+                                        ng-click="ctrl.setColourScheme(option)">
+                                    <span translate>{{ 'settings.ui.SCHEME_' + option.toUpperCase() }}</span>
+                                </button>
+                            </div>
                         </md-list-item>
                         <md-list-item class="background-picker">
                             <span translate>settings.ui.CUSTOM_BACKGROUND</span>

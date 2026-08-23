@@ -112,7 +112,7 @@ body {
         $half-transparent: rgba(0, 0, 0, .5);
         margin: 8px;
         text-shadow: 0 1px 1px $half-transparent;
-        color: var(--surface);
+        color: var(--text-on-dark);
 
         &:first-of-type {
             margin-left: 16px;

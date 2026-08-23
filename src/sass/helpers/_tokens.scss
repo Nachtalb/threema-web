@@ -22,6 +22,8 @@
     --text-muted: rgba(0, 0, 0, .54);
     --text-faint: rgba(0, 0, 0, .38);
     --text-on-accent: #ffffff;
+    // Text drawn on a backdrop that is dark in both schemes
+    --text-on-dark: #ffffff;
     --placeholder: #d3d3d3;
 
     // Message bubbles
@@ -35,10 +37,21 @@
     --scrollbar-thumb: #cccccc;
     --overlay: rgba(0, 0, 0, .45);
     --overlay-strong: rgba(0, 0, 0, .7);
-    --hover: rgba(0, 0, 0, .08);
+    --hover: rgba(0, 0, 0, .09);
+    --hover-soft: rgba(0, 0, 0, .05);
     --divider: rgba(0, 0, 0, .12);
     --shadow-colour: rgba(0, 0, 0, .16);
     --shadow-colour-strong: rgba(0, 0, 0, .23);
+
+    // Chrome that is its own surface rather than following the page
+    --nav-header: #424242;
+    --nav-tabs: #f5f5f5;
+    --nav-search: #f5f5f5;
+    --scroll-jump: rgba(255, 255, 255, .72);
+    --avatar-brightness: 1;
+    --background-brightness: 1;
+    // Monochrome icons that ship as black image files
+    --icon-invert: 0;
 }
 
 @mixin dark-scheme {
@@ -67,10 +80,20 @@
     --scrollbar-thumb: #454a4f;
     --overlay: rgba(0, 0, 0, .6);
     --overlay-strong: rgba(0, 0, 0, .8);
-    --hover: rgba(255, 255, 255, .08);
+    --hover: rgba(255, 255, 255, .09);
+    --hover-soft: rgba(255, 255, 255, .05);
     --divider: rgba(255, 255, 255, .12);
     --shadow-colour: rgba(0, 0, 0, .4);
     --shadow-colour-strong: rgba(0, 0, 0, .5);
+
+    --nav-header: #16181b;
+    --nav-tabs: #202327;
+    --nav-search: #202327;
+    --scroll-jump: rgba(40, 43, 48, .85);
+    // The generated avatars are bright pastels; knock them back a little
+    --avatar-brightness: .8;
+    --background-brightness: .55;
+    --icon-invert: 1;
 }
 
 // The scheme follows the system unless the setting overrides it. The media

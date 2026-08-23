@@ -57,7 +57,7 @@ $loading-ring-thickness: 5px;
             margin: auto;
             border-radius: $material-radius;
             background: rgba(128, 128, 128, .3);
-            color: var(--surface);
+            color: var(--text-on-dark);
         }
     }
 
@@ -203,7 +203,7 @@ $loading-ring-thickness: 5px;
                 }
 
                 .percent {
-                    color: var(--surface);
+                    color: var(--text-on-dark);
                     font-size: 11px;
                 }
             }

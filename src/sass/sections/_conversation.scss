@@ -112,7 +112,7 @@
             box-sizing: content-box;
             // Matches the context menus
             border-radius: 50%;
-            background-color: rgba(255, 255, 255, .72);
+            background-color: var(--scroll-jump);
             backdrop-filter: blur(16px) saturate(140%);
             padding: 7px;
             width: 22px;
@@ -208,7 +208,7 @@
     border-left: 5px solid #0000ff;
     // Tint the quote so it reads as separate from the message written around it
     border-radius: 0 3px 3px 0;
-    background-color: rgba(0, 0, 0, .05);
+    background-color: var(--hover-soft);
     padding: 6px 8px;
     font-size: .9em;
 
@@ -219,7 +219,7 @@
         cursor: pointer;
 
         &:hover {
-            background-color: rgba(0, 0, 0, .09);
+            background-color: var(--hover);
         }
     }
 
@@ -265,7 +265,7 @@
         border-radius: 12px;
         background-color: rgba(0, 0, 0, .45);
         padding: 2px 10px;
-        color: var(--surface);
+        color: var(--text-on-dark);
         font-size: .8em;
     }
 }
@@ -484,11 +484,11 @@
                     // The digits sit high in their line box, so an even
                     // padding reads as squashed against the top.
                     line-height: 1.2;
-                    color: var(--surface);
+                    color: var(--text-on-dark);
 
                     .message-date,
                     .message-state i {
-                        color: var(--surface);
+                        color: var(--text-on-dark);
                     }
                 }
 
@@ -652,7 +652,7 @@
                 // frosted light one so it stands out as mine.
                 border-radius: 15px;
                 background-color: rgba(0, 0, 0, .3);
-                color: var(--surface);
+                color: var(--text-on-dark);
 
                 &.active {
                     background-color: rgba(255, 255, 255, .5);
@@ -744,7 +744,7 @@
             align-items: end;
             justify-content: flex-end;
             margin-top: 4px;
-            color: #808080;
+            color: var(--text-muted);
             font-size: .8em;
             gap: 4px;
 
@@ -896,7 +896,7 @@
             border-radius: 12px;
             background-color: rgba(0, 0, 0, .45);
             padding: 2px 10px;
-            color: var(--surface);
+            color: var(--text-on-dark);
             font-size: .8em;
         }
     }
@@ -926,7 +926,7 @@
             padding: 3px 10px;
             min-width: 0;
             max-width: 85%;
-            color: var(--surface);
+            color: var(--text-on-dark);
             font-size: .8em;
 
             .message-text {

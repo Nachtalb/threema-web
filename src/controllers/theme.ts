@@ -18,8 +18,8 @@
 import {Logger} from 'ts-log';
 
 import {LogService} from '../services/log';
-import {ThemeService} from '../services/theme';
 import {SettingsService} from '../services/settings'
+import {ThemeService} from '../services/theme';
 
 /**
  * This controller handles theming.
@@ -28,7 +28,7 @@ export class ThemeController {
     // Logging
     private readonly log: Logger;
 
-    // Theme name
+    // Theme name, as registered with angular-material
     public theme: string;
 
     // Background class
@@ -38,18 +38,24 @@ export class ThemeController {
     // empty while it follows it
     public schemeClass: string;
 
+    private readonly settingsService: SettingsService;
+    private brand: threema.Theme;
+
     public static $inject = ['$scope', 'LogService', 'ThemeService', 'SettingsService'];
     constructor($scope, logService: LogService, themeService: ThemeService, settingsService: SettingsService) {
         // Logging
         this.log = logService.getLogger('Theme-C', 'color: #000; background-color: #ffff99');
 
-        // Initialize theme
-        this.theme = themeService.theme;
+        this.settingsService = settingsService;
+        this.brand = themeService.theme;
 
         // Listen to theme changes
         themeService.evtThemeChange.attach((newTheme: threema.Theme) => {
-            this.log.debug(`Updating theme: ${this.theme} -> ${newTheme}`);
-            $scope.$apply(() => this.theme = newTheme);
+            this.log.debug(`Updating theme: ${this.brand} -> ${newTheme}`);
+            $scope.$apply(() => {
+                this.brand = newTheme;
+                this.applyScheme();
+            });
         });
 
         // Set background class
@@ -60,18 +66,33 @@ export class ThemeController {
             $scope.$apply(() => this.backgroundClass = ThemeController.getBackgroundClass(blur));
         })
 
-        // Colour scheme. 'system' adds no class at all: the stylesheet's
-        // prefers-color-scheme query handles that case natively, including
-        // when the system flips while the app is open.
-        this.schemeClass = ThemeController.getSchemeClass(
-            settingsService.appearance.getColourScheme());
-        settingsService.colourSchemeChange.attach((scheme: threema.ColourScheme) => {
-            $scope.$apply(() => this.schemeClass = ThemeController.getSchemeClass(scheme));
+        // Colour scheme
+        this.applyScheme();
+        settingsService.colourSchemeChange.attach(() => {
+            $scope.$apply(() => this.applyScheme());
+        });
+
+        // angular-material needs a concrete palette, so unlike the stylesheet
+        // it cannot leave the system case to CSS.
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+            if (this.settingsService.appearance.getColourScheme() === 'system') {
+                $scope.$apply(() => this.applyScheme());
+            }
         });
     }
 
-    private static getSchemeClass(scheme: threema.ColourScheme): string {
-        return scheme === 'system' ? '' : `scheme-${scheme}`;
+    /** Whether the dark scheme applies right now. */
+    private isDark(): boolean {
+        const scheme = this.settingsService.appearance.getColourScheme();
+        return scheme === 'system'
+            ? window.matchMedia('(prefers-color-scheme: dark)').matches
+            : scheme === 'dark';
+    }
+
+    private applyScheme(): void {
+        const scheme = this.settingsService.appearance.getColourScheme();
+        this.schemeClass = scheme === 'system' ? '' : `scheme-${scheme}`;
+        this.theme = this.isDark() ? `${this.brand}dark` : this.brand;
     }
 
     private static getBackgroundClass(blur: boolean): string {

@@ -173,6 +173,52 @@ md-dialog.settings-dialog {
         }
     }
 
+    // Three-way switch: the selected segment's backing slides between them
+    .scheme-pill {
+        display: flex;
+        position: relative;
+        border-radius: 14px;
+        background-color: var(--surface-grey);
+        padding: 2px;
+
+        .thumb {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            transition: transform .2s ease-out;
+            border-radius: 12px;
+            background-color: var(--surface);
+            width: calc((100% - 4px) / 3);
+            height: calc(100% - 4px);
+            pointer-events: none;
+        }
+
+        &.at-light .thumb {
+            transform: translateX(100%);
+        }
+
+        &.at-dark .thumb {
+            transform: translateX(200%);
+        }
+
+        button {
+            position: relative;
+            flex: 1 1 0;
+            transition: color .2s ease-out;
+            z-index: 1;
+            border: 0;
+            background: none;
+            cursor: pointer;
+            padding: 4px 10px;
+            color: var(--text-muted);
+            font-size: .8rem;
+
+            &.selected {
+                color: var(--text);
+            }
+        }
+    }
+
     // A row that is only a label, with no control beside it
     .background-picker > span:first-child {
         margin-left: 80px;

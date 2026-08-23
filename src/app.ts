@@ -180,6 +180,18 @@ angular.module('3ema', [
     $mdThemingProvider.theme('threemawork')
         .primaryPalette('grey', {default: '800'})
         .accentPalette('threemawork', {default: 'A100'});
+
+    // Dark counterparts. angular-material generates its own colours for every
+    // component it ships, so the dark scheme has to be declared here rather
+    // than fought with overrides.
+    $mdThemingProvider.theme('threemadark')
+        .primaryPalette('grey', {default: '800'})
+        .accentPalette('threema', {default: 'A100'})
+        .dark();
+    $mdThemingProvider.theme('threemaworkdark')
+        .primaryPalette('grey', {default: '800'})
+        .accentPalette('threemawork', {default: 'A100'})
+        .dark();
     $mdThemingProvider.alwaysWatchTheme(true);
 }])
 

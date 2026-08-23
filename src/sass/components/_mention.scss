@@ -6,13 +6,13 @@
     &.me,
     &.all {
         background-color: #8b8b8b;
-        color: var(--surface);
+        color: var(--text-on-dark);
     }
 
     &.id {
         box-shadow: 0 1px 1px rgba(0, 0, 0, .1);
-        background-color: #e0e0e0;
-        color: #000000;
+        background-color: var(--surface-grey);
+        color: var(--text);
     }
 
     &::before {

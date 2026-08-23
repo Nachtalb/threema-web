@@ -55,5 +55,11 @@ $active-placeholder-color: var(--placeholder);
     color: $status-error;
 }
 
-.material-icons.md-medium-dark { color: rgba(0, 0, 0, .54); }
-.material-icons.md-medium-dark.md-inactive { color: rgba(0, 0, 0, .26); }
+.material-icons.md-medium-dark { color: var(--text-muted); }
+.material-icons.md-medium-dark.md-inactive { color: var(--text-faint); }
+
+// Icons that ship as black image files cannot take a CSS colour, so they are
+// inverted for the dark scheme instead.
+img[src$='.svg']:not(#background-image):not([src*='safari']) {
+    filter: invert(var(--icon-invert));
+}

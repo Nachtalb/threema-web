@@ -12,6 +12,9 @@
 
     > img {
         width: 100%;
+        // The generated letter avatars are bright pastels, which glare against
+        // a dark surface.
+        filter: brightness(var(--avatar-brightness));
     }
 
     // Different resolutions
