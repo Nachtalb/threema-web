@@ -21,22 +21,22 @@
     .tabs {
         display: flex;
         flex: 0 0 auto;
-        gap: 2px;
         justify-content: space-between;
-        padding: 4px 2px 0;
+        padding: 2px 0 0;
 
         button {
             display: flex;
-            align-items: center;
+            flex: 1 1 0;
+            align-items: flex-end;
             justify-content: center;
-            transition: border-color .15s ease-out, opacity .15s ease-out;
+            transition: opacity .15s ease-out;
             opacity: .55;
             border: 0;
-            border-bottom: 2px solid transparent;
             background: none;
             cursor: pointer;
-            padding: 3px 0;
-            width: $tab-size;
+            // Full height and width so the whole strip is clickable rather
+            // than just the icon.
+            padding: 6px 0 4px;
             color: $material-grey-dark;
 
             &:hover,
@@ -44,7 +44,15 @@
                 opacity: 1;
             }
 
-            &.current {
+            // The marker stays the width of the icon, not of the hit area
+            img,
+            svg {
+                border-bottom: 2px solid transparent;
+                padding-bottom: 3px;
+            }
+
+            &.current img,
+            &.current svg {
                 border-bottom-color: $theme-primary;
             }
         }
