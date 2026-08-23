@@ -291,6 +291,14 @@ md-menu-content.md-threemawork-theme {
             border-radius: inherit;
             overflow: hidden;
         }
+
+        // The picker is the bottom of the footer while it is open, so it
+        // carries the frame's rounding rather than ending square.
+        .emoji-keyboard,
+        .twemoji-picker {
+            border-bottom-right-radius: $float-radius;
+            border-bottom-left-radius: $float-radius;
+        }
     }
 
     #conversation-header {

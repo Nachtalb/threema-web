@@ -6,7 +6,9 @@
     flex-direction: column;
     margin: 0;
     background-color: $background-grey;
-    padding: 0 8px 6px;
+    // The bottom sits on the footer's rounded corner, so the skin tones need
+    // room to clear the curve.
+    padding: 0 8px 10px;
     min-height: 216px;
 
     &.outline {
