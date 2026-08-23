@@ -110,12 +110,20 @@
         padding: 4px 2px 0;
 
         img {
-            opacity: .6;
+            opacity: .5;
+            transition: opacity .15s ease-out;
             margin-left: 4px;
 
             &:hover {
-                opacity: 1;
+                opacity: .8;
             }
+        }
+    }
+
+    // The tone in use is the one that is not dimmed
+    @for $i from 0 through 5 {
+        &[data-skintone='#{$i}'] .skins img[data-tone='#{$i}'] {
+            opacity: 1;
         }
     }
 
