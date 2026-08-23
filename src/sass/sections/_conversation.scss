@@ -885,6 +885,12 @@
         text-align: center;
         pointer-events: none;
 
+        // Hidden once it has reached the floating pill, which draws the same
+        // label in the same place. The space stays so nothing shifts.
+        &.behind-floating span {
+            visibility: hidden;
+        }
+
         span {
             display: inline-block;
             border-radius: 12px;

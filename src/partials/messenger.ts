@@ -448,7 +448,7 @@ class ConversationController {
     public floatingDay: string = '';
     public floatingDayVisible: boolean = false;
     private floatingDayTimer: number | null = null;
-    private static readonly FLOATING_DAY_TOP = 40;
+    private static readonly FLOATING_DAY_TOP = 32;
     private static readonly FLOATING_DAY_LINGER = 1200;
 
     // Third party services
@@ -1245,9 +1245,18 @@ class ConversationController {
             }
         }
 
+        // The floating pill and the inline separators are the same pill drawn
+        // in the same place, so an inline one is hidden once it reaches the
+        // floating one. It reads as a single label that stuck.
+        let anyHidden = false;
+        for (const sep of Array.from(chat.querySelectorAll('.day-separator')) as HTMLElement[]) {
+            const hidden = sep.getBoundingClientRect().top < top;
+            sep.classList.toggle('behind-floating', hidden);
+            anyHidden = anyHidden || hidden;
+        }
+
         const day = hasValue(current) ? (this.$filter('unixToDay') as any)(current) : '';
-        const wasVisible = this.floatingDayVisible;
-        if (day !== this.floatingDay || !wasVisible) {
+        if (day !== this.floatingDay || !this.floatingDayVisible) {
             this.floatingDay = day;
             this.floatingDayVisible = day !== '';
             this.$scope.$evalAsync();
@@ -1255,12 +1264,17 @@ class ConversationController {
 
         if (this.floatingDayTimer !== null) {
             clearTimeout(this.floatingDayTimer);
-        }
-        this.floatingDayTimer = window.setTimeout(() => {
-            this.floatingDayVisible = false;
             this.floatingDayTimer = null;
-            this.$scope.$evalAsync();
-        }, ConversationController.FLOATING_DAY_LINGER);
+        }
+        // While a separator is tucked behind it, the pill is standing in for
+        // that label and has to stay put.
+        if (!anyHidden) {
+            this.floatingDayTimer = window.setTimeout(() => {
+                this.floatingDayVisible = false;
+                this.floatingDayTimer = null;
+                this.$scope.$evalAsync();
+            }, ConversationController.FLOATING_DAY_LINGER);
+        }
     }
 
     public showReceiver(ev): void {
