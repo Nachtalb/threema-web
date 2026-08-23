@@ -23,12 +23,7 @@ RUN sed -i "s/SELF_HOSTED: [^,]*,/SELF_HOSTED: true,/g" src/config.ts \
 
 FROM ghcr.io/static-web-server/static-web-server:2
 COPY --from=builder /site /public
+COPY sws.toml /sws.toml
 USER 65534:65534
 EXPOSE 8080
-ENV SERVER_PORT=8080 \
-    SERVER_ROOT=/public \
-    SERVER_HEALTH=true \
-    SERVER_COMPRESSION=true \
-    SERVER_CACHE_CONTROL_HEADERS=true \
-    SERVER_SECURITY_HEADERS=true \
-    SERVER_LOG_LEVEL=info
+ENV SERVER_CONFIG_FILE=/sws.toml

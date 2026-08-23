@@ -1,0 +1,58 @@
+# Static Web Server configuration.
+#
+# The bundle filenames carry a content hash, so they can be cached forever.
+# The files that *name* them cannot: an index.html held at the edge points at
+# chunks that no longer exist after a deploy, which is how a release appears
+# to succeed while the browser keeps running the old app.
+
+[general]
+host = "0.0.0.0"
+port = 8080
+root = "/public"
+health = true
+compression = true
+security-headers = true
+log-level = "info"
+
+# Set per path below rather than by file type
+cache-control-headers = false
+
+[advanced]
+
+# Content addressed, so a stale copy can never be the wrong one. The generic
+# rules come first: a later match wins, so the specific ones follow.
+[[advanced.headers]]
+source = "**/*.{css,js,json}"
+[advanced.headers.headers]
+Cache-Control = "public, max-age=3600"
+
+[[advanced.headers]]
+source = "**/*.{png,webp,avif,svg,woff,woff2,ttf,mp3,wasm}"
+[advanced.headers.headers]
+Cache-Control = "public, max-age=604800"
+
+[[advanced.headers]]
+source = "**/*.bundle.js"
+[advanced.headers.headers]
+Cache-Control = "public, max-age=31536000, immutable"
+
+# Never cached: these are looked up by name and point at everything else.
+[[advanced.headers]]
+source = "/"
+[advanced.headers.headers]
+Cache-Control = "no-cache"
+
+[[advanced.headers]]
+source = "**/*.html"
+[advanced.headers.headers]
+Cache-Control = "no-cache"
+
+[[advanced.headers]]
+source = "/version.txt"
+[advanced.headers.headers]
+Cache-Control = "no-cache"
+
+[[advanced.headers]]
+source = "**/userconfig*.js"
+[advanced.headers.headers]
+Cache-Control = "no-cache"
