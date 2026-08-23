@@ -123,6 +123,7 @@
         "DECLINE": "Nu sunt de acord",
         "DELETE": "Sterge",
         "QUOTE": "Citat",
+        "REACTION_NOTIFICATION": "{author} reacted to your message with {emoji}",
         "MESSAGE_NOTIFICATION_SUBJECT": "{messageCount, plural, one {mesaje Threema de la} few {{messageCount} mesaje Threema de la} other {{messageCount} mesaje Threema de la}}",
         "MY_THREEMA_ID": "ID-ul meu Threema",
         "MY_PUBLIC_NICKNAME": "Porecla publica",

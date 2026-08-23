@@ -130,6 +130,7 @@
         "DECLINE": "よくないね",
         "DELETE": "削除",
         "QUOTE": "引用",
+        "REACTION_NOTIFICATION": "{author} reacted to your message with {emoji}",
         "MESSAGE_NOTIFICATION_SUBJECT": "{messageCount, plural, other {{messageCount} Threemaからのメッセージ}}",
         "MY_THREEMA_ID": "あなたの Threema ID",
         "MY_PUBLIC_NICKNAME": "公開ニックネーム",

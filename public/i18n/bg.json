@@ -123,6 +123,7 @@
         "DECLINE": "Несъгласяване",
         "DELETE": "Изтриване",
         "QUOTE": "Цитат",
+        "REACTION_NOTIFICATION": "{author} reacted to your message with {emoji}",
         "MESSAGE_NOTIFICATION_SUBJECT": "{messageCount, plural, one {Threema съобщение от} other {{messageCount} Threema съобщения от}}",
         "MY_THREEMA_ID": "Моят Threema ID",
         "MY_PUBLIC_NICKNAME": "Публичен псевдоним",

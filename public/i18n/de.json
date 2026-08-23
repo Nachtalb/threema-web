@@ -130,6 +130,7 @@
         "DECLINE": "Ablehnen",
         "DELETE": "L\u00f6schen",
         "QUOTE": "Zitieren",
+        "REACTION_NOTIFICATION": "{author} reacted to your message with {emoji}",
         "MESSAGE_NOTIFICATION_SUBJECT": "{messageCount, plural, one {Threema Nachricht von} other {{messageCount} Threema Nachrichten von}}",
         "MY_THREEMA_ID": "Meine Threema ID",
         "MY_PUBLIC_NICKNAME": "Nickname",

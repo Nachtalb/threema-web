@@ -617,6 +617,22 @@ export function jumpToMessage(messageId: string): boolean {
 }
 
 /**
+ * Turn HTML entities back into the characters they stand for.
+ *
+ * Translations are interpolated by MessageFormat, which escapes anything
+ * non-ascii. That is right for markup and wrong for a desktop notification,
+ * which shows the entity verbatim.
+ */
+export function decodeHtmlEntities(text: string): string {
+    if (!text.includes('&')) {
+        return text;
+    }
+    const element = document.createElement('textarea');
+    element.innerHTML = text;
+    return element.value;
+}
+
+/**
  * Work around nonstandard Firefox behavior when downloading a PDF by changing
  * a PDF mimetype to application/octet-stream.
  *

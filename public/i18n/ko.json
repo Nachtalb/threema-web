@@ -123,6 +123,7 @@
         "DECLINE": "동의하지 않음",
         "DELETE": "삭제",
         "QUOTE": "인용",
+        "REACTION_NOTIFICATION": "{author} reacted to your message with {emoji}",
         "MESSAGE_NOTIFICATION_SUBJECT": "{messageCount, plural, other {{messageCount} Threema 메세지가 도착했습니다}}",
         "MY_THREEMA_ID": "나의 Threema ID",
         "MY_PUBLIC_NICKNAME": "공식 닉네임",

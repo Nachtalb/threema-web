@@ -121,6 +121,7 @@
         "DECLINE": "Ellenkezik",
         "DELETE": "Törlés",
         "QUOTE": "Idéz",
+        "REACTION_NOTIFICATION": "{author} reacted to your message with {emoji}",
         "MESSAGE_NOTIFICATION_SUBJECT": "{messageCount, plural, one {Threema-üzenet tőle: } other {{messageCount} Threema-üzenet tőle:}}",
         "MY_THREEMA_ID": "Az én Threema ID-m",
         "MY_PUBLIC_NICKNAME": "Nyilvános becenév",

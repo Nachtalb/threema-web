@@ -123,6 +123,7 @@
         "DECLINE": "Refuser",
         "DELETE": "Supprimer",
         "QUOTE": "Citer",
+        "REACTION_NOTIFICATION": "{author} reacted to your message with {emoji}",
         "MESSAGE_NOTIFICATION_SUBJECT": "{messageCount, plural, one {Message Threema de} many {{messageCount} messages Threema de} other {{messageCount} messages Threema de}}",
         "MY_THREEMA_ID": "Mon ID Threema",
         "MY_PUBLIC_NICKNAME": "Surnom public",

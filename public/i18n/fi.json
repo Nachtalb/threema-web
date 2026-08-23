@@ -130,6 +130,7 @@
         "DECLINE": "Hylkää",
         "DELETE": "Poista",
         "QUOTE": "Lainaus",
+        "REACTION_NOTIFICATION": "{author} reacted to your message with {emoji}",
         "MESSAGE_NOTIFICATION_SUBJECT": "{messageCount, plural, one {Threema-viesti käyttäjältä} other {{messageCount} Threema-viestejä käyttäjältä}}",
         "MY_THREEMA_ID": "Oma Threema ID",
         "MY_PUBLIC_NICKNAME": "Julkinen lempinimi",

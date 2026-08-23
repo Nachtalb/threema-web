@@ -123,6 +123,7 @@
         "DECLINE": "Niet toestemmen",
         "DELETE": "Verwijderen",
         "QUOTE": "Citaat",
+        "REACTION_NOTIFICATION": "{author} reacted to your message with {emoji}",
         "MESSAGE_NOTIFICATION_SUBJECT": "{messageCount, plural, one {{messageCount} Threema-berichten van} other {{messageCount} Threema-berichten van}}",
         "MY_THREEMA_ID": "Mijn Threema-ID",
         "MY_PUBLIC_NICKNAME": "Publieke bijnaam",

@@ -130,6 +130,7 @@
         "DECLINE": "不同意",
         "DELETE": "删除",
         "QUOTE": "引用",
+        "REACTION_NOTIFICATION": "{author} reacted to your message with {emoji}",
         "MESSAGE_NOTIFICATION_SUBJECT": "{messageCount, plural, other {{messageCount} Threema 消息来自}}",
         "MY_THREEMA_ID": "我的 Threema ID",
         "MY_PUBLIC_NICKNAME": "昵称",

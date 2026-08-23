@@ -29,8 +29,10 @@ import {
     base64ToU8a,
     bufferToUrl,
     copyDeepOrReference, copyShallow,
+    decodeHtmlEntities,
     hasValue,
     hexToU8a,
+    jumpToMessage,
     msgpackVisualizer,
     randomString,
     stringToUtf8a,
@@ -3665,19 +3667,33 @@ export class WebClientService {
         }
         const senderName = sender.displayName
             || (isContactReceiver(sender) ? '~' + sender.publicNickname : sender.id);
+        // MessageFormat escapes interpolated values into HTML entities, which
+        // a notification would show literally.
+        const title = decodeHtmlEntities(this.$translate
+            .instant('messenger.REACTION_NOTIFICATION', {author: senderName, emoji: emoji}));
         const preview = this.messageService.getQuoteText(message);
-        const body = preview === null ? emoji : `${emoji} ${preview}`;
         const avatar = (sender.avatar && sender.avatar.low)
             ? bufferToUrl(sender.avatar.low, 'image/png', this.arpLog)
             : null;
         this.notificationService.showNotification(
             `reaction-${conversation.type}-${conversation.id}-${message.id}`,
-            senderName, body, avatar,
-            () => this.$state.go('messenger.home.conversation', {
-                type: conversation.type,
-                id: conversation.id,
-                initParams: null,
-            }));
+            title, preview ?? '', avatar,
+            () => {
+                this.$state.go('messenger.home.conversation', {
+                    type: conversation.type,
+                    id: conversation.id,
+                    initParams: null,
+                });
+                // The conversation may still be rendering, so keep trying
+                // until the message is there to jump to.
+                let attempts = 20;
+                const jump = () => {
+                    if (!jumpToMessage(message.id) && attempts-- > 0) {
+                        this.$timeout(jump, 100);
+                    }
+                };
+                this.$timeout(jump, 100);
+            });
     }
 
     /**

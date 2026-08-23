@@ -130,6 +130,7 @@
         "DECLINE": "Не принимаю",
         "DELETE": "Удалить",
         "QUOTE": "Цитата",
+        "REACTION_NOTIFICATION": "{author} reacted to your message with {emoji}",
         "MESSAGE_NOTIFICATION_SUBJECT": "{messageCount, plural, one {Сообщение Threema от} few {{messageCount} сообщения Threema от} many {{messageCount} сообщений Threema от} other {{messageCount} сообщений Threema от}}",
         "MY_THREEMA_ID": "Мой Threema ID",
         "MY_PUBLIC_NICKNAME": "Псевдоним",
