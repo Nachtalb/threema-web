@@ -329,9 +329,9 @@
         },
         "ui": {
             "UI": "Interfejs użytkownika",
-            "CUSTOM_BACKGROUND": "Own background",
+            "CUSTOM_BACKGROUND": "T\u0142o",
             "CHOOSE_BACKGROUND": "Choose picture",
-            "RESET_BACKGROUND": "Use the default pictures",
+            "RESET_BACKGROUND": "Przywr\u00f3\u0107 domy\u015blne obrazy",
             "AUTO_LOAD_GIFS": "Load GIFs automatically",
             "CACHE_MEDIA": "Keep downloaded media",
         "COLOUR_SCHEME": "Colour scheme",

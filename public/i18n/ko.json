@@ -321,9 +321,9 @@
         },
         "ui": {
             "UI": "이용자 인터페이스",
-            "CUSTOM_BACKGROUND": "Own background",
+            "CUSTOM_BACKGROUND": "\ubc30\uacbd",
             "CHOOSE_BACKGROUND": "Choose picture",
-            "RESET_BACKGROUND": "Use the default pictures",
+            "RESET_BACKGROUND": "Reset to the default pictures",
             "AUTO_LOAD_GIFS": "Load GIFs automatically",
             "CACHE_MEDIA": "Keep downloaded media",
         "COLOUR_SCHEME": "Colour scheme",

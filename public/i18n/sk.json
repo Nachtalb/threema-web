@@ -328,9 +328,9 @@
         },
         "ui": {
             "UI": "Užívateľské rozhranie",
-            "CUSTOM_BACKGROUND": "Own background",
+            "CUSTOM_BACKGROUND": "Pozadie",
             "CHOOSE_BACKGROUND": "Choose picture",
-            "RESET_BACKGROUND": "Use the default pictures",
+            "RESET_BACKGROUND": "Obnovi\u0165 predvolen\u00e9 obr\u00e1zky",
             "AUTO_LOAD_GIFS": "Load GIFs automatically",
             "CACHE_MEDIA": "Keep downloaded media",
         "COLOUR_SCHEME": "Colour scheme",

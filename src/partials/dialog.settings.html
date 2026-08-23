@@ -122,16 +122,18 @@
                             </div>
                         </md-list-item>
                         <md-list-item class="background-picker">
+                            <md-icon class="material-icons md-24">wallpaper</md-icon>
                             <span translate>settings.ui.CUSTOM_BACKGROUND</span>
                             <input type="file" id="background-upload" accept="image/*"
                                    eee-file-pick="ctrl.setBackground(file)">
                             <label for="background-upload" class="md-button md-raised">
                                 <span translate>settings.ui.CHOOSE_BACKGROUND</span>
                             </label>
-                            <button type="button" class="md-button reset-background"
+                            <button type="button" class="md-button md-icon-button reset-background"
                                     ng-show="ctrl.hasCustomBackground"
-                                    ng-click="ctrl.clearBackground()">
-                                <span translate>settings.ui.RESET_BACKGROUND</span>
+                                    ng-click="ctrl.clearBackground()"
+                                    translate-attr="{'aria-label': 'settings.ui.RESET_BACKGROUND', 'title': 'settings.ui.RESET_BACKGROUND'}">
+                                <md-icon class="material-icons md-24">settings_backup_restore</md-icon>
                             </button>
                         </md-list-item>
                     </md-list>

@@ -225,17 +225,22 @@ md-dialog.settings-dialog {
         }
     }
 
-    // A row that is only a label, with no control beside it
-    .background-picker > span:first-child {
-        margin-left: 80px;
-    }
-
     // The background picker is a row of controls, not a toggle
     .background-picker {
-        .md-button {
+        .md-button:not(.md-icon-button) {
             margin: 0 0 0 8px;
             min-height: 30px;
             line-height: 30px;
+        }
+
+        // Resetting to the default pictures is an icon, so it needs no label
+        .reset-background {
+            width: 36px;
+            min-width: 36px;
+            height: 36px;
+            margin: 0 0 0 4px;
+            padding: 0;
+            line-height: 36px;
         }
     }
 
