@@ -739,12 +739,16 @@ class WelcomeController {
                 this.clearPassword();
                 this.formLocked = false;
 
-                // Persist the trusted key before leaving the welcome screen.
-                // Deriving it with scrypt is deliberately tuned to take about
-                // as long as the redirect delay, so scheduling the redirect
-                // first is a race: losing it leaves no trusted key behind and
-                // the next reload has to scan a QR code again.
-                await this.webClientService.setPassword(password, isAutoPassword);
+                // Persist the trusted key. Deriving it with scrypt is tuned to
+                // take about half a second, so this is deliberately not
+                // awaited: the welcome screen would otherwise sit at 100% for
+                // the whole derivation.
+                //
+                // It does have to be started before the redirect, though.
+                // Leaving the screen cancels it, and without a stored key the
+                // next reload has to scan a QR code again.
+                this.webClientService.setPassword(password, isAutoPassword)
+                    .catch((error) => this.log.error('Could not store the trusted key:', error));
 
                 // Redirect to home, or back to the conversation that was open
                 // before the reload.
