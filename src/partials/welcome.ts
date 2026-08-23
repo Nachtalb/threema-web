@@ -739,6 +739,13 @@ class WelcomeController {
                 this.clearPassword();
                 this.formLocked = false;
 
+                // Persist the trusted key before leaving the welcome screen.
+                // Deriving it with scrypt is deliberately tuned to take about
+                // as long as the redirect delay, so scheduling the redirect
+                // first is a race: losing it leaves no trusted key behind and
+                // the next reload has to scan a QR code again.
+                await this.webClientService.setPassword(password, isAutoPassword);
+
                 // Redirect to home, or back to the conversation that was open
                 // before the reload.
                 this.timeoutService.register(
@@ -747,9 +754,6 @@ class WelcomeController {
                     true,
                     'redirectToHome',
                 );
-
-                // Pass password to webclient service
-                await this.webClientService.setPassword(password, isAutoPassword);
             },
 
             // If an error occurs...
