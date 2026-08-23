@@ -181,6 +181,17 @@ body.scheme-dark {
             color: var(--text);
         }
 
+        // The primary palette is grey-800, which reads as ordinary text on a
+        // light surface and disappears on a dark one. Flat buttons only: a
+        // raised button keeps the palette as its background.
+        .md-button.md-primary:not(.md-raised):not(.md-fab) {
+            color: var(--text);
+
+            &[disabled] {
+                color: var(--text-faint);
+            }
+        }
+
         md-input-container label,
         md-select .md-select-value.md-select-placeholder,
         .md-subheader {

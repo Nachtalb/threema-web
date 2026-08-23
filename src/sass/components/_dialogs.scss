@@ -51,8 +51,21 @@ md-dialog {
             display: none;
         }
 
+        // A label styled as a raised button. angular-material only themes real
+        // buttons, so its colours are set here or it stays dark on dark.
         label.md-button {
             margin-left: auto;
+            background-color: var(--surface-grey);
+            color: var(--text);
+        }
+    }
+
+    // These two rows hold their own controls rather than a single toggle, so
+    // the row padding only pushes them out of line.
+    .colour-scheme,
+    .background-picker {
+        .md-list-item-inner {
+            padding: 0;
         }
     }
 
