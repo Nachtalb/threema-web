@@ -1631,7 +1631,8 @@ class NavigationController {
      * Return true if the app wants to hide inactive and revoked contacts.
      */
     public hideInactiveAndRevokedContacts(): boolean {
-        return !this.webClientService.appConfig.showInactiveIDs;
+        const config = this.webClientService.appConfig;
+        return config !== undefined && !config.showInactiveIDs;
     }
 
     /**
@@ -1809,7 +1810,8 @@ class NavigationController {
      * Only show the "create distribution list" button if the app supports it.
      */
     public showCreateDistributionListButton(): boolean {
-        return this.webClientService.appCapabilities.distributionLists;
+        const capabilities = this.webClientService.appCapabilities;
+        return capabilities !== undefined && capabilities.distributionLists;
     }
 
     /**

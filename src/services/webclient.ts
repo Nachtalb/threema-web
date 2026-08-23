@@ -4492,14 +4492,17 @@ export class WebClientService {
      * Return the configuration object from the client info data.
      */
     public get appConfig(): threema.AppConfig {
-        return this.clientInfo.configuration;
+        return this.clientInfo === null ? undefined : this.clientInfo.configuration;
     }
 
     /**
      * Return the capabilities object from the client info data.
+     *
+     * Undefined until the app has answered, which the template may render
+     * before.
      */
     public get appCapabilities(): threema.AppCapabilities {
-        return this.clientInfo.capabilities;
+        return this.clientInfo === null ? undefined : this.clientInfo.capabilities;
     }
 
     /**

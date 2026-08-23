@@ -71,6 +71,7 @@ export class MeControllerModel implements threema.ControllerModel<threema.MeRece
                 );
                 break;
             case ControllerModelMode.VIEW:
+            case ControllerModelMode.CHAT:
                 this.subject = $translate.instant('messenger.MY_THREEMA_ID');
                 break;
             default:
