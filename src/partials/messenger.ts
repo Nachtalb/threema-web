@@ -930,7 +930,7 @@ class ConversationController {
                         controllerAs: 'ctrl',
                         // tslint:disable:max-line-length
                         template: `
-                            <md-dialog class="send-file-dialog">
+                            <md-dialog class="send-file-dialog" md-theme="{{ ctrl.theme }}">
                                 <md-dialog-content class="md-dialog-content">
                                     <h2 class="md-title" ng-bind-html="ctrl.title"></h2>
                                     <img class="preview" ng-if="ctrl.hasPreview()" ng-src="{{ ctrl.previewDataUrl | unsafeResUrl }}">
@@ -944,10 +944,10 @@ class ConversationController {
                                     </md-input-container>
                                 </md-dialog-content>
                                 <md-dialog-actions>
-                                    <button class="md-primary md-cancel-button md-button" md-ink-ripple type="button" ng-click="ctrl.cancel()">
+                                    <button class="md-button" md-ink-ripple type="button" ng-click="ctrl.cancel()">
                                         <span translate>common.CANCEL</span>
                                     </button>
-                                    <button class="md-primary md-cancel-button md-button" md-ink-ripple type="button" ng-click="ctrl.send()">
+                                    <button class="md-primary md-button" md-ink-ripple type="button" ng-click="ctrl.send()">
                                         <span translate>common.SEND</span>
                                     </button>
                                 </md-dialog-actions>
