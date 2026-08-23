@@ -419,6 +419,25 @@
                 margin: 0 8px 8px;
             }
 
+            // With a caption the timestamp sits in the bar under the media,
+            // and reactions share that last row with it.
+            &:has(.message-text):has(.message-emoji-reactions) {
+                position: relative;
+
+                .message-emoji-reactions {
+                    margin: 0 8px 8px;
+                    // Leave the corner to the timestamp
+                    padding-right: 48px;
+                }
+
+                .message-info {
+                    position: absolute;
+                    right: 8px;
+                    bottom: 8px;
+                    margin: 0;
+                }
+            }
+
             // Without a caption there is no bar to sit in, so the timestamp
             // is laid over the media instead.
             &:not(:has(.message-text)) {
@@ -459,16 +478,18 @@
                         overflow: hidden;
                     }
 
-                    // The reactions row sits below the media, so the timestamp
-                    // has to clear both it and its margin to stay inset on the
-                    // picture. 25px pill + 6px margin + the usual 6px inset.
+                    // The bubble ends at the reactions row, so the timestamp
+                    // drops out of the picture and onto the end of that row.
                     .message-info {
-                        bottom: 37px;
+                        right: 0;
+                        bottom: 4px;
                     }
 
                     .message-emoji-reactions {
                         // Flush with the edge of the media above
                         margin: 6px 0 0;
+                        // Leave the corner to the timestamp
+                        padding-right: 60px;
                     }
 
                     // The reactions sit below the bubble, so the tail belongs
@@ -664,6 +685,24 @@
                 font-size: .7em;
                 transform: translateY(.85em);
             }
+
+            // With reactions the bubble no longer ends on the last line of
+            // text, so the timestamp drops to the end of the reactions row.
+            &:has(.message-emoji-reactions) {
+                .message-info {
+                    float: none;
+                    position: absolute;
+                    right: 8px;
+                    bottom: 8px;
+                    transform: none;
+                }
+
+                .message-emoji-reactions {
+                    margin-top: 4px;
+                    // Leave the corner to the timestamp
+                    padding-right: 48px;
+                }
+            }
         }
 
         .message-info {
@@ -673,6 +712,7 @@
             order: 1;
             flex-direction: row;
             align-items: end;
+            justify-content: flex-end;
             margin-top: 4px;
             color: #808080;
             font-size: .8em;
@@ -775,10 +815,6 @@
             left: -9px;
             fill: $message-bubble-color-in;
         }
-
-        .message-info {
-            justify-content: flex-start;
-        }
     }
 
     .message-out {
@@ -806,11 +842,6 @@
         .bubble-triangle {
             right: -9px;
             fill: $message-bubble-color-out;
-        }
-
-        .message-info {
-            justify-content: flex-end;
-
         }
     }
 
