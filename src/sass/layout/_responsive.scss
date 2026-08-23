@@ -45,24 +45,26 @@
         #navigation,
         #detail {
             position: absolute;
-            top: 0;
-            left: 0;
+            // The panels sit inside the wrapper's padding rather than on the
+            // screen edge, which absolute positioning would otherwise ignore.
+            top: $float-gap;
+            left: $float-gap;
             flex: none !important;
-            width: 100% !important;
+            width: calc(100% - #{$float-gap * 2}) !important;
             min-width: 0 !important;
             max-width: none !important;
-            height: 100%;
+            height: calc(100% - #{$float-gap * 2});
             transition: transform .25s ease-out;
         }
 
         // The conversation waits off screen to the right until a chat is open
         #detail {
-            transform: translateX(100%);
+            transform: translateX(calc(100% + #{$float-gap}));
         }
 
         &.show-detail {
             #navigation {
-                transform: translateX(-100%);
+                transform: translateX(calc(-100% - #{$float-gap}));
             }
 
             #detail {

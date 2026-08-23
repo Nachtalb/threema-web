@@ -21,7 +21,6 @@
 // Layouts: Macro layout files. Styles for major sections of the layout like a
 // header or footer and styles for a grid system would belong here.
 @import 'layout/main';
-@import 'layout/responsive';
 @import 'layout/floating';
 
 // Components: Micro layout files. Your styles for buttons and navigation and
@@ -62,6 +61,10 @@
 @import 'sections/footer';
 @import 'sections/status_bar';
 @import 'sections/noscript';
+
+// Responsive overrides come last so a breakpoint can override any of the
+// layout, component and section rules above.
+@import 'layout/responsive';
 
 // Vendors: Third party code.
 // Nothing to see here yet!
