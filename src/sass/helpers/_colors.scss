@@ -57,8 +57,15 @@ $active-placeholder-color: var(--placeholder);
 
 // angular-material colours a bare `md-icon` for a light surface. These follow
 // the page instead, so they stay legible in either scheme.
+//
+// A warn button means a destructive action, so its icon keeps the error colour
+// rather than the muted one.
 md-icon.material-icons:not(.md-light):not(.md-primary):not(.md-warn) {
     color: var(--text-muted);
+
+    .md-warn & {
+        color: $status-error;
+    }
 }
 
 .material-icons.md-medium-dark { color: var(--text-muted); }
