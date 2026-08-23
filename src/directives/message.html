@@ -3,7 +3,8 @@
          class="message"
          ng-class="{'message-in': !ctrl.message.isOutbox, 'message-out': ctrl.message.isOutbox,
                     'follows-same-sender': ctrl.followsSameSender,
-                    'precedes-same-sender': ctrl.precedesSameSender}"
+                    'precedes-same-sender': ctrl.precedesSameSender,
+                    'has-avatar-column': ctrl.showName}"
          eee-message-contextmenu>
 
     <eee-avatar

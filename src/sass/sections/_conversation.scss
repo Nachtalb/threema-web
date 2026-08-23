@@ -842,6 +842,12 @@
         margin-right: 16px;
     }
 
+    // Only the last message of a run carries the avatar; the earlier ones hold
+    // its place so the whole run stays in line.
+    .message-in.has-avatar-column.precedes-same-sender .message-body {
+        margin-left: 64px + 9px;
+    }
+
     .message-status {
         justify-content: center;
 

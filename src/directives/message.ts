@@ -90,8 +90,6 @@ export default [
                     this.isEdited = hasValue(this.message.lastEditedAt);
 
                     this.showName = !this.message.isOutbox && this.isGroup;
-                    // show avatar only if a name is shown
-                    this.showAvatar = this.showName;
                     // Only the last message of a run by the same sender gets a
                     // tail, so a burst reads as one block. The corners facing
                     // a neighbour in the run are tightened instead.
@@ -104,6 +102,8 @@ export default [
                     this.followsSameSender = sameSender(this.previousMessage);
                     this.precedesSameSender = sameSender(this.nextMessage);
                     this.showTail = !this.precedesSameSender;
+                    // The avatar belongs to the tail, at the bottom of the run
+                    this.showAvatar = this.showName && this.showTail;
                     this.showText = this.message.type === 'text' || this.message.caption;
                     this.showMedia = this.message.type !== 'text';
                     this.showState = messageService.showStatusIcon(this.message as threema.Message, this.receiver);
