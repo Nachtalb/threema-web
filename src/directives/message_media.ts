@@ -22,6 +22,7 @@ import {bufferToUrl, firefoxWorkaroundPdfDownload, hasValue} from '../helpers';
 import {LogService} from '../services/log';
 import {MediaboxService} from '../services/mediabox';
 import {MessageService} from '../services/message';
+import {SettingsService} from '../services/settings';
 import {TimeoutService} from '../services/timeout';
 import {WebClientService} from '../services/webclient';
 
@@ -45,6 +46,7 @@ export default [
     'MediaboxService',
     'MessageService',
     'TimeoutService',
+    'SettingsService',
     '$rootScope',
     '$mdDialog',
     '$timeout',
@@ -57,6 +59,7 @@ export default [
              mediaboxService: MediaboxService,
              messageService: MessageService,
              timeoutService: TimeoutService,
+             settingsService: SettingsService,
              $rootScope: ng.IRootScopeService,
              $mdDialog: ng.material.IDialogService,
              $timeout: ng.ITimeoutService,
@@ -153,7 +156,8 @@ export default [
 
                         // Gifs are short and meant to loop, so fetch them as
                         // soon as they are on screen rather than on a click.
-                        if (inView && this.isGif && !this.downloaded && !this.downloading) {
+                        if (inView && this.isGif && !this.downloaded && !this.downloading
+                            && settingsService.media.getAutoLoadGifs()) {
                             this.download();
                         }
 

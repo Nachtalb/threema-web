@@ -260,6 +260,8 @@ class SettingsController extends DialogController {
     private notificationSound: boolean;
     private submitWithCtrlEnter: boolean;
     private backgroundBlur: boolean;
+    private autoLoadGifs: boolean;
+    private cacheMedia: boolean;
     private hasCustomBackground: boolean = false;
     private backgroundStoreService: BackgroundStoreService;
     private readonly settingsScope: ng.IScope;
@@ -296,6 +298,8 @@ class SettingsController extends DialogController {
         this.submitWithCtrlEnter =
             settingsService.composeArea.getSubmitKey() === threema.ComposeAreaSubmitKey.CtrlEnter;
         this.backgroundBlur = settingsService.background.getBlur();
+        this.autoLoadGifs = settingsService.media.getAutoLoadGifs();
+        this.cacheMedia = settingsService.media.getCacheMedia();
         backgroundStoreService.get().then((blob) => {
             // A promise callback is outside Angular's digest
             this.settingsScope.$evalAsync(() => {
@@ -324,6 +328,14 @@ class SettingsController extends DialogController {
 
     public setBackgroundBlur(blur: boolean) {
         this.settingsService.background.setBlur(blur);
+    }
+
+    public setAutoLoadGifs(enabled: boolean) {
+        this.settingsService.media.setAutoLoadGifs(enabled);
+    }
+
+    public setCacheMedia(enabled: boolean) {
+        this.settingsService.media.setCacheMedia(enabled);
     }
 
     /**

@@ -18,6 +18,7 @@
 import {Logger} from 'ts-log';
 
 import {LogService} from './log';
+import {SettingsService} from './settings';
 
 /**
  * Keeps downloaded media around so it does not have to be fetched from the
@@ -31,15 +32,23 @@ export class BlobCacheService {
     private static readonly CACHE_NAME = 'threema-blobs';
 
     private readonly log: Logger;
+    private readonly settingsService: SettingsService;
 
-    public static $inject = ['LogService'];
+    public static $inject = ['LogService', 'SettingsService'];
 
-    constructor(logService: LogService) {
+    constructor(logService: LogService, settingsService: SettingsService) {
         this.log = logService.getLogger('BlobCache-S');
+        this.settingsService = settingsService;
+        // Turning the setting off should not leave the old media behind
+        this.settingsService.cacheMediaChange.attach((enabled: boolean) => {
+            if (!enabled) {
+                this.clear().catch((error) => this.log.warn('Could not clear the blob cache: ' + error));
+            }
+        });
     }
 
     private get available(): boolean {
-        return typeof caches !== 'undefined';
+        return typeof caches !== 'undefined' && this.settingsService.media.getCacheMedia();
     }
 
     private static url(key: string): string {
@@ -95,7 +104,8 @@ export class BlobCacheService {
      * Throw everything away, e.g. when the session is deleted.
      */
     public async clear(): Promise<void> {
-        if (!this.available) {
+        // Not gated on the setting: turning it off has to clear what is there
+        if (typeof caches === 'undefined') {
             return;
         }
         try {

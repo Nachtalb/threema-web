@@ -80,6 +80,22 @@
                                 <span translate>settings.ui.BACKGROUND_BLUR</span>
                             </md-switch>
                         </md-list-item>
+                        <md-list-item>
+                            <md-switch
+                                    ng-model="ctrl.autoLoadGifs"
+                                    ng-change="ctrl.setAutoLoadGifs(ctrl.autoLoadGifs)"
+                                    aria-label="Load GIFs automatically">
+                                <span translate>settings.ui.AUTO_LOAD_GIFS</span>
+                            </md-switch>
+                        </md-list-item>
+                        <md-list-item>
+                            <md-switch
+                                    ng-model="ctrl.cacheMedia"
+                                    ng-change="ctrl.setCacheMedia(ctrl.cacheMedia)"
+                                    aria-label="Keep downloaded media">
+                                <span translate>settings.ui.CACHE_MEDIA</span>
+                            </md-switch>
+                        </md-list-item>
                         <md-list-item class="background-picker">
                             <span translate>settings.ui.CUSTOM_BACKGROUND</span>
                             <input type="file" id="background-upload" accept="image/*"

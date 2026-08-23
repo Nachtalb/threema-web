@@ -327,6 +327,8 @@
             "CUSTOM_BACKGROUND": "Own background",
             "CHOOSE_BACKGROUND": "Choose picture",
             "RESET_BACKGROUND": "Use the default pictures",
+            "AUTO_LOAD_GIFS": "Load GIFs automatically",
+            "CACHE_MEDIA": "Keep downloaded media",
             "BACKGROUND_BLUR": "Blur the background image"
         }
     },

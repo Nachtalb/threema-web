@@ -80,6 +80,31 @@ class BackgroundSettings {
     }
 }
 
+class MediaSettings {
+    private readonly settingsService: SettingsService;
+
+    constructor(settingsService: SettingsService) {
+        this.settingsService = settingsService;
+    }
+
+    public getAutoLoadGifs(): boolean {
+        return this.settingsService.retrieveUntrustedKeyValuePair('autoLoadGifs', false) !== 'false';
+    }
+
+    public setAutoLoadGifs(enabled: boolean): void {
+        this.settingsService.storeUntrustedKeyValuePair('autoLoadGifs', enabled ? 'true' : 'false');
+    }
+
+    public getCacheMedia(): boolean {
+        return this.settingsService.retrieveUntrustedKeyValuePair('cacheMedia', false) !== 'false';
+    }
+
+    public setCacheMedia(enabled: boolean): void {
+        this.settingsService.storeUntrustedKeyValuePair('cacheMedia', enabled ? 'true' : 'false');
+        this.settingsService.cacheMediaChange.post(enabled);
+    }
+}
+
 /**
  * The settings service can update variables for settings and persist them to
  * LocalStorage.
@@ -89,11 +114,13 @@ export class SettingsService {
     private static STORAGE_KEY_PREFIX = 'settings-';
     public readonly composeArea: ComposeAreaSettings;
     public readonly background: BackgroundSettings;
+    public readonly media: MediaSettings;
     private readonly log: Logger;
     private storage: Storage;
 
     // Events
     public backgroundBlurChange = new AsyncEvent<boolean>();
+    public cacheMediaChange = new AsyncEvent<boolean>();
 
     public static $inject = ['$window', 'LogService'];
     constructor($window: ng.IWindowService, logService: LogService) {
@@ -101,6 +128,7 @@ export class SettingsService {
         this.storage = $window.localStorage;
         this.composeArea = new ComposeAreaSettings(this);
         this.background = new BackgroundSettings(this);
+        this.media = new MediaSettings(this);
     }
 
     /**
