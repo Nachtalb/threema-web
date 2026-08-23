@@ -1288,11 +1288,25 @@ class ConversationController {
             chat.scrollTop = target - glide;
         }
         this.glidingDown = true;
-        this.timeoutService.register(() => {
-            this.glidingDown = false;
-            this.updateScrollJump();
-        }, 500, true, 'scrollGlide');
-        chat.scrollTo({top: target, behavior: 'smooth'});
+
+        // Hand-rolled rather than `behavior: 'smooth'`, which picks its own
+        // duration and is over before the eye can follow it.
+        const from = chat.scrollTop;
+        const distance = target - from;
+        const duration = 450;
+        const start = performance.now();
+        const step = (now: number) => {
+            const elapsed = Math.min((now - start) / duration, 1);
+            // Ease out, so it arrives gently instead of stopping dead
+            chat.scrollTop = from + distance * (1 - Math.pow(1 - elapsed, 3));
+            if (elapsed < 1) {
+                requestAnimationFrame(step);
+            } else {
+                this.glidingDown = false;
+                this.$scope.$evalAsync(() => this.updateScrollJump());
+            }
+        };
+        requestAnimationFrame(step);
     }
 
     /**
