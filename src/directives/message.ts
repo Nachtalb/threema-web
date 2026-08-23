@@ -89,6 +89,18 @@ export default [
                     this.isBusinessReceiver = receiverService.isBusinessContact(this.receiver);
                     this.isEdited = hasValue(this.message.lastEditedAt);
 
+                    // Messages the app cannot render explain themselves on hover
+                    switch (this.message.type as string) {
+                        case 'ballot':
+                            this.unsupportedHint = $translate.instant('messenger.BALLOT_MESSAGES_TITLE');
+                            break;
+                        case 'unknown':
+                            this.unsupportedHint = $translate.instant('messenger.UNKNOWN_MESSAGE_TYPE_TITLE');
+                            break;
+                        default:
+                            this.unsupportedHint = undefined;
+                    }
+
                     this.showName = !this.message.isOutbox && this.isGroup;
                     // Only the last message of a run by the same sender gets a
                     // tail, so a burst reads as one block. The corners facing

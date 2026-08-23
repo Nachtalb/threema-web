@@ -196,6 +196,8 @@
         "PRIVATE_CHAT_DESCRIPTION": "Threema devs say \ud83d\udd95",
         "MESSAGE_TOO_LONG_SPLIT_SUBJECT": "拆分訊息",
         "MESSAGE_TOO_LONG_SPLIT_BODY": "每則訊息不能傳送超過{max}個字元，是否要將其拆分為{count}個獨立的訊息？",
+        "BALLOT_MESSAGES_TITLE": "This was supposed to be a poll",
+        "UNKNOWN_MESSAGE_TYPE_TITLE": "Your phone sent something this app cannot show",
         "BALLOT_MESSAGES_NOT_SUPPORTED": "Threema devs say \ud83d\udd95",
         "UNKNOWN_MESSAGE_TYPE": "未知訊息類型",
         "NICKNAME": "暱稱",

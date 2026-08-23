@@ -189,6 +189,8 @@
         "PRIVATE_CHAT_DESCRIPTION": "Threema devs say \ud83d\udd95",
         "MESSAGE_TOO_LONG_SPLIT_SUBJECT": "Разделяне на съобщение",
         "MESSAGE_TOO_LONG_SPLIT_BODY": "На съобщение не могат да се изпращат повече от {max} знака. Искате ли да го разделите на {count} отделни съобщения?",
+        "BALLOT_MESSAGES_TITLE": "This was supposed to be a poll",
+        "UNKNOWN_MESSAGE_TYPE_TITLE": "Your phone sent something this app cannot show",
         "BALLOT_MESSAGES_NOT_SUPPORTED": "Threema devs say \ud83d\udd95",
         "UNKNOWN_MESSAGE_TYPE": "Неизвестен тип съобщение",
         "NICKNAME": "Псевдоним",

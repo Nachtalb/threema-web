@@ -184,6 +184,8 @@
         "PRIVATE_CHAT_DESCRIPTION": "Threema devs say \ud83d\udd95",
         "MESSAGE_TOO_LONG_SPLIT_SUBJECT": "Üzenet felosztása",
         "MESSAGE_TOO_LONG_SPLIT_BODY": "Összesen {max} karakter hosszú üzenetet küldhetsz. Fel szeretnéd osztani az üzenetet {count} külön üzenetre?",
+        "BALLOT_MESSAGES_TITLE": "This was supposed to be a poll",
+        "UNKNOWN_MESSAGE_TYPE_TITLE": "Your phone sent something this app cannot show",
         "BALLOT_MESSAGES_NOT_SUPPORTED": "Threema devs say \ud83d\udd95",
         "UNKNOWN_MESSAGE_TYPE": "Ismeretlen üzenettípus",
         "NICKNAME": "Becenév",

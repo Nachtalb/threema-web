@@ -17,6 +17,14 @@ $loading-ring-thickness: 5px;
 }
 
 // Styling
+// A message the app could not render. The whole bubble is faded so it reads as
+// a placeholder rather than something someone actually wrote.
+.message-body.ballot-message-body,
+.message-body.unknown-message-body {
+    opacity: .66;
+    cursor: help;
+}
+
 .message-media {
 
     .in-view-indicator {

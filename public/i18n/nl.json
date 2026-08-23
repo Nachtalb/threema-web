@@ -189,6 +189,8 @@
         "PRIVATE_CHAT_DESCRIPTION": "Threema devs say \ud83d\udd95",
         "MESSAGE_TOO_LONG_SPLIT_SUBJECT": "Bericht splitsen",
         "MESSAGE_TOO_LONG_SPLIT_BODY": "Er kunnen niet meer dan {max} karakters per bericht verstuurd worden. Wilt u het bericht in {count} aparte berichten splitsen?",
+        "BALLOT_MESSAGES_TITLE": "This was supposed to be a poll",
+        "UNKNOWN_MESSAGE_TYPE_TITLE": "Your phone sent something this app cannot show",
         "BALLOT_MESSAGES_NOT_SUPPORTED": "Threema devs say \ud83d\udd95",
         "UNKNOWN_MESSAGE_TYPE": "Onbekend berichttype",
         "NICKNAME": "Bijnaam",

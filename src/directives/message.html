@@ -14,7 +14,8 @@
             eee-resolution="ctrl.resolution"
             ui-sref="messenger.home.conversation.detail({ detailType: 'contact', detailId: ctrl.contact.id })"></eee-avatar>
 
-    <section class="message-body {{ ctrl.message.type + '-message-body' }}">
+    <section class="message-body {{ ctrl.message.type + '-message-body' }}"
+             title="{{ ctrl.unsupportedHint }}">
         <svg ng-if="ctrl.showTail" class="bubble-triangle" eee-message-tail-tint
              width="9" height="20" viewBox="0 0 9 20">
             <path ng-if="!ctrl.message.isOutbox"

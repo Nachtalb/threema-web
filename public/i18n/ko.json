@@ -189,6 +189,8 @@
         "PRIVATE_CHAT_DESCRIPTION": "Threema devs say \ud83d\udd95",
         "MESSAGE_TOO_LONG_SPLIT_SUBJECT": "메세지 분할",
         "MESSAGE_TOO_LONG_SPLIT_BODY": "메시지당 최대 {max}자 이내로 보낼 수 있으며, {count}개의 메시지로 분할하시겠습니까?",
+        "BALLOT_MESSAGES_TITLE": "This was supposed to be a poll",
+        "UNKNOWN_MESSAGE_TYPE_TITLE": "Your phone sent something this app cannot show",
         "BALLOT_MESSAGES_NOT_SUPPORTED": "Threema devs say \ud83d\udd95",
         "UNKNOWN_MESSAGE_TYPE": "알 수 없는 메세지 유형",
         "NICKNAME": "닉네임",
