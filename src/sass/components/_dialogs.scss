@@ -92,6 +92,100 @@ md-dialog.send-file-dialog {
     }
 }
 
+// Angular-material sizes list rows for touch: 48px minimum, generous switch
+// margins and a tall subheader. On a settings screen that is mostly a column
+// of toggles it just spreads a short list over a whole screen.
+md-dialog.settings-dialog {
+    md-dialog-content > .md-dialog-content {
+        padding: 8px 24px 16px;
+    }
+
+    section + section {
+        margin-top: 4px;
+    }
+
+    md-subheader {
+        margin: 0;
+        padding: 8px 0 0;
+
+        .md-subheader-inner {
+            padding: 0;
+        }
+    }
+
+    md-list {
+        padding: 0;
+    }
+
+    md-list-item,
+    md-list-item .md-list-item-inner,
+    md-list-item > .md-no-style {
+        height: auto;
+        min-height: 0;
+    }
+
+    // Material holds every row open with a 48px `::before` spacer, sized for
+    // touch. Nothing else in the row is that tall.
+    md-list-item::before,
+    md-list-item .md-list-item-inner::before {
+        height: 34px;
+    }
+
+    // An empty secondary container carries 24px margins top and bottom
+    md-list-item .md-secondary-container {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
+    md-list-item .md-list-item-inner {
+        padding: 0;
+    }
+
+    // Every row lines up on two columns: the control at the content edge, and
+    // the text 48px in. Material indents switches, icons and bare labels each
+    // by a different amount — clickable rows are wrapped in a button that adds
+    // its own 16px.
+    md-list-item .md-list-item-inner,
+    md-list-item .md-button.md-no-style {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    md-list-item md-icon:first-child {
+        margin: 0 32px 0 0;
+        width: 24px;
+        min-width: 24px;
+    }
+
+    md-switch {
+        margin: 4px 0;
+
+        .md-container {
+            margin-right: 0;
+        }
+
+        // Control is 36px wide, so 20px puts the text on the same 80px column
+        // as the 24px icons with their 32px gap.
+        .md-label {
+            margin-left: 20px;
+        }
+    }
+
+    // A row that is only a label, with no control beside it
+    .background-picker > span:first-child {
+        margin-left: 40px;
+    }
+
+    // The background picker is a row of controls, not a toggle
+    .background-picker {
+        .md-button {
+            margin: 0 0 0 8px;
+            min-height: 30px;
+            line-height: 30px;
+        }
+    }
+}
+
 md-dialog.message-history-dialog {
     md-dialog-content {
         padding: 24px;
