@@ -47,13 +47,22 @@ export default [
             controller: [function() {
                 this.isLoading = false;
                 this.avatar = null; // String
-                const avatarFormat = webClientService.appCapabilities.imageFormat.avatar;
 
                 this.$onInit = function() {
+                    // Read lazily: the directive can be constructed before the
+                    // app has sent its capabilities, and reading it eagerly
+                    // throws during the initial connection.
+                    const avatarFormat = () => {
+                        const capabilities = webClientService.appCapabilities;
+                        return capabilities === undefined || capabilities.imageFormat === undefined
+                            ? 'image/jpeg'
+                            : capabilities.imageFormat.avatar;
+                    };
+
                     this.setAvatar = (avatarBytes: ArrayBuffer) => {
                         this.avatar = (avatarBytes === null)
                             ? null
-                            : bufferToUrl(avatarBytes, avatarFormat, log);
+                            : bufferToUrl(avatarBytes, avatarFormat(), log);
                     };
 
                     this.imageChanged = (image: ArrayBuffer, notify = true) => {

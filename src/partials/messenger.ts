@@ -648,8 +648,15 @@ class ConversationController {
         // Set receiver, conversation and type
         try {
             this.receiver = webClientService.receivers.getData({type: $stateParams.type, id: $stateParams.id});
-            this._conversation = this.webClientService.conversations.find(this.receiver);
             this.type = $stateParams.type;
+
+            // The receiver list may not have arrived yet, in which case there
+            // is nothing to show until it does.
+            if (!hasValue(this.receiver)) {
+                this.log.debug('Receiver not known yet, waiting for the list');
+                return;
+            }
+            this._conversation = this.webClientService.conversations.find(this.receiver);
 
             if (this.receiver.type === undefined) {
                 this.receiver.type = this.type;
