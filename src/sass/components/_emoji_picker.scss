@@ -1,12 +1,12 @@
 .twemoji-picker {
-    $tab-size: 32px;
+    $tab-size: 30px;
     $emoji-size: 28px;
 
     display: flex;
     flex-direction: column;
     margin: 0;
     background-color: $background-grey;
-    padding: 0 8px 8px;
+    padding: 0 8px 6px;
     min-height: 216px;
 
     &.outline {
@@ -15,7 +15,7 @@
         width: 366px;
     }
 
-    // A row of category icons across the top, as Windows does it
+    // A row of section icons. These scroll the list rather than swapping it.
     .tabs {
         display: flex;
         flex: 0 0 auto;
@@ -23,78 +23,59 @@
         justify-content: space-between;
         padding: 4px 2px 0;
 
-        label {
+        button {
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: border-color .15s ease-out;
+            transition: border-color .15s ease-out, opacity .15s ease-out;
+            opacity: .55;
+            border: 0;
             border-bottom: 2px solid transparent;
+            background: none;
             cursor: pointer;
-            padding: 4px 0 3px;
+            padding: 3px 0;
             width: $tab-size;
+            color: $material-grey-dark;
 
-            img {
-                opacity: .55;
-                transition: opacity .15s ease-out;
-            }
-
-            &:hover img {
-                opacity: .85;
-            }
-        }
-
-        [type='radio'] {
-            display: none;
-        }
-    }
-
-    // Only the checked tab's grid is on screen. The inputs sit in `.tabs`, so
-    // the panels are reached through the shared parent rather than a sibling
-    // selector.
-    @for $i from 0 through 7 {
-        .tabs [type='radio']:nth-of-type(#{$i + 1}):checked ~ label:nth-of-type(#{$i + 1}) {
-            border-bottom-color: $theme-primary;
-
-            img {
+            &:hover,
+            &.current {
                 opacity: 1;
             }
-        }
 
-        &:has(.tabs [type='radio']:nth-of-type(#{$i + 1}):checked) .tab-#{$i} {
-            display: flex;
+            &.current {
+                border-bottom-color: $theme-primary;
+            }
         }
     }
 
-    .tab {
-        display: none;
-        flex: 1 1 auto;
-        flex-direction: column;
-        // Without this the grid refuses to shrink and pushes the skin tones
-        // out of the picker.
-        min-height: 0;
-    }
-
+    // One continuous list; the sections simply follow one another.
     .content {
         @include scrollbar;
+        position: relative;
         flex: 1 1 auto;
         border-radius: 8px;
         background: #ffffff;
-        padding: 4px 8px 8px;
+        padding: 0 8px 8px;
         min-height: 0;
         overflow-y: scroll;
+
+        &:focus {
+            outline: 0;
+        }
 
         &::selection {
             background: rgba(255, 255, 255, 0);
         }
     }
 
-    // The category's name above its grid, as a heading rather than a tooltip
+    // Sticks to the very top of the list, with the grid running under it
     .category-name {
         position: sticky;
         top: 0;
+        z-index: 1;
         margin: 0;
         background: #ffffff;
-        padding: 6px 2px 4px;
+        padding: 6px 0 4px;
         color: $material-grey;
         font-size: .75em;
         font-weight: 500;
@@ -110,6 +91,12 @@
         // but the sprite is what gets drawn.
         text-indent: -99999px;
         overflow: hidden;
+
+        &.focused {
+            outline: 2px solid $theme-primary;
+            outline-offset: -2px;
+            border-radius: 4px;
+        }
     }
 
     .skins {
@@ -152,24 +139,16 @@
         display: none;
     }
 
-    // Searching looks across every category at once, so they all come on
-    // screen and their headings are dropped.
+    // Searching collapses everything into a single unlabelled list
     &.searching {
-        .tab {
-            display: block;
-        }
-
         .tabs,
         .skins,
         .category-name {
             display: none;
         }
 
-        .content {
-            border-radius: 0;
-            padding: 0;
-            height: auto;
-            overflow: visible;
+        .section[hidden] {
+            display: block;
         }
     }
 

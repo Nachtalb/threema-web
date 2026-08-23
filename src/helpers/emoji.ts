@@ -22,6 +22,7 @@
  * file, zero-padded keycaps, skin tone variants and the shortname index.
  */
 import EmojiConvertor from 'emoji-js';
+import {SHORTNAME_ORDER} from './emoji_order';
 
 const converter = new EmojiConvertor();
 converter.img_set = 'apple';
@@ -51,16 +52,44 @@ const EMOJI_REGEX: RegExp = (() => {
 })();
 
 /**
- * Every shortname the library knows, bare and without the surrounding colons.
- * Built once; the data does not change at runtime.
+ * Every shortname the library knows, bare and without the surrounding colons,
+ * in the order the picker lists them. Built once; the data does not change at
+ * runtime.
  */
 const SHORTNAMES: Map<string, string> = (() => {
     const names = new Map<string, string>();
+    const remaining = new Map<string, string>();
     for (const codepoint of Object.keys(converter.data)) {
         const entry = converter.data[codepoint];
         const emoji = entry[0][0];
         for (const shortname of entry[3]) {
+            remaining.set(shortname, emoji);
+        }
+    }
+    // Category order first, so a bare ':' starts where the picker does
+    for (const shortname of SHORTNAME_ORDER) {
+        const emoji = remaining.get(shortname);
+        if (emoji !== undefined) {
             names.set(shortname, emoji);
+            remaining.delete(shortname);
+        }
+    }
+    // Then the aliases, which carry no category of their own
+    for (const [shortname, emoji] of remaining) {
+        names.set(shortname, emoji);
+    }
+    return names;
+})();
+
+/**
+ * The name each emoji is best known by, for labelling one that has no
+ * shortname of its own in the picker.
+ */
+const NAMES_BY_EMOJI: Map<string, string> = (() => {
+    const names = new Map<string, string>();
+    for (const [shortname, emoji] of SHORTNAMES) {
+        if (!names.has(emoji)) {
+            names.set(emoji, shortname);
         }
     }
     return names;
@@ -172,6 +201,9 @@ export function shortnameToUtf8(shortname: string): string | null {
 /**
  * The shortnames starting with the given text, e.g. "smi" for "smile".
  *
+ * An empty prefix offers everything, in the order the picker lists it, so a
+ * bare ':' opens with the first category rather than an alphabetical jumble.
+ *
  * Names come back bare, without the surrounding colons, which is what
  * `shortnameToUtf8` expects.
  */
@@ -187,6 +219,14 @@ export function shortnamesStartingWith(prefix: string, limit: number): string[] 
         }
     }
     return found;
+}
+
+/**
+ * The shortname an emoji is best known by, or `null` when it is not in the
+ * set. Used to label the emoji picked most recently.
+ */
+export function utf8ToShortname(emoji: string): string | null {
+    return NAMES_BY_EMOJI.get(emoji) ?? null;
 }
 
 /**

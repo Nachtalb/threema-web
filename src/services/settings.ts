@@ -121,6 +121,41 @@ class NotificationSettings {
     }
 }
 
+class EmojiSettings {
+    private static readonly LIMIT = 36;
+
+    private readonly settingsService: SettingsService;
+
+    constructor(settingsService: SettingsService) {
+        this.settingsService = settingsService;
+    }
+
+    /**
+     * The emoji picked before, most recent first.
+     */
+    public getRecent(): string[] {
+        const stored = this.settingsService.retrieveUntrustedKeyValuePair('recentEmoji', false);
+        if (stored === '') {
+            return [];
+        }
+        try {
+            const parsed = JSON.parse(stored);
+            return Array.isArray(parsed) ? parsed.filter((x) => typeof x === 'string') : [];
+        } catch (error) {
+            return [];
+        }
+    }
+
+    /**
+     * Move an emoji to the front of the recently used list.
+     */
+    public addRecent(emoji: string): void {
+        const recent = [emoji, ...this.getRecent().filter((x) => x !== emoji)]
+            .slice(0, EmojiSettings.LIMIT);
+        this.settingsService.storeUntrustedKeyValuePair('recentEmoji', JSON.stringify(recent));
+    }
+}
+
 /**
  * The settings service can update variables for settings and persist them to
  * LocalStorage.
@@ -132,6 +167,7 @@ export class SettingsService {
     public readonly background: BackgroundSettings;
     public readonly media: MediaSettings;
     public readonly notifications: NotificationSettings;
+    public readonly emoji: EmojiSettings;
     private readonly log: Logger;
     private storage: Storage;
 
@@ -147,6 +183,7 @@ export class SettingsService {
         this.background = new BackgroundSettings(this);
         this.media = new MediaSettings(this);
         this.notifications = new NotificationSettings(this);
+        this.emoji = new EmojiSettings(this);
     }
 
     /**

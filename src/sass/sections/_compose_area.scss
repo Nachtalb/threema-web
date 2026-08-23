@@ -110,6 +110,8 @@ compose-area {
         box-shadow: 0 1px 4px rgba(0, 0, 0, .25);
         background-color: #ffffff;
         padding: 4px;
+        max-width: calc(100% - 16px);
+        overflow-x: auto;
 
         .suggestion {
             border-radius: 8px;
