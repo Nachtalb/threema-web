@@ -101,7 +101,6 @@
         "NOTE": "Бележка:"
     },
     "messenger": {
-        "VERSION": "Version",
         "VERIFICATION_LEVEL": "Ниво на проверка",
         "VERIFICATION_LEVEL2_EXPLAIN": "Самоличността на това лице е потвърдена чрез електронна поща или SMS.",
         "VERIFICATION_LEVEL3_EXPLAIN": "Проверили сте самоличността на това лице, като сте сканирали кода му.",

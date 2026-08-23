@@ -107,7 +107,6 @@
         "NOTE": "Nota: "
     },
     "messenger": {
-        "VERSION": "Versión",
         "VERIFICATION_LEVEL": "Nivel de verificacion",
         "VERIFICATION_LEVEL2_EXPLAIN": "La identidad de esta persona ha sido verificada mediante e-mail o SMS.",
         "VERIFICATION_LEVEL3_EXPLAIN": "Has verificado la identidad de esta persona al escanear su código.",

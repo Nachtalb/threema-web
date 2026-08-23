@@ -122,10 +122,6 @@
                             <md-icon aria-hidden="true" class="material-icons md-24">info</md-icon>
                             <span translate>messenger.ABOUT</span>
                         </md-list-item>
-                        <md-list-item ng-click="ctrl.version($event)">
-                            <md-icon aria-hidden="true" class="material-icons md-24">update</md-icon>
-                            <span translate>messenger.VERSION</span>
-                        </md-list-item>
                         <md-list-item ng-click="ctrl.closeSession($event)">
                             <md-icon aria-hidden="true" class="material-icons md-24">exit_to_app</md-icon>
                             <span translate>common.SESSION_CLOSE</span>
@@ -137,6 +133,10 @@
                     </md-list>
                 </section>
             </div>
+            <footer class="settings-footer">
+                <span>{{ ctrl.version }}</span>
+                <span>Developed with 🖕 by <a href="https://threema.id/XP7Z3W5M" target="_blank" rel="noopener noreferrer">XP7Z3W5M</a></span>
+            </footer>
         </md-dialog-content>
     </form>
 </md-dialog>

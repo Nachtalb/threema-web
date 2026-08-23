@@ -108,7 +108,6 @@
         "NOTE": "Poznámka:"
     },
     "messenger": {
-        "VERSION": "Verzia",
         "VERIFICATION_LEVEL": "Úroveň overenia",
         "VERIFICATION_LEVEL2_EXPLAIN": "Identita tejto osoby bola overená pomocou e-mailu alebo SMS.",
         "VERIFICATION_LEVEL3_EXPLAIN": "Overili ste identitu tejto osoby naskenovaním QR kódu.",

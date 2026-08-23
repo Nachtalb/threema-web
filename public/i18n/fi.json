@@ -108,7 +108,6 @@
         "NOTE": "Muistiinpano:"
     },
     "messenger": {
-        "VERSION": "Versio",
         "VERIFICATION_LEVEL": "Varmistustaso",
         "VERIFICATION_LEVEL2_EXPLAIN": "Tämän käyttäjän henkilöllisyys on varmistettu sähköpostilla tai tekstiviestillä.",
         "VERIFICATION_LEVEL3_EXPLAIN": "Olet varmistanut tämän henkilön identiteetin skannaamalla heidän koodinsa.",

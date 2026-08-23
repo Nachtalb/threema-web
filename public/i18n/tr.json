@@ -108,7 +108,6 @@
         "NOTE": "Not:"
     },
     "messenger": {
-        "VERSION": "Versiyon",
         "VERIFICATION_LEVEL": "Doğrulama seviyesi",
         "VERIFICATION_LEVEL2_EXPLAIN": "Bu kişinin kimliği e-posta ya da kısa mesaj ile doğrulandı.",
         "VERIFICATION_LEVEL3_EXPLAIN": "Bu kişinin kimliğini, kare kodunu tarayarak doğruladınız.",

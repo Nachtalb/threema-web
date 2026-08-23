@@ -108,7 +108,6 @@
         "NOTE": "注意:"
     },
     "messenger": {
-        "VERSION": "バージョン",
         "VERIFICATION_LEVEL": "検証レベル",
         "VERIFICATION_LEVEL2_EXPLAIN": "この人物の身元は、電子メールまたは SMS によって検証されています。",
         "VERIFICATION_LEVEL3_EXPLAIN": "あなたはコードをスキャンして、この人物の身元を検証しました。",

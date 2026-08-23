@@ -108,7 +108,6 @@
         "NOTE": "注意："
     },
     "messenger": {
-        "VERSION": "版本",
         "VERIFICATION_LEVEL": "驗證等級",
         "VERIFICATION_LEVEL2_EXPLAIN": "已使用電子郵件或簡訊驗證此人的身份。",
         "VERIFICATION_LEVEL3_EXPLAIN": "您已經透過掃描對方的QR碼驗證了此人的身份。",

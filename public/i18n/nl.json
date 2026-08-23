@@ -101,7 +101,6 @@
         "NOTE": "Let op:"
     },
     "messenger": {
-        "VERSION": "Versie",
         "VERIFICATION_LEVEL": "Verificatieniveau",
         "VERIFICATION_LEVEL2_EXPLAIN": "De identiteit van deze persoon is via e-mail of SMS geverifieerd.",
         "VERIFICATION_LEVEL3_EXPLAIN": "U heeft de identiteit van deze persoon geverifieerd door haar/zijn code te scannen.",

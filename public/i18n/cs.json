@@ -108,7 +108,6 @@
         "NOTE": "Poznámka:"
     },
     "messenger": {
-        "VERSION": "Verze",
         "VERIFICATION_LEVEL": "Úroveň ověření",
         "VERIFICATION_LEVEL2_EXPLAIN": "Identita této osoby byla ověřena pomocí e-mailu nebo SMS.",
         "VERIFICATION_LEVEL3_EXPLAIN": "Totožnost této osoby jste ověřili naskenováním QR kódu.",

@@ -108,7 +108,6 @@
         "NOTE": "Заўвага:"
     },
     "messenger": {
-        "VERSION": "Версія",
         "VERIFICATION_LEVEL": "Узровень праверкі",
         "VERIFICATION_LEVEL2_EXPLAIN": "Асоба гэтага чалавека была пацверджана з дапамогай электроннай пошты ці SMS.",
         "VERIFICATION_LEVEL3_EXPLAIN": "Вы праверылі асобу гэтага чалавека, адсканаваўшы яго код.",

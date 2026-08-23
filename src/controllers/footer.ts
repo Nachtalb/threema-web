@@ -16,30 +16,7 @@
  */
 
 import {isActionTrigger} from '../helpers';
-import {ThemeService} from '../services/theme';
-import {DialogController} from './dialog';
 import {TroubleshootingController} from './troubleshooting';
-
-/**
- * Controller for the version info dialog.
- */
-export class VersionDialogController extends DialogController {
-    public readonly version: string;
-
-    public readonly config: threema.Config;
-
-    public static readonly $inject = ['$scope', '$mdDialog', 'ThemeService', 'CONFIG'];
-    constructor(
-        $scope: ng.IScope,
-        $mdDialog: ng.material.IDialogService,
-        themeService: ThemeService,
-        config: threema.Config,
-    ) {
-        super($scope, $mdDialog, themeService);
-        this.version = config.VERSION;
-        this.config = config;
-    }
-}
 
 /**
  * Handle footer information.
@@ -53,20 +30,6 @@ export class FooterController {
     constructor(CONFIG: threema.Config, $mdDialog: ng.material.IDialogService) {
         this.$mdDialog = $mdDialog;
         this.config = CONFIG;
-    }
-
-    public showVersionInfo(ev?: KeyboardEvent): void {
-        if (ev !== undefined && !isActionTrigger(ev)) {
-            return;
-        }
-        this.$mdDialog.show({
-            controller: VersionDialogController,
-            controllerAs: 'ctrl',
-            templateUrl: 'partials/dialog.version.html',
-            parent: angular.element(document.body),
-            clickOutsideToClose: true,
-            fullscreen: true,
-        });
     }
 
     public showTroubleshooting(ev?: KeyboardEvent): void {

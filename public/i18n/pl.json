@@ -108,7 +108,6 @@
         "NOTE": "Wskazówka:"
     },
     "messenger": {
-        "VERSION": "Wersja",
         "VERIFICATION_LEVEL": "Poziom weryfikacji",
         "VERIFICATION_LEVEL2_EXPLAIN": "Tożsamość tej osoby została zweryfikowana przy użyciu adresu e-mail lub SMS.",
         "VERIFICATION_LEVEL3_EXPLAIN": "Zweryfikowano tożsamość tej osoby skanując jej kod.",

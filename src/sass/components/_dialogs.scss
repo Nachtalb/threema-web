@@ -186,6 +186,21 @@ md-dialog.settings-dialog {
             line-height: 30px;
         }
     }
+
+    // Sits at the foot of the dialog, quieter than the settings above it.
+    .settings-footer {
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        background-color: rgba(0, 0, 0, .06);
+        padding: 8px 24px;
+        color: $material-grey;
+        font-size: .75em;
+
+        a {
+            color: inherit;
+        }
+    }
 }
 
 md-dialog.message-history-dialog {

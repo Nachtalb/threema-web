@@ -108,7 +108,6 @@
         "NOTE": "Примітка."
     },
     "messenger": {
-        "VERSION": "Версія",
         "VERIFICATION_LEVEL": "Рівень підтвердження",
         "VERIFICATION_LEVEL2_EXPLAIN": "Дані цієї людини було підтверджено за допомогою ел. пошти або SMS.",
         "VERIFICATION_LEVEL3_EXPLAIN": "Ви підтвердили дані цієї людини, відсканувавши її код.",

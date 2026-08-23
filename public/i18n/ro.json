@@ -101,7 +101,6 @@
         "NOTE": "Notita:"
     },
     "messenger": {
-        "VERSION": "Versiune",
         "VERIFICATION_LEVEL": "Nivelul de verificare",
         "VERIFICATION_LEVEL2_EXPLAIN": "Identitatea persoanei a fost verificata folosing adresa de e-mail si SMS",
         "VERIFICATION_LEVEL3_EXPLAIN": "Ati certificat identitatea persoanei scanandu-le codul.",

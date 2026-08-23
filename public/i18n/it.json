@@ -108,7 +108,6 @@
         "NOTE": "Nota:"
     },
     "messenger": {
-        "VERSION": "Versione",
         "VERIFICATION_LEVEL": "Livello Verifica",
         "VERIFICATION_LEVEL2_EXPLAIN": "La identità di questa persona è stata verificata usando un SMS o un indirizzo di posta elettronica",
         "VERIFICATION_LEVEL3_EXPLAIN": "Hai verificato la identità di questa persona con il codice QR",

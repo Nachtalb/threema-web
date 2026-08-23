@@ -108,7 +108,6 @@
         "NOTE": "Hinweis:"
     },
     "messenger": {
-        "VERSION": "Version",
         "VERIFICATION_LEVEL": "Vertrauensstufe",
         "VERIFICATION_LEVEL2_EXPLAIN": "Die Identit\u00e4t dieser Person wurde mittels E-Mail oder SMS \u00fcberpr\u00fcft.",
         "VERIFICATION_LEVEL3_EXPLAIN": "Sie haben die Identit\u00e4t dieser Person durch Scannen ihres Codes \u00fcberpr\u00fcft.",

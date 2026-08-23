@@ -26,7 +26,6 @@ import {Logger} from 'ts-log';
 
 import {ContactControllerModel} from '../controller_model/contact';
 import {DialogController} from '../controllers/dialog';
-import {VersionDialogController} from '../controllers/footer';
 import {TroubleshootingController} from '../controllers/troubleshooting';
 import {bufferToUrl, firstVideoFrame, hasValue, supportsPassive, u8aToHex} from '../helpers';
 import {emojify} from '../helpers/emoji';
@@ -264,12 +263,13 @@ class SettingsController extends DialogController {
     private cacheMedia: boolean;
     private hasCustomBackground: boolean = false;
     private backgroundStoreService: BackgroundStoreService;
+    private readonly version: string;
     private readonly settingsScope: ng.IScope;
     private readonly log: Logger;
 
     public static $inject = [
         '$scope', '$mdDialog', '$window', 'SettingsService', 'ThemeService', 'NotificationService', 'navigation',
-        'BackgroundStoreService', 'LogService',
+        'BackgroundStoreService', 'LogService', 'CONFIG',
     ];
     constructor(
         $scope: ng.IScope,
@@ -281,9 +281,11 @@ class SettingsController extends DialogController {
         navigation: NavigationController,
         backgroundStoreService: BackgroundStoreService,
         logService: LogService,
+        config: threema.Config,
     ) {
         super($scope, $mdDialog, themeService);
         this.$window = $window;
+        this.version = config.VERSION;
         this.settingsService = settingsService;
         this.notificationService = notificationService;
         this.navigation = navigation;
@@ -396,10 +398,6 @@ class SettingsController extends DialogController {
 
     public about(ev: Event): void {
         this.closeThen(this.navigation.about, ev);
-    }
-
-    public version(ev: Event): void {
-        this.closeThen(this.navigation.version, ev);
     }
 
     public closeSession(ev: Event): void {
@@ -1562,13 +1560,6 @@ class NavigationController {
      */
     public about(ev): void {
         this.showDialog('about', ev, AboutDialogController);
-    }
-
-    /**
-     * Show version dialog.
-     */
-    public version(ev): void {
-        this.showDialog('version', ev, VersionDialogController)
     }
 
     /**
