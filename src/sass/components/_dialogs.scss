@@ -150,22 +150,24 @@ md-dialog.settings-dialog {
         padding-right: 0;
     }
 
+    // Icons sit centred on the same column as the toggles beside them: the
+    // 36px switch starts at 24px, so its centre is at 42px.
     md-list-item .md-list-item-inner > md-icon:first-child,
     md-list-item .md-button.md-no-style > md-icon:first-child {
-        margin: 0 16px 0 16px;
-        width: 24px;
-        min-width: 24px;
+        margin: 0 20px 0 24px;
+        width: 36px;
+        min-width: 36px;
+        text-align: center;
     }
 
     md-switch {
-        margin: 4px 0;
+        margin: 4px 0 4px 24px;
 
         .md-container {
             margin-right: 0;
         }
 
-        // Control is 36px wide, so 20px puts the text on the same 80px column
-        // as the 24px icons with their 32px gap.
+        // Matches the icons' gap, so every label starts on one column
         .md-label {
             margin-left: 20px;
         }
@@ -173,7 +175,7 @@ md-dialog.settings-dialog {
 
     // A row that is only a label, with no control beside it
     .background-picker > span:first-child {
-        margin-left: 40px;
+        margin-left: 80px;
     }
 
     // The background picker is a row of controls, not a toggle
