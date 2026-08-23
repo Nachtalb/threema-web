@@ -6,7 +6,7 @@
     &.me,
     &.all {
         background-color: #8b8b8b;
-        color: #ffffff;
+        color: var(--surface);
     }
 
     &.id {

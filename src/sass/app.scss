@@ -5,6 +5,7 @@
 // - http://vanseodesign.com/css/sass-directory-structures/
 
 // Helpers: Tools, helper files, variables, config files.
+@import 'helpers/tokens';
 @import 'helpers/colors';
 @import 'helpers/sizes';
 @import 'helpers/message_bubble';

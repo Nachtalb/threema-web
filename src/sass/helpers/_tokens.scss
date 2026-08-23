@@ -1,0 +1,41 @@
+// Runtime theme tokens.
+//
+// Sass variables are resolved at build time, so a theme cannot be swapped
+// without rebuilding. These custom properties are the values that change
+// between light and dark; the Sass variables below simply point at them, which
+// keeps every existing `$border-grey` and friend working while making the
+// actual colour a runtime choice.
+//
+// Anything that is the same in both themes stays a plain Sass variable.
+
+:root {
+    // Surfaces
+    --surface: #ffffff;
+    --surface-raised: #ffffff;
+    --surface-sunken: #f6f6f6;
+    --surface-grey: #e6e6e6;
+    --surface-grey-dim: #d4d4d4;
+    --border: #dddddd;
+
+    // Text
+    --text: rgba(0, 0, 0, .87);
+    --text-muted: rgba(0, 0, 0, .54);
+    --text-faint: rgba(0, 0, 0, .38);
+    --text-on-accent: #ffffff;
+    --placeholder: #d3d3d3;
+
+    // Message bubbles
+    --bubble-in: #ffffff;
+    --bubble-out: #e1f4e7;
+    --bubble-quote-border: rgba(0, 0, 0, .2);
+
+    // Chrome
+    --scrollbar-bg: #f6f6f6;
+    --scrollbar-thumb: #cccccc;
+    --overlay: rgba(0, 0, 0, .45);
+    --overlay-strong: rgba(0, 0, 0, .7);
+    --hover: rgba(0, 0, 0, .08);
+    --divider: rgba(0, 0, 0, .12);
+    --shadow-colour: rgba(0, 0, 0, .16);
+    --shadow-colour-strong: rgba(0, 0, 0, .23);
+}

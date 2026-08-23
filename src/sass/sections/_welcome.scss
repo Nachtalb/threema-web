@@ -278,6 +278,6 @@
     }
 
     md-input-container.md-input-focused .password-strength-indicator .unreached {
-        background-color: color.adjust($background-grey, $lightness: -7%);
+        background-color: var(--surface-grey-dim);
     }
 }

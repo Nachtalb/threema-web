@@ -50,7 +50,7 @@ body {
 }
 
 #title .dot {
-    fill: #ffffff;
+    fill: var(--surface);
 }
 
 .status-ok {
@@ -105,14 +105,14 @@ body {
     // Loading indicator color
     .loading {
         $light-transparent: rgba(255, 255, 255, .2);
-        @include loading-spinner(26px, 3px, #ffffff, $light-transparent);
+        @include loading-spinner(26px, 3px, var(--surface), $light-transparent);
     }
 
     > div {
         $half-transparent: rgba(0, 0, 0, .5);
         margin: 8px;
         text-shadow: 0 1px 1px $half-transparent;
-        color: #ffffff;
+        color: var(--surface);
 
         &:first-of-type {
             margin-left: 16px;

@@ -1,15 +1,15 @@
 body {
     margin: 0;
-    background-color: #ffffff;
+    background-color: var(--surface);
     padding: 0;
 }
 
 #main {
-    background-color: #ffffff;
+    background-color: var(--surface);
 }
 
 footer {
-    color: #ffffff;
+    color: var(--surface);
 }
 
 dl.key-values dt {

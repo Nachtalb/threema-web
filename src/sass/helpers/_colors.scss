@@ -26,20 +26,22 @@ $status-starred: #ffc107;
 // Element focus outline color
 $focus-outline-color: #c62828;
 
-$border-grey: #dddddd;
-$background-grey: color.adjust($border-grey, $lightness: 7%);
-$material-grey: rgba(0, 0, 0, .54);
-$material-grey-dark: rgba(0, 0, 0, .87);
+// These point at the runtime tokens in `_tokens.scss`, so every existing use
+// of them follows the active theme without changing at the call site.
+$border-grey: var(--border);
+$background-grey: var(--surface-grey);
+$material-grey: var(--text-muted);
+$material-grey-dark: var(--text);
 
-$dark-background-color: #f6f6f6;
-$light-background-color: #ffffff;
+$dark-background-color: var(--surface-sunken);
+$light-background-color: var(--surface);
 
-$scrollbar-color-bg: $dark-background-color;
-$scrollbar-color-thumb: #cccccc;
+$scrollbar-color-bg: var(--scrollbar-bg);
+$scrollbar-color-thumb: var(--scrollbar-thumb);
 
-$material-card-shadow: 0 2px 5px 0 rgba(0, 0, 0, .16), 0 2px 5px 0 rgba(0, 0, 0, .23);
+$material-card-shadow: 0 2px 5px 0 var(--shadow-colour), 0 2px 5px 0 var(--shadow-colour-strong);
 
-$active-placeholder-color: #d3d3d3;
+$active-placeholder-color: var(--placeholder);
 
 .color-status-ok {
     color: $status-ok;

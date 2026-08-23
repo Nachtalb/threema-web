@@ -57,7 +57,7 @@ $loading-ring-thickness: 5px;
             margin: auto;
             border-radius: $material-radius;
             background: rgba(128, 128, 128, .3);
-            color: #ffffff;
+            color: var(--surface);
         }
     }
 
@@ -203,7 +203,7 @@ $loading-ring-thickness: 5px;
                 }
 
                 .percent {
-                    color: #ffffff;
+                    color: var(--surface);
                     font-size: 11px;
                 }
             }
@@ -228,7 +228,7 @@ $loading-ring-thickness: 5px;
                     padding: 12px;
                     width: $circle-size;
                     height: $circle-size;
-                    fill: #ffffff;
+                    fill: var(--surface);
                     box-sizing: border-box;
                 }
             }
@@ -291,7 +291,7 @@ $loading-ring-thickness: 5px;
             cursor: pointer;
             border: 0;
             border-radius: 50%;
-            background: rgba(0, 0, 0, .08);
+            background: var(--hover);
             padding: 0;
             width: 32px;
             height: 32px;
@@ -308,7 +308,7 @@ $loading-ring-thickness: 5px;
             flex: 1 1 auto;
             cursor: pointer;
             border-radius: 2px;
-            background: rgba(0, 0, 0, .12);
+            background: var(--divider);
             height: 4px;
 
             // A 4px bar is too thin to hit reliably, so the grabbable area
