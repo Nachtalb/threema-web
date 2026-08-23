@@ -17,7 +17,10 @@ Changes:
 * [feature] Add a random set of background images, with a setting to disable the blur
 * [feature] Click a quote to jump to the quoted message
 * [feature] Jump from the media viewer back to the message the media belongs to
+* [feature] Play voice messages with an inline player instead of the browser's controls
+* [feature] Optionally show a notification when somebody reacts to a message
 * [change] Move the overflow menu entries into the settings dialog
+* [change] Replace the version dialog with a footer in the settings dialog
 * [change] Default to the minimal user interface
 * [change] Use toggles for the settings entries
 * [change] Remove the desktop app banner and trim the welcome screen
@@ -26,6 +29,10 @@ Changes:
 * [change] Ship the emoji images as WebP and AVIF, halving their size
 * [change] Require a browser from 2021 or newer
 * [fix] Handle wire message acknowledgements sent as a response
+* [fix] Put the timestamp in the corner of a message that has reactions
+* [fix] Stop a finished download from reopening a media viewer that was closed
+* [fix] Show transparent images whole rather than cropped
+* [fix] Colour the bubble tail of images restored from the cache
 
 Jumping to a quoted message is exact when the phone is an iPhone. Android
 reports a local database id for each message instead of the Threema message id
