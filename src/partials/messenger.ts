@@ -27,7 +27,7 @@ import {Logger} from 'ts-log';
 import {ContactControllerModel} from '../controller_model/contact';
 import {DialogController} from '../controllers/dialog';
 import {TroubleshootingController} from '../controllers/troubleshooting';
-import {bufferToUrl, firstVideoFrame, hasValue, supportsPassive, u8aToHex} from '../helpers';
+import {bufferToUrl, firstVideoFrame, hasValue, jumpToMessage, supportsPassive, u8aToHex} from '../helpers';
 import {emojify} from '../helpers/emoji';
 import {publicKeyGrid} from '../helpers/public_key';
 import {BackgroundStoreService} from '../services/background_store';
@@ -1171,6 +1171,8 @@ class ConversationController {
         const next = messages[at + (older ? -1 : 1)];
         if (next !== undefined) {
             this.webClientService.setQuote(this.receiver, next);
+            // Show which message is being quoted, since it is usually off screen
+            jumpToMessage(next.id);
         } else if (!older) {
             // Past the newest message: stop quoting
             this.webClientService.setQuote(this.receiver, null);
