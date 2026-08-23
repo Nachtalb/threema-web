@@ -6,6 +6,9 @@
             on-uploading="ctrl.onUploading"></drag-file>
 
     <div id="conversation-header" class="detail-header">
+        <!-- Only shown when the chat list is off screen -->
+        <ng-include src="'partials/messenger.backbutton.html'"></ng-include>
+
         <!-- Conversation details -->
         <div class="header-avatar" ng-click="ctrl.showReceiver()">
             <eee-avatar eee-receiver="ctrl.receiver"

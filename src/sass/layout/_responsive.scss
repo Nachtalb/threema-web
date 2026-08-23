@@ -28,8 +28,24 @@
     }
 }
 
+// The conversation header carries a back button, which is only useful once
+// the chat list is off screen.
+#conversation-header .header-back-button {
+    display: none;
+}
+
 @media (max-width: 630px) {
+    // Too narrow for two columns: the chat list and the conversation take
+    // turns at full width, and the back button in the conversation header is
+    // the way back to the list.
     #messenger {
+        #navigation {
+            flex: 1 1 100% !important;
+            width: 100% !important;
+            min-width: 0 !important;
+            max-width: none !important;
+        }
+
         &.show-detail {
             #navigation {
                 display: none;
@@ -42,6 +58,15 @@
                 max-width: 100%;
             }
         }
+    }
+
+    #conversation-header .header-back-button {
+        display: inline-block;
+    }
+
+    // The profile takes the whole screen rather than sharing it
+    #conversation-wrapper #conversation-detail.detail-open {
+        width: 100%;
     }
 }
 
