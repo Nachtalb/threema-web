@@ -265,20 +265,29 @@ export function utf8ToShortname(emoji: string): string | null {
 }
 
 /**
- * Enlarge 1-3 emoji.
+ * Enlarge a message that is nothing but emoji.
+ *
+ * A handful of them are drawn large; a longer run is drawn smaller so it still
+ * fits across the bubble's width.
  */
 const pattern = /<img class="em([" ])([^>]*>)/g;
 const singleEmojiThreshold = 3;
 const singleEmojiClassName = 'large-emoji';
+const manyEmojiClassName = 'medium-emoji';
 export function enlargeSingleEmoji(text: string, enlarge: boolean = false): string {
     if (!enlarge) {
         return text;
     }
     const matches = text.match(pattern);
-    if (matches != null && matches.length >= 1 && matches.length <= singleEmojiThreshold) {
-        if (text.replace(pattern, '').length === 0) {
-            text = text.replace(pattern, '<img class="em ' + singleEmojiClassName + '$1$2');
-        }
+    if (matches === null || matches.length === 0) {
+        return text;
     }
-    return text;
+    // Whitespace between them still counts as a message of only emoji
+    if (text.replace(pattern, '').trim().length !== 0) {
+        return text;
+    }
+    const className = matches.length <= singleEmojiThreshold
+        ? singleEmojiClassName
+        : manyEmojiClassName;
+    return text.replace(pattern, '<img class="em ' + className + '$1$2');
 }

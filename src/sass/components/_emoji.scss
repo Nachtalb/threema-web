@@ -1,5 +1,7 @@
 $emoji-height-normal: 1em;
 $emoji-height-large: 3em;
+// A longer run of emoji still needs to fit across the bubble
+$emoji-height-medium: 2em;
 
 img.em {
     margin: 0 .05em 0 .1em;
@@ -13,5 +15,11 @@ img.em {
         margin: 1px 4px 1px 0;
         width: $emoji-height-large;
         height: $emoji-height-large;
+    }
+
+    .em.medium-emoji {
+        margin: 1px 4px 1px 0;
+        width: $emoji-height-medium;
+        height: $emoji-height-medium;
     }
 }

@@ -1069,7 +1069,9 @@ md-menu-item {
 // the message. The selector matches the bubble rules' specificity, which set
 // the background per direction.
 #conversation .message-in .message-body:has(.em.large-emoji),
-#conversation .message-out .message-body:has(.em.large-emoji) {
+#conversation .message-in .message-body:has(.em.medium-emoji),
+#conversation .message-out .message-body:has(.em.large-emoji),
+#conversation .message-out .message-body:has(.em.medium-emoji) {
     box-shadow: none;
     background-color: transparent;
     // Nothing to fill, so the bubble's minimum does not apply
@@ -1094,10 +1096,12 @@ md-menu-item {
 
 // The bubble is inset to leave room for its tail; without a bubble that gap is
 // just a stray indent.
-#conversation .message-in .message-body:has(.em.large-emoji) {
+#conversation .message-in .message-body:has(.em.large-emoji),
+#conversation .message-in .message-body:has(.em.medium-emoji) {
     margin-left: 0;
 }
 
-#conversation .message-out .message-body:has(.em.large-emoji) {
+#conversation .message-out .message-body:has(.em.large-emoji),
+#conversation .message-out .message-body:has(.em.medium-emoji) {
     margin-right: 0;
 }
