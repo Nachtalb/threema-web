@@ -238,11 +238,11 @@ export default [
             // tslint:disable:max-line-length
             template: `
                 <div class="box" ng-if="ctrl.open">
-                    <div class="action jump" ng-click="ctrl.jumpToMessage()" role="button" aria-label="Jump to message" translate-attr="{'aria-label': 'messenger.JUMP_TO_MESSAGE', 'title': 'messenger.JUMP_TO_MESSAGE'}">
-                        <svg viewBox="0 0 24 24"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
-                    </div>
                     <div class="action save" ng-click="ctrl.save()" ng-if="!ctrl.loading" role="button" aria-label="Save" translate-attr="{'aria-label': 'common.SAVE', 'title': 'common.SAVE'}">
                         <svg viewBox="0 0 24 24"><path d="M12 3v13m0 0 5-5m-5 5-5-5M4 20h16"/></svg>
+                    </div>
+                    <div class="action jump" ng-click="ctrl.jumpToMessage()" role="button" aria-label="Jump to message" translate-attr="{'aria-label': 'messenger.JUMP_TO_MESSAGE', 'title': 'messenger.JUMP_TO_MESSAGE'}">
+                        <svg viewBox="0 0 24 24"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
                     </div>
                     <div class="action close" ng-click="ctrl.close()" role="button" aria-label="Close" translate-attr="{'aria-label': 'common.CLOSE', 'title': 'common.CLOSE'}">
                         <svg viewBox="0 0 24 24"><path d="M5 5l14 14M19 5L5 19"/></svg>

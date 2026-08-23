@@ -76,12 +76,15 @@ mediabox {
                 opacity: 1;
             }
 
+            // Save sits furthest out: it disappears while the media is still
+            // downloading, and a gap at the end reads better than one in the
+            // middle of the row.
             &.save {
-                right: 88px;
+                right: 152px;
             }
 
             &.jump {
-                right: 152px;
+                right: 88px;
             }
 
             &.close {
