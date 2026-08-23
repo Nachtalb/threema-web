@@ -216,8 +216,21 @@ md-menu-content.md-threemawork-theme {
         padding-right: 0;
     }
 
-    // The edit form slides in over the profile it belongs to.
+    // The edit form slides in over the profile it belongs to. While it is
+    // animating it comes out of the flow, otherwise the profile underneath is
+    // pushed down by a pane that is on its way out.
     .edit-pane {
+        &.ng-enter,
+        &.ng-leave {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 3;
+            background-color: var(--surface-raised);
+        }
+
         &.ng-enter {
             transition: transform .2s ease-out;
             transform: translateX(100%);
