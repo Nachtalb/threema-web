@@ -1856,9 +1856,6 @@ class NavigationController {
 
 class MessengerController {
     public name = 'messenger';
-    // True once a conversation's template has been built. `showDetail()` flips
-    // as soon as the route changes, which is before the content exists.
-    public conversationReady: boolean = false;
     private receiverService: ReceiverService;
     private $state;
     private webClientService: WebClientService;
@@ -1888,9 +1885,6 @@ class MessengerController {
         this.$state = $state;
         this.webClientService = webClientService;
 
-        // A reload straight into a conversation never fires a transition
-        this.conversationReady = !$state.is('messenger.home');
-
         // Remember where we are, so a reload comes back to the same place
         $transitions.onSuccess({}, (transition) => {
             const name = transition.to().name;
@@ -1903,17 +1897,6 @@ class MessengerController {
             } else if (name === 'messenger.home') {
                 navigationStateService.clearConversation();
             }
-
-            // The panel slides once the route settles. The class is applied a
-            // frame later so the browser has laid the new view out first,
-            // otherwise the transition starts mid-layout and stutters.
-            const ready = name !== 'messenger.home';
-            if (ready === this.conversationReady) {
-                return;
-            }
-            requestAnimationFrame(() => {
-                $scope.$apply(() => this.conversationReady = ready);
-            });
         });
 
         // Keep the profile sidebar open across conversations: opening a chat
