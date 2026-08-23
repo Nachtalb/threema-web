@@ -33,21 +33,21 @@
                                 <span translate>settings.notifications.SHOW_PREVIEW</span>
                             </md-switch>
                         </md-list-item>
-                        <md-list-item>
-                            <md-switch
-                                    ng-model="ctrl.notificationSound"
-                                    ng-change="ctrl.setWantsSound(ctrl.notificationSound)"
-                                    aria-label="Play notification sound">
-                                <span translate>settings.notifications.PLAY_SOUND</span>
-                            </md-switch>
-                        </md-list-item>
-                        <md-list-item>
+                        <md-list-item ng-if="ctrl.desktopNotifications && ctrl.notificationApiAvailable && ctrl.notificationPermission !== false">
                             <md-switch
                                     ng-disabled="!ctrl.desktopNotifications"
                                     ng-model="ctrl.notifyReactions"
                                     ng-change="ctrl.setNotifyReactions(ctrl.notifyReactions)"
                                     aria-label="Notify on reactions">
                                 <span translate>settings.notifications.NOTIFY_REACTIONS</span>
+                            </md-switch>
+                        </md-list-item>
+                        <md-list-item>
+                            <md-switch
+                                    ng-model="ctrl.notificationSound"
+                                    ng-change="ctrl.setWantsSound(ctrl.notificationSound)"
+                                    aria-label="Play notification sound">
+                                <span translate>settings.notifications.PLAY_SOUND</span>
                             </md-switch>
                         </md-list-item>
                     </md-list>
