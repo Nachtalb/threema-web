@@ -869,6 +869,9 @@ export default [
                 let suggestionStrip: HTMLElement | null = null;
                 let suggestions: string[] = [];
                 let suggestionIndex = 0;
+                // What the strip was last built for, so an unchanged word does
+                // not rebuild it
+                let suggestionNeedle: string | null = null;
 
                 function hideSuggestions(): void {
                     if (suggestionStrip !== null) {
@@ -877,6 +880,7 @@ export default [
                     }
                     suggestions = [];
                     suggestionIndex = 0;
+                    suggestionNeedle = null;
                 }
 
                 function insertSuggestion(shortname: string): void {
@@ -937,6 +941,13 @@ export default [
                     }
 
                     const needle = typed.slice(1).toLowerCase();
+                    // Every keyup lands here, arrow keys included. Rebuilding
+                    // on an unchanged word would throw away the selection the
+                    // arrows just moved.
+                    if (needle === suggestionNeedle && suggestionStrip !== null) {
+                        return;
+                    }
+                    suggestionNeedle = needle;
                     const recent = settingsService.emoji.getRecent()
                         .map((emoji) => utf8ToShortname(emoji))
                         .filter((name) => name !== null && name.startsWith(needle));

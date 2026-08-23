@@ -284,7 +284,13 @@ md-menu-content.md-threemawork-theme {
         box-sizing: border-box;
         width: 100%;
         max-width: $chat-max-width;
-        overflow: hidden;
+
+        // The corners are clipped on the input row itself, so the emoji
+        // suggestion strip can still rise above the footer.
+        compose-area > div:not(.emoji-suggestions) {
+            border-radius: inherit;
+            overflow: hidden;
+        }
     }
 
     #conversation-header {
