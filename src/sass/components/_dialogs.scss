@@ -54,9 +54,16 @@ md-dialog {
         // A label styled as a raised button. angular-material only themes real
         // buttons, so its colours are set here or it stays dark on dark.
         label.md-button {
-            margin-left: auto;
+            margin: 0;
             background-color: var(--surface-grey);
             color: var(--text);
+        }
+
+        // `md-secondary` puts this at the right edge, the same way the colour
+        // scheme pill is placed.
+        .background-actions {
+            display: flex;
+            align-items: center;
         }
     }
 
@@ -240,8 +247,9 @@ md-dialog.settings-dialog {
 
     // The background picker is a row of controls, not a toggle
     .background-picker {
+        // No margin here: the label's `margin-left: auto` above pushes the
+        // controls to the right edge, and a shorthand would reset it.
         .md-button:not(.md-icon-button) {
-            margin: 0 0 0 8px;
             min-height: 30px;
             line-height: 30px;
         }
