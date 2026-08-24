@@ -110,6 +110,46 @@ md-dialog.send-file-dialog {
         max-width: 100%;
         max-height: 250px;
     }
+
+    // What is about to be sent, rather than leaving the dialog silent about it
+    .file-row {
+        display: flex;
+        align-items: center;
+        margin: 8px 0 4px;
+
+        .file-icon {
+            display: flex;
+            flex: 0 0 auto;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background-color: var(--surface-grey);
+            width: 40px;
+            height: 40px;
+
+            img {
+                width: 24px;
+                height: 24px;
+            }
+        }
+
+        .file-details {
+            flex: 1 1 auto;
+            margin-left: 12px;
+            min-width: 0;
+        }
+
+        .file-name {
+            font-weight: 500;
+            // A long name wraps rather than widening the dialog
+            overflow-wrap: anywhere;
+        }
+
+        .file-size {
+            color: var(--text-muted);
+            font-size: .8rem;
+        }
+    }
 }
 
 // Angular-material sizes list rows for touch: 48px minimum, generous switch

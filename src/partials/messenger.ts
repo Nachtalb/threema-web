@@ -60,22 +60,30 @@ class SendFileController extends DialogController {
     public caption: string;
     public sendAsFile: boolean = false;
     public title: string;
+    public files: threema.FileMessageData[];
     private preview: threema.FileMessageData | null = null;
     public previewDataUrl: string | null = null;
+    private readonly mimeService: MimeService;
 
-    public static $inject = ['$scope', '$mdDialog', 'LogService', 'ThemeService', 'preview', 'title'];
+    public static $inject = [
+        '$scope', '$mdDialog', 'LogService', 'ThemeService', 'MimeService', 'preview', 'title', 'files',
+    ];
     constructor(
         $scope: ng.IScope,
         $mdDialog: ng.material.IDialogService,
         logService: LogService,
         themeService: ThemeService,
+        mimeService: MimeService,
         preview: threema.FileMessageData,
         title: string,
+        files: threema.FileMessageData[],
     ) {
         super($scope, $mdDialog, themeService);
         const log = logService.getLogger('SendFile-C');
+        this.mimeService = mimeService;
         this.preview = preview;
         this.title = title;
+        this.files = files;
         if (preview !== null) {
             if (preview.fileType.startsWith('video/')) {
                 // A video has no preview of its own; use its first frame
@@ -86,6 +94,10 @@ class SendFileController extends DialogController {
                 this.previewDataUrl = bufferToUrl(this.preview.data, this.preview.fileType, log);
             }
         }
+    }
+
+    public iconUrl(file: threema.FileMessageData): string {
+        return this.mimeService.getIconUrl(file.fileType);
     }
 
     public send(): void {
@@ -960,7 +972,11 @@ class ConversationController {
                     // Show confirmation dialog
                     this.$mdDialog.show({
                         clickOutsideToClose: false,
-                        locals: { preview: preview, title: title },
+                        locals: {
+                            preview: preview,
+                            title: title,
+                            files: contents as threema.FileMessageData[],
+                        },
                         controller: 'SendFileController',
                         controllerAs: 'ctrl',
                         // tslint:disable:max-line-length
@@ -969,6 +985,15 @@ class ConversationController {
                                 <md-dialog-content class="md-dialog-content">
                                     <h2 class="md-title" ng-bind-html="ctrl.title"></h2>
                                     <img class="preview" ng-if="ctrl.hasPreview()" ng-src="{{ ctrl.previewDataUrl | unsafeResUrl }}">
+                                    <div class="file-row" ng-repeat="file in ctrl.files">
+                                        <div class="file-icon">
+                                            <img ng-src="{{ ctrl.iconUrl(file) }}" alt="">
+                                        </div>
+                                        <div class="file-details">
+                                            <div class="file-name">{{ file.name }}</div>
+                                            <div class="file-size">{{ file.size | fileSize }}</div>
+                                        </div>
+                                    </div>
                                     <md-input-container md-no-float class="input-caption md-prompt-input-container" ng-show="${showCaption}">
                                         <input maxlength="1000" md-autofocus ng-keypress="ctrl.keypress($event)" ng-model="ctrl.caption" placeholder="${placeholder}" aria-label="${placeholder}">
                                     </md-input-container>
