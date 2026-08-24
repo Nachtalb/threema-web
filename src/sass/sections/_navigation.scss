@@ -58,6 +58,9 @@
     // A sub view slides in over the settings it was opened from. While it is
     // animating both are in the panel, so the incoming one is taken out of the
     // flow rather than pushing the other down.
+    //
+    // Going deeper the new view arrives from the right and the old one steps
+    // aside to the left; stepping back reverses both.
     > div.ng-enter,
     > div.ng-leave {
         position: absolute;
@@ -84,7 +87,17 @@
     }
 
     > div.ng-leave-active {
-        transform: translateX(100%);
+        transform: translateX(-100%);
+    }
+
+    &.going-back {
+        > div.ng-enter {
+            transform: translateX(-100%);
+        }
+
+        > div.ng-leave-active {
+            transform: translateX(100%);
+        }
     }
 
     .settings-pane {

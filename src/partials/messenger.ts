@@ -1522,6 +1522,9 @@ class NavigationController {
     // of its sub views is showing
     public settingsOpen: boolean = false;
     public settingsView: 'settings' | 'troubleshooting' | 'about' = 'settings';
+    // Which way the next sub view change is travelling, so it slides the way
+    // the user is moving
+    public settingsGoingBack: boolean = false;
 
     private $mdDialog;
     private $translate: ng.translate.ITranslateService;
@@ -1750,6 +1753,7 @@ class NavigationController {
      * Show one of the settings' sub views.
      */
     public openSettingsView(view: 'troubleshooting' | 'about'): void {
+        this.settingsGoingBack = false;
         this.settingsView = view;
     }
 
@@ -1759,6 +1763,7 @@ class NavigationController {
      */
     public settingsBack(): void {
         if (this.settingsView !== 'settings') {
+            this.settingsGoingBack = true;
             this.settingsView = 'settings';
         } else {
             this.settingsOpen = false;

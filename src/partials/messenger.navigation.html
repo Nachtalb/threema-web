@@ -49,7 +49,8 @@
 </div>
 
 <!-- Settings and its sub views -->
-<div id="navigation-settings" class="tab-content" ng-if="ctrl.settingsOpen">
+<div id="navigation-settings" class="tab-content" ng-if="ctrl.settingsOpen"
+     ng-class="{'going-back': ctrl.settingsGoingBack}">
     <div ng-if="ctrl.settingsView === 'settings'"
          ng-controller="SettingsController as settingsCtrl"
          ng-include src="'partials/messenger.settings.html'"></div>
