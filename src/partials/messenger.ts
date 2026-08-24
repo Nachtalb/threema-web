@@ -29,6 +29,7 @@ import {DialogController} from '../controllers/dialog';
 import {TroubleshootingController} from '../controllers/troubleshooting';
 import {bufferToUrl, firstVideoFrame, glideScrollTo, hasValue, jumpToMessage, supportsPassive, u8aToHex} from '../helpers';
 import {emojify} from '../helpers/emoji';
+import {EmojiPicker} from '../helpers/emoji_picker';
 import {publicKeyGrid} from '../helpers/public_key';
 import {BackgroundStoreService} from '../services/background_store';
 import {ContactService} from '../services/contact';
@@ -64,16 +65,25 @@ class SendFileController extends DialogController {
     private preview: threema.FileMessageData | null = null;
     public previewDataUrl: string | null = null;
     private readonly mimeService: MimeService;
+    private readonly settingsService: SettingsService;
+    private readonly $translate: ng.translate.ITranslateService;
+    private readonly $timeout: ng.ITimeoutService;
+    private readonly dialogScope: ng.IScope;
+    private picker: EmojiPicker | null = null;
 
     public static $inject = [
-        '$scope', '$mdDialog', 'LogService', 'ThemeService', 'MimeService', 'preview', 'title', 'files',
+        '$scope', '$mdDialog', '$translate', '$timeout', 'LogService', 'ThemeService', 'MimeService',
+        'SettingsService', 'preview', 'title', 'files',
     ];
     constructor(
         $scope: ng.IScope,
         $mdDialog: ng.material.IDialogService,
+        $translate: ng.translate.ITranslateService,
+        $timeout: ng.ITimeoutService,
         logService: LogService,
         themeService: ThemeService,
         mimeService: MimeService,
+        settingsService: SettingsService,
         preview: threema.FileMessageData,
         title: string,
         files: threema.FileMessageData[],
@@ -81,6 +91,10 @@ class SendFileController extends DialogController {
         super($scope, $mdDialog, themeService);
         const log = logService.getLogger('SendFile-C');
         this.mimeService = mimeService;
+        this.settingsService = settingsService;
+        this.$translate = $translate;
+        this.$timeout = $timeout;
+        this.dialogScope = $scope;
         this.preview = preview;
         this.title = title;
         this.files = files;
@@ -94,10 +108,96 @@ class SendFileController extends DialogController {
                 this.previewDataUrl = bufferToUrl(this.preview.data, this.preview.fileType, log);
             }
         }
+        $scope.$on('$destroy', () => this.closeEmojiPicker());
     }
 
     public iconUrl(file: threema.FileMessageData): string {
         return this.mimeService.getIconUrl(file.fileType);
+    }
+
+    /** The caption input and its picker, which sits below it. */
+    private captionElements(): {input: HTMLInputElement, keyboard: Element, trigger: Element} | null {
+        const dialog = document.querySelector('md-dialog.send-file-dialog');
+        if (dialog === null) {
+            return null;
+        }
+        const input = dialog.querySelector('.input-caption input') as HTMLInputElement;
+        const keyboard = dialog.querySelector('.emoji-keyboard');
+        const trigger = dialog.querySelector('.emoji-trigger');
+        if (input === null || keyboard === null || trigger === null) {
+            return null;
+        }
+        return {input: input, keyboard: keyboard, trigger: trigger};
+    }
+
+    public toggleEmojiPicker(): void {
+        if (this.picker !== null) {
+            this.closeEmojiPicker();
+        } else {
+            this.openEmojiPicker();
+        }
+    }
+
+    private openEmojiPicker(): void {
+        // The picker markup is pulled in by `ng-include`, so it may not be in
+        // the dialog yet on the first click.
+        this.$timeout(() => {
+            const parts = this.captionElements();
+            if (parts === null) {
+                return;
+            }
+            const element = parts.keyboard.querySelector('div.twemoji-picker');
+            if (element === null) {
+                return;
+            }
+
+            parts.keyboard.classList.add('active');
+            parts.keyboard.setAttribute('aria-expanded', 'true');
+            parts.trigger.setAttribute('aria-pressed', 'true');
+            parts.trigger.classList.add('is-active');
+
+            this.picker = new EmojiPicker(element, this.settingsService, {
+                insert: (emoji: string) => this.insertIntoCaption(emoji),
+                close: () => this.dialogScope.$applyAsync(() => this.closeEmojiPicker()),
+            }, this.$translate.instant('messenger.SEARCH'));
+            this.picker.attach();
+        });
+    }
+
+    private closeEmojiPicker(): void {
+        const parts = this.captionElements();
+        if (parts !== null) {
+            parts.keyboard.classList.remove('active');
+            parts.keyboard.setAttribute('aria-expanded', 'false');
+            parts.trigger.setAttribute('aria-pressed', 'false');
+            parts.trigger.classList.remove('is-active');
+        }
+        if (this.picker !== null) {
+            this.picker.detach();
+            this.picker = null;
+        }
+        if (parts !== null) {
+            parts.input.focus();
+        }
+    }
+
+    /** Write an emoji at the caret rather than appending it. */
+    private insertIntoCaption(emoji: string): void {
+        const parts = this.captionElements();
+        if (parts === null) {
+            return;
+        }
+        const input = parts.input;
+        const text = input.value;
+        const at = input.selectionStart ?? text.length;
+        const to = input.selectionEnd ?? at;
+        const caption = text.slice(0, at) + emoji + text.slice(to);
+        this.dialogScope.$applyAsync(() => this.caption = caption);
+        // The model update lands on the next digest, so the caret is placed
+        // against the value written here rather than the one on screen now.
+        input.value = caption;
+        const caret = at + emoji.length;
+        input.setSelectionRange(caret, caret);
     }
 
     public send(): void {
@@ -996,7 +1096,11 @@ class ConversationController {
                                     </div>
                                     <md-input-container md-no-float class="input-caption md-prompt-input-container" ng-show="${showCaption}">
                                         <input maxlength="1000" md-autofocus ng-keypress="ctrl.keypress($event)" ng-model="ctrl.caption" placeholder="${placeholder}" aria-label="${placeholder}">
+                                        <i class="md-primary emoji-trigger trigger is-enabled material-icons" role="button" aria-label="emoji" aria-pressed="false" tabindex="0" ng-click="ctrl.toggleEmojiPicker()">tag_faces</i>
                                     </md-input-container>
+                                    <div class="emoji-keyboard" aria-expanded="false" ng-show="${showCaption}">
+                                        <ng-include src="'partials/emoji-picker.html'" include-replace></ng-include>
+                                    </div>
                                     <md-input-container md-no-float class="input-send-as-file md-prompt-input-container" ng-show="${showSendAsFileCheckbox}">
                                         <md-checkbox ng-model="ctrl.sendAsFile" aria-label="${confirmSendAsFile}">
                                             ${confirmSendAsFile}

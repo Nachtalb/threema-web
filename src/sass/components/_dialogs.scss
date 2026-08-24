@@ -63,6 +63,11 @@ md-dialog {
 }
 
 md-dialog.send-file-dialog {
+    // Anchors the caption's emoji picker, which floats over the dialog
+    md-dialog-content {
+        position: relative;
+    }
+
     md-input-container.input-caption {
         margin-bottom: 0;
     }
@@ -70,6 +75,48 @@ md-dialog.send-file-dialog {
     md-input-container.input-send-as-file {
         margin-top: 0;
         margin-bottom: 0;
+    }
+
+    // The caption's emoji picker floats over the dialog rather than growing
+    // it, and its trigger sits inside the input at the right edge.
+    md-input-container.input-caption {
+        position: relative;
+
+        .emoji-trigger {
+            position: absolute;
+            right: 0;
+            bottom: 4px;
+            cursor: pointer;
+            color: var(--text-muted);
+
+            &.is-active {
+                color: $theme-primary;
+            }
+        }
+
+        input {
+            padding-right: 32px;
+        }
+    }
+
+    .emoji-keyboard {
+        display: none;
+        position: absolute;
+        right: 24px;
+        z-index: 5;
+        box-shadow: 0 2px 8px var(--shadow-colour);
+        border-radius: 4px;
+        width: 320px;
+        overflow: hidden;
+
+        &.active {
+            display: block;
+        }
+
+        .twemoji-picker {
+            box-sizing: border-box;
+            height: 300px;
+        }
     }
 
     .preview {
