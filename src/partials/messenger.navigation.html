@@ -34,22 +34,27 @@
     </div>
 </div>
 
-<!-- Settings header, in place of the tabs -->
+<!-- Header of whatever slid in over the list, in place of the tabs -->
 <div id="navigation-header" class="pane-header" ng-if="ctrl.settingsOpen">
     <div class="main">
         <md-button md-no-ink class="md-icon-button header-back-button"
                    aria-label="Back" title="Back"
-                   ng-click="ctrl.closeSettings()">
+                   ng-click="ctrl.settingsBack()">
             <md-icon class="material-icons md-24">arrow_back</md-icon>
         </md-button>
-        <h2 translate>settings.SETTINGS</h2>
+        <h2 ng-if="ctrl.settingsView === 'settings'" translate>settings.SETTINGS</h2>
+        <h2 ng-if="ctrl.settingsView === 'troubleshooting'" translate>troubleshooting.TROUBLESHOOTING</h2>
     </div>
 </div>
 
-<!-- Settings -->
-<div id="navigation-settings" class="tab-content" ng-if="ctrl.settingsOpen"
-     ng-controller="SettingsController as settingsCtrl"
-     ng-include src="'partials/messenger.settings.html'"></div>
+<!-- Settings and its sub views -->
+<div id="navigation-settings" class="tab-content" ng-if="ctrl.settingsOpen">
+    <div ng-if="ctrl.settingsView === 'settings'"
+         ng-controller="SettingsController as settingsCtrl"
+         ng-include src="'partials/messenger.settings.html'"></div>
+    <div ng-if="ctrl.settingsView === 'troubleshooting'"
+         ng-include src="'partials/messenger.troubleshooting.html'"></div>
+</div>
 
 <!-- Conversations -->
 <div id="navigation-conversations" class="tab-content" ng-if="!ctrl.settingsOpen && ctrl.activeTab == 'conversations'" in-view-container>

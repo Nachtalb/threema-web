@@ -41,6 +41,14 @@
     flex-direction: column;
     min-height: 0;
 
+    // The view wrapper `ng-if` adds between here and the pane
+    > div {
+        display: flex;
+        flex: 1 1 auto;
+        flex-direction: column;
+        min-height: 0;
+    }
+
     .settings-pane {
         display: flex;
         flex: 1 1 auto;
@@ -57,6 +65,30 @@
 
     .settings-footer {
         flex: 0 0 auto;
+    }
+
+    // A sub view that is prose and a couple of buttons rather than a list
+    .pane-text {
+        padding: 8px 24px;
+        color: var(--text);
+
+        p {
+            margin: 0 0 12px;
+        }
+
+        md-checkbox {
+            margin: 4px 0 0;
+        }
+    }
+
+    .pane-actions {
+        display: flex;
+        flex-direction: column;
+        padding: 0 24px 8px;
+
+        .md-button {
+            margin: 4px 0;
+        }
     }
 }
 

@@ -405,8 +405,8 @@ class SettingsController extends DialogController {
         action.call(this.navigation, ev);
     }
 
-    public troubleshooting(ev: Event): void {
-        this.closeThen(this.navigation.troubleshooting, ev);
+    public troubleshooting(): void {
+        this.navigation.openSettingsView('troubleshooting');
     }
 
     public about(ev: Event): void {
@@ -1486,8 +1486,10 @@ class NavigationController {
     private searchVisible = false;
     private searchText: string = '';
 
-    // Whether the settings have slid in over the conversation list
+    // Whether the settings have slid in over the conversation list, and which
+    // of its sub views is showing
     public settingsOpen: boolean = false;
+    public settingsView: 'settings' | 'troubleshooting' | 'about' = 'settings';
 
     private $mdDialog;
     private $translate: ng.translate.ITranslateService;
@@ -1535,7 +1537,7 @@ class NavigationController {
             // Escape steps back out of a view that slid in over the list
             if (event.key === 'Escape' && this.settingsOpen) {
                 event.preventDefault();
-                $scope.$apply(() => this.closeSettings());
+                $scope.$apply(() => this.settingsBack());
                 return;
             }
             if (!event.altKey) {
@@ -1716,13 +1718,34 @@ class NavigationController {
      */
     public openSettings(): void {
         this.settingsOpen = true;
+        this.settingsView = 'settings';
     }
 
     /**
-     * Leave the settings, or step back out of one of its sub views.
+     * Show one of the settings' sub views.
+     */
+    public openSettingsView(view: 'troubleshooting' | 'about'): void {
+        this.settingsView = view;
+    }
+
+    /**
+     * Step back: out of a sub view to the settings, or out of the settings
+     * altogether.
+     */
+    public settingsBack(): void {
+        if (this.settingsView !== 'settings') {
+            this.settingsView = 'settings';
+        } else {
+            this.settingsOpen = false;
+        }
+    }
+
+    /**
+     * Leave the settings, whichever view is showing.
      */
     public closeSettings(): void {
         this.settingsOpen = false;
+        this.settingsView = 'settings';
     }
 
     /**
@@ -2607,6 +2630,7 @@ angular.module('3ema.messenger', ['ngMaterial'])
 
 .controller('SendFileController', SendFileController)
 .controller('SettingsController', SettingsController)
+.controller('TroubleshootingController', TroubleshootingController)
 .controller('MessengerController', MessengerController)
 .controller('ConversationController', ConversationController)
 .controller('NavigationController', NavigationController)

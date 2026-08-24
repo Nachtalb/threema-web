@@ -1,0 +1,24 @@
+<!-- Troubleshooting, slid in over the settings -->
+<div class="settings-pane" ng-controller="TroubleshootingController as troubleshootingCtrl">
+    <div class="settings-body">
+        <section class="pane-text">
+            <p translate>troubleshooting.REPORT_FAQ</p>
+            <p translate>troubleshooting.REPORT_LOG</p>
+            <p translate>troubleshooting.REPORT_VIA_CLIPBOARD</p>
+            <md-checkbox ng-model="troubleshootingCtrl.sanitize" aria-label="Remove sensitive data">
+                <span translate>troubleshooting.REMOVE_SENSITIVE_DATA</span>
+            </md-checkbox>
+        </section>
+        <section class="pane-actions">
+            <md-button class="md-raised md-accent" ng-click="troubleshootingCtrl.copyToClipboard()"
+                       aria-labelledby="aria-label-copy-log-clipboard">
+                <span translate id="aria-label-copy-log-clipboard">troubleshooting.COPY_LOG_CLIPBOARD</span>
+            </md-button>
+            <md-button class="md-raised" ng-href="{{ troubleshootingCtrl.issueUrl }}"
+                       target="_blank" rel="noopener noreferrer"
+                       aria-labelledby="aria-label-report-issue">
+                <span translate id="aria-label-report-issue">troubleshooting.REPORT_VIA_GITHUB</span>
+            </md-button>
+        </section>
+    </div>
+</div>
