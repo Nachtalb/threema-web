@@ -138,6 +138,9 @@ md-dialog.send-file-dialog {
         margin: 0;
         padding: 6px 0 2px;
         line-height: 1.4;
+        // The accent colour is the section marker; a slab of raised surface
+        // behind it just stripes the list.
+        background-color: transparent;
 
         .md-subheader-inner {
             padding: 0;
