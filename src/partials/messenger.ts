@@ -73,6 +73,7 @@ class SendFileController extends DialogController {
     private picker: EmojiPicker | null = null;
     private pickerPanel: HTMLElement | null = null;
     private dismissPicker: ((ev: MouseEvent) => void) | null = null;
+    private pickerKeys: ((ev: KeyboardEvent) => void) | null = null;
     private pickerTemplate: string = '';
     private suggestions: EmojiSuggestions | null = null;
 
@@ -207,6 +208,22 @@ class SendFileController extends DialogController {
             }
         };
         document.addEventListener('mousedown', this.dismissPicker);
+
+        // Escape and Ctrl+. belong to the picker while it is open: the dialog
+        // would otherwise close on escape, and the conversation's own compose
+        // area would answer the shortcut from behind the dialog.
+        this.pickerKeys = (ev: KeyboardEvent) => {
+            const closes = ev.key === 'Escape'
+                || (ev.key === '.' && ev.ctrlKey && !ev.altKey && !ev.metaKey);
+            if (!closes) {
+                return;
+            }
+            ev.preventDefault();
+            ev.stopPropagation();
+            this.dialogScope.$applyAsync(() => this.closeEmojiPicker());
+        };
+        // Capturing, so it runs before the dialog's and the compose area's
+        document.addEventListener('keydown', this.pickerKeys, true);
     }
 
     /** Sit the panel above the trigger, kept inside the window. */
@@ -233,6 +250,10 @@ class SendFileController extends DialogController {
         if (this.dismissPicker !== null) {
             document.removeEventListener('mousedown', this.dismissPicker);
             this.dismissPicker = null;
+        }
+        if (this.pickerKeys !== null) {
+            document.removeEventListener('keydown', this.pickerKeys, true);
+            this.pickerKeys = null;
         }
         if (this.picker !== null) {
             this.picker.detach();
