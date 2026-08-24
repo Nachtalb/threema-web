@@ -19,6 +19,7 @@ import {ComposeArea} from '@threema/compose-area';
 
 import {isActionTrigger} from '../helpers';
 import {emojify, parseEmoji, shortnamesStartingWith, shortnameToUtf8, utf8ToShortname} from '../helpers/emoji';
+import {EmojiPicker} from '../helpers/emoji_picker';
 import {BrowserService} from '../services/browser';
 import {LogService} from '../services/log';
 import {ReceiverService} from '../services/receiver';
@@ -536,264 +537,51 @@ export default [
                 $translate('messenger.COMPOSE_MESSAGE').then((translated) => regularPlaceholder = translated);
                 $translate('messenger.COMPOSE_MESSAGE_DRAGOVER').then((translated) => dragoverPlaceholder = translated);
 
-                // Show emoji picker element
+                // The picker itself lives in `helpers/emoji_picker`, so the
+                // caption input in the send-file dialog can drive the same one.
+                let picker: EmojiPicker | null = null;
+
                 function showEmojiPicker() {
                     // If the emoji picker is triggered too early, it's possible that the picker element
                     // has not yet been fully loaded (e.g. during UI tests). Therefore enqueue the event
                     // handler at the end of the event loop.
                     $timeout(() => {
-                        const emojiPicker = wrapper[0].querySelector('div.twemoji-picker');
+                        const element = wrapper[0].querySelector('div.twemoji-picker');
 
-                        // Show
                         emojiKeyboard.addClass('active');
                         emojiKeyboard.attr('aria-expanded', 'true');
                         emojiTrigger.attr('aria-pressed', 'true');
                         emojiTrigger.addClass(TRIGGER_ACTIVE_CSS_CLASS);
 
-                        addEmojiSearch(emojiPicker);
-                        fillRecentSection(emojiPicker);
-
-                        // Find some selectors
-                        const allEmoji = angular.element(emojiPicker.querySelectorAll('.content .em'));
-                        const sectionButtons = angular.element(emojiPicker.querySelectorAll('.tabs button'));
-                        const skinSelectors = angular.element(emojiPicker.querySelectorAll('.skins img'));
-
-                        // Add event handlers
-                        allEmoji.on('click', onEmojiChosen as any);
-                        sectionButtons.on('click', onSectionSelected as any);
-                        skinSelectors.on('click', onSkintoneSelected as any);
-                        skinSelectors.on('keydown', onSkintoneSelected as any);
-
-                        const content = emojiPicker.querySelector('.content');
-                        content.addEventListener('keydown', onPickerKeyDown);
-                        content.addEventListener('scroll', onPickerScroll);
-                        onPickerScroll();
-
-                        // Typing goes straight into the filter; the arrows
-                        // still walk the grid from there.
-                        const search = emojiPicker.querySelector('.emoji-search') as HTMLInputElement;
-                        if (search !== null) {
-                            search.focus();
-                        }
-                    });
-                }
-
-                // The emoji currently under the keyboard cursor
-                const HEADING_HEIGHT = 26;
-                let focusedEmoji: HTMLElement | null = null;
-
-                function setFocusedEmoji(em: HTMLElement | null): void {
-                    if (focusedEmoji !== null) {
-                        focusedEmoji.classList.remove('focused');
-                    }
-                    focusedEmoji = em;
-                    if (em !== null) {
-                        em.classList.add('focused');
-                        em.scrollIntoView({block: 'nearest'});
-                    }
-                }
-
-                /** The emoji on screen, in the order they are laid out. */
-                function visibleEmoji(picker: Element): HTMLElement[] {
-                    return Array.from(picker.querySelectorAll('.content .em'))
-                        .filter((em: HTMLElement) => em.offsetParent !== null) as HTMLElement[];
-                }
-
-                /**
-                 * Walk the grid with the arrow keys and pick with enter. The
-                 * rows wrap, so up and down are found by comparing offsets
-                 * rather than assuming a column count.
-                 */
-                function onPickerKeyDown(ev: KeyboardEvent): void {
-                    const picker = wrapper[0].querySelector('div.twemoji-picker');
-                    const emoji = visibleEmoji(picker);
-                    if (emoji.length === 0) {
-                        return;
-                    }
-
-                    const at = focusedEmoji === null ? -1 : emoji.indexOf(focusedEmoji);
-                    const step = (to: number) => {
-                        ev.preventDefault();
-                        setFocusedEmoji(emoji[Math.max(0, Math.min(to, emoji.length - 1))]);
-                    };
-
-                    switch (ev.key) {
-                        case 'ArrowRight':
-                            return step(at + 1);
-                        case 'ArrowLeft':
-                            return step(at - 1);
-                        case 'ArrowDown':
-                        case 'ArrowUp': {
-                            ev.preventDefault();
-                            if (at === -1) {
-                                return setFocusedEmoji(emoji[0]);
-                            }
-                            const from = emoji[at].getBoundingClientRect();
-                            const down = ev.key === 'ArrowDown';
-                            // The first emoji on the next row that is at least
-                            // as far along as this one
-                            for (let i = down ? at + 1 : at - 1; down ? i < emoji.length : i >= 0;
-                                 down ? i++ : i--) {
-                                const box = emoji[i].getBoundingClientRect();
-                                if (box.top !== from.top
-                                    && (down ? box.left >= from.left : box.left <= from.left)) {
-                                    return setFocusedEmoji(emoji[i]);
+                        picker = new EmojiPicker(element, settingsService, {
+                            insert: (emoji: string) => {
+                                // Writing needs the message's caret, but focus
+                                // goes back to wherever it was so picking
+                                // several in a row keeps working.
+                                const previous = document.activeElement as HTMLElement | null;
+                                composeArea.focus();
+                                composeArea.store_selection_range();
+                                insertSingleEmojiString(emoji);
+                                if (previous !== null && previous !== document.activeElement) {
+                                    previous.focus();
                                 }
-                            }
-                            return setFocusedEmoji(emoji[down ? emoji.length - 1 : 0]);
-                        }
-                        case 'Enter':
-                        case ' ':
-                            if (focusedEmoji !== null) {
-                                ev.preventDefault();
-                                pickEmoji(focusedEmoji);
-                            }
-                            return;
-                        case 'Escape':
-                            ev.preventDefault();
-                            hideEmojiPicker();
-                            return;
-                        default:
-                            return;
-                    }
-                }
-
-                /** Keep the section button in step with what is on screen. */
-                function onPickerScroll(): void {
-                    const picker = wrapper[0].querySelector('div.twemoji-picker');
-                    if (picker === null) {
-                        return;
-                    }
-                    const content = picker.querySelector('.content');
-                    const top = content.getBoundingClientRect().top;
-                    let current = null;
-                    // The headings stick, so compare their sections' extent
-                    // rather than the headings themselves. A section counts as
-                    // current once its heading has reached the top.
-                    Array.from(picker.querySelectorAll('.section')).forEach((section: HTMLElement) => {
-                        if (section.hidden) {
-                            return;
-                        }
-                        const box = section.getBoundingClientRect();
-                        if (box.top - top <= HEADING_HEIGHT && box.bottom - top > HEADING_HEIGHT) {
-                            current = section.getAttribute('data-section');
-                        }
-                    });
-                    Array.from(picker.querySelectorAll('.tabs button')).forEach((button: Element) => {
-                        button.classList.toggle('current',
-                            button.getAttribute('data-section') === current);
+                                updateView();
+                            },
+                            close: () => hideEmojiPicker(),
+                        }, $translate.instant('messenger.SEARCH'));
+                        picker.attach();
                     });
                 }
 
-                /** Rebuild the recently used row from what has been picked. */
-                function fillRecentSection(picker: Element): void {
-                    const section = picker.querySelector('.section-recent') as HTMLElement;
-                    const heading = picker.querySelector('.category-name[data-section="recent"]') as HTMLElement;
-                    const recent = settingsService.emoji.getRecent();
-                    section.innerHTML = '';
-                    section.hidden = recent.length === 0;
-                    heading.hidden = recent.length === 0;
-                    for (const emoji of recent) {
-                        const source = picker.querySelector(
-                            `.section:not(.section-recent) .em[data-c="${codepointOf(emoji)}"]`);
-                        if (source === null) {
-                            continue;
-                        }
-                        const copy = source.cloneNode(true) as HTMLElement;
-                        // The tone filter would hide a copy that carries one
-                        copy.removeAttribute('data-t');
-                        section.appendChild(copy);
-                    }
-                }
-
-                /** The codepoint an emoji is stored under in the picker. */
-                function codepointOf(emoji: string): string {
-                    return [...emoji].map((c) => c.codePointAt(0).toString(16)).join('-');
-                }
-
-                // Filter the emoji by their shortcode, e.g. ":smirk:".
-                // Separators are ignored, so "flag_ch" and "flagch" both find
-                // ":flag-ch:".
-                function applyEmojiSearch(picker: Element, needle: string): void {
-                    const term = needle.trim().toLowerCase().replace(/[-_\s:]/g, '');
-                    picker.classList.toggle('searching', term !== '');
-                    // The recently used row holds copies of emoji that also sit
-                    // in their own category, so a match would show up twice.
-                    const seen = new Set<string>();
-                    Array.from(picker.querySelectorAll('.content .em')).forEach((em: Element) => {
-                        const shortcode = (em.getAttribute('data-s') || '')
-                            .toLowerCase().replace(/[-_\s:]/g, '');
-                        const codepoint = em.getAttribute('data-c') || '';
-                        const matches = term !== '' && shortcode.includes(term) && !seen.has(codepoint);
-                        if (matches) {
-                            seen.add(codepoint);
-                        }
-                        em.classList.toggle('search-hidden', term !== '' && !matches);
-                    });
-                    // The best match is ready for enter, no arrows needed
-                    setFocusedEmoji(term === '' ? null : visibleEmoji(picker)[0] ?? null);
-                }
-
-                // A search box above the emoji, added here because the picker
-                // library does not offer one.
-                function addEmojiSearch(picker: Element): void {
-                    if (picker.querySelector('.emoji-search') !== null) {
-                        return;
-                    }
-                    const search = document.createElement('input');
-                    search.type = 'search';
-                    search.className = 'emoji-search';
-                    search.setAttribute('aria-label', 'Search emoji');
-                    $translate('messenger.SEARCH').then(
-                        (translated) => search.placeholder = translated);
-                    search.addEventListener('input', () => applyEmojiSearch(picker, search.value));
-                    // Typing must not reach the emoji keyboard navigation, but
-                    // the arrows and enter still walk the results rather than
-                    // moving the caret inside the box.
-                    search.addEventListener('keydown', (ev) => {
-                        if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Enter', 'Escape']
-                                .includes(ev.key)) {
-                            ev.preventDefault();
-                            onPickerKeyDown(ev);
-                            return;
-                        }
-                        // Ctrl+. still closes the picker from in here
-                        if (ev.key === '.' && ev.ctrlKey) {
-                            return;
-                        }
-                        ev.stopPropagation();
-                    });
-                    picker.insertBefore(search, picker.querySelector('.content'));
-                }
-
-                // Hide emoji picker element
                 function hideEmojiPicker() {
-                    const emojiPicker = wrapper[0].querySelector('div.twemoji-picker');
-
-                    // Hide
                     emojiKeyboard.removeClass('active');
                     emojiKeyboard.attr('aria-expanded', 'false');
                     emojiTrigger.attr('aria-pressed', 'false');
                     emojiTrigger.removeClass(TRIGGER_ACTIVE_CSS_CLASS);
 
-                    // Find some selectors
-                    const allEmoji = angular.element(emojiPicker.querySelectorAll('.content .em'));
-                    const sectionButtons = angular.element(emojiPicker.querySelectorAll('.tabs button'));
-
-                    // Remove event handlers
-                    allEmoji.off('click', onEmojiChosen as any);
-                    sectionButtons.off('click', onSectionSelected as any);
-
-                    const content = emojiPicker.querySelector('.content');
-                    content.removeEventListener('keydown', onPickerKeyDown);
-                    content.removeEventListener('scroll', onPickerScroll);
-                    setFocusedEmoji(null);
-
-                    // Reopen on the full list rather than the last search
-                    const search = emojiPicker.querySelector('.emoji-search') as HTMLInputElement;
-                    if (search !== null && search.value !== '') {
-                        search.value = '';
-                        applyEmojiSearch(emojiPicker, '');
+                    if (picker !== null) {
+                        picker.detach();
+                        picker = null;
                     }
 
                     // The search box had focus; hand it back to the message
@@ -812,67 +600,6 @@ export default [
                         hideEmojiPicker();
                     } else {
                         showEmojiPicker();
-                    }
-                }
-
-                // Emoji is chosen
-                function onEmojiChosen(ev: MouseEvent | KeyboardEvent): void {
-                    if (ev.type === 'click' || (isKeyboardEvent(ev) && isActionTrigger(ev))) {
-                        ev.stopPropagation();
-                        if (isKeyboardEvent(ev)) {
-                            ev.preventDefault();
-                        }
-                        pickEmoji(ev.target as Element);
-                    }
-                }
-
-                /** Put an emoji from the picker into the message. */
-                function pickEmoji(em: Element): void {
-                    const emoji = em.textContent;
-                    // Writing needs the message's caret, but focus goes back to
-                    // wherever it was so picking several in a row keeps working.
-                    const previous = document.activeElement as HTMLElement | null;
-                    composeArea.focus();
-                    composeArea.store_selection_range();
-                    insertSingleEmojiString(emoji);
-                    settingsService.emoji.addRecent(emoji);
-                    if (previous !== null && previous !== document.activeElement) {
-                        previous.focus();
-                    }
-                    updateView();
-                }
-
-                // A section icon is clicked: scroll to it rather than swapping lists
-                function onSectionSelected(ev: MouseEvent): void {
-                    ev.stopPropagation();
-                    const button = (ev.target as Element).closest('button');
-                    if (button === null) {
-                        return;
-                    }
-                    const picker = wrapper[0].querySelector('div.twemoji-picker');
-                    const content = picker.querySelector('.content') as HTMLElement;
-                    // The section, not its heading: a stuck heading reports
-                    // where it is pinned rather than where it belongs.
-                    const section = picker.querySelector(
-                        `.section[data-section="${button.getAttribute('data-section')}"]`) as HTMLElement;
-                    if (section !== null) {
-                        content.scrollTop = section.offsetTop - HEADING_HEIGHT;
-                        onPickerScroll();
-                    }
-                }
-
-                // Skintone is chosen
-                function onSkintoneSelected(ev: MouseEvent | KeyboardEvent): void {
-                    if (ev.type === 'click' || (isKeyboardEvent(ev) && isActionTrigger(ev))) {
-                        ev.stopPropagation();
-                        if (isKeyboardEvent(ev)) {
-                            ev.preventDefault();
-                        }
-                        const tone: string = (ev.target as Element).getAttribute('data-tone');
-                        log.debug(`Skintone selected: Tone ${tone}`);
-
-                        const emojiPicker = wrapper[0].querySelector('div.twemoji-picker');
-                        emojiPicker.setAttribute('data-skintone', tone);
                     }
                 }
 
