@@ -1,0 +1,31 @@
+<!-- About, slid in over the settings -->
+<div class="settings-pane" ng-controller="AboutController as aboutCtrl">
+    <div class="settings-body">
+        <section class="pane-text">
+            <p>
+                Threema Web &copy; 2016&ndash;2026 Threema GmbH.
+                <span translate>about.ALL_RIGHTS_RESERVED</span>
+            </p>
+
+            <p><a href="https://threema.com/" target="_blank" rel="noopener noreferrer">https://threema.com/</a></p>
+
+            <h3>Open Source</h3>
+            <p translate>about.OPEN_SOURCE</p>
+            <p>
+                <span translate>about.SOURCE_CODE</span>
+                <a ng-href="{{ aboutCtrl.config.GIT_REPO }}"
+                   target="_blank" rel="noopener noreferrer">{{ aboutCtrl.config.GIT_REPO }}</a>.
+            </p>
+
+            <h3 translate>about.CHANGELOG</h3>
+            <p translate translate-values="{ url: '{{ aboutCtrl.config.GIT_REPO }}/blob/{{ aboutCtrl.config.GIT_BRANCH }}/CHANGELOG.md' }">about.CHANGELOG_TEXT</p>
+
+            <h3 translate>about.LICENSES</h3>
+            <ul>
+                <li translate>about.EMOJI_ART</li>
+                <li translate translate-values="{ url: '{{ aboutCtrl.config.GIT_REPO }}/blob/{{ aboutCtrl.config.GIT_BRANCH }}/LICENSE-3RD-PARTY.txt' }">about.LICENSE_TEXT</li>
+                <li translate>about.NOTIFICATION_SOUNDS</li>
+            </ul>
+        </section>
+    </div>
+</div>

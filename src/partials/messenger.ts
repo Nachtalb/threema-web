@@ -409,8 +409,8 @@ class SettingsController extends DialogController {
         this.navigation.openSettingsView('troubleshooting');
     }
 
-    public about(ev: Event): void {
-        this.closeThen(this.navigation.about, ev);
+    public about(): void {
+        this.navigation.openSettingsView('about');
     }
 
     public closeSession(ev: Event): void {
@@ -1456,7 +1456,7 @@ class ConversationController {
     }
 }
 
-class AboutDialogController extends DialogController {
+class AboutController extends DialogController {
     public readonly config: threema.Config;
 
     public static readonly $inject = ['$scope', '$mdDialog', 'ThemeService', 'CONFIG'];
@@ -1690,13 +1690,6 @@ class NavigationController {
             clickOutsideToClose: true,
             fullscreen: true,
         });
-    }
-
-    /**
-     * Show about dialog.
-     */
-    public about(ev): void {
-        this.showDialog('about', ev, AboutDialogController);
     }
 
     /**
@@ -2631,6 +2624,7 @@ angular.module('3ema.messenger', ['ngMaterial'])
 .controller('SendFileController', SendFileController)
 .controller('SettingsController', SettingsController)
 .controller('TroubleshootingController', TroubleshootingController)
+.controller('AboutController', AboutController)
 .controller('MessengerController', MessengerController)
 .controller('ConversationController', ConversationController)
 .controller('NavigationController', NavigationController)

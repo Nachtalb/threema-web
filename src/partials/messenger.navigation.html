@@ -44,6 +44,7 @@
         </md-button>
         <h2 ng-if="ctrl.settingsView === 'settings'" translate>settings.SETTINGS</h2>
         <h2 ng-if="ctrl.settingsView === 'troubleshooting'" translate>troubleshooting.TROUBLESHOOTING</h2>
+        <h2 ng-if="ctrl.settingsView === 'about'" translate>messenger.ABOUT</h2>
     </div>
 </div>
 
@@ -54,6 +55,8 @@
          ng-include src="'partials/messenger.settings.html'"></div>
     <div ng-if="ctrl.settingsView === 'troubleshooting'"
          ng-include src="'partials/messenger.troubleshooting.html'"></div>
+    <div ng-if="ctrl.settingsView === 'about'"
+         ng-include src="'partials/messenger.about.html'"></div>
 </div>
 
 <!-- Conversations -->
