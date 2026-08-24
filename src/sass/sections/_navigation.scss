@@ -72,6 +72,45 @@
     > #navigation-settings.ng-leave-active {
         transform: translateX(100%);
     }
+
+    // The list is the other half of that move: it steps aside to the left as
+    // the settings arrive, and comes back from the left as they leave. The two
+    // tabs live inside one wrapper so switching between them does not animate.
+    > #navigation-lists.ng-enter,
+    > #navigation-lists.ng-leave {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+    }
+
+    > #navigation-lists.ng-enter {
+        transition: transform .2s ease-out;
+        transform: translateX(-100%);
+    }
+
+    > #navigation-lists.ng-enter-active {
+        transform: translateX(0);
+    }
+
+    > #navigation-lists.ng-leave {
+        transition: transform .2s ease-in;
+        transform: translateX(0);
+    }
+
+    > #navigation-lists.ng-leave-active {
+        transform: translateX(-100%);
+    }
+}
+
+// Holds the two tab lists so they can be slid aside as one
+#navigation-lists {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    min-height: 0;
+    background-color: var(--surface);
 }
 
 // The settings, slid in over the conversation list. The body scrolls and the
