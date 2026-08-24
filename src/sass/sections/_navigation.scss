@@ -38,8 +38,14 @@
 // footer stays at the bottom of the panel.
 #navigation-settings {
     display: flex;
+    // Fills the panel the same way the conversation list does, rather than
+    // ending halfway down with the panel's edge showing under it.
+    flex: 1;
     flex-direction: column;
+    // Anchors a sub view while it slides in
+    position: relative;
     min-height: 0;
+    overflow: hidden;
 
     // The view wrapper `ng-if` adds between here and the pane
     > div {
@@ -47,6 +53,38 @@
         flex: 1 1 auto;
         flex-direction: column;
         min-height: 0;
+    }
+
+    // A sub view slides in over the settings it was opened from. While it is
+    // animating both are in the panel, so the incoming one is taken out of the
+    // flow rather than pushing the other down.
+    > div.ng-enter,
+    > div.ng-leave {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 3;
+        background-color: var(--surface);
+    }
+
+    > div.ng-enter {
+        transition: transform .2s ease-out;
+        transform: translateX(100%);
+    }
+
+    > div.ng-enter-active {
+        transform: translateX(0);
+    }
+
+    > div.ng-leave {
+        transition: transform .2s ease-in;
+        transform: translateX(0);
+    }
+
+    > div.ng-leave-active {
+        transform: translateX(100%);
     }
 
     .settings-pane {
@@ -65,6 +103,48 @@
 
     .settings-footer {
         flex: 0 0 auto;
+    }
+
+    // Picking an own background. The real file input is hidden behind its
+    // label, which is styled as a button.
+    .background-picker {
+        input[type="file"] {
+            display: none;
+        }
+
+        // A label styled as a raised button. angular-material only themes real
+        // buttons, so its colours are set here or it stays dark on dark.
+        label.md-button {
+            margin: 0;
+            background-color: var(--surface-grey);
+            color: var(--text);
+        }
+
+        // `md-secondary` puts this at the right edge, the same way the colour
+        // scheme pill is placed.
+        .background-actions {
+            display: flex;
+            align-items: center;
+        }
+    }
+
+    // These two rows hold their own controls rather than a single toggle, so
+    // the row padding only pushes them out of line.
+    .colour-scheme,
+    .background-picker {
+        .md-list-item-inner {
+            padding: 0;
+        }
+    }
+
+    // Every clickable row in the settings reacts the same way, rather than
+    // only the ones angular-material happens to treat as buttons.
+    md-list-item[ng-click] {
+        cursor: pointer;
+
+        &:hover {
+            background-color: var(--hover);
+        }
     }
 
     // A destructive row that is asking to be confirmed
@@ -88,6 +168,21 @@
             margin: 0 0 12px;
         }
 
+        h3 {
+            margin: 16px 0 8px;
+            font-size: 1rem;
+        }
+
+        ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+
+            li {
+                margin-bottom: 8px;
+            }
+        }
+
         md-checkbox {
             margin: 4px 0 0;
         }
@@ -109,9 +204,12 @@
     box-shadow: -2px 2px 4px -2px rgba(0, 0, 0, .4);
     background-color: var(--nav-tabs);
 
-    // A view that slid in over the list titles itself instead of showing tabs
+    // A view that slid in over the list titles itself instead of showing tabs.
+    // The height matches the tab bar's so the header does not jump when one
+    // replaces the other.
     &.pane-header .main {
         padding: 0 8px;
+        height: 48px;
 
         h2 {
             margin: 0;
@@ -195,7 +293,8 @@
 }
 
 #navigation-conversations,
-#navigation-contacts {
+#navigation-contacts,
+#navigation-settings {
     @include scrollbar;
     background-color: var(--surface);
 

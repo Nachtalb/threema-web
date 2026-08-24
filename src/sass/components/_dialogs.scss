@@ -44,38 +44,6 @@ md-dialog {
         padding-left: 16px;
     }
 
-    // Picking an own background. The real file input is hidden behind its
-    // label, which is styled as a button.
-    .background-picker {
-        input[type="file"] {
-            display: none;
-        }
-
-        // A label styled as a raised button. angular-material only themes real
-        // buttons, so its colours are set here or it stays dark on dark.
-        label.md-button {
-            margin: 0;
-            background-color: var(--surface-grey);
-            color: var(--text);
-        }
-
-        // `md-secondary` puts this at the right edge, the same way the colour
-        // scheme pill is placed.
-        .background-actions {
-            display: flex;
-            align-items: center;
-        }
-    }
-
-    // These two rows hold their own controls rather than a single toggle, so
-    // the row padding only pushes them out of line.
-    .colour-scheme,
-    .background-picker {
-        .md-list-item-inner {
-            padding: 0;
-        }
-    }
-
     // Action entries at the bottom of the settings dialog. Clickable
     // md-list-items are rendered as md-buttons, which centre their content by
     // default. angular-material also sets `md-icon { margin-left: auto }`,
@@ -163,12 +131,13 @@ md-dialog.send-file-dialog {
     }
 
     section + section {
-        margin-top: 4px;
+        margin-top: 0;
     }
 
     md-subheader {
         margin: 0;
-        padding: 8px 0 0;
+        padding: 6px 0 2px;
+        line-height: 1.4;
 
         .md-subheader-inner {
             padding: 0;
@@ -190,7 +159,7 @@ md-dialog.send-file-dialog {
     // touch. Nothing else in the row is that tall.
     md-list-item::before,
     md-list-item .md-list-item-inner::before {
-        height: 34px;
+        height: 30px;
     }
 
     // An empty secondary container carries 24px margins top and bottom
@@ -224,7 +193,7 @@ md-dialog.send-file-dialog {
     }
 
     md-switch {
-        margin: 4px 0 4px 24px;
+        margin: 2px 0 2px 24px;
 
         .md-container {
             margin-right: 0;
@@ -307,11 +276,11 @@ md-dialog.send-file-dialog {
         }
     }
 
-    // Sits at the foot of the dialog, quieter than the settings above it.
+    // Sits at the foot of the panel, quieter than the settings above it.
     .settings-footer {
         display: flex;
         justify-content: center;
-        padding: 16px 24px 8px;
+        padding: 6px 24px 3px;
         color: $material-grey;
         font-size: .75em;
 
@@ -325,7 +294,7 @@ md-dialog.send-file-dialog {
         }
 
         a {
-            color: inherit;
+            color: $theme-primary;
         }
     }
 }
