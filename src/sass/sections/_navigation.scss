@@ -34,10 +34,51 @@
     }
 }
 
+// The settings, slid in over the conversation list. The body scrolls and the
+// footer stays at the bottom of the panel.
+#navigation-settings {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+
+    .settings-pane {
+        display: flex;
+        flex: 1 1 auto;
+        flex-direction: column;
+        min-height: 0;
+    }
+
+    .settings-body {
+        flex: 1 1 auto;
+        padding: 8px 0 8px;
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+
+    .settings-footer {
+        flex: 0 0 auto;
+    }
+}
+
 #navigation-header {
     z-index: 18;
     box-shadow: -2px 2px 4px -2px rgba(0, 0, 0, .4);
     background-color: var(--nav-tabs);
+
+    // A view that slid in over the list titles itself instead of showing tabs
+    &.pane-header .main {
+        padding: 0 8px;
+
+        h2 {
+            margin: 0;
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        .header-back-button {
+            margin-right: 12px;
+        }
+    }
 
     .main {
         display: flex;

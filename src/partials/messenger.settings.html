@@ -1,0 +1,159 @@
+<!-- The settings, slid in over the conversation list -->
+<div class="settings-pane">
+    <div class="settings-body">
+        <section>
+            <md-subheader class="md-accent"><span translate>settings.notifications.NOTIFICATIONS</span>
+            </md-subheader>
+            <md-list flex>
+                <md-list-item ng-if="settingsCtrl.notificationApiAvailable && settingsCtrl.notificationPermission !== false">
+                    <md-switch
+                            ng-disabled="!settingsCtrl.notificationApiAvailable || settingsCtrl.notificationPermission === false"
+                            ng-model="settingsCtrl.desktopNotifications"
+                            ng-change="settingsCtrl.setWantsNotifications(settingsCtrl.desktopNotifications)"
+                            aria-label="Show desktop notifications">
+                        <span translate>settings.notifications.SHOW_NOTIFICATIONS</span>
+                    </md-switch>
+                </md-list-item>
+                <md-list-item ng-if="settingsCtrl.desktopNotifications && settingsCtrl.notificationApiAvailable && settingsCtrl.notificationPermission !== false">
+                    <md-switch
+                            ng-disabled="!settingsCtrl.desktopNotifications"
+                            ng-model="settingsCtrl.notificationPreview"
+                            ng-change="settingsCtrl.setWantsPreview(settingsCtrl.notificationPreview)"
+                            aria-label="Show message preview">
+                        <span translate>settings.notifications.SHOW_PREVIEW</span>
+                    </md-switch>
+                </md-list-item>
+                <md-list-item ng-if="settingsCtrl.desktopNotifications && settingsCtrl.notificationApiAvailable && settingsCtrl.notificationPermission !== false">
+                    <md-switch
+                            ng-disabled="!settingsCtrl.desktopNotifications"
+                            ng-model="settingsCtrl.notifyReactions"
+                            ng-change="settingsCtrl.setNotifyReactions(settingsCtrl.notifyReactions)"
+                            aria-label="Notify on reactions">
+                        <span translate>settings.notifications.NOTIFY_REACTIONS</span>
+                    </md-switch>
+                </md-list-item>
+                <md-list-item>
+                    <md-switch
+                            ng-model="settingsCtrl.notificationSound"
+                            ng-change="settingsCtrl.setWantsSound(settingsCtrl.notificationSound)"
+                            aria-label="Play notification sound">
+                        <span translate>settings.notifications.PLAY_SOUND</span>
+                    </md-switch>
+                </md-list-item>
+            </md-list>
+            <div ng-if="!settingsCtrl.notificationApiAvailable" class="status status-no">
+                <i class="material-icons md-24">error</i>
+                <span translate>error.NOTIFICATION_API_NOT_AVAILABLE</span>
+            </div>
+            <div ng-if="settingsCtrl.notificationPermission === false && settingsCtrl.notificationApiAvailable" class="status status-no">
+                <i class="material-icons md-24">error</i> <span translate>error.NOTIFICATION_PERMISSION_DENIED</span>
+                <a href="https://threema.com/de/faq/web_notifications"
+                   target="_blank" rel="noopener noreferrer">
+                    <p translate>error.NOTIFICATION_PERMISSION_DENIED_LEARN_MORE</p>
+                </a>
+            </div>
+        </section>
+        <section>
+            <md-subheader class="md-accent"><span translate>settings.composearea.COMPOSE_AREA</span>
+            </md-subheader>
+            <md-list flex>
+                <md-list-item>
+                    <md-switch
+                            ng-model="settingsCtrl.submitWithCtrlEnter"
+                            ng-change="settingsCtrl.setSubmitWithCtrlEnter(settingsCtrl.submitWithCtrlEnter)"
+                            aria-label="Send with Ctrl+Enter">
+                        <span translate>settings.composearea.SUBMIT_WITH_CTRL_ENTER</span>
+                    </md-switch>
+                </md-list-item>
+            </md-list>
+        </section>
+        <section>
+            <md-subheader class="md-accent"><span translate>settings.ui.UI</span>
+            </md-subheader>
+            <md-list flex>
+                <md-list-item>
+                    <md-switch
+                            ng-model="settingsCtrl.backgroundBlur"
+                            ng-change="settingsCtrl.setBackgroundBlur(settingsCtrl.backgroundBlur)"
+                            aria-label="Blur the background image">
+                        <span translate>settings.ui.BACKGROUND_BLUR</span>
+                    </md-switch>
+                </md-list-item>
+                <md-list-item>
+                    <md-switch
+                            ng-model="settingsCtrl.autoLoadGifs"
+                            ng-change="settingsCtrl.setAutoLoadGifs(settingsCtrl.autoLoadGifs)"
+                            aria-label="Load GIFs automatically">
+                        <span translate>settings.ui.AUTO_LOAD_GIFS</span>
+                    </md-switch>
+                </md-list-item>
+                <md-list-item>
+                    <md-switch
+                            ng-model="settingsCtrl.cacheMedia"
+                            ng-change="settingsCtrl.setCacheMedia(settingsCtrl.cacheMedia)"
+                            aria-label="Keep downloaded media">
+                        <span translate>settings.ui.CACHE_MEDIA</span>
+                    </md-switch>
+                </md-list-item>
+                <md-list-item class="colour-scheme">
+                    <md-icon class="material-icons md-24">contrast</md-icon>
+                    <span translate>settings.ui.COLOUR_SCHEME</span>
+                    <div class="scheme-pill md-secondary" role="radiogroup"
+                         aria-label="Colour scheme"
+                         ng-class="'at-' + settingsCtrl.colourScheme">
+                        <span class="thumb" aria-hidden="true"></span>
+                        <button type="button" role="radio"
+                                ng-repeat="option in ['system', 'light', 'dark']"
+                                ng-class="{selected: settingsCtrl.colourScheme === option}"
+                                aria-checked="{{ settingsCtrl.colourScheme === option }}"
+                                ng-click="settingsCtrl.setColourScheme(option)">
+                            <span translate>{{ 'settings.ui.SCHEME_' + option.toUpperCase() }}</span>
+                        </button>
+                    </div>
+                </md-list-item>
+                <md-list-item class="background-picker">
+                    <md-icon class="material-icons md-24">wallpaper</md-icon>
+                    <span translate>settings.ui.CUSTOM_BACKGROUND</span>
+                    <input type="file" id="background-upload" accept="image/*"
+                           eee-file-pick="settingsCtrl.setBackground(file)">
+                    <div class="background-actions md-secondary">
+                        <label for="background-upload" class="md-button md-raised">
+                            <span translate>settings.ui.CHOOSE_BACKGROUND</span>
+                        </label>
+                        <button type="button" class="md-button md-icon-button reset-background"
+                                ng-show="settingsCtrl.hasCustomBackground"
+                                ng-click="settingsCtrl.clearBackground()"
+                                translate-attr="{'aria-label': 'settings.ui.RESET_BACKGROUND', 'title': 'settings.ui.RESET_BACKGROUND'}">
+                            <md-icon class="material-icons md-24">settings_backup_restore</md-icon>
+                        </button>
+                    </div>
+                </md-list-item>
+            </md-list>
+        </section>
+        <section class="settings-actions">
+            <md-divider></md-divider>
+            <md-list flex>
+                <md-list-item ng-click="settingsCtrl.troubleshooting($event)">
+                    <md-icon aria-hidden="true" class="material-icons md-24">bug_report</md-icon>
+                    <span translate>troubleshooting.TROUBLESHOOTING</span>
+                </md-list-item>
+                <md-list-item ng-click="settingsCtrl.about($event)">
+                    <md-icon aria-hidden="true" class="material-icons md-24">info</md-icon>
+                    <span translate>messenger.ABOUT</span>
+                </md-list-item>
+                <md-list-item class="destructive" ng-click="settingsCtrl.closeSession($event)">
+                    <md-icon aria-hidden="true" class="material-icons md-24">exit_to_app</md-icon>
+                    <span translate>common.SESSION_CLOSE</span>
+                </md-list-item>
+                <md-list-item class="destructive" ng-if="settingsCtrl.isPersistent()" ng-click="settingsCtrl.deleteSession($event)">
+                    <md-icon aria-hidden="true" class="material-icons md-24">delete</md-icon>
+                    <span translate>common.SESSION_DELETE</span>
+                </md-list-item>
+            </md-list>
+        </section>
+    </div>
+    <footer class="settings-footer">
+        <span>{{ settingsCtrl.version }}</span>
+        <span>Developed with 🖕 by <a href="https://threema.id/XP7Z3W5M" target="_blank" rel="noopener noreferrer">XP7Z3W5M</a></span>
+    </footer>
+</div>

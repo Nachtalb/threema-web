@@ -270,7 +270,7 @@ class SettingsController extends DialogController {
     private readonly log: Logger;
 
     public static $inject = [
-        '$scope', '$mdDialog', '$window', 'SettingsService', 'ThemeService', 'NotificationService', 'navigation',
+        '$scope', '$mdDialog', '$window', 'SettingsService', 'ThemeService', 'NotificationService',
         'BackgroundStoreService', 'LogService', 'CONFIG',
     ];
     constructor(
@@ -280,7 +280,6 @@ class SettingsController extends DialogController {
         settingsService: SettingsService,
         themeService: ThemeService,
         notificationService: NotificationService,
-        navigation: NavigationController,
         backgroundStoreService: BackgroundStoreService,
         logService: LogService,
         config: threema.Config,
@@ -290,7 +289,9 @@ class SettingsController extends DialogController {
         this.version = config.VERSION;
         this.settingsService = settingsService;
         this.notificationService = notificationService;
-        this.navigation = navigation;
+        // The settings live inside the navigation panel, so its controller is
+        // the parent scope's.
+        this.navigation = ($scope as any).ctrl;
         this.backgroundStoreService = backgroundStoreService;
         this.settingsScope = $scope;
         this.log = logService.getLogger('Settings-C');
@@ -396,12 +397,11 @@ class SettingsController extends DialogController {
     }
 
     /**
-     * Close the settings dialog, then run the navigation action. Only a single
-     * md-dialog can be open at a time, so the settings dialog must be closed
-     * before the follow-up dialog is shown.
+     * Leave the settings, then run the navigation action. The remaining
+     * dialogs cannot open while the settings pane owns the panel.
      */
     private closeThen(action: (ev: Event) => void, ev: Event): void {
-        this.cancel();
+        this.navigation.closeSettings();
         action.call(this.navigation, ev);
     }
 
@@ -1486,6 +1486,9 @@ class NavigationController {
     private searchVisible = false;
     private searchText: string = '';
 
+    // Whether the settings have slid in over the conversation list
+    public settingsOpen: boolean = false;
+
     private $mdDialog;
     private $translate: ng.translate.ITranslateService;
     private $state: UiStateService;
@@ -1526,7 +1529,16 @@ class NavigationController {
         // Alt+arrow steps through the chat list. Alt keeps it clear of the
         // caret movement and of the quote shortcuts.
         const onKeyDown = (event: KeyboardEvent) => {
-            if (!event.altKey || event.defaultPrevented) {
+            if (event.defaultPrevented) {
+                return;
+            }
+            // Escape steps back out of a view that slid in over the list
+            if (event.key === 'Escape' && this.settingsOpen) {
+                event.preventDefault();
+                $scope.$apply(() => this.closeSettings());
+                return;
+            }
+            if (!event.altKey) {
                 return;
             }
             if (event.key !== 'ArrowUp' && event.key !== 'ArrowDown') {
@@ -1700,19 +1712,17 @@ class NavigationController {
     }
 
     /**
-     * Show settings dialog.
+     * Slide the settings in over the conversation list.
      */
-    public settings(ev): void {
-        this.$mdDialog.show({
-            controller: SettingsController,
-            controllerAs: 'ctrl',
-            templateUrl: 'partials/dialog.settings.html',
-            parent: angular.element(document.body),
-            targetEvent: ev,
-            clickOutsideToClose: true,
-            fullscreen: true,
-            locals: {navigation: this},
-        });
+    public openSettings(): void {
+        this.settingsOpen = true;
+    }
+
+    /**
+     * Leave the settings, or step back out of one of its sub views.
+     */
+    public closeSettings(): void {
+        this.settingsOpen = false;
     }
 
     /**
@@ -2596,6 +2606,7 @@ angular.module('3ema.messenger', ['ngMaterial'])
 }])
 
 .controller('SendFileController', SendFileController)
+.controller('SettingsController', SettingsController)
 .controller('MessengerController', MessengerController)
 .controller('ConversationController', ConversationController)
 .controller('NavigationController', NavigationController)

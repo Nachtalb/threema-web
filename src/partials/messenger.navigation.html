@@ -8,13 +8,13 @@
 
     <battery-status></battery-status>
 
-    <md-button aria-label="Settings" class="md-icon-button" ng-click="ctrl.settings($event)">
+    <md-button aria-label="Settings" class="md-icon-button" ng-click="ctrl.openSettings()">
         <i class="material-icons md-light md-24" translate translate-attr-title="messenger.SETTINGS">settings</i>
     </md-button>
 </div>
 
-<!-- Header -->
-<div id="navigation-header">
+<!-- Header: either the tabs, or the title of whatever slid in over them -->
+<div id="navigation-header" ng-if="!ctrl.settingsOpen">
     <div class="main">
         <md-nav-bar md-no-ink md-selected-nav-item="ctrl.activeTab" nav-bar-aria-label="navigation links">
             <md-nav-item md-nav-click="1" name="conversations" aria-label="conversations">
@@ -34,8 +34,25 @@
     </div>
 </div>
 
+<!-- Settings header, in place of the tabs -->
+<div id="navigation-header" class="pane-header" ng-if="ctrl.settingsOpen">
+    <div class="main">
+        <md-button md-no-ink class="md-icon-button header-back-button"
+                   aria-label="Back" title="Back"
+                   ng-click="ctrl.closeSettings()">
+            <md-icon class="material-icons md-24">arrow_back</md-icon>
+        </md-button>
+        <h2 translate>settings.SETTINGS</h2>
+    </div>
+</div>
+
+<!-- Settings -->
+<div id="navigation-settings" class="tab-content" ng-if="ctrl.settingsOpen"
+     ng-controller="SettingsController as settingsCtrl"
+     ng-include src="'partials/messenger.settings.html'"></div>
+
 <!-- Conversations -->
-<div id="navigation-conversations" class="tab-content" ng-if="ctrl.activeTab == 'conversations'" in-view-container>
+<div id="navigation-conversations" class="tab-content" ng-if="!ctrl.settingsOpen && ctrl.activeTab == 'conversations'" in-view-container>
     <p class="empty" ng-if="ctrl.conversations().length === 0 && !ctrl.startupDone()" translate>messenger.LOADING_CONVERSATIONS</p>
     <p class="empty" ng-if="ctrl.conversations().length === 0 && ctrl.startupDone()" translate>messenger.NO_CONVERSATIONS_FOUND</p>
     <ul>
@@ -116,7 +133,7 @@
 </div>
 
 <!-- Contacts -->
-<div id="navigation-contacts" class="tab-content" ng-if="ctrl.activeTab == 'contacts'" in-view-container>
+<div id="navigation-contacts" class="tab-content" ng-if="!ctrl.settingsOpen && ctrl.activeTab == 'contacts'" in-view-container>
     <p class="empty" ng-if="ctrl.contacts().length === 0" translate>messenger.NO_CONTACTS_FOUND</p>
     <ul ng-class="{'hide-inactive': ctrl.hideInactiveAndRevokedContacts()}">
         <li ng-repeat="contact in ctrl.contacts() | filter:ctrl.searchContact"
@@ -154,7 +171,7 @@
 </div>
 
 <!-- FAB -->
-<div id="navigation-fab">
+<div id="navigation-fab" ng-if="!ctrl.settingsOpen">
     <md-fab-speed-dial md-direction="up" class="md-scale md-fab-bottom-right md-hover-full" ng-cloak>
         <md-fab-trigger>
             <md-button aria-label="menu" class="md-fab">

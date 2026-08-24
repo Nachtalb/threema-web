@@ -115,7 +115,9 @@ md-dialog.send-file-dialog {
 // Angular-material sizes list rows for touch: 48px minimum, generous switch
 // margins and a tall subheader. On a settings screen that is mostly a column
 // of toggles it just spreads a short list over a whole screen.
-md-dialog.settings-dialog {
+//
+// Applies to the settings pane in the navigation panel.
+#navigation-settings {
     md-dialog-content > .md-dialog-content {
         padding: 8px 24px 16px;
     }
