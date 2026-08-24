@@ -30,6 +30,7 @@ import {TroubleshootingController} from '../controllers/troubleshooting';
 import {bufferToUrl, firstVideoFrame, glideScrollTo, hasValue, jumpToMessage, supportsPassive, u8aToHex} from '../helpers';
 import {emojify} from '../helpers/emoji';
 import {EmojiPicker} from '../helpers/emoji_picker';
+import {EmojiSuggestions} from '../helpers/emoji_suggestions';
 import {publicKeyGrid} from '../helpers/public_key';
 import {BackgroundStoreService} from '../services/background_store';
 import {ContactService} from '../services/contact';
@@ -70,6 +71,7 @@ class SendFileController extends DialogController {
     private readonly $timeout: ng.ITimeoutService;
     private readonly dialogScope: ng.IScope;
     private picker: EmojiPicker | null = null;
+    private suggestions: EmojiSuggestions | null = null;
 
     public static $inject = [
         '$scope', '$mdDialog', '$translate', '$timeout', 'LogService', 'ThemeService', 'MimeService',
@@ -108,7 +110,24 @@ class SendFileController extends DialogController {
                 this.previewDataUrl = bufferToUrl(this.preview.data, this.preview.fileType, log);
             }
         }
-        $scope.$on('$destroy', () => this.closeEmojiPicker());
+        // The caption input is only in the DOM once the dialog is, so the
+        // shortcode suggestions are attached a tick later.
+        $timeout(() => {
+            const parts = this.captionElements();
+            if (parts !== null) {
+                this.suggestions = new EmojiSuggestions(
+                    parts.input, settingsService,
+                    (value: string) => $scope.$applyAsync(() => this.caption = value));
+            }
+        });
+
+        $scope.$on('$destroy', () => {
+            this.closeEmojiPicker();
+            if (this.suggestions !== null) {
+                this.suggestions.destroy();
+                this.suggestions = null;
+            }
+        });
     }
 
     public iconUrl(file: threema.FileMessageData): string {
@@ -209,9 +228,15 @@ class SendFileController extends DialogController {
     }
 
     public keypress($event: KeyboardEvent): void {
-        if ($event.key === 'Enter') { // see https://developer.mozilla.org/de/docs/Web/API/KeyboardEvent/key/Key_Values
+        // Enter picks the highlighted shortcode suggestion rather than sending
+        if ($event.key === 'Enter' && !this.suggesting()) {
             this.send();
         }
+    }
+
+    /** Whether the shortcode strip is showing and owns the enter key. */
+    private suggesting(): boolean {
+        return this.suggestions !== null && this.suggestions.isOpen();
     }
 
     public hasPreview(): boolean {

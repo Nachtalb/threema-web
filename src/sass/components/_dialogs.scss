@@ -97,6 +97,42 @@ md-dialog.send-file-dialog {
         input {
             padding-right: 32px;
         }
+
+        // Shortcode suggestions, shown above the caption while typing
+        .emoji-suggestions {
+            display: flex;
+            position: absolute;
+            bottom: 100%;
+            left: 0;
+            gap: 2px;
+            z-index: 6;
+            border-radius: 12px;
+            box-shadow: 0 1px 4px var(--shadow-colour);
+            background-color: var(--surface-raised);
+            padding: 4px;
+            max-width: 100%;
+            overflow-x: auto;
+
+            .suggestion {
+                display: flex;
+                align-items: center;
+                border-radius: 8px;
+                cursor: pointer;
+                padding: 3px;
+
+                img.em {
+                    margin: 0;
+                    width: 24px;
+                    height: 24px;
+                    vertical-align: middle;
+                }
+
+                &.selected,
+                &:hover {
+                    background-color: var(--hover);
+                }
+            }
+        }
     }
 
     .emoji-keyboard {
