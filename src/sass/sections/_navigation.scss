@@ -34,6 +34,46 @@
     }
 }
 
+// The list and the settings take turns filling the panel below the header.
+// While one replaces the other both are present, so they are stacked and slid
+// rather than stacked vertically.
+#navigation-body {
+    display: flex;
+    position: relative;
+    flex: 1;
+    flex-direction: column;
+    min-height: 0;
+    overflow: hidden;
+
+    > #navigation-settings.ng-enter,
+    > #navigation-settings.ng-leave {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 4;
+    }
+
+    > #navigation-settings.ng-enter {
+        transition: transform .2s ease-out;
+        transform: translateX(100%);
+    }
+
+    > #navigation-settings.ng-enter-active {
+        transform: translateX(0);
+    }
+
+    > #navigation-settings.ng-leave {
+        transition: transform .2s ease-in;
+        transform: translateX(0);
+    }
+
+    > #navigation-settings.ng-leave-active {
+        transform: translateX(100%);
+    }
+}
+
 // The settings, slid in over the conversation list. The body scrolls and the
 // footer stays at the bottom of the panel.
 #navigation-settings {
@@ -46,6 +86,7 @@
     position: relative;
     min-height: 0;
     overflow: hidden;
+    background-color: var(--surface);
 
     // The view wrapper `ng-if` adds between here and the pane
     > div {
@@ -108,7 +149,9 @@
     }
 
     .settings-body {
+        display: flex;
         flex: 1 1 auto;
+        flex-direction: column;
         padding: 8px 0 8px;
         overflow-x: hidden;
         overflow-y: auto;
@@ -142,12 +185,24 @@
     }
 
     // These two rows hold their own controls rather than a single toggle, so
-    // the row padding only pushes them out of line.
+    // the row padding only pushes them out of line. Material pads the item
+    // itself via `md-no-proxy`, which the inner rule below does not reach.
     .colour-scheme,
     .background-picker {
+        &.md-no-proxy,
+        .md-no-style {
+            padding-left: 0;
+        }
+
         .md-list-item-inner {
             padding: 0;
         }
+    }
+
+    // The actions sit at the foot of the settings rather than directly under
+    // the last toggle.
+    .settings-actions {
+        margin-top: auto;
     }
 
     // Every clickable row in the settings reacts the same way, rather than
