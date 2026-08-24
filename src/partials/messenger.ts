@@ -74,6 +74,7 @@ class SendFileController extends DialogController {
     private pickerPanel: HTMLElement | null = null;
     private dismissPicker: ((ev: MouseEvent) => void) | null = null;
     private pickerKeys: ((ev: KeyboardEvent) => void) | null = null;
+    private shortcutKeys: (ev: KeyboardEvent) => void;
     private pickerTemplate: string = '';
     private suggestions: EmojiSuggestions | null = null;
 
@@ -133,8 +134,22 @@ class SendFileController extends DialogController {
             }
         });
 
+        // Ctrl+. belongs to this dialog for as long as it is up, otherwise the
+        // conversation's compose area answers it from behind the dialog and
+        // opens its own picker. Capturing, so it runs first.
+        this.shortcutKeys = (ev: KeyboardEvent) => {
+            if (ev.key !== '.' || !ev.ctrlKey || ev.altKey || ev.metaKey) {
+                return;
+            }
+            ev.preventDefault();
+            ev.stopPropagation();
+            $scope.$applyAsync(() => this.toggleEmojiPicker());
+        };
+        document.addEventListener('keydown', this.shortcutKeys, true);
+
         $scope.$on('$destroy', () => {
             this.closeEmojiPicker();
+            document.removeEventListener('keydown', this.shortcutKeys, true);
             if (this.suggestions !== null) {
                 this.suggestions.destroy();
                 this.suggestions = null;
@@ -209,20 +224,17 @@ class SendFileController extends DialogController {
         };
         document.addEventListener('mousedown', this.dismissPicker);
 
-        // Escape and Ctrl+. belong to the picker while it is open: the dialog
-        // would otherwise close on escape, and the conversation's own compose
-        // area would answer the shortcut from behind the dialog.
+        // Escape belongs to the picker while it is open, or the dialog would
+        // close instead.
         this.pickerKeys = (ev: KeyboardEvent) => {
-            const closes = ev.key === 'Escape'
-                || (ev.key === '.' && ev.ctrlKey && !ev.altKey && !ev.metaKey);
-            if (!closes) {
+            if (ev.key !== 'Escape') {
                 return;
             }
             ev.preventDefault();
             ev.stopPropagation();
             this.dialogScope.$applyAsync(() => this.closeEmojiPicker());
         };
-        // Capturing, so it runs before the dialog's and the compose area's
+        // Capturing, so it runs before the dialog's own handler
         document.addEventListener('keydown', this.pickerKeys, true);
     }
 
