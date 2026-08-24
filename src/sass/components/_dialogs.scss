@@ -77,15 +77,21 @@ md-dialog.send-file-dialog {
         margin-bottom: 0;
     }
 
-    // The caption's emoji picker floats over the dialog rather than growing
-    // it, and its trigger sits inside the input at the right edge.
-    md-input-container.input-caption {
-        position: relative;
+    // The caption and its emoji trigger share a row, so the icon sits beside
+    // the input rather than below the container's bottom margin.
+    .caption-row {
+        display: flex;
+        align-items: flex-end;
+        gap: 8px;
+
+        md-input-container.input-caption {
+            position: relative;
+            flex: 1 1 auto;
+        }
 
         .emoji-trigger {
-            position: absolute;
-            right: 0;
-            bottom: 4px;
+            flex: 0 0 auto;
+            margin-bottom: 20px;
             cursor: pointer;
             color: var(--text-muted);
 
@@ -93,11 +99,9 @@ md-dialog.send-file-dialog {
                 color: $theme-primary;
             }
         }
+    }
 
-        input {
-            padding-right: 32px;
-        }
-
+    md-input-container.input-caption {
         // Shortcode suggestions, shown above the caption while typing
         .emoji-suggestions {
             display: flex;
@@ -132,26 +136,6 @@ md-dialog.send-file-dialog {
                     background-color: var(--hover);
                 }
             }
-        }
-    }
-
-    .emoji-keyboard {
-        display: none;
-        position: absolute;
-        right: 24px;
-        z-index: 5;
-        box-shadow: 0 2px 8px var(--shadow-colour);
-        border-radius: 4px;
-        width: 320px;
-        overflow: hidden;
-
-        &.active {
-            display: block;
-        }
-
-        .twemoji-picker {
-            box-sizing: border-box;
-            height: 300px;
         }
     }
 
@@ -382,6 +366,24 @@ md-dialog.send-file-dialog {
         a {
             color: $theme-primary;
         }
+    }
+}
+
+// The caption's emoji picker. It floats over everything on the body rather
+// than sitting in the send-file dialog, which would push the dialog's own
+// contents out of view. Above `md-dialog-container`, which is at 80.
+.caption-emoji-panel {
+    position: fixed;
+    z-index: 90;
+    box-shadow: 0 4px 16px var(--shadow-colour);
+    border-radius: 8px;
+    width: 340px;
+    overflow: hidden;
+
+    .twemoji-picker {
+        box-sizing: border-box;
+        border-radius: 8px;
+        height: 340px;
     }
 }
 

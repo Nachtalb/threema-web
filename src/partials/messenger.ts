@@ -71,17 +71,21 @@ class SendFileController extends DialogController {
     private readonly $timeout: ng.ITimeoutService;
     private readonly dialogScope: ng.IScope;
     private picker: EmojiPicker | null = null;
+    private pickerPanel: HTMLElement | null = null;
+    private dismissPicker: ((ev: MouseEvent) => void) | null = null;
+    private pickerTemplate: string = '';
     private suggestions: EmojiSuggestions | null = null;
 
     public static $inject = [
-        '$scope', '$mdDialog', '$translate', '$timeout', 'LogService', 'ThemeService', 'MimeService',
-        'SettingsService', 'preview', 'title', 'files',
+        '$scope', '$mdDialog', '$translate', '$timeout', '$templateRequest', 'LogService', 'ThemeService',
+        'MimeService', 'SettingsService', 'preview', 'title', 'files',
     ];
     constructor(
         $scope: ng.IScope,
         $mdDialog: ng.material.IDialogService,
         $translate: ng.translate.ITranslateService,
         $timeout: ng.ITimeoutService,
+        $templateRequest: ng.ITemplateRequestService,
         logService: LogService,
         themeService: ThemeService,
         mimeService: MimeService,
@@ -110,6 +114,13 @@ class SendFileController extends DialogController {
                 this.previewDataUrl = bufferToUrl(this.preview.data, this.preview.fileType, log);
             }
         }
+        // The picker's markup is large and only needed once the trigger is
+        // used, so it is fetched rather than rendered with the dialog.
+        this.pickerTemplate = '';
+        $templateRequest('partials/emoji-picker.html')
+            .then((template: string) => this.pickerTemplate = template)
+            .catch(() => log.warn('Could not load the emoji picker'));
+
         // The caption input is only in the DOM once the dialog is, so the
         // shortcode suggestions are attached a tick later.
         $timeout(() => {
@@ -134,19 +145,18 @@ class SendFileController extends DialogController {
         return this.mimeService.getIconUrl(file.fileType);
     }
 
-    /** The caption input and its picker, which sits below it. */
-    private captionElements(): {input: HTMLInputElement, keyboard: Element, trigger: Element} | null {
+    /** The caption input and its emoji trigger. */
+    private captionElements(): {input: HTMLInputElement, trigger: Element} | null {
         const dialog = document.querySelector('md-dialog.send-file-dialog');
         if (dialog === null) {
             return null;
         }
         const input = dialog.querySelector('.input-caption input') as HTMLInputElement;
-        const keyboard = dialog.querySelector('.emoji-keyboard');
         const trigger = dialog.querySelector('.emoji-trigger');
-        if (input === null || keyboard === null || trigger === null) {
+        if (input === null || trigger === null) {
             return null;
         }
-        return {input: input, keyboard: keyboard, trigger: trigger};
+        return {input: input, trigger: trigger};
     }
 
     public toggleEmojiPicker(): void {
@@ -157,43 +167,80 @@ class SendFileController extends DialogController {
         }
     }
 
+    /**
+     * The picker floats over everything rather than sitting in the dialog,
+     * which would push its contents out of view. It is therefore built on the
+     * body and positioned against the trigger.
+     */
     private openEmojiPicker(): void {
-        // The picker markup is pulled in by `ng-include`, so it may not be in
-        // the dialog yet on the first click.
-        this.$timeout(() => {
-            const parts = this.captionElements();
-            if (parts === null) {
-                return;
-            }
-            const element = parts.keyboard.querySelector('div.twemoji-picker');
-            if (element === null) {
-                return;
-            }
+        const parts = this.captionElements();
+        if (parts === null) {
+            return;
+        }
 
-            parts.keyboard.classList.add('active');
-            parts.keyboard.setAttribute('aria-expanded', 'true');
-            parts.trigger.setAttribute('aria-pressed', 'true');
-            parts.trigger.classList.add('is-active');
+        this.pickerPanel = document.createElement('div');
+        this.pickerPanel.className = 'caption-emoji-panel';
+        this.pickerPanel.innerHTML = this.pickerTemplate;
+        document.body.appendChild(this.pickerPanel);
 
-            this.picker = new EmojiPicker(element, this.settingsService, {
-                insert: (emoji: string) => this.insertIntoCaption(emoji),
-                close: () => this.dialogScope.$applyAsync(() => this.closeEmojiPicker()),
-            }, this.$translate.instant('messenger.SEARCH'));
-            this.picker.attach();
-        });
+        const element = this.pickerPanel.querySelector('div.twemoji-picker');
+        if (element === null) {
+            this.closeEmojiPicker();
+            return;
+        }
+
+        this.placePicker(parts.trigger);
+        parts.trigger.setAttribute('aria-pressed', 'true');
+        parts.trigger.classList.add('is-active');
+
+        this.picker = new EmojiPicker(element, this.settingsService, {
+            insert: (emoji: string) => this.insertIntoCaption(emoji),
+            close: () => this.dialogScope.$applyAsync(() => this.closeEmojiPicker()),
+        }, this.$translate.instant('messenger.SEARCH'));
+        this.picker.attach();
+
+        // A click anywhere else puts it away, the way a menu behaves
+        this.dismissPicker = (ev: MouseEvent) => {
+            const target = ev.target as Node;
+            if (!this.pickerPanel.contains(target) && !parts.trigger.contains(target)) {
+                this.dialogScope.$applyAsync(() => this.closeEmojiPicker());
+            }
+        };
+        document.addEventListener('mousedown', this.dismissPicker);
+    }
+
+    /** Sit the panel above the trigger, kept inside the window. */
+    private placePicker(trigger: Element): void {
+        const at = trigger.getBoundingClientRect();
+        const panel = this.pickerPanel.getBoundingClientRect();
+        const margin = 8;
+        // Above the trigger, unless there is more room below it
+        const above = at.top - panel.height - margin;
+        const top = above >= margin ? above : Math.min(at.bottom + margin,
+            window.innerHeight - panel.height - margin);
+        const left = Math.max(margin, Math.min(at.right - panel.width,
+            window.innerWidth - panel.width - margin));
+        this.pickerPanel.style.top = `${Math.max(margin, top)}px`;
+        this.pickerPanel.style.left = `${left}px`;
     }
 
     private closeEmojiPicker(): void {
         const parts = this.captionElements();
         if (parts !== null) {
-            parts.keyboard.classList.remove('active');
-            parts.keyboard.setAttribute('aria-expanded', 'false');
             parts.trigger.setAttribute('aria-pressed', 'false');
             parts.trigger.classList.remove('is-active');
+        }
+        if (this.dismissPicker !== null) {
+            document.removeEventListener('mousedown', this.dismissPicker);
+            this.dismissPicker = null;
         }
         if (this.picker !== null) {
             this.picker.detach();
             this.picker = null;
+        }
+        if (this.pickerPanel !== null) {
+            this.pickerPanel.remove();
+            this.pickerPanel = null;
         }
         if (parts !== null) {
             parts.input.focus();
@@ -1119,12 +1166,11 @@ class ConversationController {
                                             <div class="file-size">{{ file.size | fileSize }}</div>
                                         </div>
                                     </div>
-                                    <md-input-container md-no-float class="input-caption md-prompt-input-container" ng-show="${showCaption}">
-                                        <input maxlength="1000" md-autofocus ng-keypress="ctrl.keypress($event)" ng-model="ctrl.caption" placeholder="${placeholder}" aria-label="${placeholder}">
+                                    <div class="caption-row" ng-show="${showCaption}">
+                                        <md-input-container md-no-float class="input-caption md-prompt-input-container">
+                                            <input maxlength="1000" md-autofocus ng-keypress="ctrl.keypress($event)" ng-model="ctrl.caption" placeholder="${placeholder}" aria-label="${placeholder}">
+                                        </md-input-container>
                                         <i class="md-primary emoji-trigger trigger is-enabled material-icons" role="button" aria-label="emoji" aria-pressed="false" tabindex="0" ng-click="ctrl.toggleEmojiPicker()">tag_faces</i>
-                                    </md-input-container>
-                                    <div class="emoji-keyboard" aria-expanded="false" ng-show="${showCaption}">
-                                        <ng-include src="'partials/emoji-picker.html'" include-replace></ng-include>
                                     </div>
                                     <md-input-container md-no-float class="input-send-as-file md-prompt-input-container" ng-show="${showSendAsFileCheckbox}">
                                         <md-checkbox ng-model="ctrl.sendAsFile" aria-label="${confirmSendAsFile}">
