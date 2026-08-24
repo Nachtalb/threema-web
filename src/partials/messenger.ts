@@ -397,13 +397,10 @@ class SettingsController extends DialogController {
     }
 
     /**
-     * Leave the settings, then run the navigation action. The remaining
-     * dialogs cannot open while the settings pane owns the panel.
+     * Which destructive row is asking for confirmation, if any. Tapping the row
+     * again puts the question away.
      */
-    private closeThen(action: (ev: Event) => void, ev: Event): void {
-        this.navigation.closeSettings();
-        action.call(this.navigation, ev);
-    }
+    public confirming: 'close' | 'delete' | null = null;
 
     public troubleshooting(): void {
         this.navigation.openSettingsView('troubleshooting');
@@ -413,12 +410,22 @@ class SettingsController extends DialogController {
         this.navigation.openSettingsView('about');
     }
 
-    public closeSession(ev: Event): void {
-        this.closeThen(this.navigation.closeSession, ev);
+    public askCloseSession(): void {
+        this.confirming = this.confirming === 'close' ? null : 'close';
     }
 
-    public deleteSession(ev: Event): void {
-        this.closeThen(this.navigation.deleteSession, ev);
+    public askDeleteSession(): void {
+        this.confirming = this.confirming === 'delete' ? null : 'delete';
+    }
+
+    public closeSession(): void {
+        this.confirming = null;
+        this.navigation.closeSession();
+    }
+
+    public deleteSession(): void {
+        this.confirming = null;
+        this.navigation.deleteSession();
     }
 }
 
@@ -1757,52 +1764,32 @@ class NavigationController {
     }
 
     /**
-     * Close the session.
+     * Close the session. The settings pane asks for confirmation itself.
      */
-    public closeSession(ev): void {
-        const confirm = this.$mdDialog.confirm()
-            .title(this.$translate.instant('common.SESSION_CLOSE'))
-            .textContent(this.$translate.instant('common.CONFIRM_CLOSE_BODY'))
-            .targetEvent(ev)
-            .ok(this.$translate.instant('common.YES'))
-            .cancel(this.$translate.instant('common.CANCEL'));
-        this.$mdDialog.show(confirm).then(() => {
-            this.webClientService.stop({
-                reason: threema.DisconnectReason.SessionStopped,
-                send: true,
-                // TODO: Use welcome.stopped once we have it
-                close: 'welcome',
-                connectionBuildupState: 'closed',
-            });
-        }, () => {
-            // do nothing
+    public closeSession(): void {
+        this.webClientService.stop({
+            reason: threema.DisconnectReason.SessionStopped,
+            send: true,
+            // TODO: Use welcome.stopped once we have it
+            close: 'welcome',
+            connectionBuildupState: 'closed',
         });
     }
 
     /**
-     * Close and delete the session.
+     * Close and delete the session. The settings pane asks for confirmation
+     * itself.
      */
-    public deleteSession(ev): void {
-        const confirm = this.$mdDialog.confirm()
-            .title(this.$translate.instant('common.SESSION_DELETE'))
-            .textContent(this.$translate.instant('common.CONFIRM_DELETE_CLOSE_BODY'))
-            .targetEvent(ev)
-            .ok(this.$translate.instant('common.YES'))
-            .cancel(this.$translate.instant('common.CANCEL'));
-        this.$mdDialog.show(confirm).then(() => {
-            // The stored media belonged to the session being thrown away
-            this.webClientService.forgetStoredMedia();
-            this.webClientService.stop({
-                reason: threema.DisconnectReason.SessionDeleted,
-                send: true,
-                // TODO: Use welcome.deleted once we have it
-                close: 'welcome',
-                connectionBuildupState: 'closed',
-            });
-        }, () => {
-            // do nothing
+    public deleteSession(): void {
+        // The stored media belonged to the session being thrown away
+        this.webClientService.forgetStoredMedia();
+        this.webClientService.stop({
+            reason: threema.DisconnectReason.SessionDeleted,
+            send: true,
+            // TODO: Use welcome.deleted once we have it
+            close: 'welcome',
+            connectionBuildupState: 'closed',
         });
-
     }
 
     public addContact(ev): void {

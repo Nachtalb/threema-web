@@ -141,13 +141,23 @@
                     <md-icon aria-hidden="true" class="material-icons md-24">info</md-icon>
                     <span translate>messenger.ABOUT</span>
                 </md-list-item>
-                <md-list-item class="destructive" ng-click="settingsCtrl.closeSession($event)">
+                <md-list-item class="destructive" ng-click="settingsCtrl.askCloseSession()">
                     <md-icon aria-hidden="true" class="material-icons md-24">exit_to_app</md-icon>
                     <span translate>common.SESSION_CLOSE</span>
+                    <div class="confirm md-secondary" ng-if="settingsCtrl.confirming === 'close'">
+                        <md-button class="md-raised md-warn" ng-click="$event.stopPropagation(); settingsCtrl.closeSession()">
+                            <span translate>common.YES</span>
+                        </md-button>
+                    </div>
                 </md-list-item>
-                <md-list-item class="destructive" ng-if="settingsCtrl.isPersistent()" ng-click="settingsCtrl.deleteSession($event)">
+                <md-list-item class="destructive" ng-if="settingsCtrl.isPersistent()" ng-click="settingsCtrl.askDeleteSession()">
                     <md-icon aria-hidden="true" class="material-icons md-24">delete</md-icon>
                     <span translate>common.SESSION_DELETE</span>
+                    <div class="confirm md-secondary" ng-if="settingsCtrl.confirming === 'delete'">
+                        <md-button class="md-raised md-warn" ng-click="$event.stopPropagation(); settingsCtrl.deleteSession()">
+                            <span translate>common.YES</span>
+                        </md-button>
+                    </div>
                 </md-list-item>
             </md-list>
         </section>
